@@ -5,6 +5,7 @@ import 'app_localizations.dart';
 
 export 'app_languages.dart';
 export 'app_localizations.dart';
+export 'l10n_ext.dart';
 export 'terms.dart';
 
 /// 介面翻譯入口：畫面裡用 `context.l10n.xxx`；沒有 BuildContext 時（通知等）用 `L10n.current.xxx`。

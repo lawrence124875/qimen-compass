@@ -13,7 +13,8 @@ dependencies:
   flutter_localizations: # 介面翻譯（ARB，比照謙卦）
     sdk: flutter
   intl: any # 版本由 flutter_localizations 決定
-  lunar: ^1.7.8 # 節氣與干支（6tail，純 Dart；包在 lib/engine/calendar_service.dart）
+  lunar: ^1.7.8
+  shared_preferences: ^2.3.2 # 設定（外觀等） # 節氣與干支（6tail，純 Dart；包在 lib/engine/calendar_service.dart）
 
 dev_dependencies:
   flutter_test:
@@ -23,3 +24,16 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true # 由 lib/l10n/*.arb 產生 AppLocalizations（l10n.yaml）
+
+  # 字型子集由 scripts/build_fonts.py 產生（CI 自動執行；本機開發先跑一次）
+  fonts:
+    - family: QmSans
+      fonts:
+        - asset: assets/fonts/QmSans-Regular.otf
+        - asset: assets/fonts/QmSans-Bold.otf
+          weight: 700
+    - family: QmSerif
+      fonts:
+        - asset: assets/fonts/QmSerif-Regular.otf
+        - asset: assets/fonts/QmSerif-Bold.otf
+          weight: 700
