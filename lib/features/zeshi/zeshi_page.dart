@@ -39,6 +39,7 @@ class _ZeShiPageState extends State<ZeShiPage> {
 
   Future<void> _load() async {
     final p = await SharedPreferences.getInstance();
+    if (!mounted) return;
     final birth = DateTime.tryParse(p.getString(_kBirth) ?? '');
     setState(() {
       _prefs = p;
