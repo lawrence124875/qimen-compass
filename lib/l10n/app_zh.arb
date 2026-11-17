@@ -159,5 +159,14 @@
   "settingsAppearance": "外觀",
   "appearanceSystem": "跟隨系統",
   "appearanceLight": "淺色",
-  "appearanceDark": "深色"
+  "appearanceDark": "深色",
+  "compassIntroInfo": "使用說明",
+  "compassIntro1Title": "盤面對準現實方位",
+  "compassIntro1Body": "八門盤會跟著手機轉動\n上方指針就是你面對的方向",
+  "compassIntro2Title": "先校準再看",
+  "compassIntro2Body": "手機平放、遠離金屬和家電\n精度低時在空中畫 8 字\n在房間內請用室內鎖定",
+  "compassIntro3Title": "找吉門",
+  "compassIntro3Body": "選一個門\n照箭頭轉向就能對準\n也能預覽下個時辰的門位",
+  "compassIntroNext": "下一頁",
+  "compassIntroDone": "開始使用"
 }

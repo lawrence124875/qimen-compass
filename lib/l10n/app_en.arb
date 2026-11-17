@@ -138,5 +138,14 @@
   "settingsAppearance": "Appearance",
   "appearanceSystem": "Follow system",
   "appearanceLight": "Light",
-  "appearanceDark": "Dark"
+  "appearanceDark": "Dark",
+  "compassIntroInfo": "How to use",
+  "compassIntro1Title": "The chart follows real directions",
+  "compassIntro1Body": "The gate chart turns with your phone\nThe top pointer is the way you face",
+  "compassIntro2Title": "Calibrate first",
+  "compassIntro2Body": "Hold your phone flat, away from metal and appliances\nWave a figure 8 when accuracy is low\nUse indoor lock inside a room",
+  "compassIntro3Title": "Find a gate",
+  "compassIntro3Body": "Pick a gate\nTurn as the arrow shows to face it\nYou can also preview the next hour",
+  "compassIntroNext": "Next",
+  "compassIntroDone": "Start"
 }
