@@ -47,6 +47,22 @@ jobs:
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: bash scripts/patch_android.sh
 
+      # 判讀文句、規則 JSON、課程等 App 內容放在私人 repo qimen-content 的 app/，建置時複製到 assets/content/（不進公開 repo）
+      - name: 取得 App 內容（qimen-content/app）
+        uses: actions/checkout@v5
+        with:
+          repository: lawrence124875/qimen-content
+          token: ${{ secrets.BUILDS_REPO_TOKEN }}
+          path: _content
+          sparse-checkout: app
+
+      - name: 複製 App 內容
+        run: |
+          mkdir -p assets/content
+          if [ -d _content/app ]; then cp -r _content/app/. assets/content/; fi
+          rm -rf _content
+          echo "::notice title=App 內容::$(find assets/content -name '*.json' | wc -l) 個 JSON"
+
       - name: 產生字型子集
         run: |
           pip install --quiet fonttools
