@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
+import '../../app/settings/app_settings.dart';
 import '../../app/theme/app_theme.dart';
+import '../../app/widgets/guide.dart';
 import '../../app/widgets/chart_board.dart';
 import '../../compass/compass_math.dart';
 import '../../engine/engine.dart' hide Element, palaceBearing;
@@ -53,10 +55,7 @@ class _HousePageState extends State<HousePage> {
     final h = await HouseStore.load();
     if (!mounted) return;
     setState(() => _house = h);
-    if (!await HouseStore.introSeen() && mounted) {
-      await HouseStore.setIntroSeen();
-      if (mounted) await showHouseIntro(context);
-    }
+    if (mounted) await showHouseIntro(context);
   }
 
   Future<void> _save() async {
@@ -68,7 +67,8 @@ class _HousePageState extends State<HousePage> {
   /// 依選擇的疊盤起局；引擎尚不支援的盤（年、月、日）回傳 null。
   QimenChart? _try(DateTime t, PanUnit unit) {
     try {
-      return _engine.compute(t, settings: TimeSettings(utcOffset: t.timeZoneOffset), unit: unit);
+      final app = AppSettings.instance;
+      return _engine.compute(t, settings: app.timeSettingsAt(t), method: app.juMethod, unit: unit);
     } on UnsupportedError {
       return null;
     }
@@ -226,7 +226,7 @@ class _HousePageState extends State<HousePage> {
     final h = _house;
     return Scaffold(
       appBar: AppBar(title: Text(l.houseTitle), actions: [
-        IconButton(icon: const Icon(Icons.info_outline), tooltip: l.houseIntroTitle, onPressed: () => showHouseIntro(context)),
+        IconButton(icon: const Icon(Icons.info_outline), tooltip: l.houseIntroTitle, onPressed: () => showHouseIntro(context, force: true)),
       ]),
       body: SafeArea(
         child: h == null ? const Center(child: CircularProgressIndicator()) : _body(context, h),
@@ -485,51 +485,12 @@ class _PalaceTile extends StatelessWidget {
   }
 }
 
-/// 首次進入的 3 頁引導（比照謙卦），右上 ⓘ 可重看。
-Future<void> showHouseIntro(BuildContext context) {
+/// 首次進入的 3 頁引導（共用 [showGuide]，比照謙卦），右上 ⓘ 可重看。
+Future<void> showHouseIntro(BuildContext context, {bool force = false}) {
   final l = context.l10n;
-  final pages = [
-    (Icons.explore_outlined, l.houseIntro1Title, l.houseIntro1),
-    (Icons.my_location, l.houseIntro2Title, l.houseIntro2),
-    (Icons.grid_view, l.houseIntro3Title, l.houseIntro3),
-  ];
-  final ctrl = PageController();
-  var page = 0;
-  return showDialog<void>(
-    context: context,
-    builder: (context) => StatefulBuilder(
-      builder: (context, set) => AlertDialog(
-        title: Text(l.houseIntroTitle),
-        content: SizedBox(
-          width: 320,
-          height: 260,
-          child: PageView(
-            controller: ctrl,
-            onPageChanged: (i) => set(() => page = i),
-            children: [
-              for (final (icon, title, body) in pages)
-                SingleChildScrollView(
-                  child: Column(children: [
-                    Icon(icon, size: 48, color: context.qm.primary),
-                    const SizedBox(height: 12),
-                    Text(title, style: serif(Theme.of(context).textTheme.titleMedium), textAlign: TextAlign.center),
-                    const SizedBox(height: 8),
-                    Text(body, textAlign: TextAlign.center),
-                  ]),
-                ),
-            ],
-          ),
-        ),
-        actions: [
-          Text('${page + 1} / ${pages.length}'),
-          FilledButton(
-            onPressed: () => page < pages.length - 1
-                ? ctrl.nextPage(duration: const Duration(milliseconds: 250), curve: Curves.easeOut)
-                : Navigator.pop(context),
-            child: Text(page < pages.length - 1 ? l.houseNext : l.houseOk),
-          ),
-        ],
-      ),
-    ),
-  ).whenComplete(ctrl.dispose);
+  return showGuide(context, 'house', [
+    GuidePage(icon: Icons.explore_outlined, title: l.houseIntro1Title, body: l.houseIntro1),
+    GuidePage(icon: Icons.my_location, title: l.houseIntro2Title, body: l.houseIntro2),
+    GuidePage(icon: Icons.grid_view, title: l.houseIntro3Title, body: l.houseIntro3),
+  ], force: force);
 }

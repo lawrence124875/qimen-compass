@@ -205,7 +205,6 @@ class HouseStore {
   HouseStore._();
 
   static const _key = 'qm_house';
-  static const _introKey = 'qm_house_intro_seen';
 
   static Future<House> load() async {
     try {
@@ -220,20 +219,6 @@ class HouseStore {
   static Future<void> save(House h) async {
     try {
       await (await SharedPreferences.getInstance()).setString(_key, jsonEncode(h.toJson()));
-    } catch (_) {}
-  }
-
-  static Future<bool> introSeen() async {
-    try {
-      return (await SharedPreferences.getInstance()).getBool(_introKey) ?? false;
-    } catch (_) {
-      return true;
-    }
-  }
-
-  static Future<void> setIntroSeen() async {
-    try {
-      await (await SharedPreferences.getInstance()).setBool(_introKey, true);
     } catch (_) {}
   }
 }
