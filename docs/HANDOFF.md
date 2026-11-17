@@ -22,7 +22,7 @@
 |---|---|
 | V1 | 時家轉盤排盤、奇門羅盤、出行訣（走路、跑步、喝水計時）、吉時推播 |
 | V1.5 | 擇時擇日、年盤、月盤、宅盤九宮（站中心點標記房間＋拍平面圖套用） |
-| V2 | 事類占卜（求財、事業、感情、考試、失物）、失物方位接羅盤 |
+| V2 | 事類占卜（求財、事業、感情、考試、失物、官司、健康）、失物方位接羅盤（✓ run 11） |
 | V3 | 主客分析（宜先動或後動、宜攻或宜守）；日家盤 |
 
 ## 3. 排盤引擎（`lib/engine/`，純 Dart、不依賴 UI）
@@ -121,6 +121,9 @@
 - 出行訣（`lib/features/travel/`）：首頁「出行訣」→ 事類切換、現在＋接下來 11 個時辰的吉方與等級、走路／跑步（15/20/30 分＋`pedometer` 計步）、喝水法（15/30/60 分）、`flutter_compass` 箭頭指向吉方；未來時辰可「提醒我」
 - 吉時推播：`lib/services/notifications.dart`（`flutter_local_notifications`，一律 `inexactAllowWhileIdle`、不用精確鬧鐘權限）；`TravelReminders` 每次啟動與切換事類時重排 7 天、吉時前 10 分鐘通知；預設開、第一次進出行訣看到結果才請求權限，被拒時 SnackBar 開 App 設定（permission_handler `openAppSettings`；`app_settings` 套件 compileSdk 33 會讓建置失敗，已移除）。通知 id：1000–1019 每日、1020–1039 單次提醒、1040 計時結束。`patch_android.sh` 加 POST_NOTIFICATIONS／RECEIVE_BOOT_COMPLETED／ACTIVITY_RECOGNITION、兩個 receiver、desugaring、ProGuard Gson
 - 出行訣待補：iOS `NSMotionUsageDescription`（計步）、推播點擊直接開出行訣頁、排盤設定（真太陽時等）接上設定頁後同步給 `TravelReminders.timeSettings`；需實機驗證 release 版通知會跳
+
+- 事類問事（V2，介面名「奇門問事」，避開「占卜」字眼）：引擎 `lib/engine/divination.dart`（`DivinationEngine`：用神落宮、月令旺相休囚死、宮生剋、空亡門迫擊刑入墓馬星伏反吟、同宮門神、日干與用神生剋 → 加總分五級；`factorWeight` 可調）；畫面 `lib/features/divination/`（事類＋流派選單、解讀頁、失物方位＋羅盤箭頭＋可能地點、官司／健康「僅供參考」聲明、問事紀錄＋應驗回饋＋左滑刪除可復原、首次 3 頁引導＋ⓘ、複製結果）。內容在 qimen-content `app/divination/`：`rules.json`（7 事類、流派 standard／liuhe／yigeng／wuzi）、`text/<語言>.json`（zh-Hant、en；缺語言退回 en）。CI 兩個 workflow 都把 qimen-content `app/` 複製到 `assets/content/`（課程共用），`build_fonts.py` 收這些 JSON 的字；`test/engine/divination_test.dart` 在 CI 檢查內容檔鍵值齊全
+- 事類問事待補：其餘 9 語文句檔（加語言時順便加 `text/<code>.json`）；分享卡片圖片；免費次數／付費牆（商業模式定案後）；用神與加權請 Lawrence 依流派校對
 
 ## 14. 沿用謙卦／光穗塔羅的經驗（2026-11-17 整理；細節見 iching-content `HANDOFF.md`、`docs/REFERENCE.md`，tarot-content `HANDOFF.md`）
 ### 配色與 UI（配色已定案，見 §13 介面）
