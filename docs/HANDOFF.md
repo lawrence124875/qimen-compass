@@ -21,12 +21,12 @@
 | 版本 | 內容 |
 |---|---|
 | V1 | 時家轉盤排盤、奇門羅盤、出行訣（走路、跑步、喝水計時）、吉時推播 |
-| V1.5 | 擇時擇日、年盤、月盤、宅盤九宮（站中心點標記房間＋拍平面圖套用） |
+| V1.5 | ~~擇時擇日、年盤、月盤~~（完成）、宅盤九宮（站中心點標記房間＋拍平面圖套用） |
 | V2 | 事類占卜（求財、事業、感情、考試、失物）、失物方位接羅盤 |
 | V3 | 主客分析（宜先動或後動、宜攻或宜守）；日家盤 |
 
 ## 3. 排盤引擎（`lib/engine/`，純 Dart、不依賴 UI）
-- 盤的時間單位做成參數：`PanUnit { hour, day, month, year }`，V1 只實作 hour
+- 盤的時間單位做成參數：`PanUnit { hour, day, month, year }`，已實作 hour、month、year
 - 曆法：使用 `lunar`（6tail）套件取得節氣與干支；包成 `CalendarService`，日後可以抽成共用套件
 - 時家轉盤：
   - 陽遁：冬至到芒種；陰遁：夏至到大雪
@@ -117,6 +117,9 @@
   - 字型：`scripts/build_fonts.py` 從 noto-cjk tag（Sans2.004、Serif2.003）抓 TC 黑體／宋體，依 lib/ 內 .dart、.arb 用字做子集到 `assets/fonts/`（不進 repo，兩個 workflow 都先跑）；本機開發先 `pip install fonttools && python3 scripts/build_fonts.py`
 - 出行訣（`lib/features/travel/`）：首頁「出行訣」→ 事類切換、現在＋接下來 11 個時辰的吉方與等級、走路／跑步（15/20/30 分＋`pedometer` 計步）、喝水法（15/30/60 分）、`flutter_compass` 箭頭指向吉方；未來時辰可「提醒我」
 - 吉時推播：`lib/services/notifications.dart`（`flutter_local_notifications`，一律 `inexactAllowWhileIdle`、不用精確鬧鐘權限）；`TravelReminders` 每次啟動與切換事類時重排 7 天、吉時前 10 分鐘通知；預設開、第一次進出行訣看到結果才請求權限，被拒時 SnackBar 開系統通知設定。通知 id：1000–1019 每日、1020–1039 單次提醒、1040 計時結束。`patch_android.sh` 加 POST_NOTIFICATIONS／RECEIVE_BOOT_COMPLETED／ACTIVITY_RECOGNITION、兩個 receiver、desugaring、ProGuard Gson
+- 年盤、月盤（`PanUnit.year／month`）：年家以 60 年為一元，1864 上元陰一、1924 中元陰四、1984 下元陰七（依立春換年）；月家依年支，子午卯酉陰七、寅申巳亥陰一、辰戌丑未陰四（依節換月）。一律陰遁，起局柱為年柱／月柱（`QimenChart.pivot`，旬首、空亡、馬星都依此柱）。首頁「時盤／月盤／年盤」切換，前後鈕依單位換時辰／月／年。日家盤仍排 V3
+- 擇時擇日（`lib/engine/zeshi.dart`、`lib/features/zeshi/`）：六情境（簽約開門＋六合、開幕生開＋值符、面試開門＋九天、相親休門＋六合、訂婚休生＋六合、遠行開休生＋九天）；每時辰中點起局，基礎 4 分，加分：用神門旺相（宮生門或比和）、吉神（情境喜神另記）、三奇臨宮、青龍返首、飛鳥跌穴、年命逢吉門；扣分：用神受宮剋、門迫、空亡、伏吟、反吟、擊刑、入墓、凶神、年命逢空墓。五級 ≥7 大吉、≥5 吉、≥3 平、≥1 小阻。只看 7–21 點，7／14／30 天，前 5 名同天最多 2 個；生日存 `qm_birth_date`。卡片點開看盤、`add_2_calendar` 加入行事曆（`patch_android.sh` 宣告 INSERT intent；iOS 上架前要加 `NSCalendarsUsageDescription`）。首次進入顯示說明，右上 ⓘ 重看
+- 擇時待補（比照謙卦 §14）：擇時紀錄＋事後應驗回饋、付費牆（新功能免費完整體驗一次）
 - 出行訣待補：iOS `NSMotionUsageDescription`（計步）、推播點擊直接開出行訣頁、排盤設定（真太陽時等）接上設定頁後同步給 `TravelReminders.timeSettings`；需實機驗證 release 版通知會跳
 
 ## 14. 沿用謙卦／光穗塔羅的經驗（2026-11-17 整理；細節見 iching-content `HANDOFF.md`、`docs/REFERENCE.md`，tarot-content `HANDOFF.md`）
