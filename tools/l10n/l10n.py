@@ -27,7 +27,7 @@ ARB = {'zh-Hant': 'app_zh.arb', 'zh-Hans': 'app_zh_Hans.arb', 'en': 'app_en.arb'
 HANS_FIX = {'推播': '推送', '・': '·', '目前时盘': '当前时盘', '目前朝向': '当前朝向'}
 SECTIONS = ['doors', 'stars', 'gods', 'palaces', 'marks', 'dun', 'yuan', 'solarTerms']
 # 繁中殘留檢查（簡中 ARB 不應出現）
-TRAD = set('門開陽陰時盤設定與機啟點擊這們個來還麼裡後當動說書會對東車馬長兩錢氣')
+TRAD = set('門開陽陰時盤設與機啟點擊這們個來還麼裡後當動說書會對東車馬長兩錢氣')
 
 
 def load_glossary():
