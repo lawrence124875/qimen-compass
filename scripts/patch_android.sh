@@ -13,6 +13,10 @@ sed -i "s/android:label=\"[^\"]*\"/android:label=\"${APP_LABEL}\"/" "$MANIFEST"
 sed -i "s/applicationId = \"[^\"]*\"/applicationId = \"${APP_ID}\"/" "$GRADLE"
 grep -q "applicationId = \"${APP_ID}\"" "$GRADLE" && echo "套件名稱：${APP_ID}" || { echo "::error::套件名稱設定失敗"; exit 1; }
 
+# 羅盤真北：只要概略位置（不要求精確位置，配合 2027 位置權限新規）
+grep -q ACCESS_COARSE_LOCATION "$MANIFEST" || sed -i 's#<application#<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>\n    <application#' "$MANIFEST"
+grep -q ACCESS_COARSE_LOCATION "$MANIFEST" && echo "權限：ACCESS_COARSE_LOCATION" || { echo "::error::位置權限設定失敗"; exit 1; }
+
 # 不鎖方向、不限制調整大小（Play Console 對大螢幕的要求）
 sed -i -E 's/[[:space:]]*android:(screenOrientation|resizeableActivity)="[^"]*"//g' "$MANIFEST"
 
