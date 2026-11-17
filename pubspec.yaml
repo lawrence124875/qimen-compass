@@ -32,6 +32,10 @@ flutter:
   uses-material-design: true
   generate: true # 由 lib/l10n/*.arb 產生 AppLocalizations（l10n.yaml）
 
+  # App 內容（私人 repo qimen-content/app/，CI 建置時複製進來；各子資料夾放 .gitkeep）
+  assets:
+    - assets/content/divination/
+
   # 字型子集由 scripts/build_fonts.py 產生（CI 自動執行；本機開發先跑一次）
   fonts:
     - family: QmSans
