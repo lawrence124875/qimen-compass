@@ -25,6 +25,7 @@ dependencies:
   share_plus: ^11.0.0 # 分享盤面卡片
   pedometer: ^4.1.1 # 走路／跑步計步
   permission_handler: ^12.0.0 # Android 計步權限（ACTIVITY_RECOGNITION）；通知被拒時 openAppSettings()
+  add_2_calendar: ^3.0.1 # 擇時擇日：加入手機行事曆（Android 用 intent，不需行事曆權限）
 
 dev_dependencies:
   flutter_test:
@@ -38,6 +39,7 @@ flutter:
   # App 內容（私人 repo qimen-content/app/，CI 建置時複製進來；各子資料夾放 .gitkeep）
   assets:
     - assets/content/divination/
+    - assets/content/course/
 
   # 字型子集由 scripts/build_fonts.py 產生（CI 自動執行；本機開發先跑一次）
   fonts:

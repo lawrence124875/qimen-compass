@@ -19,6 +19,11 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      # 11 語翻譯檢查（tools/l10n/README.md）：術語表完整、ARB 參數一致、術語鍵＝術語表、terms_data.dart 是最新。
+      # 未開放語言缺鍵只列 warning，不讓 CI 失敗。
+      - name: 翻譯檢查
+        run: python3 tools/l10n/l10n.py check
+
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'

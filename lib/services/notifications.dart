@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
@@ -12,6 +13,26 @@ class Notifications {
   Notifications._();
 
   static final _plugin = FlutterLocalNotificationsPlugin();
+
+  /// App 的 Navigator（點通知開對應頁面用；在 MaterialApp 設定）。
+  static final navigatorKey = GlobalKey<NavigatorState>();
+
+  /// payload → 頁面（由 main 註冊，避免 services 依賴功能模組）。
+  static final Map<String, Route<void> Function()> routes = {};
+
+  static void _open(String? payload) {
+    final builder = routes[payload];
+    final nav = navigatorKey.currentState;
+    if (builder == null || nav == null) return;
+    nav.push(builder());
+  }
+
+  /// App 由通知啟動時，開啟對應頁面（第一個畫面出現後呼叫）。
+  static Future<void> handleLaunch() async {
+    await init();
+    final d = await _plugin.getNotificationAppLaunchDetails();
+    if (d?.didNotificationLaunchApp ?? false) _open(d!.notificationResponse?.payload);
+  }
   static Future<void>? _init;
 
   static Future<void> init() => _init ??= _doInit();
@@ -26,7 +47,7 @@ class Notifications {
         requestSoundPermission: false,
       ),
     );
-    await _plugin.initialize(settings);
+    await _plugin.initialize(settings, onDidReceiveNotificationResponse: (r) => _open(r.payload));
   }
 
   static AndroidFlutterLocalNotificationsPlugin? get _android =>
@@ -58,6 +79,7 @@ class Notifications {
     required DateTime atUtc,
     required String channelId,
     required String channelName,
+    String? payload,
   }) async {
     await init();
     await _plugin.zonedSchedule(
@@ -71,6 +93,7 @@ class Notifications {
         iOS: const DarwinNotificationDetails(),
       ),
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+      payload: payload,
     );
   }
 

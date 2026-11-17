@@ -92,7 +92,7 @@ void main() {
     expect(solarTermNames[z.termIndex], '大雪');
   });
 
-  test('非時家單位尚未實作', () {
+  test('日家盤尚未實作（V3）', () {
     expect(() => engine.compute(DateTime.utc(2024), unit: PanUnit.day), throwsUnsupportedError);
   });
 }

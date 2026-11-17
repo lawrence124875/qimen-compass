@@ -112,7 +112,7 @@ class PalaceCell extends StatelessWidget {
             padding: EdgeInsets.all(s * 0.045),
             child: Column(children: [
               Row(children: [
-                fit(Text(pc.god?.zh ?? '', style: st(0.12, qm.textMuted))),
+                fit(Text(pc.god == null ? '' : QimenTerms.godName(pc.god!, L10n.language), style: st(0.12, qm.textMuted))),
                 const Spacer(),
                 fit(Text(stemsText(pc.heavenStems), style: st(0.15, qm.primary, w: FontWeight.w700))),
               ]),
@@ -120,12 +120,12 @@ class PalaceCell extends StatelessWidget {
                 child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                   fit(Text(starsText(pc.stars), style: st(0.13, qm.text))),
                   if (door != null)
-                    fit(Text(door.zh, style: st(0.17, qm.luck(door.luck), w: FontWeight.w700))),
+                    fit(Text(QimenTerms.doorName(door, L10n.language), style: st(0.17, qm.luck(door.luck), w: FontWeight.w700))),
                   if (marks.isNotEmpty)
                     Padding(
                       padding: EdgeInsets.only(top: s * 0.02),
                       child: fit(Row(mainAxisSize: MainAxisSize.min, children: [
-                        for (final m in marks) _MarkChip(text: QimenTerms.markShort(m), size: s),
+                        for (final m in marks) _MarkChip(text: QimenTerms.markShort(m, L10n.language), size: s),
                       ])),
                     ),
                 ]),
@@ -186,8 +186,8 @@ class _CenterCell extends StatelessWidget {
       child: FittedBox(
         fit: BoxFit.scaleDown,
         child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Text('${chart.dun.zh}${chart.ju}局', style: st(0.14, qm.primary, w: FontWeight.w700)),
-          Text(chart.yuan.zh, style: st(0.11, qm.textMuted)),
+          Text('${QimenTerms.dunName(chart.dun, L10n.language)}${chart.ju}局', style: st(0.14, qm.primary, w: FontWeight.w700)),
+          Text(QimenTerms.yuanName(chart.yuan, L10n.language), style: st(0.11, qm.textMuted)),
           SizedBox(height: s * 0.04),
           Text('中5  ${stemsText(chart[5].earthStems)}', style: st(0.12, qm.textMuted)),
         ]),
