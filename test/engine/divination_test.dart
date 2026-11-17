@@ -145,4 +145,18 @@ void main() {
     expect(real.rule('lawsuit').disclaimer, isTrue);
     expect(real.rule('health').disclaimer, isTrue);
   }, skip: hasContent ? false : '沒有 assets/content/divination（私人內容，只在 CI 檢查）');
+
+  // run 11–25 的坑：pubspec 的資料夾 asset 不含子資料夾，text/ 沒打包進 APK。
+  test('assets/content 底下有檔案的資料夾都列在 pubspec', () {
+    final pubspec = File('pubspec.yaml').readAsStringSync();
+    final dirs = Directory('assets/content')
+        .listSync(recursive: true)
+        .whereType<File>()
+        .map((f) => '${f.parent.path.replaceAll(r'\\', '/')}/')
+        .where((d) => d != 'assets/content/')
+        .toSet();
+    for (final d in dirs) {
+      expect(pubspec, contains('- $d'), reason: '$d 沒列在 pubspec.yaml assets');
+    }
+  });
 }

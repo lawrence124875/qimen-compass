@@ -55,6 +55,7 @@ flutter:
   assets:
     - assets/other_apps/ # LC Lab 其他 App 圖示（設定頁）
     - assets/content/divination/
+    - assets/content/divination/text/ # Flutter 資料夾不含子資料夾，子資料夾要另外列
     - assets/content/course/
 
   # 字型子集由 scripts/build_fonts.py 產生（CI 自動執行；本機開發先跑一次）
