@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qimen_compass/app/theme/app_theme.dart';
-import 'package:qimen_compass/engine/engine.dart' hide Element, palaceBearing;
+import 'package:qimen_compass/engine/engine.dart' hide Element;
 import 'package:qimen_compass/features/house/house_geometry.dart';
 import 'package:qimen_compass/features/house/house_model.dart';
 import 'package:qimen_compass/features/house/house_widgets.dart';

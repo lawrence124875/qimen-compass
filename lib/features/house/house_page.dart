@@ -9,7 +9,7 @@ import '../../app/theme/app_theme.dart';
 import '../../app/widgets/guide.dart';
 import '../../app/widgets/chart_board.dart';
 import '../../compass/compass_math.dart';
-import '../../engine/engine.dart' hide Element, palaceBearing;
+import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
 import 'heading_tracker.dart';
 import 'house_geometry.dart';

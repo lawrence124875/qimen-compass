@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../app/theme/app_theme.dart';
 import '../../compass/compass_math.dart';
-import '../../engine/engine.dart' hide Element, palaceBearing;
+import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
 import 'heading_tracker.dart';
 import 'house_model.dart';
