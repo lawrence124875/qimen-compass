@@ -6,3 +6,4 @@ export 'ganzhi.dart';
 export 'qimen_types.dart';
 export 'shijia_engine.dart';
 export 'chuxing.dart';
+export 'zeshi.dart';

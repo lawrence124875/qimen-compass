@@ -1,6 +1,6 @@
 import 'ganzhi.dart';
 
-/// 盤的時間單位。V1 只實作 [hour]（時家）。
+/// 盤的時間單位。已實作 [hour]（時家）、[month]（月家）、[year]（年家）；[day] 排在 V3。
 enum PanUnit { hour, day, month, year }
 
 /// 定元方法。
@@ -157,6 +157,7 @@ class QimenChart {
     required this.month,
     required this.day,
     required this.hour,
+    GanZhi? pivot,
     required this.xunShou,
     required this.zhiFu,
     required this.zhiShi,
@@ -165,7 +166,7 @@ class QimenChart {
     required this.starFanYin,
     required this.doorFuYin,
     required this.doorFanYin,
-  });
+  }) : pivot = pivot ?? hour;
 
   final PanUnit unit;
   final JuMethod method;
@@ -178,7 +179,10 @@ class QimenChart {
 
   final GanZhi year, month, day, hour;
 
-  /// 時柱旬首（例如甲子）與其遁藏的六儀。
+  /// 起局所依的柱：時盤＝時柱、月盤＝月柱、年盤＝年柱。
+  final GanZhi pivot;
+
+  /// 起局柱（[pivot]）的旬首（例如甲子）。
   final GanZhi xunShou;
 
   final Star zhiFu;

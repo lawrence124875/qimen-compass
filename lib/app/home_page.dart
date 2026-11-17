@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../engine/engine.dart' hide Element;
 import '../features/travel/travel_page.dart';
+import '../features/zeshi/zeshi_page.dart';
 import '../l10n/l10n.dart';
 import 'pages/settings_page.dart';
 import 'theme/app_theme.dart';
 import 'widgets/chart_board.dart';
 
-/// 首頁：目前時盤（九宮格）。可前後切換時辰；直式上下排、橫式／平板左右排。
+/// 首頁：目前的時盤／月盤／年盤（九宮格）。可前後切換；直式上下排、橫式／平板左右排。
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -18,9 +19,31 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   static const _engine = ShiJiaEngine();
   DateTime _instant = DateTime.now();
+  PanUnit _unit = PanUnit.hour;
   late QimenChart _chart = _compute();
 
-  QimenChart _compute() => _engine.compute(_instant, settings: TimeSettings(utcOffset: _instant.timeZoneOffset));
+  QimenChart _compute() =>
+      _engine.compute(_instant, settings: TimeSettings(utcOffset: _instant.timeZoneOffset), unit: _unit);
+
+  void _setUnit(PanUnit u) => setState(() {
+        _unit = u;
+        _chart = _compute();
+      });
+
+  /// 前後切換一個單位（時辰／月／年）。月、年取同一日；遇月底則取該月最後一天。
+  DateTime _shift(int n) => switch (_unit) {
+        PanUnit.month => _addMonths(_instant, n),
+        PanUnit.year => _addMonths(_instant, 12 * n),
+        _ => _instant.add(Duration(hours: 2 * n)),
+      };
+
+  static DateTime _addMonths(DateTime t, int n) {
+    final m0 = t.month - 1 + n;
+    final y = t.year + (m0 / 12).floor();
+    final m = m0 % 12 + 1;
+    final last = DateTime(y, m + 1, 0).day;
+    return DateTime(y, m, t.day > last ? last : t.day, t.hour, t.minute);
+  }
 
   void _set(DateTime t) => setState(() {
         _instant = t;
@@ -46,15 +69,46 @@ class _HomePageState extends State<HomePage> {
           final wide = box.maxWidth > box.maxHeight && box.maxWidth >= 560;
           final info = ChartInfo(chart: _chart, instant: _instant);
           final nav = _HourNav(
-            onPrev: () => _set(_instant.subtract(const Duration(hours: 2))),
+            prevLabel: switch (_unit) { PanUnit.month => l.homePrevMonth, PanUnit.year => l.homePrevYear, _ => l.homePrevHour },
+            nextLabel: switch (_unit) { PanUnit.month => l.homeNextMonth, PanUnit.year => l.homeNextYear, _ => l.homeNextHour },
+            onPrev: () => _set(_shift(-1)),
             onNow: () => _set(DateTime.now()),
-            onNext: () => _set(_instant.add(const Duration(hours: 2))),
+            onNext: () => _set(_shift(1)),
+          );
+          final units = SegmentedButton<PanUnit>(
+            showSelectedIcon: false,
+            segments: [
+              ButtonSegment(value: PanUnit.hour, label: Text(l.unitHour)),
+              ButtonSegment(value: PanUnit.month, label: Text(l.unitMonth)),
+              ButtonSegment(value: PanUnit.year, label: Text(l.unitYear)),
+            ],
+            selected: {_unit},
+            onSelectionChanged: (v) => _setUnit(v.first),
           );
           final board = ChartBoard(chart: _chart);
-          final travel = FilledButton.tonal(
-            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const TravelPage())),
-            child: Text(l.homeTravel),
-          );
+          final travel = Row(children: [
+            Expanded(
+              child: FilledButton.tonal(
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const TravelPage())),
+                child: Text(l.homeTravel),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: FilledButton.tonal(
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const ZeShiPage())),
+                child: Text(l.homeZeShi),
+              ),
+            ),
+          ]);
+          final unitNote = _unit == PanUnit.hour
+              ? const SizedBox.shrink()
+              : Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: Text(l.homeUnitNote,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.qm.textMuted)),
+                );
           final footer = Text(l.homeDisclaimer,
               textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.qm.textMuted));
           if (wide) {
@@ -64,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                 ConstrainedBox(constraints: BoxConstraints(maxWidth: box.maxHeight - 32), child: board),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: ListView(children: [info, const SizedBox(height: 12), nav, const SizedBox(height: 8), travel, const SizedBox(height: 12), footer]),
+                  child: ListView(children: [units, unitNote, const SizedBox(height: 8), info, const SizedBox(height: 12), nav, const SizedBox(height: 8), travel, const SizedBox(height: 12), footer]),
                 ),
               ]),
             );
@@ -72,6 +126,9 @@ class _HomePageState extends State<HomePage> {
           return ListView(
             padding: const EdgeInsets.fromLTRB(12, 4, 12, 16),
             children: [
+              units,
+              unitNote,
+              const SizedBox(height: 8),
               info,
               const SizedBox(height: 10),
               Center(child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 520), child: board)),
@@ -150,8 +207,15 @@ class ChartInfo extends StatelessWidget {
 }
 
 class _HourNav extends StatelessWidget {
-  const _HourNav({required this.onPrev, required this.onNow, required this.onNext});
+  const _HourNav({
+    required this.prevLabel,
+    required this.nextLabel,
+    required this.onPrev,
+    required this.onNow,
+    required this.onNext,
+  });
 
+  final String prevLabel, nextLabel;
   final VoidCallback onPrev, onNow, onNext;
 
   @override
@@ -164,7 +228,7 @@ class _HourNav extends StatelessWidget {
         child: OutlinedButton(
           style: style,
           onPressed: onPrev,
-          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [const Icon(Icons.chevron_left, size: 20), label(l.homePrevHour)]),
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [const Icon(Icons.chevron_left, size: 20), label(prevLabel)]),
         ),
       ),
       const SizedBox(width: 8),
@@ -174,7 +238,7 @@ class _HourNav extends StatelessWidget {
         child: OutlinedButton(
           style: style,
           onPressed: onNext,
-          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [label(l.homeNextHour), const Icon(Icons.chevron_right, size: 20)]),
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [label(nextLabel), const Icon(Icons.chevron_right, size: 20)]),
         ),
       ),
     ]);

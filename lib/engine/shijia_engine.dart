@@ -37,19 +37,54 @@ class ShiJiaEngine {
 
   final CalendarService calendar;
 
-  /// 起局。[unit] 目前只支援 [PanUnit.hour]。
+  /// 起局。支援時盤、月盤、年盤（[PanUnit.day] 日家奇門排在 V3）。
+  /// 月盤、年盤一律陰遁，不受 [method] 影響。
   QimenChart compute(
     DateTime instant, {
     TimeSettings settings = const TimeSettings(),
     JuMethod method = JuMethod.chaiBu,
     PanUnit unit = PanUnit.hour,
   }) {
-    if (unit != PanUnit.hour) {
-      throw UnsupportedError('V1 只實作時家盤（PanUnit.hour）');
-    }
     final m = calendar.momentAt(instant, settings);
-    final ju = method == JuMethod.chaiBu ? juChaiBu(m) : juZhiRun(m, settings);
-    return buildChart(m, ju, method: method);
+    final JuInfo ju;
+    switch (unit) {
+      case PanUnit.hour:
+        ju = method == JuMethod.chaiBu ? juChaiBu(m) : juZhiRun(m, settings);
+      case PanUnit.month:
+        ju = juMonth(m);
+      case PanUnit.year:
+        ju = juYear(m);
+      case PanUnit.day:
+        throw UnsupportedError('日家盤排在 V3');
+    }
+    return buildChart(m, ju, method: method, unit: unit);
+  }
+
+  /// 年家奇門：以 60 年為一元，一律陰遁。
+  /// 上元（1864–1923 起之甲子）陰一局、中元陰四局、下元陰七局；1984 甲子起為下元。
+  /// 年以立春為界（年柱已依立春換年）。
+  JuInfo juYear(CalendarMoment m) {
+    final y = lichunYear(m);
+    final cycle = ((y - 1864) / 60).floor() % 3;
+    final yuan = Yuan.values[(cycle + 3) % 3];
+    return JuInfo(Dun.yin, const [1, 4, 7][yuan.index], yuan, m.term.index);
+  }
+
+  /// 月家奇門：以年支定元，一律陰遁。
+  /// 子午卯酉年上元陰七局、寅申巳亥年中元陰一局、辰戌丑未年下元陰四局；月以節為界（月柱已依節換月）。
+  JuInfo juMonth(CalendarMoment m) {
+    final yuan = Yuan.values[const [0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1][m.year.branch]];
+    return JuInfo(Dun.yin, const [7, 1, 4][yuan.index], yuan, m.term.index);
+  }
+
+  /// 以立春為界的西元年（例：2026-01-20 仍屬 2025 年）。
+  static int lichunYear(CalendarMoment m) {
+    // 年柱序 0＝甲子，1984 為甲子年。
+    final y0 = m.clock.year;
+    for (final y in [y0, y0 - 1, y0 + 1]) {
+      if (((y - 1984) % 60 + 60) % 60 == m.year.index) return y;
+    }
+    return y0;
   }
 
   /// 拆補法：節氣取真實節氣，元取符頭（最近的甲日或己日）地支。
@@ -100,7 +135,8 @@ class ShiJiaEngine {
       JuInfo(term < 12 ? Dun.yang : Dun.yin, juTable[term][yuan.index], yuan, term);
 
   /// 依已定的局排盤。
-  QimenChart buildChart(CalendarMoment m, JuInfo info, {JuMethod method = JuMethod.chaiBu}) {
+  /// 年盤、月盤以年柱、月柱代替時柱（旬首、值符值使、空亡、馬星都依該柱）。
+  QimenChart buildChart(CalendarMoment m, JuInfo info, {JuMethod method = JuMethod.chaiBu, PanUnit unit = PanUnit.hour}) {
     final yang = info.dun == Dun.yang;
     final palaces = {for (var p = 1; p <= 9; p++) p: PalaceChart(p)};
     int step(int from, int n) => ((from - 1 + (yang ? n : -n)) % 9 + 9) % 9 + 1;
@@ -117,7 +153,7 @@ class ShiJiaEngine {
     palaces[2]!.earthStems.addAll(palaces[5]!.earthStems); // 中五寄坤二
 
     // 2. 旬首 → 值符、值使。
-    final hour = m.hour;
+    final hour = switch (unit) { PanUnit.year => m.year, PanUnit.month => m.month, _ => m.hour };
     final xun = GanZhi(hour.xunStart);
     final hidden = xunHiddenStem[xun.branch]!;
     final p0 = earthPalaceOf[hidden]!;
@@ -166,7 +202,7 @@ class ShiJiaEngine {
     }
 
     return QimenChart(
-      unit: PanUnit.hour,
+      unit: unit,
       method: method,
       dun: info.dun,
       ju: info.ju,
@@ -175,7 +211,8 @@ class ShiJiaEngine {
       year: m.year,
       month: m.month,
       day: m.day,
-      hour: hour,
+      hour: m.hour,
+      pivot: hour,
       xunShou: xun,
       zhiFu: zhiFu,
       zhiShi: zhiShi,
