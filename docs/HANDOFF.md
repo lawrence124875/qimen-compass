@@ -132,6 +132,15 @@
 - 事類問事（V2，介面名「奇門問事」，避開「占卜」字眼）：引擎 `lib/engine/divination.dart`（`DivinationEngine`：用神落宮、月令旺相休囚死、宮生剋、空亡門迫擊刑入墓馬星伏反吟、同宮門神、日干與用神生剋 → 加總分五級；`factorWeight` 可調）；畫面 `lib/features/divination/`（事類＋流派選單、解讀頁、失物方位＋羅盤箭頭＋可能地點、官司／健康「僅供參考」聲明、問事紀錄＋應驗回饋＋左滑刪除可復原、首次 3 頁引導＋ⓘ、複製結果）。內容在 qimen-content `app/divination/`：`rules.json`（7 事類、流派 standard／liuhe／yigeng／wuzi）、`text/<語言>.json`（zh-Hant、en；缺語言退回 en）。CI 兩個 workflow 都把 qimen-content `app/` 複製到 `assets/content/`（課程共用），`build_fonts.py` 收這些 JSON 的字；`test/engine/divination_test.dart` 在 CI 檢查內容檔鍵值齊全
 - 事類問事待補：其餘 9 語文句檔（加語言時順便加 `text/<code>.json`）；分享卡片圖片；免費次數／付費牆（商業模式定案後）；用神與加權請 Lawrence 依流派校對
 
+- 宅盤九宮（`lib/features/house/`，首頁與羅盤同一列）：§6 三種輸入完成
+  - 站中心點標記（`mark_rooms_page.dart`）：用羅盤的 `GyroLock`／`MagneticMonitor`，包成 `HeadingTracker`（宅盤內共用，門口鎖定後走進屋內仍維持）
+  - 拍平面圖（`plan_corners_page.dart`→`plan_editor_page.dart`）：`image_picker`（最大 2048px）存 App 文件夾；拖四角→單應矩陣 `Transform` 透視校正，長寬比自動估計可微調；北方轉箭頭對指北針或手機量；中心預設重心可拖曳
+  - 手繪：同一編輯器，長方形拼房間（0.5 格對齊），中心＝房間聯集重心；含中心點的房間算中五宮，中宮半徑＝等面積正方形邊長 1/6
+  - 九宮採 45° 扇區（中心＋正北），宅盤一律磁北；坐向四種定法＋量向；入宅時間選填
+  - 疊盤：現在／指定時間時盤、年盤、月盤、宅命盤（有時間＝時盤、只填日期＝日盤、未填＝年盤）；引擎不支援的單位（目前日盤）捕捉 `UnsupportedError` 顯示「製作中」
+  - 資料：SharedPreferences `qm_house`（帶 schemaVersion，目前一間）；引導用共用 `showGuide`（id `house`）；排盤沿用 App 排盤設定
+  - 待補：其餘 9 語的 house* 鍵；iOS `NSCameraUsageDescription`／`NSPhotoLibraryUsageDescription`；宅盤判讀文句（qimen-content）；多間房子；分享卡片；付費牆（§10 宅盤屬訂閱）；實機驗證陀螺儀鎖定漂移
+
 ## 14. 沿用謙卦／光穗塔羅的經驗（2026-11-17 整理；細節見 iching-content `HANDOFF.md`、`docs/REFERENCE.md`，tarot-content `HANDOFF.md`）
 ### 配色與 UI（配色已定案，見 §13 介面）
 - 謙卦「天玄地黃」：深色 玄墨 #1C1B22 底、玄灰 #26242E 卡片、地黃 #C9A45C 主色、稻金 #D8B56A 點綴、山褐 #7E6A52 框線、淡金 #E8D9B0 文字；淺色 宣紙 #F3ECDD 底、地黃 #946C2A。塔羅為晨光奶油＋琥珀金＋暮光紫。奇門建議沿用謙卦色系（同屬東方、利於互相導流），八門吉／平／凶用五行色標示，深淺色模式從第一版就做（設定「外觀」跟隨系統／淺／深；顏色用 getter，不放 const；圖上文字用固定 `onImage`）。
