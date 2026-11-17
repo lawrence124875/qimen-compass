@@ -45,5 +45,8 @@
   "dirS": "S",
   "dirSW": "SW",
   "dirW": "W",
-  "dirNW": "NW"
+  "dirNW": "NW",
+  "compassLock": "Indoor lock",
+  "compassLockHint": "Turn on at a low-interference spot like a doorway or balcony\nthen walk to the room's center",
+  "compassLockOn": "North locked\nTurn your phone to see each gate"
 }

@@ -129,3 +129,35 @@ DateTime? nextChartChange(
   }
   return at(hiS);
 }
+
+/// 室內鎖定：在干擾少的地方（門口、陽台）鎖定方位後，改用陀螺儀累計轉動角，
+/// 不再受室內金屬、家電影響。手機平放時，繞 z 軸逆時針轉（俯視）為正。
+class GyroLock {
+  double? _heading;
+  DateTime? _last;
+
+  bool get locked => _heading != null;
+  double? get heading => _heading;
+
+  void lock(double heading) {
+    _heading = normalizeDeg(heading);
+    _last = null;
+  }
+
+  void unlock() {
+    _heading = null;
+    _last = null;
+  }
+
+  /// [wz] 為陀螺儀 z 軸角速度（rad/s）；[at] 為樣本時間。
+  void update(double wz, DateTime at) {
+    final h = _heading;
+    if (h == null) return;
+    final last = _last;
+    _last = at;
+    if (last == null) return;
+    final dt = at.difference(last).inMicroseconds / 1e6;
+    if (dt <= 0 || dt > 0.5) return; // 樣本中斷時不累計，避免暴衝
+    _heading = normalizeDeg(h - wz * dt * 180 / math.pi);
+  }
+}

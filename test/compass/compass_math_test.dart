@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qimen_compass/compass/compass_math.dart';
 import 'package:qimen_compass/compass/declination.dart';
@@ -86,5 +88,21 @@ void main() {
   test('磁偏角（WMM 2025）：台北約西偏 4–5°', () {
     final d = Declination.at(25.03, 121.56, DateTime.utc(2026, 11, 17));
     expect(d, inInclusiveRange(-6.0, -3.0));
+  });
+
+  test('室內鎖定：陀螺儀累計轉動', () {
+    final g = GyroLock();
+    final t0 = DateTime.utc(2026);
+    g.update(1, t0);
+    expect(g.heading, isNull);
+    g.lock(10);
+    g.update(0, t0);
+    // 順時針轉 90°（z 軸角速度為負）分 10 步、每步 0.1 秒
+    for (var i = 1; i <= 10; i++) {
+      g.update(-math.pi / 2, t0.add(Duration(milliseconds: 100 * i)));
+    }
+    expect(g.heading, closeTo(100, 1e-6));
+    g.update(5, t0.add(const Duration(seconds: 5))); // 中斷超過 0.5 秒不累計
+    expect(g.heading, closeTo(100, 1e-6));
   });
 }

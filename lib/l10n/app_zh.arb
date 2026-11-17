@@ -59,5 +59,8 @@
   "dirS": "南",
   "dirSW": "西南",
   "dirW": "西",
-  "dirNW": "西北"
+  "dirNW": "西北",
+  "compassLock": "室內鎖定",
+  "compassLockHint": "在門口或陽台等干擾少的地方開啟\n再走到房間中心看各門位置",
+  "compassLockOn": "已鎖定北方\n轉動手機看各門方位"
 }

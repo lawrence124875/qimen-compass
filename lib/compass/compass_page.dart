@@ -22,6 +22,7 @@ class _CompassPageState extends State<CompassPage> {
   static const _engine = ShiJiaEngine();
 
   final _field = MagneticMonitor();
+  final _gyro = GyroLock();
   final _subs = <StreamSubscription<dynamic>>[];
   Timer? _ticker;
 
@@ -73,6 +74,8 @@ class _CompassPageState extends State<CompassPage> {
     }
     _subs.add(magnetometerEventStream(samplingPeriod: SensorInterval.uiInterval)
         .listen((e) => _field.add(e.x, e.y, e.z), onError: (_) {}));
+    _subs.add(gyroscopeEventStream(samplingPeriod: SensorInterval.gameInterval)
+        .listen((e) => _gyro.update(e.z, DateTime.now()), onError: (_) {}));
     _subs.add(accelerometerEventStream(samplingPeriod: SensorInterval.uiInterval)
         .listen((e) => _tilt = tiltDegrees(e.x, e.y, e.z), onError: (_) {}));
   }
@@ -94,6 +97,7 @@ class _CompassPageState extends State<CompassPage> {
   }
 
   double? get _heading {
+    if (_gyro.locked) return _gyro.heading; // 鎖定時已含北方基準
     final h = _magHeading;
     if (h == null) return null;
     return _trueNorth && _declination != null ? normalizeDeg(h + _declination!) : h;
@@ -198,6 +202,7 @@ class _CompassPageState extends State<CompassPage> {
       if (_field.strength != null)
         Chip(label: Text('${_field.strength!.round()} μT'), visualDensity: VisualDensity.compact),
     ]));
+    if (_gyro.locked) notes.clear();
     for (final n in notes) {
       widgets.add(Card(
         color: theme.colorScheme.errorContainer,
@@ -207,6 +212,18 @@ class _CompassPageState extends State<CompassPage> {
         ),
       ));
     }
+
+    // 室內鎖定（房間內金屬、家電多：先在門口或陽台鎖定，再走到房間中心）
+    widgets.add(const SizedBox(height: 8));
+    widgets.add(SwitchListTile(
+      contentPadding: EdgeInsets.zero,
+      title: Text(l.compassLock),
+      subtitle: Text(_gyro.locked ? l.compassLockOn : l.compassLockHint),
+      value: _gyro.locked,
+      onChanged: heading == null && !_gyro.locked
+          ? null
+          : (on) => setState(() => on ? _gyro.lock(heading!) : _gyro.unlock()),
+    ));
 
     // 北方基準
     widgets.add(const SizedBox(height: 8));
@@ -221,7 +238,7 @@ class _CompassPageState extends State<CompassPage> {
           ),
         ],
         selected: {_trueNorth},
-        onSelectionChanged: _locating ? null : (s) => _setTrueNorth(s.first),
+        onSelectionChanged: _locating || _gyro.locked ? null : (s) => _setTrueNorth(s.first),
       ),
     ));
     if (_trueNorth && _declination != null) {
