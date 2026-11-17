@@ -97,5 +97,18 @@
   "settingsAppearance": "Appearance",
   "appearanceSystem": "Follow system",
   "appearanceLight": "Light",
-  "appearanceDark": "Dark"
+  "appearanceDark": "Dark",
+  "travelIntro1Title": "Find today's lucky direction",
+  "travelIntro1Body": "Pick what you want to do\nSee lucky hours and directions now and ahead",
+  "travelIntro2Title": "Take a walk that way",
+  "travelIntro2Body": "Walk or run for 15–30 minutes\nor place a glass of water in that direction",
+  "travelIntro3Title": "Lucky hour alerts",
+  "travelIntro3Body": "One alert a day for the best hour\nTurn it on or off below",
+  "travelIntroNext": "Next",
+  "travelIntroDone": "Get started",
+  "travelIntroAgain": "How it works",
+  "travelLogTitle": "Travel log",
+  "travelLogEmpty": "No records yet\nFinished sessions will appear here",
+  "travelLogDeleted": "Deleted",
+  "travelLogUndo": "Undo"
 }

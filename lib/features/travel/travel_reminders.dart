@@ -23,6 +23,10 @@ class TravelPrefs {
   /// 是否已請求過通知權限（第一次看到結果時請求一次）。
   bool get askedPermission => _p.getBool('notify_permission_asked') ?? false;
   Future<void> setAskedPermission() => _p.setBool('notify_permission_asked', true);
+
+  /// 首次進出行訣顯示 3 頁引導。
+  bool get introSeen => _p.getBool('travel_intro_seen') ?? false;
+  Future<void> setIntroSeen() => _p.setBool('travel_intro_seen', true);
 }
 
 /// 吉時推播：一次排未來 7 天，每天 7–21 點間最佳的吉時（未達「吉」的日子不提醒），開始前 10 分鐘通知。
@@ -75,6 +79,10 @@ class TravelReminders {
       atUtc: at,
       channelId: channelId,
       channelName: l.travelChannelName,
+      payload: payload,
     );
   }
+
+  /// 點通知開出行訣頁。
+  static const payload = 'travel';
 }

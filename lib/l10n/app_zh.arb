@@ -117,5 +117,18 @@
   "settingsAppearance": "外觀",
   "appearanceSystem": "跟隨系統",
   "appearanceLight": "淺色",
-  "appearanceDark": "深色"
+  "appearanceDark": "深色",
+  "travelIntro1Title": "找出當下的吉方",
+  "travelIntro1Body": "選擇想做的事\n列出現在與接下來的吉時和方位",
+  "travelIntro2Title": "往吉方走一走",
+  "travelIntro2Body": "走路、跑步 15–30 分鐘\n或在吉方靜置一杯水",
+  "travelIntro3Title": "吉時推播",
+  "travelIntro3Body": "每天提醒一次最佳吉時\n可以在下方開關",
+  "travelIntroNext": "下一頁",
+  "travelIntroDone": "開始使用",
+  "travelIntroAgain": "使用說明",
+  "travelLogTitle": "出行紀錄",
+  "travelLogEmpty": "還沒有紀錄\n完成一次出行後會出現在這裡",
+  "travelLogDeleted": "已刪除",
+  "travelLogUndo": "復原"
 }
