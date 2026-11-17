@@ -1,0 +1,16 @@
+{
+  "@@locale": "zh",
+  "appTitle": "奇門羅盤",
+  "@appTitle": {"description": "App 名稱（桌面名稱另由 scripts/patch_android.sh 設定）"},
+  "homeCurrentChart": "目前時盤",
+  "homeJu": "{dun}{ju}局・{yuan}",
+  "@homeJu": {"placeholders": {"dun": {"type": "String"}, "ju": {"type": "int"}, "yuan": {"type": "String"}}},
+  "homePillars": "{year}年 {month}月 {day}日 {hour}時",
+  "@homePillars": {"placeholders": {"year": {"type": "String"}, "month": {"type": "String"}, "day": {"type": "String"}, "hour": {"type": "String"}}},
+  "homeZhiFu": "值符：{star}",
+  "@homeZhiFu": {"placeholders": {"star": {"type": "String"}}},
+  "homeZhiShi": "值使：{door}",
+  "@homeZhiShi": {"placeholders": {"door": {"type": "String"}}},
+  "homeRefresh": "重新排盤",
+  "homeDisclaimer": "內容僅供參考"
+}

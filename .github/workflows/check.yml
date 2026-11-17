@@ -1,0 +1,56 @@
+name: Check (branches)
+
+# 分支上的快速檢查（不建置、不發 Release）：靜態檢查＋單元測試（含 golden）。
+on:
+  push:
+    branches-ignore: [main]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+  workflow_dispatch:
+
+concurrency:
+  group: check-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          # 比照謙卦：stable 3.50.0 的 release lint 在 JDK 17 崩潰，固定在 3.47.9
+          flutter-version: '3.47.9'
+          cache: true
+
+      - name: 安裝套件
+        run: flutter pub get
+
+# 錯誤轉成 annotation，Claude 可用 check-runs API 讀取摘要（容器連不到日誌下載網址）。
+      - name: 靜態檢查
+        run: |
+          set +e
+          flutter analyze --no-fatal-infos --no-fatal-warnings > /tmp/analyze.log 2>&1
+          status=$?
+          cat /tmp/analyze.log
+          if [ $status -ne 0 ]; then
+            grep -E "error •|error -" /tmp/analyze.log | head -30 | while IFS= read -r line; do echo "::error::$line"; done
+          fi
+          exit $status
+
+      - name: 單元測試（含 golden）
+        run: |
+          set +e
+          flutter test > /tmp/test.log 2>&1
+          status=$?
+          cat /tmp/test.log
+          summary=$(grep -oE '\+[0-9]+( ~[0-9]+)?( -[0-9]+)?: (All tests passed|All tests skipped|Some tests failed)' /tmp/test.log | tail -1)
+          golden=$(ls test/golden/cases/*.json 2>/dev/null | wc -l)
+          echo "::notice title=測試摘要::${summary:-（無摘要）}；golden 測試盤 ${golden} 組"
+          if [ $status -ne 0 ]; then
+            grep -E "\[E\]|Expected|Actual|Error|reason" /tmp/test.log | head -30 | while IFS= read -r line; do echo "::error::$line"; done
+          fi
+          exit $status

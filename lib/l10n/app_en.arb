@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "appTitle": "Qimen Compass",
+  "homeCurrentChart": "Current hour chart",
+  "homeJu": "{dun} · Ju {ju} · {yuan}",
+  "homePillars": "Year {year} · Month {month} · Day {day} · Hour {hour}",
+  "homeZhiFu": "Zhi Fu (Duty Star): {star}",
+  "homeZhiShi": "Zhi Shi (Duty Gate): {door}",
+  "homeRefresh": "Recalculate",
+  "homeDisclaimer": "For reference only"
+}

@@ -1,0 +1,149 @@
+name: Build Android
+
+on:
+  push:
+    branches: [main]
+    # 只改文件的 commit 不建置（HANDOFF 更新不產生 Release）
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+  workflow_dispatch:
+    inputs:
+      force_lang:
+        description: '測試用：強制介面語言（例如 en），留空為正式版'
+        required: false
+        default: ''
+
+concurrency:
+  group: android-build
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          # 比照謙卦：stable 3.50.0 的 release lint 在 JDK 17 崩潰，固定在 3.47.9
+          flutter-version: '3.47.9'
+          cache: true
+
+      # 本 repo 只放跨平台程式（lib/、pubspec.yaml）；android/ 在這裡自動產生。
+      - name: 產生 Android 平台資料夾
+        run: |
+          if [ ! -d android ]; then
+            flutter create --platforms=android --project-name=qimen_compass --org com.lclab .
+          fi
+          rm -f test/widget_test.dart
+
+      - name: 套用 App 設定（名稱、簽署）
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: bash scripts/patch_android.sh
+
+      - name: 安裝套件
+        run: flutter pub get
+
+# 錯誤轉成 annotation，Claude 可用 check-runs API 讀取摘要（容器連不到日誌下載網址）。
+      - name: 靜態檢查
+        run: |
+          set +e
+          flutter analyze --no-fatal-infos --no-fatal-warnings > /tmp/analyze.log 2>&1
+          status=$?
+          cat /tmp/analyze.log
+          if [ $status -ne 0 ]; then
+            grep -E "error •|error -" /tmp/analyze.log | head -30 | while IFS= read -r line; do echo "::error::$line"; done
+          fi
+          exit $status
+
+      - name: 單元測試（含 golden）
+        run: |
+          set +e
+          flutter test > /tmp/test.log 2>&1
+          status=$?
+          cat /tmp/test.log
+          summary=$(grep -oE '\+[0-9]+( ~[0-9]+)?( -[0-9]+)?: (All tests passed|All tests skipped|Some tests failed)' /tmp/test.log | tail -1)
+          golden=$(ls test/golden/cases/*.json 2>/dev/null | wc -l)
+          echo "::notice title=測試摘要::${summary:-（無摘要）}；golden 測試盤 ${golden} 組"
+          if [ $status -ne 0 ]; then
+            grep -E "\[E\]|Expected|Actual|Error|reason" /tmp/test.log | head -30 | while IFS= read -r line; do echo "::error::$line"; done
+          fi
+          exit $status
+
+      - name: 建置 APK（release）
+        env:
+          FORCE_LANG: ${{ inputs.force_lang }}
+        run: |
+          set +e
+          flutter build apk --release ${FORCE_LANG:+--dart-define=FORCE_LANG=$FORCE_LANG} > /tmp/build.log 2>&1
+          status=$?
+          tail -n 40 /tmp/build.log
+          if [ $status -ne 0 ]; then
+            grep -E "\.dart:[0-9]+|Error:|error:|FAILURE|What went wrong" /tmp/build.log | head -30 | while IFS= read -r line; do echo "::error::$line"; done
+          fi
+          exit $status
+
+      # 上架用 AAB；強制介面語言的測試版不建。
+      - name: 建置 AAB（release）
+        if: ${{ inputs.force_lang == '' }}
+        run: |
+          set +e
+          flutter build appbundle --release > /tmp/bundle.log 2>&1
+          status=$?
+          tail -n 20 /tmp/bundle.log
+          if [ $status -ne 0 ]; then
+            grep -E "\.dart:[0-9]+|Error:|error:|FAILURE|What went wrong" /tmp/bundle.log | head -30 | while IFS= read -r line; do echo "::error::$line"; done
+          fi
+          exit $status
+
+      - name: 大小摘要
+        if: ${{ always() }}
+        run: |
+          aab=$(( $(stat -c %s build/app/outputs/bundle/release/app-release.aab 2>/dev/null || echo 0) / 1024 ))
+          apk=$(( $(stat -c %s build/app/outputs/flutter-apk/app-release.apk 2>/dev/null || echo 0) / 1024 ))
+          echo "::notice title=大小摘要::AAB=${aab} KB APK=${apk} KB"
+
+      # ⚠️ 永久原則：APK／AAB 不可用 upload-artifact 放在公開 repo，一律發佈到私人 repo qimen-content 的 Release。
+      - name: 發佈到私人 repo 的 Release
+        if: ${{ github.ref == 'refs/heads/main' }}
+        env:
+          GH_TOKEN: ${{ secrets.BUILDS_REPO_TOKEN }}
+          FORCE_LANG: ${{ inputs.force_lang }}
+        run: |
+          set -euo pipefail
+          if [ -z "$GH_TOKEN" ]; then echo "::error::Secret BUILDS_REPO_TOKEN 沒有設定"; exit 1; fi
+          ver=$(grep '^version:' pubspec.yaml | awk '{print $2}')
+          n=${{ github.run_number }}
+          f="qimen_${ver}_run${n}${FORCE_LANG:+_ui-$FORCE_LANG}.apk"
+          cp build/app/outputs/flutter-apk/app-release.apk "$f"
+          files=("$f")
+          aab=build/app/outputs/bundle/release/app-release.aab
+          if [ -z "${FORCE_LANG}" ] && [ -f "$aab" ]; then
+            cp "$aab" "qimen_${ver}_run${n}.aab"
+            files+=("qimen_${ver}_run${n}.aab")
+          fi
+          echo "commit ${{ github.sha }}；簽署：${SIGNING}" > notes.md
+          gh release create "qimen-android-run${n}" "${files[@]}" \
+            --repo lawrence124875/qimen-content \
+            --title "奇門羅盤 ${ver}（run ${n}）${FORCE_LANG:+［測試：介面 $FORCE_LANG］}" \
+            --notes-file notes.md
+          echo "::notice title=Release::qimen-content qimen-android-run${n}"
+
+      # 依 run 編號排序（不用 createdAt，避免內容 repo 沒變時誤刪最新的；謙卦 run 6 的教訓）。
+      - name: 只保留最近 5 個建置 Release
+        if: ${{ github.ref == 'refs/heads/main' }}
+        env:
+          GH_TOKEN: ${{ secrets.BUILDS_REPO_TOKEN }}
+        run: |
+          set -euo pipefail
+          gh release list --repo lawrence124875/qimen-content --limit 100 --json tagName \
+            --jq '[.[] | select(.tagName | startswith("qimen-android-run"))] | sort_by(.tagName | ltrimstr("qimen-android-run") | tonumber) | reverse | .[5:] | .[].tagName' |
+          while IFS= read -r tag; do
+            gh release delete "$tag" --repo lawrence124875/qimen-content --yes --cleanup-tag
+          done

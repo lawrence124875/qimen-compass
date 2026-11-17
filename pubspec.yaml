@@ -1,0 +1,25 @@
+name: qimen_compass
+description: "奇門羅盤 Qimen Compass（LC Lab）"
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: '>=3.4.0 <4.0.0'
+
+# 原則：只用同時支援 Android 與 iOS 的套件（比照謙卦 iching-cards）。
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations: # 介面翻譯（ARB，比照謙卦）
+    sdk: flutter
+  intl: any # 版本由 flutter_localizations 決定
+  lunar: ^1.7.8 # 節氣與干支（6tail，純 Dart；包在 lib/engine/calendar_service.dart）
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  generate: true # 由 lib/l10n/*.arb 產生 AppLocalizations（l10n.yaml）

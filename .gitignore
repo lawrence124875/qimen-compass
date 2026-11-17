@@ -1,0 +1,25 @@
+# Flutter / Dart
+.dart_tool/
+.packages
+build/
+pubspec.lock
+.flutter-plugins
+.flutter-plugins-dependencies
+doc/api/
+.env*
+
+# ---- 奇門羅盤 ----
+# 平台資料夾由 CI 以 flutter create 產生
+/android/
+/ios/
+# 判讀文句、規則 JSON 只在私人 repo qimen-content
+/assets/content/**/*.json
+/_content/
+# 金鑰絕不 commit
+*.jks
+*.keystore
+key.properties
+google-services.json
+GoogleService-Info.plist
+# 介面翻譯由 ARB 自動產生（l10n.yaml）
+/lib/l10n/app_localizations*.dart
