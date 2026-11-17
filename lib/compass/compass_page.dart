@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
+import '../app/settings/app_settings.dart';
 import '../app/theme/app_theme.dart';
 import '../engine/engine.dart' hide Element;
 import '../l10n/l10n.dart';
@@ -43,8 +44,9 @@ class _CompassPageState extends State<CompassPage> {
   bool _showNext = false;
   Door? _target;
 
-  QimenChart _computeAt(DateTime t) =>
-      _engine.compute(t, settings: TimeSettings(utcOffset: t.toLocal().timeZoneOffset));
+  // 與首頁同一套排盤設定（定元法、子時、真太陽時）。
+  QimenChart _computeAt(DateTime t) => _engine.compute(t,
+      settings: AppSettings.instance.timeSettingsAt(t), method: AppSettings.instance.juMethod);
 
   @override
   void initState() {
