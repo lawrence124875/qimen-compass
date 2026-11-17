@@ -1,6 +1,6 @@
 """用開源 kinqimen（kentang2017，PyPI）產生參考盤原始輸出，供 golden 測試比對。
 
-只在 GitHub Actions 執行（golden_ref.yml），輸出 JSON 為 artifact，不 commit。
+只在 GitHub Actions 執行（golden_ref.yml），輸出 JSON 推到 golden-ref 分支（不進 main）。
 時間一律為北京時間（UTC+8）。
 """
 import json
