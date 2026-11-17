@@ -97,7 +97,6 @@
 - [ ] golden 測試盤：Lawrence 提供 ≥30 組參考盤（格式見 `test/golden/README.md`），放 `test/golden/cases/` 並全數通過；不符時修正引擎（特別確認：置閏法的超神門檻、子時換日、八神用白虎／玄武或勾陳／朱雀）
 - [ ] 盤面 UI（九宮格）
 - [ ] 奇門羅盤：旋轉疊圖、干擾偵測、找吉門
-- [ ] 出行訣與吉時推播
 - [ ] 封閉測試上架
 
 ## 13. 現況（2026-11-17）
@@ -108,7 +107,12 @@
 - 引擎 `lib/engine/`：
   - `CalendarService`：節氣用 `lunar`（北京時間→UTC），日柱以儒略日自算、時柱五鼠遁；時區、真太陽時（經度＋NOAA 均時差）、子時換日（`nextDay` 23 點換日預設／`lateZi` 晚子時）
   - `ShiJiaEngine`：拆補法（預設）／置閏法（超神 >9 日於芒種、大雪置閏，自 6 年前推算）；地盤、值符值使、九星（禽寄芮）、八門（值使依時干數走九宮，入中寄坤）、八神（陽順陰逆）、空亡、馬星、伏吟反吟、門迫、擊刑、入墓
+  - `ChuXingPlanner`（`chuxing.dart`，出行訣）：事類→用神門（出行＝開休生取最佳、求財生、事業開、感情休、考試景）；每時辰以中點起局，基礎 4 分，門迫／空亡／伏吟／反吟／擊刑／入墓各 −1，吉神（值符、太陰、六合、九地、九天）+1、凶神（白虎、玄武、螣蛇）−1；五級 ≥5 大吉、4 吉、3 平、2 小阻、其餘阻；`dailyBest` 取每天 7–21 點最佳且達「吉」者
   - 已有單元測試：日柱／時柱／節氣與 lunar 比對（1950–2060 抽樣）、地盤、結構不變量；`test/golden/` 架構已建、測試盤待提供
+
+- 出行訣（`lib/features/travel/`）：首頁「出行訣」→ 事類切換、現在＋接下來 11 個時辰的吉方與等級、走路／跑步（15/20/30 分＋`pedometer` 計步）、喝水法（15/30/60 分）、`flutter_compass` 箭頭指向吉方；未來時辰可「提醒我」
+- 吉時推播：`lib/services/notifications.dart`（`flutter_local_notifications`，一律 `inexactAllowWhileIdle`、不用精確鬧鐘權限）；`TravelReminders` 每次啟動與切換事類時重排 7 天、吉時前 10 分鐘通知；預設開、第一次進出行訣看到結果才請求權限，被拒時 SnackBar 開系統通知設定。通知 id：1000–1019 每日、1020–1039 單次提醒、1040 計時結束。`patch_android.sh` 加 POST_NOTIFICATIONS／RECEIVE_BOOT_COMPLETED／ACTIVITY_RECOGNITION、兩個 receiver、desugaring、ProGuard Gson
+- 出行訣待補：iOS `NSMotionUsageDescription`（計步）、推播點擊直接開出行訣頁、排盤設定（真太陽時等）接上設定頁後同步給 `TravelReminders.timeSettings`；需實機驗證 release 版通知會跳
 
 ## 14. 沿用謙卦／光穗塔羅的經驗（2026-11-17 整理；細節見 iching-content `HANDOFF.md`、`docs/REFERENCE.md`，tarot-content `HANDOFF.md`）
 ### 配色與 UI（建議，盤面 UI 時定案）
