@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
-import '../engine/engine.dart';
+import '../app/theme/app_theme.dart';
+import '../engine/engine.dart' hide Element;
 import '../l10n/l10n.dart';
 import 'compass_math.dart';
 import 'declination.dart';
@@ -172,7 +173,7 @@ class _CompassPageState extends State<CompassPage> {
       widgets.add(Text(
         l.compassAhead(QimenTerms.door(door, lang), _luckLabel(l, door.luck)),
         textAlign: TextAlign.center,
-        style: theme.textTheme.titleLarge?.copyWith(color: luckColor(door.luck, theme.brightness)),
+        style: theme.textTheme.titleLarge?.copyWith(color: context.qm.luck(door.luck)),
       ));
       widgets.add(Text('${_dirLabel(l, palaceAtBearing(heading))} ${heading.round()}°',
           textAlign: TextAlign.center, style: theme.textTheme.bodyMedium));
@@ -254,7 +255,7 @@ class _CompassPageState extends State<CompassPage> {
         ChoiceChip(
           label: Text(d.zh),
           selected: _target == d,
-          selectedColor: luckColor(d.luck, theme.brightness).withValues(alpha: 0.3),
+          selectedColor: context.qm.luck(d.luck).withValues(alpha: 0.3),
           onSelected: (on) => setState(() => _target = on ? d : null),
         ),
     ]));
@@ -265,7 +266,7 @@ class _CompassPageState extends State<CompassPage> {
         padding: const EdgeInsets.only(top: 8),
         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           if (!aligned) Icon(delta < 0 ? Icons.rotate_left : Icons.rotate_right, size: 32),
-          if (aligned) Icon(Icons.check_circle, size: 32, color: luckColor(Luck.good, theme.brightness)),
+          if (aligned) Icon(Icons.check_circle, size: 32, color: context.qm.good),
           const SizedBox(width: 8),
           Flexible(
             child: Text(
@@ -337,16 +338,6 @@ String _dirLabel(AppLocalizations l, int palace) => switch (palace) {
       _ => '',
     };
 
-/// 吉／平／凶的顏色（暫定：木綠、地黃、赭紅；盤面主題定案後改用主題色）。
-Color luckColor(Luck luck, Brightness b) {
-  final dark = b == Brightness.dark;
-  return switch (luck) {
-    Luck.good => dark ? const Color(0xFF7FC08A) : const Color(0xFF3E7D4A),
-    Luck.neutral => dark ? const Color(0xFFD8B56A) : const Color(0xFF946C2A),
-    Luck.bad => dark ? const Color(0xFFE08A72) : const Color(0xFFA4432D),
-  };
-}
-
 /// 羅盤盤面：八宮扇形依 [heading] 反向旋轉；上方固定指針。
 class _Dial extends StatelessWidget {
   const _Dial({required this.chart, required this.heading, required this.target, required this.live});
@@ -367,7 +358,7 @@ class _Dial extends StatelessWidget {
           chart: chart,
           heading: heading,
           target: target,
-          brightness: theme.brightness,
+          qm: context.qm,
           line: theme.colorScheme.outline,
           text: theme.colorScheme.onSurface,
           accent: theme.colorScheme.primary,
@@ -384,7 +375,7 @@ class _DialPainter extends CustomPainter {
     required this.chart,
     required this.heading,
     required this.target,
-    required this.brightness,
+    required this.qm,
     required this.line,
     required this.text,
     required this.accent,
@@ -395,7 +386,7 @@ class _DialPainter extends CustomPainter {
   final QimenChart chart;
   final double heading;
   final Door? target;
-  final Brightness brightness;
+  final QmPalette qm;
   final Color line, text, accent;
   final Map<int, String> dirs;
   final bool live;
@@ -419,7 +410,7 @@ class _DialPainter extends CustomPainter {
     for (final e in palaceBearing.entries) {
       final p = chart[e.key];
       final door = p.door!;
-      final color = luckColor(door.luck, brightness);
+      final color = qm.luck(door.luck);
       final start = _rad(e.value - 22.5 - 90);
       final sweep = _rad(45);
       final isTarget = door == target;
@@ -480,5 +471,5 @@ class _DialPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_DialPainter old) =>
-      old.heading != heading || old.chart != chart || old.target != target || old.brightness != brightness || old.live != live;
+      old.heading != heading || old.chart != chart || old.target != target || old.qm != qm || old.live != live;
 }

@@ -47,6 +47,11 @@ jobs:
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: bash scripts/patch_android.sh
 
+      - name: 產生字型子集
+        run: |
+          pip install --quiet fonttools
+          python3 scripts/build_fonts.py || { echo "::error::字型子集產生失敗（scripts/build_fonts.py）"; exit 1; }
+
       - name: 安裝套件
         run: flutter pub get
 

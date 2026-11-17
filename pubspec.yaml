@@ -18,6 +18,13 @@ dependencies:
   sensors_plus: ^7.1.1 # 磁力計（干擾偵測）、加速度計（平放提示）
   geomag: ^0.3.0 # WMM 2025 磁偏角（真北）
   geolocator: ^14.0.0 # 真北時取概略位置（只要求 ACCESS_COARSE_LOCATION）
+  # 出行訣與吉時推播（HANDOFF §5）
+  flutter_local_notifications: ^19.4.0 # 吉時推播（非精確排程，不用精確鬧鐘權限）
+  timezone: ^0.10.0 # zonedSchedule 需要（一律以 UTC 排程）
+  shared_preferences: ^2.3.0
+  app_settings: ^6.1.1 # 通知被拒時開系統通知設定
+  pedometer: ^4.1.1 # 走路／跑步計步
+  permission_handler: ^12.0.0 # Android 計步權限（ACTIVITY_RECOGNITION）
 
 dev_dependencies:
   flutter_test:
@@ -27,3 +34,16 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true # 由 lib/l10n/*.arb 產生 AppLocalizations（l10n.yaml）
+
+  # 字型子集由 scripts/build_fonts.py 產生（CI 自動執行；本機開發先跑一次）
+  fonts:
+    - family: QmSans
+      fonts:
+        - asset: assets/fonts/QmSans-Regular.otf
+        - asset: assets/fonts/QmSans-Bold.otf
+          weight: 700
+    - family: QmSerif
+      fonts:
+        - asset: assets/fonts/QmSerif-Regular.otf
+        - asset: assets/fonts/QmSerif-Bold.otf
+          weight: 700

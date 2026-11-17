@@ -1,0 +1,36 @@
+name: Golden reference (kinqimen)
+
+# 手動執行：用開源 kinqimen 產生參考盤（北京時間），輸出 JSON artifact（只有文字資料，不含安裝檔）。
+on:
+  workflow_dispatch:
+    inputs:
+      times:
+        description: '空白分隔的時間 YYYY-M-D-H-M（北京時間）'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  ref:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: 產生參考盤
+        env:
+          TIMES: ${{ inputs.times }}
+        run: |
+          pip install --quiet kinqimen sxtwl && pip install --quiet -U ephem
+          python tools/golden/kinqimen_ref.py ref.json "$TIMES"
+      # 容器下載不到 artifact，改推到 golden-ref 分支（只有文字資料）
+      - name: 推到 golden-ref 分支
+        run: |
+          git config user.name github-actions; git config user.email github-actions@users.noreply.github.com
+          git checkout --orphan golden-ref
+          git rm -rq --cached .
+          git add -f ref.json
+          git commit -qm "kinqimen 參考盤 run ${{ github.run_number }}"
+          git push -f origin golden-ref
