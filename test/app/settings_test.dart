@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qimen_compass/app/pages/settings_page.dart';
+import 'package:qimen_compass/app/services.dart';
 import 'package:qimen_compass/app/settings/app_settings.dart';
 import 'package:qimen_compass/app/settings/cities.dart';
 import 'package:qimen_compass/app/theme/app_theme.dart';
@@ -40,7 +41,7 @@ void main() {
       locale: const Locale('zh'),
       supportedLocales: const [Locale('zh'), Locale('en')],
       localizationsDelegates: AppLocalizations.localizationsDelegates,
-      home: const SettingsPage(),
+      home: AppServices(services: Services(), child: const SettingsPage()),
     ));
     await tester.tap(find.text('置閏法'));
     await tester.pump();

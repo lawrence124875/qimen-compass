@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart' show openAppSettings;
 
+import '../../app/services.dart';
 import '../../engine/engine.dart';
+import '../../shared/premium/usage_gate.dart';
 import '../../l10n/l10n.dart';
 import '../../services/notifications.dart';
 import 'travel_intro.dart';
@@ -96,7 +98,12 @@ class _TravelPageState extends State<TravelPage> {
     }
   }
 
-  void _start(TravelSlot s, SessionMode mode) {
+  /// 免費版每天 1 次＋看廣告 1 次（比照謙卦），今天第一次免費使用先播插頁。
+  Future<void> _start(TravelSlot s, SessionMode mode) async {
+    final pass = await ensureCanUse(context, quota: AppServices.of(context).travelQuota, type: 'travel');
+    if (pass == null || !mounted) return;
+    if (pass.interstitial) await pauseBeforeResult(context);
+    if (!mounted) return;
     Navigator.of(context).push(MaterialPageRoute(builder: (_) => TravelSessionPage(slot: s, mode: mode, event: _event)));
   }
 
