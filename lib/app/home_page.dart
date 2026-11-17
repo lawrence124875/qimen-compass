@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../engine/engine.dart' hide Element;
+import '../features/course/course_page.dart';
 import '../features/divination/divination_page.dart';
 import '../features/travel/travel_page.dart';
 import '../l10n/l10n.dart';
@@ -133,10 +134,21 @@ class _HomePageState extends State<HomePage> {
             onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const TravelPage())),
             child: Text(l.homeTravel),
           );
-          final divination = FilledButton.tonal(
-            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const DivinationPage())),
-            child: Text(l.homeDivination),
-          );
+          final divination = Row(children: [
+            Expanded(
+              child: FilledButton.tonal(
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const DivinationPage())),
+                child: Text(l.homeDivination),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: FilledButton.tonal(
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const CoursePage())),
+                child: Text(l.homeCourse),
+              ),
+            ),
+          ]);
           final footer = Text(l.homeDisclaimer,
               textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.qm.textMuted));
           final hint = Text(l.homeTapHint,

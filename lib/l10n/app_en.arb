@@ -155,5 +155,16 @@
   "divGuide3": "Readings are saved to your log\nWhen the outcome is known, mark whether it matched to build your own reference",
   "divGuidePrev": "Back",
   "divGuideNext": "Next",
-  "divGuideDone": "Start"
+  "divGuideDone": "Start",
+  "homeCourse": "Qimen Basics",
+  "courseTitle": "Qimen Basics",
+  "courseEmpty": "Lessons are not available yet",
+  "courseLesson": "Lesson {n}",
+  "courseMinutes": "{n} min",
+  "courseFree": "Free",
+  "courseLocked": "Unlock with a subscription",
+  "courseTakeaways": "Key points",
+  "courseNext": "Next lesson",
+  "courseFinish": "Done",
+  "courseProgress": "{done} of {total} read"
 }

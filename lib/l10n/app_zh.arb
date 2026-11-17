@@ -177,5 +177,19 @@
   "divGuide3": "結果會存在問事紀錄\n事情有結果後回來標記應驗與否，慢慢累積自己的參考",
   "divGuidePrev": "上一步",
   "divGuideNext": "下一步",
-  "divGuideDone": "開始"
+  "divGuideDone": "開始",
+  "homeCourse": "奇門入門課",
+  "courseTitle": "奇門入門課",
+  "courseEmpty": "課程內容尚未載入",
+  "courseLesson": "第 {n} 課",
+  "@courseLesson": {"placeholders": {"n": {"type": "int"}}},
+  "courseMinutes": "{n} 分鐘",
+  "@courseMinutes": {"placeholders": {"n": {"type": "int"}}},
+  "courseFree": "免費",
+  "courseLocked": "訂閱後解鎖",
+  "courseTakeaways": "重點",
+  "courseNext": "下一課",
+  "courseFinish": "讀完了",
+  "courseProgress": "已讀 {done}／{total}",
+  "@courseProgress": {"placeholders": {"done": {"type": "int"}, "total": {"type": "int"}}}
 }
