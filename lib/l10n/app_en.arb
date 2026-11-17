@@ -98,7 +98,6 @@
   "appearanceSystem": "Follow system",
   "appearanceLight": "Light",
   "appearanceDark": "Dark",
-<<<<<<< HEAD
   "homeShare": "Share chart",
   "guideTooltip": "How to use",
   "guideSkip": "Skip",
@@ -167,8 +166,7 @@
   "courseTakeaways": "Key points",
   "courseNext": "Next lesson",
   "courseFinish": "Done",
-  "courseProgress": "{done} of {total} read"
-=======
+  "courseProgress": "{done} of {total} read",
   "travelIntro1Title": "Find today's lucky direction",
   "travelIntro1Body": "Pick what you want to do\nSee lucky hours and directions now and ahead",
   "travelIntro2Title": "Take a walk that way",
@@ -182,5 +180,4 @@
   "travelLogEmpty": "No records yet\nFinished sessions will appear here",
   "travelLogDeleted": "Deleted",
   "travelLogUndo": "Undo"
->>>>>>> tmpwork
 }
