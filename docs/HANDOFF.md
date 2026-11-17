@@ -94,7 +94,7 @@
 - [ ] 測試盤的參考軟體由誰提供（請 Lawrence 指定）
 
 ## 12. 下一步（V1 待辦，完成一項刪一項）
-- [ ] golden 測試盤：Lawrence 提供 ≥30 組參考盤（格式見 `test/golden/README.md`），放 `test/golden/cases/` 並全數通過；不符時修正引擎（特別確認：置閏法的超神門檻、子時換日、八神用白虎／玄武或勾陳／朱雀）
+- [ ] 置閏法參考盤：kinqimen 置閏與本引擎有 12/37 組局數不同，需第二個來源（Lawrence 信任的軟體或書上盤例）判定後補 golden；拆補法 35 組已通過
 - [ ] 奇門羅盤：旋轉疊圖、干擾偵測、找吉門
 - [ ] 封閉測試上架
 
@@ -107,7 +107,7 @@
   - `CalendarService`：節氣用 `lunar`（北京時間→UTC），日柱以儒略日自算、時柱五鼠遁；時區、真太陽時（經度＋NOAA 均時差）、子時換日（`nextDay` 23 點換日預設／`lateZi` 晚子時）
   - `ShiJiaEngine`：拆補法（預設）／置閏法（超神 >9 日於芒種、大雪置閏，自 6 年前推算）；地盤、值符值使、九星（禽寄芮）、八門（值使依時干數走九宮，入中寄坤）、八神（陽順陰逆）、空亡、馬星、伏吟反吟、門迫、擊刑、入墓
   - `ChuXingPlanner`（`chuxing.dart`，出行訣）：事類→用神門（出行＝開休生取最佳、求財生、事業開、感情休、考試景）；每時辰以中點起局，基礎 4 分，門迫／空亡／伏吟／反吟／擊刑／入墓各 −1，吉神（值符、太陰、六合、九地、九天）+1、凶神（白虎、玄武、螣蛇）−1；五級 ≥5 大吉、4 吉、3 平、2 小阻、其餘阻；`dailyBest` 取每天 7–21 點最佳且達「吉」者
-  - 已有單元測試：日柱／時柱／節氣與 lunar 比對（1950–2060 抽樣）、地盤、結構不變量、九宮格 widget（深淺色、英文詳情、小尺寸）；`test/golden/` 架構已建、測試盤待提供
+  - 已有單元測試：日柱／時柱／節氣與 lunar 比對（1950–2060 抽樣）、地盤、結構不變量、九宮格 widget（深淺色、英文詳情、小尺寸）；golden 35 組（拆補，來源 kinqimen 交叉比對，說明見 `test/golden/README.md`）
 
 - 介面（`lib/app/`，羅盤等畫面請直接沿用）：
   - 主題 `theme/app_theme.dart`＋`theme/qm_palette.dart`：謙卦「天玄地黃」定案；`context.qm` 取色（深淺各一份 ThemeExtension，含吉平凶 `luck()`、五行 `element()`、圖上文字 `QmPalette.onImage`）；字型 `kSans`／`kSerif`（帶 fallback），盤面文字用 `serif()`。引擎的 `Element` 與 Flutter 撞名，UI 檔 import engine 時 `hide Element`
