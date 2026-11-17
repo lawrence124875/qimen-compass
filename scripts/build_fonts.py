@@ -2,7 +2,7 @@
 """產生字型子集（思源黑體／宋體 TC），輸出到 assets/fonts/（不進 repo，比照謙卦）。
 
 - 來源固定在 noto-cjk 的發佈 tag，確保每次建置字形一致。
-- 收字範圍：lib/ 下所有 .dart 與 .arb 用到的字＋ASCII＋常用全形標點。
+- 收字範圍：lib/ 下所有 .dart 與 .arb、assets/content/ 下所有 .json 用到的字＋ASCII＋常用全形標點。
   新增語言（日韓泰阿等）換主字型時，在 SOURCES 加一組並在 app_theme.dart 設 fallback。
 用法：pip install fonttools && python3 scripts/build_fonts.py
 """
@@ -30,7 +30,7 @@ EXTRA = ''.join(chr(c) for c in range(0x20, 0x7F)) + '、。，．：；！？�
 
 def charset() -> str:
     chars = set(EXTRA)
-    for p in list((ROOT / 'lib').rglob('*.dart')) + list((ROOT / 'lib').rglob('*.arb')):
+    for p in list((ROOT / 'lib').rglob('*.dart')) + list((ROOT / 'lib').rglob('*.arb')) + list((ROOT / 'assets' / 'content').rglob('*.json')):
         chars.update(p.read_text(encoding='utf-8'))
     return ''.join(sorted(c for c in chars if c.isprintable()))
 

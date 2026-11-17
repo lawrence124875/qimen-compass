@@ -2,6 +2,7 @@ import 'package:add_2_calendar/add_2_calendar.dart' as cal;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../app/settings/app_settings.dart';
 import '../../app/theme/app_theme.dart';
 import '../../app/widgets/chart_board.dart';
 import '../../engine/engine.dart' hide Element;
@@ -68,7 +69,7 @@ class _ZeShiPageState extends State<ZeShiPage> {
     );
   }
 
-  TimeSettings get _settings => TimeSettings(utcOffset: DateTime.now().timeZoneOffset);
+  TimeSettings get _settings => AppSettings.instance.timeSettingsAt(DateTime.now());
 
   void _run() {
     setState(() => _result = null);
@@ -78,7 +79,7 @@ class _ZeShiPageState extends State<ZeShiPage> {
       final birth = _useBirth && _birth != null
           ? BirthInfo.fromInstant(DateTime.utc(_birth!.year, _birth!.month, _birth!.day, 4), settings: const TimeSettings())
           : null;
-      final r = _planner.best(DateTime.now(), _event, days: _days, birth: birth, settings: _settings);
+      final r = _planner.best(DateTime.now(), _event, days: _days, birth: birth, settings: _settings, method: AppSettings.instance.juMethod);
       setState(() => _result = r);
     });
   }

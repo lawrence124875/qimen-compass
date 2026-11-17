@@ -7,3 +7,4 @@ export 'qimen_types.dart';
 export 'shijia_engine.dart';
 export 'chuxing.dart';
 export 'zeshi.dart';
+export 'divination.dart';

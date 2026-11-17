@@ -1,5 +1,5 @@
-import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart' show openAppSettings;
 
 import '../../engine/engine.dart';
 import '../../l10n/l10n.dart';
@@ -70,7 +70,7 @@ class _TravelPageState extends State<TravelPage> {
     await TravelReminders.reschedule();
   }
 
-  void _openSettings() => AppSettings.openAppSettings(type: AppSettingsType.notification);
+  void _openSettings() => openAppSettings();
 
   void _snack(String text, {(String, VoidCallback)? action}) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(

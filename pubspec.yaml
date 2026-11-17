@@ -18,10 +18,10 @@ dependencies:
   flutter_local_notifications: ^19.4.0 # 吉時推播（非精確排程，不用精確鬧鐘權限）
   timezone: ^0.10.0 # zonedSchedule 需要（一律以 UTC 排程）
   shared_preferences: ^2.3.0
-  app_settings: ^6.1.1 # 通知被拒時開系統通知設定
+  share_plus: ^11.0.0 # 分享盤面卡片
   flutter_compass: ^0.8.1 # 指向吉方
   pedometer: ^4.1.1 # 走路／跑步計步
-  permission_handler: ^12.0.0 # Android 計步權限（ACTIVITY_RECOGNITION）
+  permission_handler: ^12.0.0 # Android 計步權限（ACTIVITY_RECOGNITION）；通知被拒時 openAppSettings()
   add_2_calendar: ^3.0.1 # 擇時擇日：加入手機行事曆（Android 用 intent，不需行事曆權限）
 
 dev_dependencies:
@@ -32,6 +32,10 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true # 由 lib/l10n/*.arb 產生 AppLocalizations（l10n.yaml）
+
+  # App 內容（私人 repo qimen-content/app/，CI 建置時複製進來；各子資料夾放 .gitkeep）
+  assets:
+    - assets/content/divination/
 
   # 字型子集由 scripts/build_fonts.py 產生（CI 自動執行；本機開發先跑一次）
   fonts:

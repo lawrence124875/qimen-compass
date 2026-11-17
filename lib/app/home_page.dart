@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 
 import '../engine/engine.dart' hide Element;
+import '../features/divination/divination_page.dart';
 import '../features/travel/travel_page.dart';
 import '../features/zeshi/zeshi_page.dart';
 import '../l10n/l10n.dart';
 import 'pages/settings_page.dart';
+import 'settings/app_settings.dart';
 import 'theme/app_theme.dart';
 import 'widgets/chart_board.dart';
+import 'widgets/guide.dart';
+import 'widgets/share_capture.dart';
 
 /// 首頁：目前的時盤／月盤／年盤（九宮格）。可前後切換；直式上下排、橫式／平板左右排。
 class HomePage extends StatefulWidget {
@@ -18,12 +22,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   static const _engine = ShiJiaEngine();
+  final _shareKey = GlobalKey();
+  final _settings = AppSettings.instance;
   DateTime _instant = DateTime.now();
   PanUnit _unit = PanUnit.hour;
   late QimenChart _chart = _compute();
+  bool _capturing = false;
 
   QimenChart _compute() =>
-      _engine.compute(_instant, settings: TimeSettings(utcOffset: _instant.timeZoneOffset), unit: _unit);
+      _engine.compute(_instant, settings: _settings.timeSettingsAt(_instant), method: _settings.juMethod, unit: _unit);
 
   void _setUnit(PanUnit u) => setState(() {
         _unit = u;
@@ -50,6 +57,74 @@ class _HomePageState extends State<HomePage> {
         _chart = _compute();
       });
 
+  void _onSettings() => setState(() => _chart = _compute());
+
+  @override
+  void initState() {
+    super.initState();
+    _settings.addListener(_onSettings);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _showGuide();
+    });
+  }
+
+  @override
+  void dispose() {
+    _settings.removeListener(_onSettings);
+    super.dispose();
+  }
+
+  Future<void> _showGuide({bool force = false}) {
+    final l = context.l10n;
+    return showGuide(
+      context,
+      'home',
+      [
+        GuidePage(icon: Icons.grid_view_rounded, title: l.guideHome1Title, body: l.guideHome1Body),
+        GuidePage(icon: Icons.door_front_door_outlined, title: l.guideHome2Title, body: l.guideHome2Body),
+        GuidePage(icon: Icons.schedule, title: l.guideHome3Title, body: l.guideHome3Body),
+      ],
+      force: force,
+    );
+  }
+
+  Future<void> _share() async {
+    final l = context.l10n;
+    setState(() => _capturing = true);
+    await WidgetsBinding.instance.endOfFrame;
+    try {
+      await shareBoundary(_shareKey, text: '${l.appTitle} ${l.homeJu(_chart.dun.zh, _chart.ju, _chart.yuan.zh)}');
+    } finally {
+      if (mounted) setState(() => _capturing = false);
+    }
+  }
+
+  /// 分享卡片的範圍：盤頭＋九宮格（擷取時加上 App 名稱與聲明）。
+  Widget _shareBlock(BuildContext context, Widget info, Widget board) {
+    final qm = context.qm;
+    final small = Theme.of(context).textTheme.bodySmall?.copyWith(color: qm.textMuted);
+    return RepaintBoundary(
+      key: _shareKey,
+      child: Container(
+        color: qm.background,
+        padding: _capturing ? const EdgeInsets.all(12) : EdgeInsets.zero,
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          info,
+          const SizedBox(height: 10),
+          board,
+          if (_capturing) ...[
+            const SizedBox(height: 8),
+            Row(children: [
+              Text(context.l10n.appTitle, style: small?.copyWith(color: qm.primary)),
+              const Spacer(),
+              Text(context.l10n.homeDisclaimer, style: small),
+            ]),
+          ],
+        ]),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
@@ -57,6 +132,8 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text(l.appTitle),
         actions: [
+          IconButton(icon: const Icon(Icons.info_outline), tooltip: l.guideTooltip, onPressed: () => _showGuide(force: true)),
+          IconButton(icon: const Icon(Icons.ios_share), tooltip: l.homeShare, onPressed: _capturing ? null : _share),
           IconButton(
             icon: const Icon(Icons.settings_outlined),
             tooltip: l.settingsTitle,
@@ -109,16 +186,25 @@ class _HomePageState extends State<HomePage> {
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.qm.textMuted)),
                 );
+          final divination = FilledButton.tonal(
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const DivinationPage())),
+            child: Text(l.homeDivination),
+          );
           final footer = Text(l.homeDisclaimer,
+              textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.qm.textMuted));
+          final hint = Text(l.homeTapHint,
               textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.qm.textMuted));
           if (wide) {
             return Padding(
               padding: const EdgeInsets.all(16),
               child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                ConstrainedBox(constraints: BoxConstraints(maxWidth: box.maxHeight - 32), child: board),
+                SizedBox(
+                  width: (box.maxHeight * 0.85).clamp(320.0, box.maxWidth * 0.6),
+                  child: SingleChildScrollView(child: _shareBlock(context, info, board)),
+                ),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: ListView(children: [units, unitNote, const SizedBox(height: 8), info, const SizedBox(height: 12), nav, const SizedBox(height: 8), travel, const SizedBox(height: 12), footer]),
+                  child: ListView(children: [units, unitNote, const SizedBox(height: 8), hint, const SizedBox(height: 12), nav, const SizedBox(height: 8), travel, const SizedBox(height: 8), divination, const SizedBox(height: 12), footer]),
                 ),
               ]),
             );
@@ -129,16 +215,15 @@ class _HomePageState extends State<HomePage> {
               units,
               unitNote,
               const SizedBox(height: 8),
-              info,
-              const SizedBox(height: 10),
-              Center(child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 520), child: board)),
+              Center(child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 520), child: _shareBlock(context, info, board))),
               const SizedBox(height: 6),
-              Text(l.homeTapHint,
-                  textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.qm.textMuted)),
+              hint,
               const SizedBox(height: 10),
               nav,
               const SizedBox(height: 8),
               travel,
+              const SizedBox(height: 8),
+              divination,
               const SizedBox(height: 12),
               footer,
             ],

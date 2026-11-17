@@ -72,6 +72,12 @@ void main() {
       if (c.hour.stem == 0) {
         expect(c.starFuYin && c.doorFuYin, isTrue, reason: '${c.hour}');
       }
+      // 星伏吟時天盤必同地盤（kinqimen 在時干入中五時算錯天盤，本引擎以此規則把關）
+      if (c.starFuYin) {
+        for (final p in c.palaces.values.where((p) => p.palace != 5)) {
+          expect(p.heavenStems.first, p.earthStems.first, reason: '${c.hour} ${p.palace}宮');
+        }
+      }
       expect(c[c.palaceOfDoor(c.zhiShi)].door, c.zhiShi);
       // 值符神與值符星同宮
       final zf = c.palaces.values.firstWhere((p) => p.god == God.zhiFu);
