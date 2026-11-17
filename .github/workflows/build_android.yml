@@ -65,10 +65,10 @@ jobs:
       - name: 單元測試（含 golden）
         run: |
           set +e
-          flutter test > /tmp/test.log 2>&1
+          flutter test --reporter expanded > /tmp/test.log 2>&1
           status=$?
           cat /tmp/test.log
-          summary=$(grep -oE '\+[0-9]+( ~[0-9]+)?( -[0-9]+)?: (All tests passed|All tests skipped|Some tests failed)' /tmp/test.log | tail -1)
+          summary=$(sed 's/\x1b\[[0-9;]*m//g' /tmp/test.log | grep -E 'All tests|Some tests' | tail -1)
           golden=$(ls test/golden/cases/*.json 2>/dev/null | wc -l)
           echo "::notice title=測試摘要::${summary:-（無摘要）}；golden 測試盤 ${golden} 組"
           if [ $status -ne 0 ]; then

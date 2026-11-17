@@ -101,6 +101,7 @@
 - [ ] 封閉測試上架
 
 ## 13. 現況（2026-11-17）
+- 首次 CI（run 1）：analyze、測試、APK／AAB（各約 44 MB，除錯金鑰簽署）都通過；只有上傳 Release 失敗，因為 **qimen-compass 尚未設定 Secret `BUILDS_REPO_TOKEN`**（Lawrence 設定後重跑即可；上傳金鑰 `ANDROID_KEYSTORE_*` 等 Secrets 也還沒設）
 - Repo：`qimen-compass`（公開）、`qimen-content`（私人，放 build Releases，tag `qimen-android-run<N>`，只保留最近 5 個）
 - CI：`check.yml`（分支：analyze＋test）、`build_android.yml`（main：analyze＋test → APK＋AAB → 上傳 qimen-content Releases）。Flutter 固定 3.47.9（比照謙卦）；`android/` 由 CI 用 `flutter create` 產生，`scripts/patch_android.sh` 設名稱、套件 `com.lclab.qimen`、簽署（上傳金鑰 Secrets 未設時用除錯金鑰）
 - i18n：11 語清單在 `lib/l10n/app_languages.dart`，目前開放 zh-Hant、en（`app_zh.arb`、`app_en.arb`）；術語顯示（中文＋拼音＋意譯）在 `lib/l10n/terms.dart`
@@ -108,3 +109,30 @@
   - `CalendarService`：節氣用 `lunar`（北京時間→UTC），日柱以儒略日自算、時柱五鼠遁；時區、真太陽時（經度＋NOAA 均時差）、子時換日（`nextDay` 23 點換日預設／`lateZi` 晚子時）
   - `ShiJiaEngine`：拆補法（預設）／置閏法（超神 >9 日於芒種、大雪置閏，自 6 年前推算）；地盤、值符值使、九星（禽寄芮）、八門（值使依時干數走九宮，入中寄坤）、八神（陽順陰逆）、空亡、馬星、伏吟反吟、門迫、擊刑、入墓
   - 已有單元測試：日柱／時柱／節氣與 lunar 比對（1950–2060 抽樣）、地盤、結構不變量；`test/golden/` 架構已建、測試盤待提供
+
+## 14. 沿用謙卦／光穗塔羅的經驗（2026-11-17 整理；細節見 iching-content `HANDOFF.md`、`docs/REFERENCE.md`，tarot-content `HANDOFF.md`）
+### 配色與 UI（建議，盤面 UI 時定案）
+- 謙卦「天玄地黃」：深色 玄墨 #1C1B22 底、玄灰 #26242E 卡片、地黃 #C9A45C 主色、稻金 #D8B56A 點綴、山褐 #7E6A52 框線、淡金 #E8D9B0 文字；淺色 宣紙 #F3ECDD 底、地黃 #946C2A。塔羅為晨光奶油＋琥珀金＋暮光紫。奇門建議沿用謙卦色系（同屬東方、利於互相導流），八門吉／平／凶用五行色標示，深淺色模式從第一版就做（設定「外觀」跟隨系統／淺／深；顏色用 getter，不放 const；圖上文字用固定 `onImage`）。
+- 字體：思源黑體＋宋體子集（CI 用 `build_fonts.py` 從固定 commit 產生，不進 repo）；日韓泰阿換主字型，簡中用 SC 補字；`fontFamily: kSerif` 一定要帶 fallback。泰文、阿拉伯文不可加字距。
+- 置中短提示語不加標點，逗號處換行；按鈕全 App 同一樣式；首頁一屏顯示完；不鎖方向，橫放／平板由版面處理（`adaptive_layout`）。
+- 架構：功能模組化＋功能註冊表、遠端開關（Remote Config，`qm_` 前綴）、資料 JSON 帶 `schemaVersion`、core 不放介面文字（介面一律經 `terms.dart`／ARB）。
+
+### 功能與課程（可比照）
+- 免費版模式：每天免費次數＋獎勵廣告加次（載入失敗仍給該次）、每日第 1 次結果前播一則插頁（前置過場「靜心片刻…」，逾時 3 秒直接顯示）、橫幅只放首頁與列表；付費牆價格用 RevenueCat 當地價格字串、年繳 7 天試用；新功能「免費完整體驗一次，之後只看標題」。
+- 紀錄（卦記／日記）：免費 30 則、只顯示近 30 天，分類、搜尋、左滑刪除可復原、備份還原。奇門可用於「擇時紀錄＋事後應驗回饋」。
+- 課程：課程 JSON 分語言、前 1–2 課免費、課末按鈕直接開對應功能；首次進功能顯示 3 頁引導，右上 ⓘ 可重看。
+- 每日提醒：預設開、早上 8 點，一次排 7 天一次性通知；**不請求精確鬧鐘權限**（`SCHEDULE_EXACT_ALARM` 已被兩個 App 移除）；啟動時不要求通知權限，第一次看到結果才要求，被拒後開系統通知設定。吉時推播照此做。
+- App 內更新提示（Play In-App Updates）每版保留；設定頁「LC Lab 其他 App」；意見回饋表單（Firestore 集合 `qm_feedback`）；分享卡片。
+- 交叉解讀規則：五級（大吉／吉／平／小阻／阻，不用「凶」字）、應期只給區間、ar／id 不顯示應期；文案避開占卜、保證、療效字眼（商店也是）。
+
+### 已知坑
+- Flutter 固定 3.47.9（3.50.0 release lint 在 JDK 17 崩潰）；要升先加 `setup-java` 21。
+- 第三方套件 lintVital 可能在 lint 內部崩潰：只停用非 app 子專案的 lintVital（塔羅做法）。
+- 容器讀不到完整 CI 日誌：錯誤轉成 annotation，讀 check-runs annotations。
+- Release 清理依 run 編號排序，不用 createdAt。
+- 通知：`flutter_local_notifications` 要兩個 receiver＋desugaring＋ProGuard 保留 Gson TypeToken，否則 release 版排程「成功」卻不跳。
+- iOS：少 `GADApplicationIdentifier` 啟動即當、少 `CFBundleLocalizations` 一律英文。
+- 夏令時：時辰用當地標準時間（扣回夏令時）；真太陽時讓使用者選城市、不取位置權限（謙卦 `SolarTime`）。奇門羅盤若要用定位算磁偏角，需注意 2027-01-27 位置權限新規（最小範圍）。
+- 簡中不可自動繁轉簡專有名詞（例：「乾」變「干」），奇門術語（乾宮、天沖等）同理要人工對照。
+- 版本資訊：改版本號前先寫 qimen-content `store/release-notes/<版本>.txt`，Release 說明才會帶入。
+- 政策：2027-02-01 前交易者身分申報；2027-02 起記憶體品質門檻；AAB 瘦身（兩個 App 都約 110–120 MB）。
