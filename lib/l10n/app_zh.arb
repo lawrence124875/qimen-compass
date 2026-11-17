@@ -159,5 +159,8 @@
   "zeshiFlagFeiNiao": "飛鳥跌穴",
   "zeshiFlagMingJi": "年命逢吉門",
   "zeshiFlagQiuSi": "用神受制",
-  "zeshiFlagMingXiong": "年命逢空墓"
+  "zeshiFlagMingXiong": "年命逢空墓",
+  "zeshiIntro": "選一個情境，App 會掃描未來幾天每個時辰的盤，依用神門的旺衰、空亡、門迫、伏吟反吟、吉格與吉神打分，列出最好的 5 個時段。\n\n開啟「加入我的生辰」會再看你的年命與日干落在哪一宮。\n\n點卡片可以看那個時辰的盤，右側按鈕可以加入手機行事曆。",
+  "zeshiIntroOk": "知道了",
+  "zeshiIntroTip": "說明"
 }

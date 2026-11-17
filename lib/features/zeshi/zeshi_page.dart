@@ -22,6 +22,7 @@ class _ZeShiPageState extends State<ZeShiPage> {
   static const _kEvent = 'qm_zeshi_event';
   static const _kDays = 'qm_zeshi_days';
   static const _kBirth = 'qm_birth_date';
+  static const _kIntro = 'qm_zeshi_intro_seen';
 
   SharedPreferences? _prefs;
   ZeShiEvent _event = ZeShiEvent.contract;
@@ -47,6 +48,23 @@ class _ZeShiPageState extends State<ZeShiPage> {
       _useBirth = birth != null;
     });
     _run();
+    // 首次進入顯示說明（比照謙卦：右上 ⓘ 可重看）。
+    if (!(p.getBool(_kIntro) ?? false)) {
+      await p.setBool(_kIntro, true);
+      if (mounted) _showIntro();
+    }
+  }
+
+  void _showIntro() {
+    final l = context.l10n;
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l.zeshiTitle),
+        content: SingleChildScrollView(child: Text(l.zeshiIntro)),
+        actions: [TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(l.zeshiIntroOk))],
+      ),
+    );
   }
 
   TimeSettings get _settings => TimeSettings(utcOffset: DateTime.now().timeZoneOffset);
@@ -138,7 +156,9 @@ class _ZeShiPageState extends State<ZeShiPage> {
     final theme = Theme.of(context);
     final result = _result;
     return Scaffold(
-      appBar: AppBar(title: Text(l.zeshiTitle)),
+      appBar: AppBar(title: Text(l.zeshiTitle), actions: [
+        IconButton(tooltip: l.zeshiIntroTip, icon: const Icon(Icons.info_outline), onPressed: _showIntro),
+      ]),
       body: _prefs == null
           ? const Center(child: CircularProgressIndicator())
           : ListView(

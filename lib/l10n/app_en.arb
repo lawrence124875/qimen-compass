@@ -134,5 +134,8 @@
   "zeshiFlagFeiNiao": "飛鳥跌穴 Bird Enters Nest",
   "zeshiFlagMingJi": "Your stem meets a lucky gate",
   "zeshiFlagQiuSi": "Key gate restrained",
-  "zeshiFlagMingXiong": "Your stem is void or entombed"
+  "zeshiFlagMingXiong": "Your stem is void or entombed",
+  "zeshiIntro": "Pick an occasion and the app scans every two-hour period over the coming days. Each chart is scored on the key gate's strength, void, gate pressure, Fu Yin and Fan Yin, auspicious patterns and deities, and the best 5 periods are listed.\n\nTurn on \"Include my birth date\" to also weigh where your birth year and day stems fall.\n\nTap a card to see that chart, or use the button on the right to add it to your calendar.",
+  "zeshiIntroOk": "Got it",
+  "zeshiIntroTip": "About"
 }
