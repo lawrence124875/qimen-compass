@@ -10,6 +10,7 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../engine/engine.dart';
 import '../../l10n/l10n.dart';
 import '../../services/notifications.dart';
+import 'travel_log.dart';
 import 'travel_reminders.dart';
 import 'travel_text.dart';
 
@@ -18,10 +19,11 @@ enum SessionMode { walk, run, water }
 /// 出行訣計時：走路、跑步（15–30 分鐘＋計步）、喝水法（在吉方靜置水杯）。
 /// 畫面上有指向吉方的箭頭；計時結束另排一則通知，App 在背景也會提醒。
 class TravelSessionPage extends StatefulWidget {
-  const TravelSessionPage({super.key, required this.slot, required this.mode});
+  const TravelSessionPage({super.key, required this.slot, required this.mode, required this.event});
 
   final TravelSlot slot;
   final SessionMode mode;
+  final TravelEvent event;
 
   @override
   State<TravelSessionPage> createState() => _TravelSessionPageState();
@@ -107,6 +109,17 @@ class _TravelSessionPageState extends State<TravelSessionPage> {
     await _stepSub?.cancel();
     _stepSub = null;
     if (!completed) await Notifications.cancel(TravelReminders.sessionEnd);
+    if (completed) {
+      await TravelLog.add(TravelRecord(
+        at: DateTime.now(),
+        mode: widget.mode.name,
+        minutes: _minutes,
+        steps: _steps,
+        door: widget.slot.door,
+        palace: widget.slot.palace,
+        event: widget.event,
+      ));
+    }
     if (!mounted) return;
     setState(() {
       _done = true;

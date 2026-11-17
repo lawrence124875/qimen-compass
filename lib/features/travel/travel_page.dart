@@ -4,6 +4,8 @@ import 'package:permission_handler/permission_handler.dart' show openAppSettings
 import '../../engine/engine.dart';
 import '../../l10n/l10n.dart';
 import '../../services/notifications.dart';
+import 'travel_intro.dart';
+import 'travel_log.dart';
 import 'travel_reminders.dart';
 import 'travel_session_page.dart';
 import 'travel_text.dart';
@@ -39,7 +41,11 @@ class _TravelPageState extends State<TravelPage> {
       _notify = prefs.notify;
       _slots = _compute();
     });
-    // 第一次看到結果才請求通知權限（比照謙卦）。
+    // 首次進入：3 頁引導，看完結果後才請求通知權限（比照謙卦）。
+    if (!prefs.introSeen) {
+      await prefs.setIntroSeen();
+      if (mounted) await showTravelIntro(context);
+    }
     if (!prefs.askedPermission) {
       await prefs.setAskedPermission();
       await Notifications.requestPermission();
@@ -91,7 +97,7 @@ class _TravelPageState extends State<TravelPage> {
   }
 
   void _start(TravelSlot s, SessionMode mode) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => TravelSessionPage(slot: s, mode: mode)));
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => TravelSessionPage(slot: s, mode: mode, event: _event)));
   }
 
   @override
@@ -103,6 +109,17 @@ class _TravelPageState extends State<TravelPage> {
       appBar: AppBar(
         title: Text(l.travelTitle),
         actions: [
+          IconButton(
+            tooltip: l.travelLogTitle,
+            icon: const Icon(Icons.history),
+            onPressed: () =>
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) => const TravelLogPage())),
+          ),
+          IconButton(
+            tooltip: l.travelIntroAgain,
+            icon: const Icon(Icons.info_outline),
+            onPressed: () => showTravelIntro(context),
+          ),
           IconButton(
             tooltip: l.homeRefresh,
             icon: const Icon(Icons.refresh),
