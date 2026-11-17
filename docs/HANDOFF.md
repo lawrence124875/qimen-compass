@@ -98,11 +98,13 @@
 - [ ] 奇門羅盤：旋轉疊圖、干擾偵測、找吉門
 - [ ] 封閉測試上架
 
+- [ ] 11 語最終掃描（翻譯串）：ARB 新增鍵、課程與事類文句 8 語、en 課程術語改帶聲調拼音；開放語言前補日韓泰阿＋簡中字型（比照謙卦 build_fonts.py），泰、阿請母語者校閱
+
 ## 13. 現況（2026-11-17）
 - CI 已打通：run 2 通過並發佈 qimen-content Release `qimen-android-run2`（0.1.0+1，APK／AAB 各約 44 MB，除錯金鑰簽署；上傳金鑰 `ANDROID_KEYSTORE_*` 等 Secrets 尚未設）
 - Repo：`qimen-compass`（公開）、`qimen-content`（私人，放 build Releases，tag `qimen-android-run<N>`，只保留最近 5 個）
 - CI：`check.yml`（分支：analyze＋test）、`build_android.yml`（main：analyze＋test → APK＋AAB → 上傳 qimen-content Releases）。Flutter 固定 3.47.9（比照謙卦）；`android/` 由 CI 用 `flutter create` 產生，`scripts/patch_android.sh` 設名稱、套件 `com.lclab.qimen`、簽署（上傳金鑰 Secrets 未設時用除錯金鑰）
-- i18n：11 語清單在 `lib/l10n/app_languages.dart`，目前開放 zh-Hant、en（`app_zh.arb`、`app_en.arb`）；術語顯示（中文＋拼音＋意譯）在 `lib/l10n/terms.dart`
+- i18n：11 語清單在 `lib/l10n/app_languages.dart`，目前開放 zh-Hant、en。11 語 ARB 都已建（9 語＋簡中翻到原 98 鍵；之後新增的鍵待掃描）。術語唯一來源 `tools/l10n/glossary.json`（帶聲調拼音，例「生門 Shēng Mén (Gate of Life)」）→ `l10n.py gen` 產生 `lib/l10n/terms_data.dart`；工具與流程見 `tools/l10n/README.md`。其他串新增介面文字只改 zh＋en ARB，未開放語言缺鍵 CI 只警告。簡中內容用 qimen-content `tools/to_hans.py`（乾不轉干）
 - 引擎 `lib/engine/`：
   - `CalendarService`：節氣用 `lunar`（北京時間→UTC），日柱以儒略日自算、時柱五鼠遁；時區、真太陽時（經度＋NOAA 均時差）、子時換日（`nextDay` 23 點換日預設／`lateZi` 晚子時）
   - `ShiJiaEngine`：拆補法（預設）／置閏法（超神 >9 日於芒種、大雪置閏，自 6 年前推算）；地盤、值符值使、九星（禽寄芮）、八門（值使依時干數走九宮，入中寄坤）、八神（陽順陰逆）、空亡、馬星、伏吟反吟、門迫、擊刑、入墓
@@ -118,12 +120,14 @@
   - 比照謙卦尚未做（之後各功能串補）：設定頁「LC Lab 其他 App」、意見回饋（Firestore `qm_feedback`，需先接 Firebase）、App 內更新、夏令時扣回標準時
   - i18n 對照：`l10n_ext.dart`（`l.luck()`、`l.palaceDirection()`、`l.markHint()`）；術語 `QimenTerms.palace()`、`mark()`、`markShort()`
   - 字型：`scripts/build_fonts.py` 從 noto-cjk tag（Sans2.004、Serif2.003）抓 TC 黑體／宋體，依 lib/ 內 .dart、.arb 用字做子集到 `assets/fonts/`（不進 repo，兩個 workflow 都先跑）；本機開發先 `pip install fonttools && python3 scripts/build_fonts.py`
+- 課程「奇門入門課」（`lib/features/course/`）：首頁按鈕 → 目錄（已讀進度）→ 單課（段落、重點、課末按鈕開功能、下一課）。內容在 qimen-content `app/course/<contentFolder>.json`（10 課，前 2 課 `free`；格式見該資料夾 README），CI 匯入到 `assets/content/course/`；找不到該語言退回 en → zh-Hant。`action.type` 目前 `chart`／`travel`，加新功能（羅盤、擇時、宅盤、占卜）時在 `CourseActionType` 加類型並可增課。付費牆：`CourseAccess.paywallEnabled` 目前 false（全開），接 RevenueCat 後改 true 並更新 `CourseAccess.premium`。`test/course/` 檢查各語結構與 zh-Hant 一致、禁用字。已完成 zh-Hant、en；其餘 9 語由翻譯串補
 - 出行訣（`lib/features/travel/`）：首頁「出行訣」→ 事類切換、現在＋接下來 11 個時辰的吉方與等級、走路／跑步（15/20/30 分＋`pedometer` 計步）、喝水法（15/30/60 分）、`flutter_compass` 箭頭指向吉方；未來時辰可「提醒我」
 - 吉時推播：`lib/services/notifications.dart`（`flutter_local_notifications`，一律 `inexactAllowWhileIdle`、不用精確鬧鐘權限）；`TravelReminders` 每次啟動與切換事類時重排 7 天、吉時前 10 分鐘通知；預設開、第一次進出行訣看到結果才請求權限，被拒時 SnackBar 開 App 設定（permission_handler `openAppSettings`；`app_settings` 套件 compileSdk 33 會讓建置失敗，已移除）。通知 id：1000–1019 每日、1020–1039 單次提醒、1040 計時結束。`patch_android.sh` 加 POST_NOTIFICATIONS／RECEIVE_BOOT_COMPLETED／ACTIVITY_RECOGNITION、兩個 receiver、desugaring、ProGuard Gson
 - 年盤、月盤（`PanUnit.year／month`）：年家以 60 年為一元，1864 上元陰一、1924 中元陰四、1984 下元陰七（依立春換年）；月家依年支，子午卯酉陰七、寅申巳亥陰一、辰戌丑未陰四（依節換月）。一律陰遁，起局柱為年柱／月柱（`QimenChart.pivot`，旬首、空亡、馬星都依此柱）。首頁「時盤／月盤／年盤」切換，前後鈕依單位換時辰／月／年。日家盤仍排 V3
 - 擇時擇日（`lib/engine/zeshi.dart`、`lib/features/zeshi/`）：六情境（簽約開門＋六合、開幕生開＋值符、面試開門＋九天、相親休門＋六合、訂婚休生＋六合、遠行開休生＋九天）；每時辰中點起局，基礎 4 分，加分：用神門旺相（宮生門或比和）、吉神（情境喜神另記）、三奇臨宮、青龍返首、飛鳥跌穴、年命逢吉門；扣分：用神受宮剋、門迫、空亡、伏吟、反吟、擊刑、入墓、凶神、年命逢空墓。五級 ≥7 大吉、≥5 吉、≥3 平、≥1 小阻。只看 7–21 點，7／14／30 天，前 5 名同天最多 2 個；生日存 `qm_birth_date`。卡片點開看盤、`add_2_calendar` 加入行事曆（`patch_android.sh` 宣告 INSERT intent；iOS 上架前要加 `NSCalendarsUsageDescription`）。首次進入顯示說明，右上 ⓘ 重看
 - 擇時待補（比照謙卦 §14）：擇時紀錄＋事後應驗回饋、付費牆（新功能免費完整體驗一次）
-- 出行訣待補：iOS `NSMotionUsageDescription`（計步）、推播點擊直接開出行訣頁、排盤設定（真太陽時等）接上設定頁後同步給 `TravelReminders.timeSettings`；需實機驗證 release 版通知會跳
+- 比照謙卦已補：首次 3 頁引導＋右上 ⓘ 重看、點通知直接開出行訣（`Notifications.routes`＋`navigatorKey`）、出行紀錄（完成即存，JSON 帶 schemaVersion，保留 30 則，左滑刪除可復原）
+- 出行訣待補：iOS `NSMotionUsageDescription`（計步）、免費次數＋廣告（等廣告模組）、分享卡片、排盤設定（真太陽時等）接上設定頁後同步給 `TravelReminders.timeSettings`；需實機驗證 release 版通知會跳
 
 - 事類問事（V2，介面名「奇門問事」，避開「占卜」字眼）：引擎 `lib/engine/divination.dart`（`DivinationEngine`：用神落宮、月令旺相休囚死、宮生剋、空亡門迫擊刑入墓馬星伏反吟、同宮門神、日干與用神生剋 → 加總分五級；`factorWeight` 可調）；畫面 `lib/features/divination/`（事類＋流派選單、解讀頁、失物方位＋羅盤箭頭＋可能地點、官司／健康「僅供參考」聲明、問事紀錄＋應驗回饋＋左滑刪除可復原、首次 3 頁引導＋ⓘ、複製結果）。內容在 qimen-content `app/divination/`：`rules.json`（7 事類、流派 standard／liuhe／yigeng／wuzi）、`text/<語言>.json`（zh-Hant、en；缺語言退回 en）。CI 兩個 workflow 都把 qimen-content `app/` 複製到 `assets/content/`（課程共用），`build_fonts.py` 收這些 JSON 的字；`test/engine/divination_test.dart` 在 CI 檢查內容檔鍵值齊全
 - 事類問事待補：其餘 9 語文句檔（加語言時順便加 `text/<code>.json`）；分享卡片圖片；免費次數／付費牆（商業模式定案後）；用神與加權請 Lawrence 依流派校對

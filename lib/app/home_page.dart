@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../engine/engine.dart' hide Element;
+import '../features/course/course_page.dart';
 import '../features/divination/divination_page.dart';
 import '../features/travel/travel_page.dart';
 import '../features/zeshi/zeshi_page.dart';
@@ -178,6 +179,21 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ]);
+          final divination = Row(children: [
+            Expanded(
+              child: FilledButton.tonal(
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const DivinationPage())),
+                child: Text(l.homeDivination),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: FilledButton.tonal(
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const CoursePage())),
+                child: Text(l.homeCourse),
+              ),
+            ),
+          ]);
           final unitNote = _unit == PanUnit.hour
               ? const SizedBox.shrink()
               : Padding(
@@ -186,10 +202,6 @@ class _HomePageState extends State<HomePage> {
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.qm.textMuted)),
                 );
-          final divination = FilledButton.tonal(
-            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const DivinationPage())),
-            child: Text(l.homeDivination),
-          );
           final footer = Text(l.homeDisclaimer,
               textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.qm.textMuted));
           final hint = Text(l.homeTapHint,
@@ -262,12 +274,12 @@ class ChartInfo extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(l.homeTime(time, solarTermNames[c.termIndex]), style: muted),
+          Text(l.homeTime(time, QimenTerms.solarTerm(c.termIndex, lang)), style: muted),
           const SizedBox(height: 4),
           Text(l.homePillars('${c.year}', '${c.month}', '${c.day}', '${c.hour}'),
               style: serif(text.titleMedium).copyWith(color: qm.text)),
           const SizedBox(height: 4),
-          Text(l.homeJu(c.dun.zh, c.ju, c.yuan.zh), style: serif(text.titleMedium).copyWith(color: qm.primary, fontWeight: FontWeight.w700)),
+          Text(l.homeJu(QimenTerms.dun(c.dun, lang), c.ju, QimenTerms.yuan(c.yuan, lang)), style: serif(text.titleMedium).copyWith(color: qm.primary, fontWeight: FontWeight.w700)),
           const SizedBox(height: 4),
           Wrap(spacing: 16, runSpacing: 2, children: [
             Text(l.homeZhiFu(QimenTerms.star(c.zhiFu, lang)), style: muted),

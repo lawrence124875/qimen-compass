@@ -39,7 +39,7 @@ void main() {
     await tester.tap(find.text('${palaceNames[p]}$p'));
     await tester.pumpAndSettle();
     expect(find.byType(PalaceDetail), findsOneWidget);
-    expect(find.textContaining('Kai Men'), findsOneWidget);
+    expect(find.textContaining('Kāi Mén'), findsOneWidget);
     L10n.language = AppLanguages.zhHant;
   });
 

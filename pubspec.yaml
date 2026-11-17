@@ -36,6 +36,7 @@ flutter:
   # App 內容（私人 repo qimen-content/app/，CI 建置時複製進來；各子資料夾放 .gitkeep）
   assets:
     - assets/content/divination/
+    - assets/content/course/
 
   # 字型子集由 scripts/build_fonts.py 產生（CI 自動執行；本機開發先跑一次）
   fonts:
