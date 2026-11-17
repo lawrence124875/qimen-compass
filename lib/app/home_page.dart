@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../engine/engine.dart' hide Element;
+import '../features/divination/divination_page.dart';
 import '../features/travel/travel_page.dart';
 import '../l10n/l10n.dart';
 import 'pages/settings_page.dart';
@@ -132,6 +133,10 @@ class _HomePageState extends State<HomePage> {
             onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const TravelPage())),
             child: Text(l.homeTravel),
           );
+          final divination = FilledButton.tonal(
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const DivinationPage())),
+            child: Text(l.homeDivination),
+          );
           final footer = Text(l.homeDisclaimer,
               textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.qm.textMuted));
           final hint = Text(l.homeTapHint,
@@ -146,7 +151,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: ListView(children: [hint, const SizedBox(height: 12), nav, const SizedBox(height: 8), travel, const SizedBox(height: 12), footer]),
+                  child: ListView(children: [hint, const SizedBox(height: 12), nav, const SizedBox(height: 8), travel, const SizedBox(height: 8), divination, const SizedBox(height: 12), footer]),
                 ),
               ]),
             );
@@ -161,6 +166,8 @@ class _HomePageState extends State<HomePage> {
               nav,
               const SizedBox(height: 8),
               travel,
+              const SizedBox(height: 8),
+              divination,
               const SizedBox(height: 12),
               footer,
             ],
