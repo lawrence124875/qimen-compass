@@ -218,12 +218,12 @@ class ChartInfo extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(l.homeTime(time, solarTermNames[c.termIndex]), style: muted),
+          Text(l.homeTime(time, QimenTerms.solarTerm(c.termIndex, lang)), style: muted),
           const SizedBox(height: 4),
           Text(l.homePillars('${c.year}', '${c.month}', '${c.day}', '${c.hour}'),
               style: serif(text.titleMedium).copyWith(color: qm.text)),
           const SizedBox(height: 4),
-          Text(l.homeJu(c.dun.zh, c.ju, c.yuan.zh), style: serif(text.titleMedium).copyWith(color: qm.primary, fontWeight: FontWeight.w700)),
+          Text(l.homeJu(QimenTerms.dun(c.dun, lang), c.ju, QimenTerms.yuan(c.yuan, lang)), style: serif(text.titleMedium).copyWith(color: qm.primary, fontWeight: FontWeight.w700)),
           const SizedBox(height: 4),
           Wrap(spacing: 16, runSpacing: 2, children: [
             Text(l.homeZhiFu(QimenTerms.star(c.zhiFu, lang)), style: muted),
