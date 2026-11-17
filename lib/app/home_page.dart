@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../engine/engine.dart';
+import '../features/travel/travel_page.dart';
 import '../l10n/l10n.dart';
 
 /// 暫時的首頁：顯示目前時盤摘要。盤面 UI（九宮格）見 HANDOFF §12。
@@ -42,6 +43,11 @@ class _HomePageState extends State<HomePage> {
                 '${c[p].door?.zh ?? ''}  ${c[p].god?.zh ?? ''}'),
           const SizedBox(height: 16),
           FilledButton(onPressed: () => setState(() => _chart = _compute()), child: Text(l.homeRefresh)),
+          const SizedBox(height: 8),
+          FilledButton.tonal(
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const TravelPage())),
+            child: Text(l.homeTravel),
+          ),
           const SizedBox(height: 16),
           Text(l.homeDisclaimer, style: Theme.of(context).textTheme.bodySmall),
         ],

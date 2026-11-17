@@ -5,3 +5,4 @@ export 'calendar_service.dart';
 export 'ganzhi.dart';
 export 'qimen_types.dart';
 export 'shijia_engine.dart';
+export 'chuxing.dart';
