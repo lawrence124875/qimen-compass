@@ -8,7 +8,8 @@ export 'qm_palette.dart';
 /// 一律帶 fallback：子集外的字（日後新增語言）交給系統字型。
 const kSans = 'QmSans';
 const kSerif = 'QmSerif';
-const kFontFallback = <String>['Noto Sans TC', 'PingFang TC', 'Noto Sans CJK TC', 'sans-serif'];
+/// 補字順序：簡中、日、韓、泰、阿拉伯（scripts/build_fonts.py 的 FALLBACKS），最後才是系統字型。
+const kFontFallback = <String>['QmFbSC', 'QmFbJP', 'QmFbKR', 'QmFbTH', 'QmFbAR', 'Noto Sans TC', 'PingFang TC', 'Noto Sans CJK TC', 'sans-serif'];
 
 /// 盤面用的宋體樣式（宮內文字）。
 TextStyle serif(TextStyle? base) => (base ?? const TextStyle()).copyWith(fontFamily: kSerif, fontFamilyFallback: kFontFallback);

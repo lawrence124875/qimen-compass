@@ -69,3 +69,18 @@ flutter:
         - asset: assets/fonts/QmSerif-Regular.otf
         - asset: assets/fonts/QmSerif-Bold.otf
           weight: 700
+    - family: QmFbSC
+      fonts:
+        - asset: assets/fonts/QmFbSC-Regular.otf
+    - family: QmFbJP
+      fonts:
+        - asset: assets/fonts/QmFbJP-Regular.otf
+    - family: QmFbKR
+      fonts:
+        - asset: assets/fonts/QmFbKR-Regular.otf
+    - family: QmFbTH
+      fonts:
+        - asset: assets/fonts/QmFbTH-Regular.ttf
+    - family: QmFbAR
+      fonts:
+        - asset: assets/fonts/QmFbAR-Regular.ttf
