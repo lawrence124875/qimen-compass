@@ -8,6 +8,10 @@ import '../features/house/house_page.dart';
 import '../features/travel/travel_page.dart';
 import '../features/zeshi/zeshi_page.dart';
 import '../l10n/l10n.dart';
+import '../core/records/record_store.dart';
+import '../features/records/record_actions.dart';
+import '../features/records/record_list_page.dart';
+import '../shared/premium/ad_banner.dart';
 import 'pages/settings_page.dart';
 import 'settings/app_settings.dart';
 import 'theme/app_theme.dart';
@@ -128,6 +132,16 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  /// 記下這一盤（紀錄＋事後應驗回饋）。
+  Future<void> _saveRecord() {
+    final l = context.l10n;
+    final c = _chart;
+    return saveRecord(context,
+        kind: RecordKind.chart,
+        chartAt: _instant,
+        summary: '${l.homeJu(c.dun.zh, c.ju, c.yuan.zh)}${l.separator}${l.homeZhiShi(QimenTerms.door(c.zhiShi, L10n.language))}');
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
@@ -137,6 +151,12 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(icon: const Icon(Icons.info_outline), tooltip: l.guideTooltip, onPressed: () => _showGuide(force: true)),
           IconButton(icon: const Icon(Icons.ios_share), tooltip: l.homeShare, onPressed: _capturing ? null : _share),
+          IconButton(icon: const Icon(Icons.bookmark_add_outlined), tooltip: l.recordSaveTitle, onPressed: _saveRecord),
+          IconButton(
+            icon: const Icon(Icons.bookmarks_outlined),
+            tooltip: l.recordsTitle,
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const RecordListPage())),
+          ),
           IconButton(
             icon: const Icon(Icons.settings_outlined),
             tooltip: l.settingsTitle,
@@ -144,6 +164,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+      bottomNavigationBar: const AdBanner(),
       body: SafeArea(
         child: LayoutBuilder(builder: (context, box) {
           final wide = box.maxWidth > box.maxHeight && box.maxWidth >= 560;

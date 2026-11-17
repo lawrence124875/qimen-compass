@@ -1,0 +1,25 @@
+/// 遠端開關介面（REFERENCE §9 第 4 項、§18）。目前只用來開關功能入口：
+/// 參數名稱 `qm_feature_<功能 id>`（布林），App 內預設全部開啟。
+///
+/// Firebase 專案與智慧聽覺巡航共用，所以參數一律 `qm_` 開頭，
+/// 並且在 Firebase 主控台只設定在「奇門羅盤 App」條件下（見 §18）。
+abstract class RemoteFlags {
+  bool featureEnabled(String featureId);
+
+  /// 整數參數（免費版限制等，REFERENCE §23）；讀不到回傳 [fallback]。
+  int intValue(String key, int fallback);
+}
+
+/// 參數名稱（主控台建立參數時照這個寫）。
+String featureFlagKey(String featureId) => 'qm_feature_$featureId';
+
+/// 沒有 Firebase（初始化失敗、測試）時：全部照 App 內預設，也就是全部開啟。
+class DefaultRemoteFlags implements RemoteFlags {
+  const DefaultRemoteFlags();
+
+  @override
+  bool featureEnabled(String featureId) => true;
+
+  @override
+  int intValue(String key, int fallback) => fallback;
+}

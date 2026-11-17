@@ -22,13 +22,25 @@ dependencies:
   flutter_local_notifications: ^19.4.0 # 吉時推播（非精確排程，不用精確鬧鐘權限）
   timezone: ^0.10.0 # zonedSchedule 需要（一律以 UTC 排程）
   shared_preferences: ^2.3.0
-  share_plus: ^11.0.0 # 分享盤面卡片
   pedometer: ^4.1.1 # 走路／跑步計步
   permission_handler: ^12.0.0 # Android 計步權限（ACTIVITY_RECOGNITION）；通知被拒時 openAppSettings()
   # 宅盤九宮（HANDOFF §6）
   image_picker: ^1.1.2 # 拍平面圖／從相簿選（Android 用系統相片挑選器，不需儲存權限）
-  path_provider: ^2.1.4 # 平面圖照片存到 App 文件夾
   add_2_calendar: ^3.0.1 # 擇時擇日：加入手機行事曆（Android 用 intent，不需行事曆權限）
+  # 比照謙卦的共通功能（紀錄、分享、意見回饋、更新提示、免費版／廣告／訂閱）
+  path_provider: ^2.1.4 # 紀錄、額度、設定檔存檔位置
+  url_launcher: ^6.3.1 # 隱私權政策、LC Lab 其他 App、管理訂閱
+  share_plus: ^13.3.1 # 分享盤面卡片、推薦給朋友、紀錄備份匯出
+  file_picker: ^13.1.0 # 紀錄從備份還原
+  package_info_plus: ^10.2.2 # 意見回饋附上 App 版本
+  in_app_update: ">=4.2.5 <6.0.0" # Google Play 更新提示（只有 Android）
+  firebase_core: ^3.6.0 # 與謙卦共用 Firebase 專案（參數、事件、集合一律 qm_ 開頭）
+  firebase_analytics: ^11.3.3
+  firebase_crashlytics: ^4.1.3
+  cloud_firestore: ^5.4.4 # 意見回饋（集合 qm_feedback）
+  firebase_remote_config: ^5.1.3 # 遠端開關、免費版額度（qm_ 開頭）
+  google_mobile_ads: ^9.0.0
+  purchases_flutter: ">=10.0.0 <10.8.0" # RevenueCat 訂閱
 
 dev_dependencies:
   flutter_test:
@@ -41,6 +53,7 @@ flutter:
 
   # App 內容（私人 repo qimen-content/app/，CI 建置時複製進來；各子資料夾放 .gitkeep）
   assets:
+    - assets/other_apps/ # LC Lab 其他 App 圖示（設定頁）
     - assets/content/divination/
     - assets/content/course/
 
