@@ -165,6 +165,7 @@
 - 交叉解讀規則：五級（大吉／吉／平／小阻／阻，不用「凶」字）、應期只給區間、ar／id 不顯示應期；文案避開占卜、保證、療效字眼（商店也是）。
 
 ### 已知坑
+- pubspec 的資料夾 asset 不含子資料夾：assets/content 下每個子資料夾都要另列（run 11–25 問事文句沒打包；`divination_test` 已檢查）。
 - Flutter 固定 3.47.9（3.50.0 release lint 在 JDK 17 崩潰）；要升先加 `setup-java` 21。
 - 第三方套件 lintVital 可能在 lint 內部崩潰：只停用非 app 子專案的 lintVital（塔羅做法）。
 - 容器讀不到完整 CI 日誌：錯誤轉成 annotation，讀 check-runs annotations。
