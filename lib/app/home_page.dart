@@ -4,6 +4,7 @@ import '../compass/compass_page.dart';
 import '../engine/engine.dart' hide Element;
 import '../features/course/course_page.dart';
 import '../features/divination/divination_page.dart';
+import '../features/house/house_page.dart';
 import '../features/travel/travel_page.dart';
 import '../features/zeshi/zeshi_page.dart';
 import '../l10n/l10n.dart';
@@ -165,11 +166,22 @@ class _HomePageState extends State<HomePage> {
             onSelectionChanged: (v) => _setUnit(v.first),
           );
           final board = ChartBoard(chart: _chart);
-          final compass = FilledButton.icon(
-            icon: const Icon(Icons.explore),
-            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const CompassPage())),
-            label: Text(l.homeOpenCompass),
-          );
+          final compassHouse = Row(children: [
+            Expanded(
+              child: FilledButton.icon(
+                icon: const Icon(Icons.explore),
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const CompassPage())),
+                label: Text(l.homeOpenCompass),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: FilledButton.tonal(
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const HousePage())),
+                child: Text(l.homeHouse),
+              ),
+            ),
+          ]);
           final travel = Row(children: [
             Expanded(
               child: FilledButton.tonal(
@@ -222,7 +234,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: ListView(children: [units, unitNote, const SizedBox(height: 8), hint, const SizedBox(height: 12), nav, const SizedBox(height: 8), compass, const SizedBox(height: 8), travel, const SizedBox(height: 8), divination, const SizedBox(height: 12), footer]),
+                  child: ListView(children: [units, unitNote, const SizedBox(height: 8), hint, const SizedBox(height: 12), nav, const SizedBox(height: 8), compassHouse, const SizedBox(height: 8), travel, const SizedBox(height: 8), divination, const SizedBox(height: 12), footer]),
                 ),
               ]),
             );
@@ -239,7 +251,7 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 10),
               nav,
               const SizedBox(height: 8),
-              compass,
+              compassHouse,
               const SizedBox(height: 8),
               travel,
               const SizedBox(height: 8),

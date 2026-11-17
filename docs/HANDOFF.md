@@ -132,6 +132,14 @@
 - 事類問事待補：其餘 9 語文句檔（加語言時順便加 `text/<code>.json`）；分享卡片圖片；免費次數／付費牆（商業模式定案後）；用神與加權請 Lawrence 依流派校對
 
 - 奇門羅盤（V1，`lib/compass/`）：`compass_math.dart` 純計算（`palaceAtBearing`、`normalizeDeg`、`turnDelta`、`MagneticMonitor` 25–65 μT＋抖動、`GyroLock` 室內鎖定、`nextChartChange` 下個換盤時刻；宅盤串沿用，勿改簽章）；`compass_page.dart` 盤面依 heading 反向旋轉、前方門吉平凶、精度／干擾／平放提示、磁北⇄真北（`declination.dart`：geomag WMM2025＋geolocator 只要概略位置，`patch_android.sh` 加 `ACCESS_COARSE_LOCATION`）、室內鎖定（門口量北方後改陀螺儀）、找吉門箭頭、下個時辰預覽＋倒數；首次 3 頁引導＋ⓘ、記住北方基準（`qm_compass_*`）。排盤沿用 `AppSettings`。待辦：iOS 需 `NSLocationWhenInUseUsageDescription`；課程 `CourseActionType` 可加 compass
+- 宅盤九宮（`lib/features/house/`，首頁與羅盤同一列）：§6 三種輸入完成
+  - 站中心點標記（`mark_rooms_page.dart`）：用羅盤的 `GyroLock`／`MagneticMonitor`，包成 `HeadingTracker`（宅盤內共用，門口鎖定後走進屋內仍維持）
+  - 拍平面圖（`plan_corners_page.dart`→`plan_editor_page.dart`）：`image_picker`（最大 2048px）存 App 文件夾；拖四角→單應矩陣 `Transform` 透視校正，長寬比自動估計可微調；北方轉箭頭對指北針或手機量；中心預設重心可拖曳
+  - 手繪：同一編輯器，長方形拼房間（0.5 格對齊），中心＝房間聯集重心；含中心點的房間算中五宮，中宮半徑＝等面積正方形邊長 1/6
+  - 九宮採 45° 扇區（中心＋正北），宅盤一律磁北；坐向四種定法＋量向；入宅時間選填
+  - 疊盤：現在／指定時間時盤、年盤、月盤、宅命盤（有時間＝時盤、只填日期＝日盤、未填＝年盤）；引擎不支援的單位（目前日盤）捕捉 `UnsupportedError` 顯示「製作中」
+  - 資料：SharedPreferences `qm_house`（帶 schemaVersion，目前一間）；引導用共用 `showGuide`（id `house`）；排盤沿用 App 排盤設定
+  - 待補：其餘 9 語的 house* 鍵；iOS `NSCameraUsageDescription`／`NSPhotoLibraryUsageDescription`；宅盤判讀文句（qimen-content）；多間房子；分享卡片；付費牆（§10 宅盤屬訂閱）；實機驗證陀螺儀鎖定漂移
 
 ## 14. 沿用謙卦／光穗塔羅的經驗（2026-11-17 整理；細節見 iching-content `HANDOFF.md`、`docs/REFERENCE.md`，tarot-content `HANDOFF.md`）
 ### 配色與 UI（配色已定案，見 §13 介面）

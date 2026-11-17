@@ -25,6 +25,9 @@ dependencies:
   share_plus: ^11.0.0 # 分享盤面卡片
   pedometer: ^4.1.1 # 走路／跑步計步
   permission_handler: ^12.0.0 # Android 計步權限（ACTIVITY_RECOGNITION）；通知被拒時 openAppSettings()
+  # 宅盤九宮（HANDOFF §6）
+  image_picker: ^1.1.2 # 拍平面圖／從相簿選（Android 用系統相片挑選器，不需儲存權限）
+  path_provider: ^2.1.4 # 平面圖照片存到 App 文件夾
   add_2_calendar: ^3.0.1 # 擇時擇日：加入手機行事曆（Android 用 intent，不需行事曆權限）
 
 dev_dependencies:
