@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../compass/compass_page.dart';
 import '../engine/engine.dart' hide Element;
+import '../features/house/house_page.dart';
 import '../features/travel/travel_page.dart';
 import '../l10n/l10n.dart';
 import 'pages/settings_page.dart';
@@ -61,6 +62,10 @@ class _HomePageState extends State<HomePage> {
             onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const TravelPage())),
             child: Text(l.homeTravel),
           );
+          final house = FilledButton.tonal(
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const HousePage())),
+            child: Text(l.homeHouse),
+          );
           final footer = Text(l.homeDisclaimer,
               textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.qm.textMuted));
           if (wide) {
@@ -70,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                 ConstrainedBox(constraints: BoxConstraints(maxWidth: box.maxHeight - 32), child: board),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: ListView(children: [info, const SizedBox(height: 12), nav, const SizedBox(height: 8), compass, const SizedBox(height: 8), travel, const SizedBox(height: 12), footer]),
+                  child: ListView(children: [info, const SizedBox(height: 12), nav, const SizedBox(height: 8), compass, const SizedBox(height: 8), travel, const SizedBox(height: 8), house, const SizedBox(height: 12), footer]),
                 ),
               ]),
             );
@@ -90,6 +95,8 @@ class _HomePageState extends State<HomePage> {
               compass,
               const SizedBox(height: 8),
               travel,
+              const SizedBox(height: 8),
+              house,
               const SizedBox(height: 12),
               footer,
             ],

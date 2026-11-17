@@ -25,6 +25,9 @@ dependencies:
   app_settings: ^6.1.1 # 通知被拒時開系統通知設定
   pedometer: ^4.1.1 # 走路／跑步計步
   permission_handler: ^12.0.0 # Android 計步權限（ACTIVITY_RECOGNITION）
+  # 宅盤九宮（HANDOFF §6）
+  image_picker: ^1.1.2 # 拍平面圖／從相簿選（Android 用系統相片挑選器，不需儲存權限）
+  path_provider: ^2.1.4 # 平面圖照片存到 App 文件夾
 
 dev_dependencies:
   flutter_test:
