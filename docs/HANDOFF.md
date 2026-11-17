@@ -97,13 +97,13 @@
 - [ ] 置閏法參考盤：kinqimen 置閏與本引擎有 12/37 組局數不同，需第二個來源（Lawrence 信任的軟體或書上盤例）判定後補 golden；拆補法 35 組已通過
 - [ ] 封閉測試上架
 
-- [ ] 11 語最終掃描（翻譯串）：ARB 新增鍵、課程與事類文句 8 語、en 課程術語改帶聲調拼音；開放語言前補日韓泰阿＋簡中字型（比照謙卦 build_fonts.py），泰、阿請母語者校閱
+- [ ] 翻譯補掃：「共通功能」串完成後跑 `tools/l10n/l10n.py status` 補新鍵（apply → hans → missing／fill → check --strict），qimen-content 改版後重跑 `tools/to_hans.py`；泰、阿上架前請母語者校閱
 
 ## 13. 現況（2026-11-17）
 - CI 已打通：run 2 通過並發佈 qimen-content Release `qimen-android-run2`（0.1.0+1，APK／AAB 各約 44 MB，除錯金鑰簽署；上傳金鑰 `ANDROID_KEYSTORE_*` 等 Secrets 尚未設）
 - Repo：`qimen-compass`（公開）、`qimen-content`（私人，放 build Releases，tag `qimen-android-run<N>`，只保留最近 5 個）
 - CI：`check.yml`（分支：analyze＋test）、`build_android.yml`（main：analyze＋test → APK＋AAB → 上傳 qimen-content Releases）。Flutter 固定 3.47.9（比照謙卦）；`android/` 由 CI 用 `flutter create` 產生，`scripts/patch_android.sh` 設名稱、套件 `com.lclab.qimen`、簽署（上傳金鑰 Secrets 未設時用除錯金鑰）
-- i18n：11 語清單在 `lib/l10n/app_languages.dart`，目前開放 zh-Hant、en。11 語 ARB 都已建（9 語＋簡中翻到原 98 鍵；之後新增的鍵待掃描）。術語唯一來源 `tools/l10n/glossary.json`（帶聲調拼音，例「生門 Shēng Mén (Gate of Life)」）→ `l10n.py gen` 產生 `lib/l10n/terms_data.dart`；工具與流程見 `tools/l10n/README.md`。其他串新增介面文字只改 zh＋en ARB，未開放語言缺鍵 CI 只警告。簡中內容用 qimen-content `tools/to_hans.py`（乾不轉干）
+- i18n：**11 語全部開放**（2026-11-17）：ARB 474 鍵齊全，課程、問事文句 11 語（qimen-content `app/course`、`app/divination/text`）。術語唯一來源 `tools/l10n/glossary.json`（帶聲調拼音，例「生門 Shēng Mén (Gate of Life)」；日韓越意譯用各自讀音）→ `l10n.py gen` 產生 `lib/l10n/terms_data.dart`；流程見 `tools/l10n/README.md`。已開放語言缺鍵測試會失敗，新增介面文字的串要通知翻譯補掃（或自行用 l10n.py 補）。簡中內容用 qimen-content `tools/to_hans.py`（乾不轉干）。字型：TC 主字型＋補字 QmFbSC／JP／KR／TH／AR（`build_fonts.py` FALLBACKS），日文漢字暫用 TC 字形
 - 引擎 `lib/engine/`：
   - `CalendarService`：節氣用 `lunar`（北京時間→UTC），日柱以儒略日自算、時柱五鼠遁；時區、真太陽時（經度＋NOAA 均時差）、子時換日（`nextDay` 23 點換日預設／`lateZi` 晚子時）
   - `ShiJiaEngine`：拆補法（預設）／置閏法（超神 >9 日於芒種、大雪置閏，自 6 年前推算）；地盤、值符值使、九星（禽寄芮）、八門（值使依時干數走九宮，入中寄坤）、八神（陽順陰逆）、空亡、馬星、伏吟反吟、門迫、擊刑、入墓
