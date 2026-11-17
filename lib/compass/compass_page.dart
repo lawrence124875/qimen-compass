@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
+import '../app/settings/app_settings.dart';
 import '../app/theme/app_theme.dart';
 import '../engine/engine.dart' hide Element;
 import '../l10n/l10n.dart';
+import 'compass_intro.dart';
 import 'compass_math.dart';
 import 'declination.dart';
 
@@ -42,13 +44,15 @@ class _CompassPageState extends State<CompassPage> {
   bool _showNext = false;
   Door? _target;
 
-  QimenChart _computeAt(DateTime t) =>
-      _engine.compute(t, settings: TimeSettings(utcOffset: t.toLocal().timeZoneOffset));
+  // 與首頁同一套排盤設定（定元法、子時、真太陽時）。
+  QimenChart _computeAt(DateTime t) => _engine.compute(t,
+      settings: AppSettings.instance.timeSettingsAt(t), method: AppSettings.instance.juMethod);
 
   @override
   void initState() {
     super.initState();
     _refreshCharts();
+    _loadPrefs();
     _ticker = Timer.periodic(const Duration(seconds: 1), (_) {
       if (!mounted) return;
       final at = _nextAt;
@@ -81,6 +85,19 @@ class _CompassPageState extends State<CompassPage> {
         .listen((e) => _tilt = tiltDegrees(e.x, e.y, e.z), onError: (_) {}));
   }
 
+  Future<void> _loadPrefs() async {
+    final p = await CompassPrefs.load();
+    if (!mounted) return;
+    setState(() {
+      _declination = p.declination;
+      _trueNorth = p.trueNorth && p.declination != null;
+    });
+    if (!p.introSeen) {
+      await CompassPrefs.markIntroSeen();
+      if (mounted) await showCompassIntro(context);
+    }
+  }
+
   void _refreshCharts() {
     final now = DateTime.now();
     _chart = _computeAt(now);
@@ -109,6 +126,7 @@ class _CompassPageState extends State<CompassPage> {
   Future<void> _setTrueNorth(bool on) async {
     if (!on || _declination != null) {
       setState(() => _trueNorth = on);
+      CompassPrefs.saveNorth(on, null);
       return;
     }
     setState(() => _locating = true);
@@ -119,6 +137,7 @@ class _CompassPageState extends State<CompassPage> {
       _declination = r.degrees;
       _trueNorth = r.degrees != null;
     });
+    CompassPrefs.saveNorth(_trueNorth, r.degrees);
     if (r.error != null) {
       final l = context.l10n;
       final msg = switch (r.error!) {
@@ -136,7 +155,13 @@ class _CompassPageState extends State<CompassPage> {
     final heading = _heading;
     final chart = _shown;
     return Scaffold(
-      appBar: AppBar(title: Text(l.compassTitle)),
+      appBar: AppBar(title: Text(l.compassTitle), actions: [
+        IconButton(
+          icon: const Icon(Icons.info_outline),
+          tooltip: l.compassIntroInfo,
+          onPressed: () => showCompassIntro(context),
+        ),
+      ]),
       body: SafeArea(
         child: LayoutBuilder(builder: (context, box) {
           final wide = box.maxWidth > box.maxHeight && box.maxWidth > 600;

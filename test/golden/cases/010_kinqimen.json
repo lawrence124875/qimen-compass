@@ -1,0 +1,79 @@
+{
+ "name": "2024-08-07 08:39 北京時間",
+ "source": "kinqimen 0.0.6.6（開源 PyPI，拆補法）；交叉比對通過",
+ "input": {
+  "datetime": "2024-08-07T08:39",
+  "utcOffset": "+08:00",
+  "method": "chaiBu",
+  "ziHour": "nextDay"
+ },
+ "expected": {
+  "dun": "yin",
+  "ju": 5,
+  "yuan": "中元",
+  "zhiFu": "天英",
+  "zhiShi": "景門",
+  "palaces": {
+   "1": {
+    "earth": "壬",
+    "heaven": "丙",
+    "star": "天柱",
+    "door": "驚門",
+    "god": "九地",
+    "kongWang": true
+   },
+   "2": {
+    "earth": "辛戊",
+    "heaven": "己",
+    "star": "天輔",
+    "door": "杜門",
+    "god": "螣蛇"
+   },
+   "3": {
+    "earth": "庚",
+    "heaven": "壬",
+    "star": "天蓬",
+    "door": "休門",
+    "god": "白虎"
+   },
+   "4": {
+    "earth": "己",
+    "heaven": "丁",
+    "star": "天任",
+    "door": "生門",
+    "god": "六合"
+   },
+   "6": {
+    "earth": "乙",
+    "heaven": "辛戊",
+    "star": "天芮/天禽",
+    "door": "死門",
+    "god": "九天"
+   },
+   "7": {
+    "earth": "丙",
+    "heaven": "癸",
+    "star": "天英",
+    "door": "景門",
+    "god": "值符"
+   },
+   "8": {
+    "earth": "丁",
+    "heaven": "乙",
+    "star": "天心",
+    "door": "開門",
+    "god": "玄武",
+    "kongWang": true,
+    "horse": true
+   },
+   "9": {
+    "earth": "癸",
+    "heaven": "庚",
+    "star": "天沖",
+    "door": "傷門",
+    "god": "太陰"
+   }
+  },
+  "pillars": "甲辰 壬申 癸卯 丙辰"
+ }
+}

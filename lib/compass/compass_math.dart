@@ -5,10 +5,7 @@ import 'dart:math' as math;
 
 import '../engine/engine.dart';
 
-/// 後天八卦各宮中心方位角（度，正北 0、順時針）：坎北、艮東北、震東、巽東南、離南、坤西南、兌西、乾西北。
-const Map<int, double> palaceBearing = {
-  1: 0, 8: 45, 3: 90, 4: 135, 9: 180, 2: 225, 7: 270, 6: 315, //
-};
+// 各宮中心方位角 palaceBearing 定義在 engine/chuxing.dart（經 engine.dart 匯出）。
 
 /// 角度正規化到 [0, 360)。
 double normalizeDeg(double d) {

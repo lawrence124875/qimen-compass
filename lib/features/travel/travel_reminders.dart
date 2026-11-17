@@ -1,5 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../app/settings/app_settings.dart';
 import '../../engine/engine.dart';
 import '../../l10n/l10n.dart';
 import '../../services/notifications.dart';
@@ -36,8 +37,8 @@ class TravelReminders {
   static const lead = Duration(minutes: 10);
   static const channelId = 'qm_lucky_hours';
 
-  /// 目前時區的排盤設定（時區取裝置；真太陽時等設定待設定頁）。
-  static TimeSettings get timeSettings => TimeSettings(utcOffset: DateTime.now().timeZoneOffset);
+  /// 排盤設定（時區取裝置；子時換日、真太陽時取設定頁）。
+  static TimeSettings get timeSettings => AppSettings.instance.timeSettingsAt(DateTime.now());
 
   static Future<void> reschedule() async {
     final prefs = await TravelPrefs.load();
