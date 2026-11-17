@@ -101,7 +101,7 @@
 - [ ] 封閉測試上架
 
 ## 13. 現況（2026-11-17）
-- 首次 CI（run 1）：analyze、測試、APK／AAB（各約 44 MB，除錯金鑰簽署）都通過；只有上傳 Release 失敗，因為 **qimen-compass 尚未設定 Secret `BUILDS_REPO_TOKEN`**（Lawrence 設定後重跑即可；上傳金鑰 `ANDROID_KEYSTORE_*` 等 Secrets 也還沒設）
+- CI 已打通：run 2 通過並發佈 qimen-content Release `qimen-android-run2`（0.1.0+1，APK／AAB 各約 44 MB，除錯金鑰簽署；上傳金鑰 `ANDROID_KEYSTORE_*` 等 Secrets 尚未設）
 - Repo：`qimen-compass`（公開）、`qimen-content`（私人，放 build Releases，tag `qimen-android-run<N>`，只保留最近 5 個）
 - CI：`check.yml`（分支：analyze＋test）、`build_android.yml`（main：analyze＋test → APK＋AAB → 上傳 qimen-content Releases）。Flutter 固定 3.47.9（比照謙卦）；`android/` 由 CI 用 `flutter create` 產生，`scripts/patch_android.sh` 設名稱、套件 `com.lclab.qimen`、簽署（上傳金鑰 Secrets 未設時用除錯金鑰）
 - i18n：11 語清單在 `lib/l10n/app_languages.dart`，目前開放 zh-Hant、en（`app_zh.arb`、`app_en.arb`）；術語顯示（中文＋拼音＋意譯）在 `lib/l10n/terms.dart`
