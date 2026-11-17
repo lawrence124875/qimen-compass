@@ -15,12 +15,12 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.11'
       - name: 產生參考盤
         env:
           TIMES: ${{ inputs.times }}
         run: |
-          pip install --quiet kinqimen sxtwl ephem
+          pip install --quiet kinqimen sxtwl && pip install --quiet -U ephem
           python tools/golden/kinqimen_ref.py ref.json "$TIMES"
       - uses: actions/upload-artifact@v4
         with:
