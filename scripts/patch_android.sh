@@ -49,6 +49,23 @@ if "isCoreLibraryDesugaringEnabled" not in g:
 PYEOF
 grep -q "ScheduledNotificationBootReceiver" "$MANIFEST" && grep -q "isCoreLibraryDesugaringEnabled" "$GRADLE" \
   && echo "通知設定：receiver＋desugaring 已加入" || { echo "::error::通知設定失敗"; exit 1; }
+# 擇時擇日「加入行事曆」（add_2_calendar）：Android 11+ 需宣告可查詢新增行程的 intent
+python3 - "$MANIFEST" << 'PYEOF'
+import sys
+p = sys.argv[1]
+m = open(p, encoding="utf-8").read()
+intent = ('        <intent>\n'
+          '            <action android:name="android.intent.action.INSERT" />\n'
+          '            <data android:mimeType="vnd.android.cursor.item/event" />\n'
+          '        </intent>\n')
+if "vnd.android.cursor.item/event" not in m:
+    if "<queries>" in m:
+        m = m.replace("<queries>\n", "<queries>\n" + intent, 1)
+    else:
+        m = m.replace("</manifest>", "    <queries>\n" + intent + "    </queries>\n</manifest>", 1)
+    open(p, "w", encoding="utf-8").write(m)
+PYEOF
+grep -q "vnd.android.cursor.item/event" "$MANIFEST" && echo "行事曆 intent 已宣告" || { echo "::error::行事曆 intent 宣告失敗"; exit 1; }
 cat >> android/app/proguard-rules.pro << 'PRO'
 # flutter_local_notifications 以 Gson 存排程，release 混淆後需保留 TypeToken
 -keep class com.google.gson.reflect.TypeToken { *; }
