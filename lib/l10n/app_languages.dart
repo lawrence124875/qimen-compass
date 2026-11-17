@@ -31,19 +31,19 @@ class AppLanguages {
       code: 'zh-Hant', locale: Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant'), contentFolder: 'zh-Hant', ready: true);
   static const en = AppLanguage(code: 'en', locale: Locale('en'), contentFolder: 'en', ready: true);
   static const zhHans = AppLanguage(
-      code: 'zh-Hans', locale: Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'), contentFolder: 'zh-Hans', ready: false);
-  static const ja = AppLanguage(code: 'ja', locale: Locale('ja'), contentFolder: 'ja', ready: false);
-  static const ko = AppLanguage(code: 'ko', locale: Locale('ko'), contentFolder: 'ko', ready: false);
-  static const vi = AppLanguage(code: 'vi', locale: Locale('vi'), contentFolder: 'vi', ready: false);
-  static const es = AppLanguage(code: 'es', locale: Locale('es'), contentFolder: 'es', ready: false);
+      code: 'zh-Hans', locale: Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'), contentFolder: 'zh-Hans', ready: true);
+  static const ja = AppLanguage(code: 'ja', locale: Locale('ja'), contentFolder: 'ja', ready: true);
+  static const ko = AppLanguage(code: 'ko', locale: Locale('ko'), contentFolder: 'ko', ready: true);
+  static const vi = AppLanguage(code: 'vi', locale: Locale('vi'), contentFolder: 'vi', ready: true);
+  static const es = AppLanguage(code: 'es', locale: Locale('es'), contentFolder: 'es', ready: true);
 
   /// 葡萄牙文：寫巴西葡萄牙文，任何葡萄牙文地區都用這一份。
-  static const pt = AppLanguage(code: 'pt-BR', locale: Locale('pt'), contentFolder: 'pt-BR', ready: false);
-  static const id = AppLanguage(code: 'id', locale: Locale('id'), contentFolder: 'id', ready: false);
-  static const th = AppLanguage(code: 'th', locale: Locale('th'), contentFolder: 'th', ready: false);
+  static const pt = AppLanguage(code: 'pt-BR', locale: Locale('pt'), contentFolder: 'pt-BR', ready: true);
+  static const id = AppLanguage(code: 'id', locale: Locale('id'), contentFolder: 'id', ready: true);
+  static const th = AppLanguage(code: 'th', locale: Locale('th'), contentFolder: 'th', ready: true);
 
   /// 阿拉伯文：由右至左（MaterialApp 依 locale 自動 RTL）。
-  static const ar = AppLanguage(code: 'ar', locale: Locale('ar'), contentFolder: 'ar', ready: false);
+  static const ar = AppLanguage(code: 'ar', locale: Locale('ar'), contentFolder: 'ar', ready: true);
 
   static const all = [zhHant, en, zhHans, ja, ko, vi, es, pt, id, th, ar];
 
