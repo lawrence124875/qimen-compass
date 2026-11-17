@@ -18,6 +18,7 @@ dependencies:
   flutter_local_notifications: ^19.4.0 # 吉時推播（非精確排程，不用精確鬧鐘權限）
   timezone: ^0.10.0 # zonedSchedule 需要（一律以 UTC 排程）
   shared_preferences: ^2.3.0
+  share_plus: ^11.0.0 # 分享盤面卡片
   flutter_compass: ^0.8.1 # 指向吉方
   pedometer: ^4.1.1 # 走路／跑步計步
   permission_handler: ^12.0.0 # Android 計步權限（ACTIVITY_RECOGNITION）；通知被拒時 openAppSettings()

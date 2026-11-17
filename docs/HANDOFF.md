@@ -112,7 +112,10 @@
 - 介面（`lib/app/`，羅盤等畫面請直接沿用）：
   - 主題 `theme/app_theme.dart`＋`theme/qm_palette.dart`：謙卦「天玄地黃」定案；`context.qm` 取色（深淺各一份 ThemeExtension，含吉平凶 `luck()`、五行 `element()`、圖上文字 `QmPalette.onImage`）；字型 `kSans`／`kSerif`（帶 fallback），盤面文字用 `serif()`。引擎的 `Element` 與 Flutter 撞名，UI 檔 import engine 時 `hide Element`
   - 盤面 `widgets/chart_board.dart`：`ChartBoard(chart, highlight: {宮}, onTapPalace:)`（上南下北）、`PalaceCell`、`showPalaceSheet`／`PalaceDetail`、`marksOf`、`kBoardLayout`
-  - 首頁 `home_page.dart`：`ChartInfo` 盤頭＋九宮格＋前後時辰切換＋出行訣入口，橫式左右排；設定頁「外觀」跟隨系統／淺／深（`settings/app_settings.dart`）
+  - 首頁 `home_page.dart`：`ChartInfo` 盤頭＋九宮格＋前後時辰切換＋出行訣入口，橫式左右排；右上 ⓘ 重看引導、分享盤面卡片（`widgets/share_capture.dart`，share_plus，擷取時加 App 名與聲明）
+  - 設定 `settings/app_settings.dart`（`AppSettings.instance`）：外觀；排盤：定元方法、子時換日、真太陽時（選城市 `settings/cities.dart`，不取位置權限）。排盤一律用 `timeSettingsAt(instant)`＋`juMethod`；`TravelReminders.timeSettings` 已接上（出行訣 planner 尚未吃 `juMethod`）
+  - 首次引導 `widgets/guide.dart`：`showGuide(context, id, [GuidePage×3], force:)`，看過記在 `qm_guide_seen_<id>`；新功能照此加
+  - 比照謙卦尚未做（之後各功能串補）：設定頁「LC Lab 其他 App」、意見回饋（Firestore `qm_feedback`，需先接 Firebase）、App 內更新、夏令時扣回標準時
   - i18n 對照：`l10n_ext.dart`（`l.luck()`、`l.palaceDirection()`、`l.markHint()`）；術語 `QimenTerms.palace()`、`mark()`、`markShort()`
   - 字型：`scripts/build_fonts.py` 從 noto-cjk tag（Sans2.004、Serif2.003）抓 TC 黑體／宋體，依 lib/ 內 .dart、.arb 用字做子集到 `assets/fonts/`（不進 repo，兩個 workflow 都先跑）；本機開發先 `pip install fonttools && python3 scripts/build_fonts.py`
 - 出行訣（`lib/features/travel/`）：首頁「出行訣」→ 事類切換、現在＋接下來 11 個時辰的吉方與等級、走路／跑步（15/20/30 分＋`pedometer` 計步）、喝水法（15/30/60 分）、`flutter_compass` 箭頭指向吉方；未來時辰可「提醒我」
