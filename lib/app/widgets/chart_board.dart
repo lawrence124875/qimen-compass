@@ -219,6 +219,7 @@ class PalaceDetail extends StatelessWidget {
     final pc = chart[palace];
     final door = pc.door;
     final text = Theme.of(context).textTheme;
+    final dir = l.palaceDirection(palace);
 
     Widget row(String label, Widget value) => Padding(
           padding: const EdgeInsets.symmetric(vertical: 6),
@@ -233,7 +234,7 @@ class PalaceDetail extends StatelessWidget {
       child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
-          Text('${QimenTerms.palace(palace, lang)} · ${l.palaceDirection(palace)}',
+          Text('${QimenTerms.palace(palace, lang)} · ${dir[0].toUpperCase()}${dir.substring(1)}',
               style: serif(text.titleLarge).copyWith(color: qm.primary)),
           const SizedBox(height: 8),
           if (pc.god != null) row(l.labelGod, v(QimenTerms.god(pc.god!, lang))),

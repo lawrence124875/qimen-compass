@@ -16,6 +16,42 @@ grep -q "applicationId = \"${APP_ID}\"" "$GRADLE" && echo "套件名稱：${APP_
 # 不鎖方向、不限制調整大小（Play Console 對大螢幕的要求）
 sed -i -E 's/[[:space:]]*android:(screenOrientation|resizeableActivity)="[^"]*"//g' "$MANIFEST"
 
+# 通知與計步（出行訣、吉時推播；比照謙卦的坑：兩個 receiver＋desugaring＋ProGuard 保留 Gson TypeToken，
+# 否則 release 版排程「成功」卻不跳）。不加 SCHEDULE_EXACT_ALARM。
+python3 - "$MANIFEST" "$GRADLE" << 'PYEOF'
+import sys
+manifest, gradle = sys.argv[1], sys.argv[2]
+m = open(manifest, encoding="utf-8").read()
+if "ScheduledNotificationReceiver" not in m:
+    perms = "".join(f'    <uses-permission android:name="android.permission.{p}"/>\n' for p in
+                    ["POST_NOTIFICATIONS", "RECEIVE_BOOT_COMPLETED", "ACTIVITY_RECOGNITION"])
+    m = m.replace("    <application", perms + "    <application", 1)
+    m = m.replace("    </application>", '''        <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
+        <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
+            </intent-filter>
+        </receiver>
+    </application>''', 1)
+    open(manifest, "w", encoding="utf-8").write(m)
+g = open(gradle, encoding="utf-8").read()
+if "isCoreLibraryDesugaringEnabled" not in g:
+    g = g.replace("compileOptions {", "compileOptions {\n        isCoreLibraryDesugaringEnabled = true", 1)
+    g += '\ndependencies {\n    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")\n}\n'
+    open(gradle, "w", encoding="utf-8").write(g)
+PYEOF
+grep -q "ScheduledNotificationBootReceiver" "$MANIFEST" && grep -q "isCoreLibraryDesugaringEnabled" "$GRADLE" \
+  && echo "通知設定：receiver＋desugaring 已加入" || { echo "::error::通知設定失敗"; exit 1; }
+cat >> android/app/proguard-rules.pro << 'PRO'
+# flutter_local_notifications 以 Gson 存排程，release 混淆後需保留 TypeToken
+-keep class com.google.gson.reflect.TypeToken { *; }
+-keep class * extends com.google.gson.reflect.TypeToken
+-keepattributes Signature
+PRO
+
 if [ -z "${ANDROID_KEYSTORE_BASE64:-}" ]; then
   echo "::warning::尚未設定上傳金鑰 Secrets，本次以除錯金鑰簽署（安裝新版前須先移除舊版）"
   echo "SIGNING=除錯金鑰" >> "$GITHUB_ENV"

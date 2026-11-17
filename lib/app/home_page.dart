@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../engine/engine.dart' hide Element;
+import '../features/travel/travel_page.dart';
 import '../l10n/l10n.dart';
 import 'pages/settings_page.dart';
 import 'theme/app_theme.dart';
@@ -50,6 +51,10 @@ class _HomePageState extends State<HomePage> {
             onNext: () => _set(_instant.add(const Duration(hours: 2))),
           );
           final board = ChartBoard(chart: _chart);
+          final travel = FilledButton.tonal(
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const TravelPage())),
+            child: Text(l.homeTravel),
+          );
           final footer = Text(l.homeDisclaimer,
               textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.qm.textMuted));
           if (wide) {
@@ -59,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                 ConstrainedBox(constraints: BoxConstraints(maxWidth: box.maxHeight - 32), child: board),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: ListView(children: [info, const SizedBox(height: 12), nav, const SizedBox(height: 12), footer]),
+                  child: ListView(children: [info, const SizedBox(height: 12), nav, const SizedBox(height: 8), travel, const SizedBox(height: 12), footer]),
                 ),
               ]),
             );
@@ -75,6 +80,8 @@ class _HomePageState extends State<HomePage> {
                   textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.qm.textMuted)),
               const SizedBox(height: 10),
               nav,
+              const SizedBox(height: 8),
+              travel,
               const SizedBox(height: 12),
               footer,
             ],
