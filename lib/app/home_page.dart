@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../compass/compass_page.dart';
 import '../engine/engine.dart';
 import '../l10n/l10n.dart';
 
@@ -26,7 +27,13 @@ class _HomePageState extends State<HomePage> {
     final lang = L10n.language;
     final c = _chart;
     return Scaffold(
-      appBar: AppBar(title: Text(l.appTitle)),
+      appBar: AppBar(title: Text(l.appTitle), actions: [
+        IconButton(
+          tooltip: l.homeOpenCompass,
+          icon: const Icon(Icons.explore),
+          onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const CompassPage())),
+        ),
+      ]),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
