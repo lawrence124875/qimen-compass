@@ -1,32 +1,26 @@
 """產生奇門羅盤圖示 SVG（九宮羅盤）。所有元素以 (54,54) 為中心對稱，確保完全置中。"""
-import math
 GOLD, BRIGHT, PALE, BROWN = "#C9A45C", "#D8B56A", "#E8D9B0", "#7E6A52"
 H = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="{vb}">'
 BG = ('<defs><radialGradient id="g" cx="50%" cy="50%" r="70%"><stop offset="0" stop-color="#2E2B38"/>'
       '<stop offset="1" stop-color="#1C1B22"/></radialGradient></defs><rect width="108" height="108" fill="url(#g)"/>')
 
 def art(mono=False):
+    """原稿座標（環半徑 32、九宮 40–68），整體以中心縮 0.86 放進安全區。"""
     c = (lambda x: "#FFFFFF") if mono else (lambda x: x)
-    s = [f'<circle cx="54" cy="54" r="27.5" fill="none" stroke="{c(GOLD)}" stroke-width="1.4"/>']
+    s = [f'<circle cx="54" cy="54" r="32" fill="none" stroke="{c(GOLD)}" stroke-width="1.6"/>']
     for i in range(24):
         major = i % 3 == 0
-        r0, r1 = 27.5, 27.5 - (3 if major else 1.7)
-        a = math.radians(i * 15)
-        x0, y0 = 54 + r0 * math.sin(a), 54 - r0 * math.cos(a)
-        x1, y1 = 54 + r1 * math.sin(a), 54 - r1 * math.cos(a)
-        s.append(f'<line x1="{x0:.2f}" y1="{y0:.2f}" x2="{x1:.2f}" y2="{y1:.2f}" stroke="{c(GOLD)}" '
-                 f'stroke-width="{1.1 if major else .7}"/>')
+        s.append(f'<line x1="54" y1="22" x2="54" y2="{25.5 if major else 24}" stroke="{c(GOLD)}" '
+                 f'stroke-width="{1.2 if major else .8}" transform="rotate({i*15} 54 54)"/>')
     for r in range(3):
         for k in range(3):
             mid = r == k == 1
-            x, y = 54 - 12.5 + k * 8.75, 54 - 12.5 + r * 8.75  # 三格寬 25，中心 54
-            fill = c(GOLD) if mid else "none"
-            s.append(f'<rect x="{x:.2f}" y="{y:.2f}" width="7.25" height="7.25" rx="1" fill="{fill}" '
-                     f'stroke="{c(GOLD) if mid else c(BROWN)}" stroke-width=".9"/>')
-    d = 11.2  # 指針：兩端對中心點對稱
-    s.append(f'<line x1="{54+d+.3:.2f}" y1="{54-d-.3:.2f}" x2="{54+d+6+.3:.2f}" y2="{54-d-6-.3:.2f}" stroke="{c(PALE)}" stroke-width="1.4" stroke-linecap="round"/>')
-    s.append(f'<line x1="{54-d-.3:.2f}" y1="{54+d+.3:.2f}" x2="{54-d-6-.3:.2f}" y2="{54+d+6+.3:.2f}" stroke="{c(BROWN)}" stroke-width="1.4" stroke-linecap="round"/>')
-    return "".join(s)
+            s.append(f'<rect x="{40+k*10}" y="{40+r*10}" width="8" height="8" rx="1.2" '
+                     f'fill="{c(GOLD) if mid else "none"}" stroke="{c(GOLD) if mid else c(BROWN)}" stroke-width="1"/>')
+    # 指針：從環內延伸到九宮角格，兩端對中心點對稱
+    s.append(f'<path d="M74 34 L60 48" stroke="{c(PALE)}" stroke-width="1.6" stroke-linecap="round"/>')
+    s.append(f'<path d="M34 74 L48 60" stroke="{c(BROWN)}" stroke-width="1.6" stroke-linecap="round"/>')
+    return '<g transform="translate(54 54) scale(.86) translate(-54 -54)">' + "".join(s) + "</g>"
 
 files = {
     "icon_foreground.svg": H.format(vb="0 0 108 108") + art() + "</svg>",
