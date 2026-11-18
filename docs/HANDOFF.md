@@ -89,7 +89,7 @@
 - 訂閱：擇時、宅盤、占卜解讀、去除廣告；價格與 Play 商品 ID 待定
 
 ## 11. 待決事項
-- [ ] App 名稱是否就用「奇門羅盤」
+- [x] App 名稱：奇門羅盤／Qimen Compass（2026-11-18 定案）
 - [ ] 訂閱價格
 - [ ] 測試盤的參考軟體由誰提供（請 Lawrence 指定）
 
@@ -123,7 +123,7 @@
     - 設定頁加：會員、備份與換手機、推薦給朋友（`features/share/share.dart` `shareApp`）、意見回饋、每日提醒、吉時推播、使用統計開關、廣告隱私、隱私權政策／使用條款（`docs/privacy.html`、`terms.html`，需開 GitHub Pages）、LC Lab 其他 App（謙卦、光穗塔羅，`app/links.dart`）
     - CI：`scripts/patch_firebase.sh`、`patch_ads.sh`；Secrets 待設：`GOOGLE_SERVICES_JSON_BASE64`（Firebase 專案加 Android App `com.lclab.qimen` 後重新下載）、`ADMOB_APP_ID`、`ADMOB_BANNER/INTERSTITIAL/REWARDED_AD_UNIT_ID`、`REVENUECAT_ANDROID_API_KEY`；沒設時建置照常（無 Firebase、測試廣告、訂閱「尚未開放」）
     - 謙卦 iching-cards PR #69、塔羅 tarot-cards PR #49：其他 App 加入奇門羅盤，預設隱藏；上架後 Remote Config 設 `qg_other_app_qimen`=1、`tr_other_app_com_lclab_qimen`=1（塔羅圖示放 tarot-content `branding/other_apps/com.lclab.qimen.png`）
-  - 尚未做：夏令時扣回標準時；奇門正式 App 圖示（目前 iching 用暫用圖）
+  - 尚未做：夏令時扣回標準時
   - i18n 對照：`l10n_ext.dart`（`l.luck()`、`l.palaceDirection()`、`l.markHint()`）；術語 `QimenTerms.palace()`、`mark()`、`markShort()`
   - 字型：`scripts/build_fonts.py` 從 noto-cjk tag（Sans2.004、Serif2.003）抓 TC 黑體／宋體，依 lib/ 內 .dart、.arb 用字做子集到 `assets/fonts/`（不進 repo，兩個 workflow 都先跑）；本機開發先 `pip install fonttools && python3 scripts/build_fonts.py`
 - 課程「奇門入門課」（`lib/features/course/`）：首頁按鈕 → 目錄（已讀進度）→ 單課（段落、重點、課末按鈕開功能、下一課）。內容在 qimen-content `app/course/<contentFolder>.json`（10 課，前 2 課 `free`；格式見該資料夾 README），CI 匯入到 `assets/content/course/`；找不到該語言退回 en → zh-Hant。`action.type` 目前 `chart`／`travel`，加新功能（羅盤、擇時、宅盤、占卜）時在 `CourseActionType` 加類型並可增課。付費牆：`CourseAccess.paywallEnabled` 目前 false（全開），接 RevenueCat 後改 true 並更新 `CourseAccess.premium`。`test/course/` 檢查各語結構與 zh-Hant 一致、禁用字。已完成 zh-Hant、en；其餘 9 語由翻譯串補
