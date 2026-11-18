@@ -98,8 +98,8 @@ void main() {
           home: AppServices(services: Services(premium: FreePremium(premium: true)), child: s.value()),
         ));
         // 讓非同步載入（App 內容 JSON 等）完成
-        for (var i = 0; i < 5; i++) {
-          await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 300)));
+        for (var i = 0; i < 15; i++) {
+          await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 500)));
           await tester.pump(const Duration(milliseconds: 300));
         }
         await expectLater(find.byType(MaterialApp), matchesGoldenFile('goldens/${lang.code}/${s.key}.png'));
