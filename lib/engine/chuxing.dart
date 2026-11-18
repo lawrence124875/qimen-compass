@@ -100,8 +100,8 @@ class ChuXingPlanner {
     return slots;
   }
 
-  /// 從 [from] 起 [days] 天，每天在鐘面時間 [fromHour]–[toHour] 之間開始的時辰中取最佳一個（未達「吉」則略過）。
-  /// 吉時推播用。
+  /// 從 [from] 起 [days] 天，每天在鐘面時間 [fromHour]–[toHour] 之間開始的時辰中取最佳 [perDay] 個（未達「吉」則略過）。
+  /// [toHour] 可到 24（全天）。吉時推播用。
   List<TravelSlot> dailyBest(
     DateTime from,
     TravelEvent event, {
@@ -110,19 +110,29 @@ class ChuXingPlanner {
     int days = 7,
     int fromHour = 7,
     int toHour = 21,
+    int perDay = 1,
   }) {
     final all = plan(from, event, settings: settings, method: method, count: days * 12 + 1)
         .where((s) => s.startUtc.isAfter(from));
-    final byDay = <int, TravelSlot>{};
+    final byDay = <int, List<TravelSlot>>{};
     for (final s in all) {
       final clock = engine.calendar.clockTime(s.startUtc, settings);
       if (clock.hour < fromHour || clock.hour >= toHour) continue;
+      if (!s.recommended) continue;
       final key = DateTime.utc(clock.year, clock.month, clock.day).millisecondsSinceEpoch;
-      final best = byDay[key];
-      if (best == null || s.score > best.score) byDay[key] = s;
+      (byDay[key] ??= []).add(s);
     }
-    return byDay.values.where((s) => s.recommended).take(days).toList()
-      ..sort((a, b) => a.startUtc.compareTo(b.startUtc));
+    final keys = byDay.keys.toList()..sort();
+    final out = <TravelSlot>[];
+    for (final k in keys.take(days)) {
+      final list = byDay[k]!
+        ..sort((a, b) {
+          final c = b.score.compareTo(a.score);
+          return c != 0 ? c : a.startUtc.compareTo(b.startUtc);
+        });
+      out.addAll(list.take(perDay));
+    }
+    return out..sort((a, b) => a.startUtc.compareTo(b.startUtc));
   }
 
   /// [t] 所在時辰的起點（UTC）。時辰以鐘面時間的奇數點為界（23–1 子、1–3 丑…）。

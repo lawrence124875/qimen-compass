@@ -5,12 +5,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../app/settings/app_settings.dart';
 import '../../app/theme/app_theme.dart';
 import '../../app/widgets/chart_board.dart';
+import '../../app/widgets/hour_window.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
 import '../travel/travel_text.dart';
 import 'zeshi_text.dart';
 
-/// 擇時擇日（HANDOFF §7）：掃描未來 N 天的時盤，依情境打分，列出前 5 名，可加入行事曆。
+/// 擇時擇日（HANDOFF §7）：掃描未來 N 天（最長 1 年）的時盤，依情境打分，列出前 N 名，可加入行事曆。
+/// 範圍、筆數、同一天上限、時段可調；長範圍分段計算並顯示進度。
 class ZeShiPage extends StatefulWidget {
   const ZeShiPage({super.key});
 
@@ -24,13 +26,23 @@ class _ZeShiPageState extends State<ZeShiPage> {
   static const _kDays = 'qm_zeshi_days';
   static const _kBirth = 'qm_birth_date';
   static const _kIntro = 'qm_zeshi_intro_seen';
+  static const _kTop = 'qm_zeshi_top';
+  static const _kPerDay = 'qm_zeshi_per_day';
+  static const _kFrom = 'qm_zeshi_from', _kTo = 'qm_zeshi_to';
+  static const dayOptions = [7, 14, 30, 90, 180, 365];
+  static const topOptions = [5, 10, 20];
 
   SharedPreferences? _prefs;
   ZeShiEvent _event = ZeShiEvent.contract;
   int _days = 7;
   DateTime? _birth;
   bool _useBirth = false;
+  int _top = 5;
+  int _perDay = 2;
+  HourWindow _window = HourWindow.day;
   List<ZeShiSlot>? _result;
+  double? _progress;
+  int _runId = 0;
 
   @override
   void initState() {
@@ -45,7 +57,12 @@ class _ZeShiPageState extends State<ZeShiPage> {
     setState(() {
       _prefs = p;
       _event = ZeShiEvent.values.asNameMap()[p.getString(_kEvent)] ?? ZeShiEvent.contract;
-      _days = p.getInt(_kDays) ?? 7;
+      final d = p.getInt(_kDays) ?? 7;
+      _days = dayOptions.contains(d) ? d : 7;
+      final t = p.getInt(_kTop) ?? 5;
+      _top = topOptions.contains(t) ? t : 5;
+      _perDay = (p.getInt(_kPerDay) ?? 2).clamp(1, 3);
+      _window = HourWindow.read(p.getInt(_kFrom), p.getInt(_kTo));
       _birth = birth;
       _useBirth = birth != null;
     });
@@ -71,16 +88,40 @@ class _ZeShiPageState extends State<ZeShiPage> {
 
   TimeSettings get _settings => AppSettings.instance.timeSettingsAt(DateTime.now());
 
-  void _run() {
-    setState(() => _result = null);
-    // 讓轉圈先畫出來再計算（30 天約 210 張盤）。
-    Future<void>.delayed(const Duration(milliseconds: 16), () {
-      if (!mounted) return;
-      final birth = _useBirth && _birth != null
-          ? BirthInfo.fromInstant(DateTime.utc(_birth!.year, _birth!.month, _birth!.day, 4), settings: const TimeSettings())
-          : null;
-      final r = _planner.best(DateTime.now(), _event, days: _days, birth: birth, settings: _settings, method: AppSettings.instance.juMethod);
-      setState(() => _result = r);
+  /// 分段計算（每段 7 天），每段之間讓出畫面更新進度；設定改變時舊的計算作廢。
+  Future<void> _run() async {
+    final id = ++_runId;
+    setState(() {
+      _result = null;
+      _progress = 0;
+    });
+    await Future<void>.delayed(const Duration(milliseconds: 16));
+    final birth = _useBirth && _birth != null
+        ? BirthInfo.fromInstant(DateTime.utc(_birth!.year, _birth!.month, _birth!.day, 4), settings: const TimeSettings())
+        : null;
+    final settings = _settings;
+    final method = AppSettings.instance.juMethod;
+    final base = DateTime.now().toUtc();
+    final all = <int, ZeShiSlot>{};
+    const chunk = 7;
+    for (var done = 0; done < _days; done += chunk) {
+      if (!mounted || id != _runId) return;
+      final from = base.add(Duration(days: done));
+      final days = (_days - done).clamp(1, chunk);
+      for (final s in _planner.scan(done == 0 ? from : from.subtract(const Duration(milliseconds: 1)), _event,
+          days: days, fromHour: _window.from, toHour: _window.to, birth: birth, settings: settings, method: method)) {
+        all[s.startUtc.millisecondsSinceEpoch] = s;
+      }
+      if (_days > chunk) {
+        setState(() => _progress = (done + days) / _days);
+        await Future<void>.delayed(Duration.zero);
+      }
+    }
+    if (!mounted || id != _runId) return;
+    final r = _planner.pick(all.values.toList(), top: _top, perDay: _perDay, settings: settings);
+    setState(() {
+      _result = r;
+      _progress = null;
     });
   }
 
@@ -95,6 +136,27 @@ class _ZeShiPageState extends State<ZeShiPage> {
     _prefs?.setInt(_kDays, d);
     _run();
   }
+
+  void _setTop(int v) {
+    _top = v;
+    _prefs?.setInt(_kTop, v);
+    _run();
+  }
+
+  void _setPerDay(int v) {
+    _perDay = v;
+    _prefs?.setInt(_kPerDay, v);
+    _run();
+  }
+
+  void _setWindow(HourWindow w) {
+    setState(() => _window = w);
+    _prefs?.setInt(_kFrom, w.from);
+    _prefs?.setInt(_kTo, w.to);
+    _run();
+  }
+
+  String _daysLabel(AppLocalizations l, int d) => d == 365 ? l.zeshiOneYear : l.zeshiDays(d);
 
   Future<void> _pickBirth() async {
     final now = DateTime.now();
@@ -171,10 +233,32 @@ class _ZeShiPageState extends State<ZeShiPage> {
                     ChoiceChip(label: Text(ZeShiText.event(l, e)), selected: e == _event, onSelected: (_) => _setEvent(e)),
                 ]),
                 const SizedBox(height: 12),
-                SegmentedButton<int>(
-                  segments: [for (final d in const [7, 14, 30]) ButtonSegment(value: d, label: Text(l.zeshiDays(d)))],
-                  selected: {_days},
-                  onSelectionChanged: (s) => _setDays(s.first),
+                Wrap(spacing: 8, runSpacing: 4, children: [
+                  for (final d in dayOptions)
+                    ChoiceChip(label: Text(_daysLabel(l, d)), selected: d == _days, onSelected: (_) => _setDays(d)),
+                ]),
+                ExpansionTile(
+                  tilePadding: EdgeInsets.zero,
+                  childrenPadding: const EdgeInsets.only(bottom: 8),
+                  title: Text(l.zeshiMoreOptions),
+                  subtitle: Text(l.zeshiOptionsSummary(_top, _perDay, _window.label(l)),
+                      style: theme.textTheme.bodySmall?.copyWith(color: context.qm.textMuted)),
+                  expandedCrossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(l.zeshiTopCount),
+                    Wrap(spacing: 8, children: [
+                      for (final t in topOptions)
+                        ChoiceChip(label: Text('$t'), selected: t == _top, onSelected: (_) => _setTop(t)),
+                    ]),
+                    const SizedBox(height: 8),
+                    Text(l.zeshiPerDayMax),
+                    Wrap(spacing: 8, children: [
+                      for (final n in const [1, 2, 3])
+                        ChoiceChip(label: Text('$n'), selected: n == _perDay, onSelected: (_) => _setPerDay(n)),
+                    ]),
+                    const SizedBox(height: 8),
+                    HourWindowPicker(value: _window, onChanged: _setWindow),
+                  ],
                 ),
                 const SizedBox(height: 4),
                 SwitchListTile(
@@ -202,7 +286,16 @@ class _ZeShiPageState extends State<ZeShiPage> {
                 Text(l.zeshiTop, style: theme.textTheme.titleMedium),
                 const SizedBox(height: 8),
                 if (result == null)
-                  const Padding(padding: EdgeInsets.all(24), child: Center(child: CircularProgressIndicator()))
+                  Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: (_progress ?? 0) > 0
+                        ? Column(children: [
+                            LinearProgressIndicator(value: _progress),
+                            const SizedBox(height: 8),
+                            Text(l.zeshiProgress(((_progress ?? 0) * 100).round())),
+                          ])
+                        : const Center(child: CircularProgressIndicator()),
+                  )
                 else if (result.isEmpty)
                   Padding(padding: const EdgeInsets.all(24), child: Text(l.zeshiNone, textAlign: TextAlign.center))
                 else

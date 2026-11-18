@@ -101,7 +101,7 @@
 ## 13. 現況（2026-11-17）
 - CI 已打通：run 2 通過並發佈 qimen-content Release `qimen-android-run2`（0.1.0+1，APK／AAB 各約 44 MB，除錯金鑰簽署；上傳金鑰 `ANDROID_KEYSTORE_*` 等 Secrets 尚未設）
 - Repo：`qimen-compass`（公開）、`qimen-content`（私人，放 build Releases，tag `qimen-android-run<N>`，只保留最近 5 個）
-- CI：`check.yml`（分支：analyze＋test）、`build_android.yml`（main：analyze＋test → APK＋AAB → 上傳 qimen-content Releases）。Flutter 固定 3.47.9（比照謙卦）；`android/` 由 CI 用 `flutter create` 產生，`scripts/patch_android.sh` 設名稱、套件 `com.lclab.qimen`、簽署（上傳金鑰 Secrets 未設時用除錯金鑰）
+- CI：`check.yml`（分支：analyze＋test）、`build_android.yml`（main：analyze＋test → APK＋AAB → 上傳 qimen-content Releases）。Flutter 固定 3.47.9（比照謙卦）；`android/` 由 CI 用 `flutter create` 產生，`scripts/patch_android.sh` 設名稱、套件 `com.lclab.qimen`、簽署（上傳金鑰 Secrets 未設時用 qimen-content `signing/debug.keystore` 固定測試金鑰，APK 可覆蓋安裝保留紀錄；versionCode＝run_number。之後設正式上傳金鑰時簽章會變，使用者要再移除一次，先提醒）
 - i18n：**11 語全部開放**（2026-11-17）：ARB 474 鍵齊全，課程、問事文句 11 語（qimen-content `app/course`、`app/divination/text`）。術語唯一來源 `tools/l10n/glossary.json`（帶聲調拼音，例「生門 Shēng Mén (Gate of Life)」；日韓越意譯用各自讀音）→ `l10n.py gen` 產生 `lib/l10n/terms_data.dart`；流程見 `tools/l10n/README.md`。已開放語言缺鍵測試會失敗，新增介面文字的串要通知翻譯補掃（或自行用 l10n.py 補）。簡中內容用 qimen-content `tools/to_hans.py`（乾不轉干）。字型：TC 主字型＋補字 QmFbSC／JP／KR／TH／AR（`build_fonts.py` FALLBACKS），日文漢字暫用 TC 字形
 - 引擎 `lib/engine/`：
   - `CalendarService`：節氣用 `lunar`（北京時間→UTC），日柱以儒略日自算、時柱五鼠遁；時區、真太陽時（經度＋NOAA 均時差）、子時換日（`nextDay` 23 點換日預設／`lateZi` 晚子時）
@@ -118,7 +118,7 @@
   - 比照謙卦共通功能（2026-11-17 完成）：
     - 服務層 `app/services.dart`（`AppServices.of(context)`；測試直接 `Services()`）：Firebase（`core/firebase/`，Analytics／Crashlytics／Remote Config，事件與參數 `qm_`）、意見回饋 Firestore `qm_feedback`、RevenueCat（權限 `premium`）、AdMob（`core/admob/`，單元 ID 由 CI dart-define；沒設定用測試 ID）、Play In-App Updates（`shared/widgets/update_prompt.dart` 包在首頁）
     - 免費版 `shared/premium/usage_gate.dart`：`ensureCanUse()`（出行訣每天 1 次＋獎勵 1 次，`qm_free_travel_per_day` 等）、`pauseBeforeResult()`（每日第一次插頁）、**`requirePremium(context, feature:)`：擇時、宅盤、問事等訂閱功能入口呼叫**（免費體驗一次，之後只看標題）；付費牆 `paywall_page.dart`；橫幅 `AdBanner` 放首頁、設定、紀錄列表
-    - 紀錄＋應驗回饋 `features/records/`：**其他功能呼叫 `saveRecord(context, kind: RecordKind.xxx, chartAt:, summary:)`**；`records.json`（schemaVersion 1）、搜尋、種類／待回饋篩選、左滑刪除可復原、應驗統計、N 天後 20:00 回顧提醒（id 1100–1199）、備份還原（設定「備份與換手機」）；免費 30 則、只看近 30 天。問事紀錄（`divination_journal.dart`）目前仍獨立，之後可併入
+    - 紀錄＋應驗回饋 `features/records/`：**其他功能呼叫 `saveRecord(context, kind: RecordKind.xxx, chartAt:, summary:)`**；`records.json`（schemaVersion 1）、搜尋、種類／待回饋篩選、左滑刪除可復原、應驗統計、N 天後 20:00 回顧提醒（id 1100–1199）、備份還原（設定「備份與換手機」）；免費 30 則、只看近 30 天。問事紀錄已併入（`RecordKind.divination`，`meta` 帶 topic／school／verdict，舊 `qm_div_journal` 自動搬；問事不受免費 30 則限制）；`RecordListPage(initialKind:)` 可預先篩選；詳情頁「看解讀」重算
     - 每日提醒 `features/reminders/daily_reminder.dart`：預設開、8:00，排 7 天（id 1050–1056），內容為當天最佳吉時；設定頁另有吉時推播開關
     - 設定頁加：會員、備份與換手機、推薦給朋友（`features/share/share.dart` `shareApp`）、意見回饋、每日提醒、吉時推播、使用統計開關、廣告隱私、隱私權政策／使用條款（`docs/privacy.html`、`terms.html`，需開 GitHub Pages）、LC Lab 其他 App（謙卦、光穗塔羅，`app/links.dart`）
     - CI：`scripts/patch_firebase.sh`、`patch_ads.sh`；Secrets 待設：`GOOGLE_SERVICES_JSON_BASE64`（Firebase 專案加 Android App `com.lclab.qimen` 後重新下載）、`ADMOB_APP_ID`、`ADMOB_BANNER/INTERSTITIAL/REWARDED_AD_UNIT_ID`、`REVENUECAT_ANDROID_API_KEY`；沒設時建置照常（無 Firebase、測試廣告、訂閱「尚未開放」）
@@ -128,14 +128,15 @@
   - 字型：`scripts/build_fonts.py` 從 noto-cjk tag（Sans2.004、Serif2.003）抓 TC 黑體／宋體，依 lib/ 內 .dart、.arb 用字做子集到 `assets/fonts/`（不進 repo，兩個 workflow 都先跑）；本機開發先 `pip install fonttools && python3 scripts/build_fonts.py`
 - 課程「奇門入門課」（`lib/features/course/`）：首頁按鈕 → 目錄（已讀進度）→ 單課（段落、重點、課末按鈕開功能、下一課）。內容在 qimen-content `app/course/<contentFolder>.json`（10 課，前 2 課 `free`；格式見該資料夾 README），CI 匯入到 `assets/content/course/`；找不到該語言退回 en → zh-Hant。`action.type` 目前 `chart`／`travel`，加新功能（羅盤、擇時、宅盤、占卜）時在 `CourseActionType` 加類型並可增課。付費牆：`CourseAccess.paywallEnabled` 目前 false（全開），接 RevenueCat 後改 true 並更新 `CourseAccess.premium`。`test/course/` 檢查各語結構與 zh-Hant 一致、禁用字。已完成 zh-Hant、en；其餘 9 語由翻譯串補
 - 出行訣（`lib/features/travel/`）：首頁「出行訣」→ 事類切換、現在＋接下來 11 個時辰的吉方與等級、走路／跑步（15/20/30 分＋`pedometer` 計步）、喝水法（15/30/60 分）、`flutter_compass` 箭頭指向吉方；未來時辰可「提醒我」
-- 吉時推播：`lib/services/notifications.dart`（`flutter_local_notifications`，一律 `inexactAllowWhileIdle`、不用精確鬧鐘權限）；`TravelReminders` 每次啟動與切換事類時重排 7 天、吉時前 10 分鐘通知；預設開、第一次進出行訣看到結果才請求權限，被拒時 SnackBar 開 App 設定（permission_handler `openAppSettings`；`app_settings` 套件 compileSdk 33 會讓建置失敗，已移除）。通知 id：1000–1019 每日、1020–1039 單次提醒、1040 計時結束。`patch_android.sh` 加 POST_NOTIFICATIONS／RECEIVE_BOOT_COMPLETED／ACTIVITY_RECOGNITION、兩個 receiver、desugaring、ProGuard Gson
+- 吉時推播：`lib/services/notifications.dart`（`flutter_local_notifications`，一律 `inexactAllowWhileIdle`、不用精確鬧鐘權限）；`TravelReminders` 每次啟動與切換事類時重排 7 天、吉時前 N 分鐘通知（設定頁「推播設定」：提前 10／20／30／60 分、時段 `HourWindow`（預設 7–21，可全天；22–6 點標題加「夜間」）、每天 1–3 則；`TravelPrefs` 鍵 `travel_notify_lead／from／to／per_day`）；預設開、第一次進出行訣看到結果才請求權限，被拒時 SnackBar 開 App 設定（permission_handler `openAppSettings`；`app_settings` 套件 compileSdk 33 會讓建置失敗，已移除）。通知 id：1000–1019 每日、1020–1039 單次提醒、1040 計時結束。`patch_android.sh` 加 POST_NOTIFICATIONS／RECEIVE_BOOT_COMPLETED／ACTIVITY_RECOGNITION、兩個 receiver、desugaring、ProGuard Gson
 - 年盤、月盤（`PanUnit.year／month`）：年家以 60 年為一元，1864 上元陰一、1924 中元陰四、1984 下元陰七（依立春換年）；月家依年支，子午卯酉陰七、寅申巳亥陰一、辰戌丑未陰四（依節換月）。一律陰遁，起局柱為年柱／月柱（`QimenChart.pivot`，旬首、空亡、馬星都依此柱）。首頁「時盤／月盤／年盤」切換，前後鈕依單位換時辰／月／年。日家盤仍排 V3
-- 擇時擇日（`lib/engine/zeshi.dart`、`lib/features/zeshi/`）：六情境（簽約開門＋六合、開幕生開＋值符、面試開門＋九天、相親休門＋六合、訂婚休生＋六合、遠行開休生＋九天）；每時辰中點起局，基礎 4 分，加分：用神門旺相（宮生門或比和）、吉神（情境喜神另記）、三奇臨宮、青龍返首、飛鳥跌穴、年命逢吉門；扣分：用神受宮剋、門迫、空亡、伏吟、反吟、擊刑、入墓、凶神、年命逢空墓。五級 ≥7 大吉、≥5 吉、≥3 平、≥1 小阻。只看 7–21 點，7／14／30 天，前 5 名同天最多 2 個；生日存 `qm_birth_date`。卡片點開看盤、`add_2_calendar` 加入行事曆（`patch_android.sh` 宣告 INSERT intent；iOS 上架前要加 `NSCalendarsUsageDescription`）。首次進入顯示說明，右上 ⓘ 重看
+- 擇時擇日（`lib/engine/zeshi.dart`、`lib/features/zeshi/`）：六情境（簽約開門＋六合、開幕生開＋值符、面試開門＋九天、相親休門＋六合、訂婚休生＋六合、遠行開休生＋九天）；每時辰中點起局，基礎 4 分，加分：用神門旺相（宮生門或比和）、吉神（情境喜神另記）、三奇臨宮、青龍返首、飛鳥跌穴、年命逢吉門；扣分：用神受宮剋、門迫、空亡、伏吟、反吟、擊刑、入墓、凶神、年命逢空墓。五級 ≥7 大吉、≥5 吉、≥3 平、≥1 小阻。時段預設 7–21 點可調（`HourWindowPicker`，`lib/app/widgets/hour_window.dart`），範圍 7／14／30／90／180 天／1 年，前 5／10／20 名、同天最多 1–3 筆（`qm_zeshi_*`）；長範圍每 7 天一段 `scan` 後 `pick`，顯示進度；生日存 `qm_birth_date`。卡片點開看盤、`add_2_calendar` 加入行事曆（`patch_android.sh` 宣告 INSERT intent；iOS 上架前要加 `NSCalendarsUsageDescription`）。首次進入顯示說明，右上 ⓘ 重看
 - 擇時待補（比照謙卦 §14）：擇時紀錄＋事後應驗回饋、付費牆（新功能免費完整體驗一次）
 - 比照謙卦已補：首次 3 頁引導＋右上 ⓘ 重看、點通知直接開出行訣（`Notifications.routes`＋`navigatorKey`）、出行紀錄（完成即存，JSON 帶 schemaVersion，保留 30 則，左滑刪除可復原）
 - 出行訣待補：iOS `NSMotionUsageDescription`（計步）、免費次數＋廣告（等廣告模組）、分享卡片、排盤設定（真太陽時等）接上設定頁後同步給 `TravelReminders.timeSettings`；需實機驗證 release 版通知會跳
 
 - 事類問事（V2，介面名「奇門問事」，避開「占卜」字眼）：引擎 `lib/engine/divination.dart`（`DivinationEngine`：用神落宮、月令旺相休囚死、宮生剋、空亡門迫擊刑入墓馬星伏反吟、同宮門神、日干與用神生剋 → 加總分五級；`factorWeight` 可調）；畫面 `lib/features/divination/`（事類＋流派選單、解讀頁、失物方位＋羅盤箭頭＋可能地點、官司／健康「僅供參考」聲明、問事紀錄＋應驗回饋＋左滑刪除可復原、首次 3 頁引導＋ⓘ、複製結果）。內容在 qimen-content `app/divination/`：`rules.json`（7 事類、流派 standard／liuhe／yigeng／wuzi）、`text/<語言>.json`（zh-Hant、en；缺語言退回 en）。CI 兩個 workflow 都把 qimen-content `app/` 複製到 `assets/content/`（課程共用），`build_fonts.py` 收這些 JSON 的字；`test/engine/divination_test.dart` 在 CI 檢查內容檔鍵值齊全
+- 問事延伸解讀（`lib/engine/divination_more.dart`，`ReadingMore` extension）：決斷（可行／可行但有阻／宜緩／不宜，依五級與有無扣分）、把握度（加減分一致度：高／中／吉凶參半）、應期（用神落宮地支，逢空亡取空亡地支＝出空；快慢依馬星／反吟／旺相 vs 伏吟／入墓／囚死；快＝12 天內、中＝13–24 天、慢＝下個相符月支）、宜忌（同宮門、神、盤面標記 → 內容檔 `tips`，各取 3 條＋宜往／忌往：吉取用神宮、否則生開休門；忌取天盤庚，否則白虎）、我方與對方（relation 事類比較日干與主用神強弱）、盤面標示說明。應期與強弱算法請 Lawrence 依流派校對
 - 事類問事待補：其餘 9 語文句檔（加語言時順便加 `text/<code>.json`）；分享卡片圖片；免費次數／付費牆（商業模式定案後）；用神與加權請 Lawrence 依流派校對
 
 - 奇門羅盤（V1，`lib/compass/`）：`compass_math.dart` 純計算（`palaceAtBearing`、`normalizeDeg`、`turnDelta`、`MagneticMonitor` 25–65 μT＋抖動、`GyroLock` 室內鎖定、`nextChartChange` 下個換盤時刻；宅盤串沿用，勿改簽章）；`compass_page.dart` 盤面依 heading 反向旋轉、前方門吉平凶、精度／干擾／平放提示、磁北⇄真北（`declination.dart`：geomag WMM2025＋geolocator 只要概略位置，`patch_android.sh` 加 `ACCESS_COARSE_LOCATION`）、室內鎖定（門口量北方後改陀螺儀）、找吉門箭頭、下個時辰預覽＋倒數；首次 3 頁引導＋ⓘ、記住北方基準（`qm_compass_*`）。排盤沿用 `AppSettings`。待辦：iOS 需 `NSLocationWhenInUseUsageDescription`；課程 `CourseActionType` 可加 compass
@@ -145,8 +146,8 @@
   - 手繪：同一編輯器，長方形拼房間（0.5 格對齊），中心＝房間聯集重心；含中心點的房間算中五宮，中宮半徑＝等面積正方形邊長 1/6
   - 九宮採 45° 扇區（中心＋正北），宅盤一律磁北；坐向四種定法＋量向；入宅時間選填
   - 疊盤：現在／指定時間時盤、年盤、月盤、宅命盤（有時間＝時盤、只填日期＝日盤、未填＝年盤）；引擎不支援的單位（目前日盤）捕捉 `UnsupportedError` 顯示「製作中」
-  - 資料：SharedPreferences `qm_house`（帶 schemaVersion，目前一間）；引導用共用 `showGuide`（id `house`）；排盤沿用 App 排盤設定
-  - 待補：其餘 9 語的 house* 鍵；iOS `NSCameraUsageDescription`／`NSPhotoLibraryUsageDescription`；宅盤判讀文句（qimen-content）；多間房子；分享卡片；付費牆（§10 宅盤屬訂閱）；實機驗證陀螺儀鎖定漂移
+  - 資料：SharedPreferences `qm_houses`（schemaVersion 1：current＋houses，每間帶 id、name；舊 `qm_house` 自動搬）；標題點開「我的房子」切換、新增、改名、刪除可復原（沒復原才刪平面圖照片）；引導用共用 `showGuide`（id `house`）；排盤沿用 App 排盤設定
+  - 待補：其餘 9 語的 house* 鍵；iOS `NSCameraUsageDescription`／`NSPhotoLibraryUsageDescription`；宅盤判讀文句（qimen-content）；分享卡片；付費牆（§10 宅盤屬訂閱）；實機驗證陀螺儀鎖定漂移
 
 ## 14. 沿用謙卦／光穗塔羅的經驗（2026-11-17 整理；細節見 iching-content `HANDOFF.md`、`docs/REFERENCE.md`，tarot-content `HANDOFF.md`）
 ### 配色與 UI（配色已定案，見 §13 介面）

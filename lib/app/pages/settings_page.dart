@@ -6,6 +6,7 @@ import '../../l10n/l10n.dart';
 import '../settings/app_settings.dart';
 import '../settings/cities.dart';
 import '../theme/app_theme.dart';
+import '../widgets/hour_window.dart';
 import '../../features/feedback/feedback_page.dart';
 import '../../features/records/record_actions.dart';
 import '../../features/reminders/daily_reminder.dart';
@@ -168,7 +169,7 @@ class SettingsPage extends StatelessWidget {
     );
   }
 }
-/// 吉時推播開關（出行訣的每日吉時前 10 分鐘通知）。
+/// 吉時推播開關＋設定（提前時間、時段、每天則數）。
 class _TravelNotifyTile extends StatefulWidget {
   const _TravelNotifyTile();
 
@@ -191,19 +192,82 @@ class _TravelNotifyTileState extends State<_TravelNotifyTile> {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final p = _prefs;
-    return SwitchListTile(
-      secondary: Icon(Icons.schedule, color: context.qm.primary),
-      title: Text(l.travelNotifySetting),
-      subtitle: Text(l.travelNotifySettingHint),
-      value: p?.notify ?? true,
-      onChanged: p == null
-          ? null
-          : (v) async {
-              await p.setNotify(v);
-              setState(() {});
-              await TravelReminders.reschedule();
-            },
+    final on = p?.notify ?? true;
+    return Column(mainAxisSize: MainAxisSize.min, children: [
+      SwitchListTile(
+        secondary: Icon(Icons.schedule, color: context.qm.primary),
+        title: Text(l.travelNotifySetting),
+        subtitle: p == null ? null : Text(_summary(l, p)),
+        value: on,
+        onChanged: p == null
+            ? null
+            : (v) async {
+                await p.setNotify(v);
+                setState(() {});
+                await TravelReminders.reschedule();
+              },
+      ),
+      if (p != null && on)
+        ListTile(
+          contentPadding: const EdgeInsetsDirectional.only(start: 72, end: 16),
+          title: Text(l.travelNotifyOptions),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => _openOptions(p),
+        ),
+    ]);
+  }
+
+  static String _lead(AppLocalizations l, int m) => m >= 60 ? l.travelLeadHour : l.travelLeadMinutes(m);
+
+  String _summary(AppLocalizations l, TravelPrefs p) =>
+      l.travelNotifySummary(_lead(l, p.leadMinutes), p.window.label(l), p.perDay);
+
+  Future<void> _openOptions(TravelPrefs p) async {
+    await showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (sheet) => StatefulBuilder(builder: (sheet, setSheet) {
+        final l = sheet.l10n;
+        Future<void> update(Future<void> Function() f) async {
+          await f();
+          setSheet(() {});
+          if (mounted) setState(() {});
+        }
+
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+            child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(l.travelNotifyOptions, style: Theme.of(sheet).textTheme.titleMedium),
+              const SizedBox(height: 12),
+              Text(l.travelLead),
+              const SizedBox(height: 6),
+              Wrap(spacing: 8, children: [
+                for (final m in TravelPrefs.leadOptions)
+                  ChoiceChip(
+                    label: Text(_lead(l, m)),
+                    selected: p.leadMinutes == m,
+                    onSelected: (_) => update(() => p.setLeadMinutes(m)),
+                  ),
+              ]),
+              const SizedBox(height: 12),
+              HourWindowPicker(value: p.window, onChanged: (w) => update(() => p.setWindow(w))),
+              if (p.window.from < 6 || p.window.to > 22)
+                Text(l.travelNightHint, style: Theme.of(sheet).textTheme.bodySmall),
+              const SizedBox(height: 12),
+              Text(l.travelPerDay),
+              const SizedBox(height: 6),
+              Wrap(spacing: 8, children: [
+                for (final n in const [1, 2, 3])
+                  ChoiceChip(label: Text('$n'), selected: p.perDay == n, onSelected: (_) => update(() => p.setPerDay(n))),
+              ]),
+            ]),
+          ),
+        );
+      }),
     );
+    await TravelReminders.reschedule();
   }
 }
 

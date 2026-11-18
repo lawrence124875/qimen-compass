@@ -7,6 +7,8 @@ import '../../app/widgets/chart_board.dart';
 import '../../core/records/record_store.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
+import '../divination/divination_journal.dart';
+import '../divination/reading_page.dart';
 import 'record_list_page.dart';
 
 /// 紀錄詳情：重看當時的盤、改事由與筆記、事後填應驗結果。
@@ -69,6 +71,21 @@ class _RecordDetailPageState extends State<RecordDetailPage> {
                 const SizedBox(height: 4),
                 Text(l.recordCreatedAt(formatRecordTime(_r.createdAt)),
                     style: t.bodySmall?.copyWith(color: context.qm.textMuted)),
+                if (JournalEntry.isDivination(_r)) ...[
+                  const SizedBox(height: 8),
+                  FilledButton.tonalIcon(
+                    icon: const Icon(Icons.auto_stories_outlined),
+                    label: Text(l.divOpenReading),
+                    onPressed: () async {
+                      final store = AppServices.of(context).records;
+                      await openSavedReading(context, _r);
+                      // 解讀頁可能改了應驗回饋，同步回來
+                      for (final x in await store.all()) {
+                        if (x.id == _r.id && mounted) setState(() => _outcome = (_r = x).outcome);
+                      }
+                    },
+                  ),
+                ],
                 const SizedBox(height: 12),
                 ChartInfo(chart: _chart, instant: _r.chartAt),
                 const SizedBox(height: 8),

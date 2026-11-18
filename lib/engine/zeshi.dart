@@ -119,7 +119,7 @@ class ZeShiPlanner {
   final ChuXingPlanner chuXing;
   ShiJiaEngine get engine => chuXing.engine;
 
-  /// 從 [from] 起 [days] 天，只看鐘面時間 [fromHour]–[toHour] 開始的時辰；
+  /// 從 [from] 起 [days] 天，只看鐘面時間 [fromHour]–[toHour] 開始的時辰（[toHour] 可到 24＝全天）；
   /// 依分數排序取前 [top] 名，同一天最多 [perDay] 個。
   List<ZeShiSlot> best(
     DateTime from,
@@ -135,6 +135,12 @@ class ZeShiPlanner {
   }) {
     final all = scan(from, event,
         days: days, fromHour: fromHour, toHour: toHour, birth: birth, settings: settings, method: method);
+    return pick(all, top: top, perDay: perDay, settings: settings);
+  }
+
+  /// 從候選時段依分數取前 [top] 名，同一天最多 [perDay] 個（分段掃描時用）。
+  List<ZeShiSlot> pick(List<ZeShiSlot> candidates, {int top = 5, int perDay = 2, TimeSettings settings = const TimeSettings()}) {
+    final all = [...candidates];
     all.sort((a, b) {
       final c = b.score.compareTo(a.score);
       return c != 0 ? c : a.startUtc.compareTo(b.startUtc);

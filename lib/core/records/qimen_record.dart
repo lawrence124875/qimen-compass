@@ -20,6 +20,7 @@ class QimenRecord {
     this.outcome,
     this.outcomeNote = '',
     this.outcomeAt,
+    this.meta = const {},
   });
 
   final String id;
@@ -39,6 +40,9 @@ class QimenRecord {
   final RecordOutcome? outcome;
   final String outcomeNote;
   final DateTime? outcomeAt;
+
+  /// 功能自帶的資料（例如問事的 topic／school／verdict，重看解讀用）。
+  final Map<String, Object?> meta;
 
   bool get hasOutcome => outcome != null;
 
@@ -61,6 +65,7 @@ class QimenRecord {
         outcome: clearOutcome ? null : (outcome ?? this.outcome),
         outcomeNote: outcomeNote ?? this.outcomeNote,
         outcomeAt: clearOutcome ? null : (outcomeAt ?? this.outcomeAt),
+        meta: meta,
       );
 
   Map<String, Object?> toJson() => {
@@ -74,6 +79,7 @@ class QimenRecord {
         if (outcome != null) 'outcome': outcome!.name,
         if (outcomeNote.isNotEmpty) 'outcomeNote': outcomeNote,
         if (outcomeAt != null) 'outcomeAt': outcomeAt!.toUtc().toIso8601String(),
+        if (meta.isNotEmpty) 'meta': meta,
       };
 
   /// 格式不對回傳 null（略過該筆，不讓整份檔案讀不出來）。
@@ -97,6 +103,7 @@ class QimenRecord {
         outcome: byName(RecordOutcome.values, j['outcome']),
         outcomeNote: j['outcomeNote'] as String? ?? '',
         outcomeAt: j['outcomeAt'] == null ? null : DateTime.parse(j['outcomeAt'] as String).toLocal(),
+        meta: j['meta'] is Map ? (j['meta'] as Map).cast<String, Object?>() : const {},
       );
     } catch (_) {
       return null;

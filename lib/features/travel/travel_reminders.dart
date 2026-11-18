@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app/settings/app_settings.dart';
+import '../../app/widgets/hour_window.dart';
 import '../../engine/engine.dart';
 import '../../l10n/l10n.dart';
 import '../../services/notifications.dart';
@@ -21,6 +22,26 @@ class TravelPrefs {
       TravelEvent.values.firstWhere((e) => e.name == _p.getString('travel_event'), orElse: () => TravelEvent.general);
   Future<void> setEvent(TravelEvent e) => _p.setString('travel_event', e.name);
 
+  /// 吉時前幾分鐘通知（10／20／30／60）。
+  static const leadOptions = [10, 20, 30, 60];
+  int get leadMinutes {
+    final v = _p.getInt('travel_notify_lead') ?? 10;
+    return leadOptions.contains(v) ? v : 10;
+  }
+
+  Future<void> setLeadMinutes(int v) => _p.setInt('travel_notify_lead', v);
+
+  /// 推播時段（預設 7–21 點，可設全天）。
+  HourWindow get window => HourWindow.read(_p.getInt('travel_notify_from'), _p.getInt('travel_notify_to'));
+  Future<void> setWindow(HourWindow w) async {
+    await _p.setInt('travel_notify_from', w.from);
+    await _p.setInt('travel_notify_to', w.to);
+  }
+
+  /// 每天最多幾則（1–3）。
+  int get perDay => (_p.getInt('travel_notify_per_day') ?? 1).clamp(1, 3);
+  Future<void> setPerDay(int v) => _p.setInt('travel_notify_per_day', v);
+
   /// 是否已請求過通知權限（第一次看到結果時請求一次）。
   bool get askedPermission => _p.getBool('notify_permission_asked') ?? false;
   Future<void> setAskedPermission() => _p.setBool('notify_permission_asked', true);
@@ -30,8 +51,8 @@ class TravelPrefs {
   Future<void> setIntroSeen() => _p.setBool('travel_intro_seen', true);
 }
 
-/// 吉時推播：一次排未來 7 天，每天 7–21 點間最佳的吉時（未達「吉」的日子不提醒），開始前 10 分鐘通知。
-/// App 每次啟動、切換事類或開關時重排。
+/// 吉時推播：一次排未來 7 天，每天在設定時段內最佳的 1–3 個吉時（未達「吉」不提醒），開始前 N 分鐘通知（預設 7–21 點、10 分鐘、1 則）。
+/// 夜間（22–6 點）的時辰在標題標示。App 每次啟動、切換事類或改設定時重排。
 class TravelReminders {
   TravelReminders._();
 
@@ -49,9 +70,13 @@ class TravelReminders {
     await Notifications.cancelRange(dailyFrom, dailyTo);
     if (!prefs.notify || !await Notifications.enabled()) return;
     final now = DateTime.now().toUtc();
-    final slots = const ChuXingPlanner().dailyBest(now, prefs.event, settings: timeSettings);
+    final w = prefs.window;
+    final slots = const ChuXingPlanner()
+        .dailyBest(now, prefs.event, settings: timeSettings, fromHour: w.from, toHour: w.to, perDay: prefs.perDay);
+    final lead = Duration(minutes: prefs.leadMinutes);
     var id = dailyFrom;
     for (final s in slots) {
+      if (id > dailyTo) break;
       final at = s.startUtc.subtract(lead);
       if (!at.isAfter(now)) continue;
       await _scheduleSlot(id++, s, prefs.event, at);
@@ -75,7 +100,7 @@ class TravelReminders {
     final dir = TravelText.direction(l, s.palace);
     return Notifications.schedule(
       id: id,
-      title: l.travelNotifyTitle(TravelText.event(l, event), dir),
+      title: _night(s) ? '${l.travelNotifyTitle(TravelText.event(l, event), dir)}${l.travelNightTag}' : l.travelNotifyTitle(TravelText.event(l, event), dir),
       body: l.travelNotifyBody(TravelText.timeRange(s), dir, QimenTerms.door(s.door, lang)),
       atUtc: at,
       channelId: channelId,
@@ -83,6 +108,9 @@ class TravelReminders {
       payload: payload,
     );
   }
+
+  static bool _night(TravelSlot s) =>
+      HourWindow.isNight(const ChuXingPlanner().engine.calendar.clockTime(s.startUtc, timeSettings).hour);
 
   /// 點通知開出行訣頁。
   static const payload = 'travel';

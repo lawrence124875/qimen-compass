@@ -2,114 +2,117 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// 問事紀錄（比照謙卦卦記）：起局時間、事類、流派、問題，加上事後應驗回饋。
-/// 盤面與解讀不存，打開時依起局時間重算（引擎固定，結果一致）。
+import '../../core/records/record_store.dart';
+import '../../engine/engine.dart' hide Element;
+import '../../l10n/l10n.dart';
+import 'divination_content.dart';
+
+/// 五級文字（大吉／吉／平／小阻／阻）。
+String verdictLabel(AppLocalizations l, Verdict v) => switch (v) {
+      Verdict.great => l.levelGreat,
+      Verdict.good => l.levelGood,
+      Verdict.neutral => l.levelNeutral,
+      Verdict.minor => l.levelMinor,
+      Verdict.blocked => l.levelBlocked,
+    };
+
+/// 紀錄列表顯示的摘要：「求財・吉」。
+String divinationSummary(AppLocalizations l, DivinationText text, String topic, String verdict) {
+  final v = Verdict.values.asNameMap()[verdict];
+  return v == null ? text.topicName(topic) : '${text.topicName(topic)}${l.separator}${verdictLabel(l, v)}';
+}
+
+/// 問事紀錄：存在統一紀錄（`RecordKind.divination`，`meta` 帶 topic／school／verdict），
+/// 盤面與解讀不存，打開時依起局時間重算（引擎固定，結果一致）。應驗回饋對應紀錄的 outcome。
 class JournalEntry {
-  JournalEntry({
-    required this.id,
-    required this.askedAt,
-    required this.topic,
-    required this.school,
-    required this.question,
-    required this.verdict,
-    this.feedback,
-  });
+  JournalEntry(this.record);
 
-  final int id;
-  final DateTime askedAt;
-  final String topic, school, question;
+  QimenRecord record;
 
-  /// 當時的五級（Verdict.name），列表顯示用。
-  final String verdict;
+  String get id => record.id;
+  DateTime get askedAt => record.chartAt;
+  String get topic => record.meta['topic'] as String? ?? '';
+  String get school => record.meta['school'] as String? ?? '';
+  String get verdict => record.meta['verdict'] as String? ?? '';
+  String get question => record.title;
 
-  /// 事後回饋：true 應驗、false 不準、null 未回饋。
-  bool? feedback;
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'askedAt': askedAt.toUtc().toIso8601String(),
-        'topic': topic,
-        'school': school,
-        'question': question,
-        'verdict': verdict,
-        if (feedback != null) 'feedback': feedback,
+  /// 事後回饋：true 應驗、false 不準、null 未回饋（部分應驗當作應驗）。
+  bool? get feedback => switch (record.outcome) {
+        null => null,
+        RecordOutcome.notMatched => false,
+        _ => true,
       };
 
-  factory JournalEntry.fromJson(Map<String, dynamic> j) => JournalEntry(
-        id: j['id'] as int,
-        askedAt: DateTime.parse(j['askedAt'] as String),
-        topic: j['topic'] as String,
-        school: j['school'] as String,
-        question: j['question'] as String? ?? '',
-        verdict: j['verdict'] as String,
-        feedback: j['feedback'] as bool?,
-      );
+  static bool isDivination(QimenRecord r) => r.kind == RecordKind.divination && r.meta['topic'] is String;
 }
 
 class DivinationJournal {
-  DivinationJournal._(this._prefs, this.entries);
+  DivinationJournal(this._store);
 
-  static const _key = 'qm_div_journal';
-  static const _schemaVersion = 1;
+  final RecordStore _store;
 
-  /// 最多保留筆數（超過刪最舊的）。
-  static const maxEntries = 200;
+  static const _legacyKey = 'qm_div_journal';
 
-  final SharedPreferences _prefs;
-
-  /// 新的在前。
-  final List<JournalEntry> entries;
-
-  static Future<DivinationJournal> load() async {
+  /// 舊版（SharedPreferences `qm_div_journal`）搬進統一紀錄，只做一次；id 沿用避免重複。
+  static Future<void> migrate(RecordStore store) async {
     final prefs = await SharedPreferences.getInstance();
-    final list = <JournalEntry>[];
+    final raw = prefs.getString(_legacyKey);
+    if (raw == null) return;
+    final out = <QimenRecord>[];
+    final content = await DivinationContent.load(L10n.language);
+    final l = L10n.current;
     try {
-      final j = jsonDecode(prefs.getString(_key) ?? '{}') as Map<String, dynamic>;
+      final j = jsonDecode(raw) as Map<String, dynamic>;
       for (final e in (j['entries'] as List?) ?? const []) {
-        list.add(JournalEntry.fromJson(e as Map<String, dynamic>));
+        final m = e as Map<String, dynamic>;
+        final askedAt = DateTime.parse(m['askedAt'] as String).toLocal();
+        final fb = m['feedback'] as bool?;
+        out.add(QimenRecord(
+          id: 'div${m['id']}',
+          createdAt: askedAt,
+          kind: RecordKind.divination,
+          chartAt: askedAt,
+          summary: content == null
+              ? '${m['topic']}'
+              : divinationSummary(l, content.text, m['topic'] as String, m['verdict'] as String? ?? ''),
+          title: m['question'] as String? ?? '',
+          outcome: fb == null ? null : (fb ? RecordOutcome.matched : RecordOutcome.notMatched),
+          meta: {'topic': m['topic'], 'school': m['school'], 'verdict': m['verdict']},
+        ));
       }
     } catch (_) {}
-    return DivinationJournal._(prefs, list);
+    if (out.isNotEmpty) await store.addMissing(out);
+    await prefs.remove(_legacyKey);
   }
 
-  Future<void> _save() => _prefs.setString(
-      _key, jsonEncode({'schemaVersion': _schemaVersion, 'entries': [for (final e in entries) e.toJson()]}));
-
+  /// 新增一筆（問事不受免費紀錄上限限制，屬訂閱功能）。[summary] 例「求財・吉」。
   Future<JournalEntry> add({
     required DateTime askedAt,
     required String topic,
     required String school,
     required String question,
     required String verdict,
+    required String summary,
   }) async {
-    final e = JournalEntry(
-      id: DateTime.now().microsecondsSinceEpoch,
-      askedAt: askedAt,
-      topic: topic,
-      school: school,
-      question: question,
-      verdict: verdict,
+    final r = QimenRecord(
+      id: '${DateTime.now().microsecondsSinceEpoch}',
+      createdAt: DateTime.now(),
+      kind: RecordKind.divination,
+      chartAt: askedAt,
+      summary: summary,
+      title: question,
+      meta: {'topic': topic, 'school': school, 'verdict': verdict},
     );
-    entries.insert(0, e);
-    if (entries.length > maxEntries) entries.removeRange(maxEntries, entries.length);
-    await _save();
-    return e;
+    await _store.save(r);
+    return JournalEntry(r);
   }
 
-  Future<void> setFeedback(int id, bool? value) async {
-    for (final e in entries) {
-      if (e.id == id) e.feedback = value;
-    }
-    await _save();
-  }
-
-  Future<void> remove(JournalEntry e) async {
-    entries.removeWhere((x) => x.id == e.id);
-    await _save();
-  }
-
-  Future<void> restore(JournalEntry e, int index) async {
-    entries.insert(index.clamp(0, entries.length), e);
-    await _save();
+  Future<void> setFeedback(JournalEntry e, bool? value) async {
+    e.record = e.record.copyWith(
+      outcome: value == null ? null : (value ? RecordOutcome.matched : RecordOutcome.notMatched),
+      clearOutcome: value == null,
+      outcomeAt: value == null ? null : DateTime.now(),
+    );
+    await _store.save(e.record);
   }
 }

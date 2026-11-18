@@ -6,6 +6,7 @@ import '../../core/records/record_store.dart';
 import '../../l10n/l10n.dart';
 import '../../shared/premium/ad_banner.dart';
 import '../../shared/premium/paywall_page.dart';
+import '../divination/divination_journal.dart';
 import 'record_actions.dart';
 import 'record_detail_page.dart';
 
@@ -32,7 +33,10 @@ String formatRecordTime(DateTime t) {
 /// 紀錄列表（比照謙卦卦記）：搜尋、依種類／待回饋篩選、左滑刪除可復原、應驗統計、備份還原。
 /// 免費版只顯示最近 [FreeLimits.recordDays] 天，較早的上鎖（點了開訂閱頁）。
 class RecordListPage extends StatefulWidget {
-  const RecordListPage({super.key});
+  const RecordListPage({super.key, this.initialKind});
+
+  /// 從功能頁開啟時預先篩選（例如問事頁的「紀錄」按鈕）。
+  final RecordKind? initialKind;
 
   @override
   State<RecordListPage> createState() => _RecordListPageState();
@@ -42,7 +46,16 @@ enum _Filter { all, pending }
 
 class _RecordListPageState extends State<RecordListPage> {
   final _search = TextEditingController();
-  Object _filter = _Filter.all; // _Filter 或 RecordKind
+  late Object _filter = widget.initialKind ?? _Filter.all; // _Filter 或 RecordKind
+
+  @override
+  void initState() {
+    super.initState();
+    // 舊版問事紀錄搬進統一紀錄（只做一次）
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) DivinationJournal.migrate(AppServices.of(context).records);
+    });
+  }
 
   @override
   void dispose() {
@@ -106,7 +119,7 @@ class _RecordListPageState extends State<RecordListPage> {
               );
             }
             final cutoff = DateTime.now().subtract(Duration(days: s.limits.recordDays));
-            final kinds = {for (final r in all) r.kind}.toList()..sort((a, b) => a.index.compareTo(b.index));
+            final kinds = {for (final r in all) r.kind, if (widget.initialKind != null) widget.initialKind!}.toList()..sort((a, b) => a.index.compareTo(b.index));
             final shown = all.where(_pass).toList();
             final judged = all.where((r) => r.hasOutcome).toList();
             int count(RecordOutcome o) => judged.where((r) => r.outcome == o).length;

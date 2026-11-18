@@ -140,13 +140,20 @@ class FloorPlan {
 /// 一間房子的宅盤資料。資料 JSON 帶 schemaVersion（HANDOFF §14）。
 class House {
   House({
+    String? id,
+    this.name = '',
     this.sittingMethod = SittingMethod.door,
     this.facing,
     this.moveIn,
     this.moveInHasTime = false,
     List<MarkedRoom>? marked,
     this.plan,
-  }) : marked = marked ?? [];
+  })  : id = id ?? DateTime.now().microsecondsSinceEpoch.toRadixString(36),
+        marked = marked ?? [];
+
+  /// 多間房子：識別碼與名稱（空白名稱顯示「我的家」）。
+  final String id;
+  String name;
 
   static const schemaVersion = 1;
 
@@ -182,6 +189,8 @@ class House {
 
   Map<String, Object?> toJson() => {
         'schemaVersion': schemaVersion,
+        'id': id,
+        'name': name,
         'sm': sittingMethod.name,
         'f': facing,
         if (moveIn != null) 'mi': moveIn!.toIso8601String(),
@@ -191,6 +200,8 @@ class House {
       };
 
   static House fromJson(Map<String, Object?> j) => House(
+        id: j['id'] as String?,
+        name: j['name'] as String? ?? '',
         sittingMethod: SittingMethod.values.firstWhere((m) => m.name == j['sm'], orElse: () => SittingMethod.door),
         facing: (j['f'] as num?)?.toDouble(),
         moveIn: DateTime.tryParse(j['mi'] as String? ?? ''),
@@ -200,25 +211,91 @@ class House {
       );
 }
 
-/// 宅盤存取（SharedPreferences，鍵 `qm_house`）。目前只存一間。
+/// 宅盤存取（SharedPreferences）：多間房子存在 `qm_houses`（schemaVersion 1：current＋houses），
+/// 舊版單間 `qm_house` 第一次讀取時搬成第一間。
 class HouseStore {
   HouseStore._();
 
-  static const _key = 'qm_house';
+  static const _legacyKey = 'qm_house';
+  static const _key = 'qm_houses';
+  static const schemaVersion = 1;
 
-  static Future<House> load() async {
+  static Future<(List<House>, String?)> _read() async {
+    final p = await SharedPreferences.getInstance();
     try {
-      final s = (await SharedPreferences.getInstance()).getString(_key);
-      if (s == null) return House();
-      return House.fromJson((jsonDecode(s) as Map).cast<String, Object?>());
-    } catch (_) {
-      return House();
-    }
+      final s = p.getString(_key);
+      if (s != null) {
+        final j = (jsonDecode(s) as Map).cast<String, Object?>();
+        final list = [
+          for (final h in (j['houses'] as List? ?? const [])) House.fromJson((h as Map).cast<String, Object?>()),
+        ];
+        return (list, j['current'] as String?);
+      }
+      final legacy = p.getString(_legacyKey);
+      if (legacy != null) {
+        final h = House.fromJson((jsonDecode(legacy) as Map).cast<String, Object?>());
+        await _write([h], h.id);
+        await p.remove(_legacyKey);
+        return ([h], h.id);
+      }
+    } catch (_) {}
+    return (<House>[], null);
   }
 
-  static Future<void> save(House h) async {
+  static Future<void> _write(List<House> houses, String? current) async {
     try {
-      await (await SharedPreferences.getInstance()).setString(_key, jsonEncode(h.toJson()));
+      await (await SharedPreferences.getInstance()).setString(
+          _key,
+          jsonEncode({
+            'schemaVersion': schemaVersion,
+            'current': current,
+            'houses': [for (final h in houses) h.toJson()],
+          }));
     } catch (_) {}
+  }
+
+  /// 全部房子（依建立順序）。
+  static Future<List<House>> all() async => (await _read()).$1;
+
+  /// 目前選的房子；一間都沒有時建立一間（尚未存檔，第一次 [save] 才寫入）。
+  static Future<House> load() async {
+    final (list, current) = await _read();
+    if (list.isEmpty) return House();
+    return list.firstWhere((h) => h.id == current, orElse: () => list.first);
+  }
+
+  /// 存一間（不存在就加入），並設為目前的房子。
+  static Future<void> save(House h) async {
+    final (list, _) = await _read();
+    final i = list.indexWhere((x) => x.id == h.id);
+    if (i >= 0) {
+      list[i] = h;
+    } else {
+      list.add(h);
+    }
+    await _write(list, h.id);
+  }
+
+  static Future<void> select(String id) async {
+    final (list, _) = await _read();
+    await _write(list, id);
+  }
+
+  /// 刪除一間，回傳原本的位置（供復原）；刪掉目前那間時改選第一間。
+  static Future<int> delete(String id) async {
+    final (list, current) = await _read();
+    final i = list.indexWhere((x) => x.id == id);
+    if (i < 0) return -1;
+    list.removeAt(i);
+    await _write(list, current == id ? (list.isEmpty ? null : list.first.id) : current);
+    return i;
+  }
+
+  /// 復原刪除。
+  static Future<void> restore(House h, int index) async {
+    final (list, _) = await _read();
+    if (list.any((x) => x.id == h.id)) return;
+    list.insert(index.clamp(0, list.length), h);
+    await _write(list, h.id);
   }
 }
