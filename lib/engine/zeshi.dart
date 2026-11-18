@@ -1,5 +1,6 @@
 import 'calendar_service.dart';
 import 'chuxing.dart';
+import 'geju.dart';
 import 'ganzhi.dart';
 import 'qimen_types.dart';
 import 'shijia_engine.dart';
@@ -40,6 +41,8 @@ enum ZeShiFlag {
   sanQi, // 三奇（乙丙丁）臨用神宮
   qingLong, // 青龍返首（天盤戊加地盤丙）
   feiNiao, // 飛鳥跌穴（天盤丙加地盤戊）
+  goodStar, // 天輔、天禽、天心同宮
+  sanDun, // 天遁、地遁、人遁
   mingJi, // 年命宮逢吉門
   // 扣分
   qiuSi, // 用神門受宮剋（囚死）
@@ -51,6 +54,9 @@ enum ZeShiFlag {
   ruMu,
   badGod,
   mingXiong, // 年命宮逢空亡或入墓
+  badStar, // 天蓬、天芮同宮
+  siXiong, // 四凶格（青龍逃走、白虎猖狂、朱雀投江、螣蛇夭矯）
+  gengBing, // 太白入熒、熒入太白
 }
 
 /// 使用者生辰（選填）：年命（出生年干支）與日干。
@@ -232,6 +238,9 @@ class ZeShiPlanner {
     if (cell.heavenStems.any((s) => s >= 1 && s <= 3)) plus.add(ZeShiFlag.sanQi);
     if (cell.heavenStems.contains(4) && cell.earthStems.contains(2)) plus.add(ZeShiFlag.qingLong);
     if (cell.heavenStems.contains(2) && cell.earthStems.contains(4)) plus.add(ZeShiFlag.feiNiao);
+    for (final g in geJuOf(cell)) {
+      (g.good ? plus : minus).add(_geJuFlag[g]!);
+    }
 
     // 年命、日干：所落宮（天盤）逢吉門加分，逢空亡、入墓扣分。
     if (birth != null) {
@@ -256,6 +265,14 @@ class ZeShiPlanner {
     final c = engine.calendar.clockTime(utc, s);
     return c.year * 10000 + c.month * 100 + c.day;
   }
+
+  static const _geJuFlag = {
+    GeJu.goodStar: ZeShiFlag.goodStar,
+    GeJu.sanDun: ZeShiFlag.sanDun,
+    GeJu.badStar: ZeShiFlag.badStar,
+    GeJu.siXiong: ZeShiFlag.siXiong,
+    GeJu.gengBing: ZeShiFlag.gengBing,
+  };
 
   static const _goodGods = {God.zhiFu, God.taiYin, God.liuHe, God.jiuDi, God.jiuTian};
   static const _badGods = {God.baiHu, God.xuanWu, God.tengShe};

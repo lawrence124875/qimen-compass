@@ -30,6 +30,11 @@ class TravelText {
         TravelFlag.ruMu => l.flagRuMu,
         TravelFlag.goodGod => l.flagGoodGod,
         TravelFlag.badGod => l.flagBadGod,
+        TravelFlag.goodStar => l.flagGoodStar,
+        TravelFlag.sanDun => l.flagSanDun,
+        TravelFlag.badStar => l.flagBadStar,
+        TravelFlag.siXiong => l.flagSiXiong,
+        TravelFlag.gengBing => l.flagGengBing,
       };
 
   static String direction(AppLocalizations l, int palace) => switch (palace) {

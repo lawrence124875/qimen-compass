@@ -33,6 +33,11 @@ class ZeShiText {
         ZeShiFlag.ruMu => l.flagRuMu,
         ZeShiFlag.badGod => l.flagBadGod,
         ZeShiFlag.mingXiong => l.zeshiFlagMingXiong,
+        ZeShiFlag.goodStar => l.flagGoodStar,
+        ZeShiFlag.sanDun => l.flagSanDun,
+        ZeShiFlag.badStar => l.flagBadStar,
+        ZeShiFlag.siXiong => l.flagSiXiong,
+        ZeShiFlag.gengBing => l.flagGengBing,
       };
 
   /// 例如「11/18（三）11:00–13:00 午時」（裝置當地時間）。

@@ -1,5 +1,6 @@
 import 'calendar_service.dart';
 import 'ganzhi.dart';
+import 'geju.dart';
 import 'qimen_types.dart';
 import 'shijia_engine.dart';
 
@@ -28,7 +29,7 @@ enum TravelEvent {
 enum TravelLevel { great, good, neutral, minor, blocked }
 
 /// 扣分或加分的原因（UI 用來顯示提示）。
-enum TravelFlag { menPo, kongWang, fuYin, fanYin, jiXing, ruMu, goodGod, badGod }
+enum TravelFlag { menPo, kongWang, fuYin, fanYin, jiXing, ruMu, goodGod, badGod, goodStar, sanDun, badStar, siXiong, gengBing }
 
 /// 宮位 → 方位角（度，正北＝0，順時針）。
 const Map<int, double> palaceBearing = {1: 0, 8: 45, 3: 90, 4: 135, 9: 180, 2: 225, 7: 270, 6: 315};
@@ -170,6 +171,10 @@ class ChuXingPlanner {
       } else if (_badGods.contains(cell.god)) {
         flags.add(TravelFlag.badGod);
         score -= 1;
+      }
+      for (final g in geJuOf(cell)) {
+        flags.add(TravelFlag.values.byName(g.name));
+        score += g.good ? 1 : -1;
       }
       final slot = TravelSlot(
         startUtc: startUtc,
