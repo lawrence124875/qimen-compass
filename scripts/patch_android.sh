@@ -74,8 +74,8 @@ cat >> android/app/proguard-rules.pro << 'PRO'
 PRO
 
 if [ -z "${ANDROID_KEYSTORE_BASE64:-}" ]; then
-  echo "::warning::尚未設定上傳金鑰 Secrets，本次以除錯金鑰簽署（安裝新版前須先移除舊版）"
-  echo "SIGNING=除錯金鑰" >> "$GITHUB_ENV"
+  echo "::warning::尚未設定上傳金鑰 Secrets，本次以固定測試金鑰簽署（可覆蓋安裝）"
+  echo "SIGNING=固定測試金鑰" >> "$GITHUB_ENV"
   exit 0
 fi
 
