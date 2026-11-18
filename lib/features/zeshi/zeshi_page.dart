@@ -30,7 +30,10 @@ class _ZeShiPageState extends State<ZeShiPage> {
   static const _kPerDay = 'qm_zeshi_per_day';
   static const _kFrom = 'qm_zeshi_from', _kTo = 'qm_zeshi_to';
   static const dayOptions = [7, 14, 30, 90, 180, 365];
-  static const topOptions = [5, 10, 20];
+  static const topOptions = [5, 10, 20, 30];
+
+  /// 同一天最多幾筆；0＝不限（一天最多 12 個時辰）。
+  static const perDayOptions = [1, 2, 3, 5, 0];
 
   SharedPreferences? _prefs;
   ZeShiEvent _event = ZeShiEvent.contract;
@@ -61,7 +64,8 @@ class _ZeShiPageState extends State<ZeShiPage> {
       _days = dayOptions.contains(d) ? d : 7;
       final t = p.getInt(_kTop) ?? 5;
       _top = topOptions.contains(t) ? t : 5;
-      _perDay = (p.getInt(_kPerDay) ?? 2).clamp(1, 3);
+      final pd = p.getInt(_kPerDay) ?? 2;
+      _perDay = perDayOptions.contains(pd) ? pd : 2;
       _window = HourWindow.read(p.getInt(_kFrom), p.getInt(_kTo));
       _birth = birth;
       _useBirth = birth != null;
@@ -118,7 +122,7 @@ class _ZeShiPageState extends State<ZeShiPage> {
       }
     }
     if (!mounted || id != _runId) return;
-    final r = _planner.pick(all.values.toList(), top: _top, perDay: _perDay, settings: settings);
+    final r = _planner.pick(all.values.toList(), top: _top, perDay: _perDay == 0 ? 12 : _perDay, settings: settings);
     setState(() {
       _result = r;
       _progress = null;
@@ -155,6 +159,8 @@ class _ZeShiPageState extends State<ZeShiPage> {
     _prefs?.setInt(_kTo, w.to);
     _run();
   }
+
+  String _perDayLabel(AppLocalizations l) => _perDay == 0 ? l.zeshiPerDayNoLimit : l.zeshiPerDayLimit(_perDay);
 
   String _daysLabel(AppLocalizations l, int d) => d == 365 ? l.zeshiOneYear : l.zeshiDays(d);
 
@@ -241,7 +247,7 @@ class _ZeShiPageState extends State<ZeShiPage> {
                   tilePadding: EdgeInsets.zero,
                   childrenPadding: const EdgeInsets.only(bottom: 8),
                   title: Text(l.zeshiMoreOptions),
-                  subtitle: Text(l.zeshiOptionsSummary(_top, _perDay, _window.label(l)),
+                  subtitle: Text(l.zeshiOptionsSummary(_top, _perDayLabel(l), _window.label(l)),
                       style: theme.textTheme.bodySmall?.copyWith(color: context.qm.textMuted)),
                   expandedCrossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -253,9 +259,11 @@ class _ZeShiPageState extends State<ZeShiPage> {
                     const SizedBox(height: 8),
                     Text(l.zeshiPerDayMax),
                     Wrap(spacing: 8, children: [
-                      for (final n in const [1, 2, 3])
-                        ChoiceChip(label: Text('$n'), selected: n == _perDay, onSelected: (_) => _setPerDay(n)),
+                      for (final n in perDayOptions)
+                        ChoiceChip(
+                            label: Text(n == 0 ? l.zeshiNoLimit : '$n'), selected: n == _perDay, onSelected: (_) => _setPerDay(n)),
                     ]),
+                    Text(l.zeshiPerDayWhy, style: theme.textTheme.bodySmall?.copyWith(color: context.qm.textMuted)),
                     const SizedBox(height: 8),
                     HourWindowPicker(value: _window, onChanged: _setWindow),
                   ],
@@ -307,7 +315,7 @@ class _ZeShiPageState extends State<ZeShiPage> {
                       onCalendar: () => _addToCalendar(result[i]),
                     ),
                 const SizedBox(height: 12),
-                Text(l.zeshiFootnote, style: theme.textTheme.bodySmall?.copyWith(color: context.qm.textMuted)),
+                Text(l.zeshiFootnote(_window.label(l), _perDayLabel(l)), style: theme.textTheme.bodySmall?.copyWith(color: context.qm.textMuted)),
                 const SizedBox(height: 4),
                 Text(l.homeDisclaimer, style: theme.textTheme.bodySmall?.copyWith(color: context.qm.textMuted)),
               ],

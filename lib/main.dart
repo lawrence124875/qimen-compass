@@ -54,6 +54,7 @@ Future<void> main() async {
   appStarted = true;
   syncAds();
   // 吉時推播、每日提醒：每次啟動重排未來 7 天（通知權限未允許時不排，啟動時也不請求）。
+  AppSettings.instance.refreshGps().catchError((_) {});
   TravelReminders.reschedule().catchError((_) {});
   DailyReminder.reschedule().catchError((_) {});
 }

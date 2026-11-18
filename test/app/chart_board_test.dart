@@ -50,4 +50,26 @@ void main() {
     ));
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets('系統字級放大、標記多也不溢位重疊', (tester) async {
+    // 找一個有宮帶 3 個以上標記的盤
+    var c = chart;
+    for (var h = 0; h < 24 * 60; h++) {
+      final x = const ShiJiaEngine().compute(DateTime.utc(2026, 1, 1).add(Duration(hours: 2 * h)), settings: const TimeSettings());
+      if (const [1, 2, 3, 4, 6, 7, 8, 9].any((p) => marksOf(x[p]).length >= 3)) {
+        c = x;
+        break;
+      }
+    }
+    for (final w in const [240.0, 360.0]) {
+      await tester.pumpWidget(MaterialApp(
+        theme: AppTheme.of(Brightness.light),
+        home: MediaQuery(
+          data: const MediaQueryData(textScaler: TextScaler.linear(2)),
+          child: Center(child: SizedBox(width: w, child: ChartBoard(chart: c))),
+        ),
+      ));
+      expect(tester.takeException(), isNull);
+    }
+  });
 }
