@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
-# CI 產生 android/ 後套用 App 設定：桌面名稱、套件名稱、不鎖方向、上傳金鑰簽署（比照謙卦 iching-cards）。
+# CI 產生 android/ 後套用 App 設定：桌面名稱與圖示、套件名稱、不鎖方向、上傳金鑰簽署（比照謙卦 iching-cards）。
 # 上傳金鑰的四個 Secrets 尚未設定時，改用除錯金鑰簽署（只能自己側載測試）。
 set -euo pipefail
 
 MANIFEST="android/app/src/main/AndroidManifest.xml"
 GRADLE="android/app/build.gradle.kts"
 APP_ID="com.lclab.qimen"
-APP_LABEL="奇門羅盤"
-
-sed -i "s/android:label=\"[^\"]*\"/android:label=\"${APP_LABEL}\"/" "$MANIFEST"
+# 圖示與各語系桌面名稱：branding/android/res（由 branding/*.svg 產生，見 branding/README.md）
+cp -r branding/android/res/. android/app/src/main/res/
+sed -i 's/android:label="[^"]*"/android:label="@string\/app_name"/' "$MANIFEST"
+grep -q 'android:label="@string/app_name"' "$MANIFEST" && [ -f android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml ] \
+  && echo "圖示＋各語系名稱已套用" || { echo "::error::圖示或名稱設定失敗"; exit 1; }
 # 套件名稱（Play 身分，上傳後不能改）：只改 applicationId，namespace 維持 flutter create 的值
 sed -i "s/applicationId = \"[^\"]*\"/applicationId = \"${APP_ID}\"/" "$GRADLE"
 grep -q "applicationId = \"${APP_ID}\"" "$GRADLE" && echo "套件名稱：${APP_ID}" || { echo "::error::套件名稱設定失敗"; exit 1; }
