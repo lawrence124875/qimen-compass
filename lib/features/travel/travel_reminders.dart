@@ -38,8 +38,9 @@ class TravelPrefs {
     await _p.setInt('travel_notify_to', w.to);
   }
 
-  /// 每天最多幾則（1–3）。
-  int get perDay => (_p.getInt('travel_notify_per_day') ?? 1).clamp(1, 3);
+  /// 每天最多幾則（1–6；只提醒達「吉」的時辰，實際可能較少）。
+  static const perDayOptions = [1, 2, 3, 4, 5, 6];
+  int get perDay => (_p.getInt('travel_notify_per_day') ?? 1).clamp(1, 6);
   Future<void> setPerDay(int v) => _p.setInt('travel_notify_per_day', v);
 
   /// 是否已請求過通知權限（第一次看到結果時請求一次）。
@@ -51,12 +52,14 @@ class TravelPrefs {
   Future<void> setIntroSeen() => _p.setBool('travel_intro_seen', true);
 }
 
-/// 吉時推播：一次排未來 7 天，每天在設定時段內最佳的 1–3 個吉時（未達「吉」不提醒），開始前 N 分鐘通知（預設 7–21 點、10 分鐘、1 則）。
+/// 吉時推播：一次排未來 7 天，每天在設定時段內最佳的 1–6 個吉時（未達「吉」不提醒），開始前 N 分鐘通知（預設 7–21 點、10 分鐘、1 則）。
 /// 夜間（22–6 點）的時辰在標題標示。App 每次啟動、切換事類或改設定時重排。
 class TravelReminders {
   TravelReminders._();
 
-  static const dailyFrom = 1000, dailyTo = 1019;
+  /// 每天 6 則 × 7 天＝42，留足空間。舊版用 1000–1019（重排時一併清掉）。
+  static const dailyFrom = 1100, dailyTo = 1159;
+  static const _legacyFrom = 1000, _legacyTo = 1019;
   static const slotReminderFrom = 1020, slotReminderTo = 1039;
   static const sessionEnd = 1040;
   static const lead = Duration(minutes: 10);
@@ -68,6 +71,7 @@ class TravelReminders {
   static Future<void> reschedule() async {
     final prefs = await TravelPrefs.load();
     await Notifications.cancelRange(dailyFrom, dailyTo);
+    await Notifications.cancelRange(_legacyFrom, _legacyTo);
     if (!prefs.notify || !await Notifications.enabled()) return;
     final now = DateTime.now().toUtc();
     final w = prefs.window;

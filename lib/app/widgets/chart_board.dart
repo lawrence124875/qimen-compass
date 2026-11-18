@@ -40,7 +40,9 @@ class ChartBoard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final qm = context.qm;
-    return AspectRatio(
+    // 盤面字級已依格子大小計算，再套系統字級放大會擠壓重疊，所以盤內固定不跟系統放大。
+    return MediaQuery.withNoTextScaling(
+      child: AspectRatio(
       aspectRatio: 1,
       child: LayoutBuilder(builder: (context, box) {
         final cell = box.maxWidth / 3;
@@ -73,6 +75,7 @@ class ChartBoard extends StatelessWidget {
           ),
         );
       }),
+    ),
     );
   }
 }
@@ -116,19 +119,27 @@ class PalaceCell extends StatelessWidget {
                 const Spacer(),
                 fit(Text(stemsText(pc.heavenStems), style: st(0.15, qm.primary, w: FontWeight.w700))),
               ]),
+              // 中段整體縮放到可用高度內：標記多（空、馬、迫、刑、墓）時不再溢出蓋到下方宮名、地盤干。
               Expanded(
-                child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  fit(Text(starsText(pc.stars), style: st(0.13, qm.text))),
-                  if (door != null)
-                    fit(Text(QimenTerms.doorName(door, L10n.language), style: st(0.17, qm.luck(door.luck), w: FontWeight.w700))),
-                  if (marks.isNotEmpty)
-                    Padding(
-                      padding: EdgeInsets.only(top: s * 0.02),
-                      child: fit(Row(mainAxisSize: MainAxisSize.min, children: [
-                        for (final m in marks) _MarkChip(text: QimenTerms.markShort(m, L10n.language), size: s),
-                      ])),
+                child: ClipRect(
+                  child: Center(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Column(mainAxisSize: MainAxisSize.min, children: [
+                        Text(starsText(pc.stars), style: st(0.13, qm.text)),
+                        if (door != null)
+                          Text(QimenTerms.doorName(door, L10n.language), style: st(0.17, qm.luck(door.luck), w: FontWeight.w700)),
+                        if (marks.isNotEmpty)
+                          Padding(
+                            padding: EdgeInsets.only(top: s * 0.02),
+                            child: Row(mainAxisSize: MainAxisSize.min, children: [
+                              for (final m in marks) _MarkChip(text: QimenTerms.markShort(m, L10n.language), size: s),
+                            ]),
+                          ),
+                      ]),
                     ),
-                ]),
+                  ),
+                ),
               ),
               Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
                 fit(Text('${pc.name}${pc.palace}', style: st(0.1, qm.textMuted))),

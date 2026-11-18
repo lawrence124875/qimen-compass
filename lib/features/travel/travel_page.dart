@@ -8,6 +8,7 @@ import '../../l10n/l10n.dart';
 import '../../services/notifications.dart';
 import 'travel_intro.dart';
 import 'travel_log.dart';
+import 'travel_notify_options.dart';
 import 'travel_reminders.dart';
 import 'travel_session_page.dart';
 import 'travel_text.dart';
@@ -174,10 +175,23 @@ class _TravelPageState extends State<TravelPage> {
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,
                   title: Text(l.travelNotifySwitch),
-                  subtitle: Text(l.travelNotifyHint(TravelText.event(l, _event))),
+                  subtitle: Text(_prefs == null
+                      ? l.travelNotifyHint(TravelText.event(l, _event))
+                      : '${l.travelNotifyHint(TravelText.event(l, _event))}\n${travelNotifySummary(l, _prefs!)}'),
                   value: _notify,
                   onChanged: _setNotify,
                 ),
+                if (_notify && _prefs != null)
+                  Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: TextButton.icon(
+                      icon: const Icon(Icons.tune, size: 18),
+                      label: Text(l.travelNotifyOptions),
+                      onPressed: () => showTravelNotifyOptions(context, _prefs!, onChanged: () {
+                        if (mounted) setState(() {});
+                      }),
+                    ),
+                  ),
                 const SizedBox(height: 8),
                 Text(l.homeDisclaimer, style: theme.textTheme.bodySmall),
               ],

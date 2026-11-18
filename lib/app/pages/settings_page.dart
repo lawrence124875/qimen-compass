@@ -4,13 +4,13 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
 import '../settings/app_settings.dart';
-import '../settings/cities.dart';
+import '../settings/solar_city_picker.dart';
 import '../theme/app_theme.dart';
-import '../widgets/hour_window.dart';
 import '../../features/feedback/feedback_page.dart';
 import '../../features/records/record_actions.dart';
 import '../../features/reminders/daily_reminder.dart';
 import '../../features/share/share.dart';
+import '../../features/travel/travel_notify_options.dart';
 import '../../features/travel/travel_reminders.dart';
 import '../../shared/premium/ad_banner.dart';
 import '../../shared/premium/paywall_page.dart';
@@ -84,16 +84,15 @@ class SettingsPage extends StatelessWidget {
             ),
             sub(s.ziHour == ZiHourMode.nextDay ? l.ziNextDayHint : l.ziLateHint),
             label(l.settingsSolarTime),
-            DropdownButtonFormField<int>(
-              initialValue: s.solarCityIndex,
-              isExpanded: true,
-              decoration: const InputDecoration(border: OutlineInputBorder(), isDense: true),
-              items: [
-                DropdownMenuItem(value: -1, child: Text(l.solarTimeOff)),
-                for (var i = 0; i < kCities.length; i++)
-                  DropdownMenuItem(value: i, child: Text('${kCities[i].name(lang)}（${kCities[i].longitude.toStringAsFixed(1)}°）')),
-              ],
-              onChanged: (v) => s.solarCityIndex = v ?? -1,
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(alignment: AlignmentDirectional.centerStart, padding: const EdgeInsets.all(14)),
+              onPressed: () => showSolarCityPicker(context),
+              child: Row(children: [
+                Icon(s.solarCityIndex == AppSettings.solarGps ? Icons.my_location : Icons.location_city, size: 18),
+                const SizedBox(width: 10),
+                Expanded(child: Text(solarLabel(l, s, lang))),
+                const Icon(Icons.search, size: 18),
+              ]),
             ),
             sub(l.solarTimeHint),
             header(l.settingsGeneral),
@@ -217,58 +216,11 @@ class _TravelNotifyTileState extends State<_TravelNotifyTile> {
     ]);
   }
 
-  static String _lead(AppLocalizations l, int m) => m >= 60 ? l.travelLeadHour : l.travelLeadMinutes(m);
+  String _summary(AppLocalizations l, TravelPrefs p) => travelNotifySummary(l, p);
 
-  String _summary(AppLocalizations l, TravelPrefs p) =>
-      l.travelNotifySummary(_lead(l, p.leadMinutes), p.window.label(l), p.perDay);
-
-  Future<void> _openOptions(TravelPrefs p) async {
-    await showModalBottomSheet<void>(
-      context: context,
-      showDragHandle: true,
-      isScrollControlled: true,
-      builder: (sheet) => StatefulBuilder(builder: (sheet, setSheet) {
-        final l = sheet.l10n;
-        Future<void> update(Future<void> Function() f) async {
-          await f();
-          setSheet(() {});
-          if (mounted) setState(() {});
-        }
-
-        return SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
-            child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(l.travelNotifyOptions, style: Theme.of(sheet).textTheme.titleMedium),
-              const SizedBox(height: 12),
-              Text(l.travelLead),
-              const SizedBox(height: 6),
-              Wrap(spacing: 8, children: [
-                for (final m in TravelPrefs.leadOptions)
-                  ChoiceChip(
-                    label: Text(_lead(l, m)),
-                    selected: p.leadMinutes == m,
-                    onSelected: (_) => update(() => p.setLeadMinutes(m)),
-                  ),
-              ]),
-              const SizedBox(height: 12),
-              HourWindowPicker(value: p.window, onChanged: (w) => update(() => p.setWindow(w))),
-              if (p.window.from < 6 || p.window.to > 22)
-                Text(l.travelNightHint, style: Theme.of(sheet).textTheme.bodySmall),
-              const SizedBox(height: 12),
-              Text(l.travelPerDay),
-              const SizedBox(height: 6),
-              Wrap(spacing: 8, children: [
-                for (final n in const [1, 2, 3])
-                  ChoiceChip(label: Text('$n'), selected: p.perDay == n, onSelected: (_) => update(() => p.setPerDay(n))),
-              ]),
-            ]),
-          ),
-        );
-      }),
-    );
-    await TravelReminders.reschedule();
-  }
+  Future<void> _openOptions(TravelPrefs p) => showTravelNotifyOptions(context, p, onChanged: () {
+        if (mounted) setState(() {});
+      });
 }
 
 void _backupSheet(BuildContext context) {

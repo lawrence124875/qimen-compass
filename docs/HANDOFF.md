@@ -106,14 +106,14 @@
 - 引擎 `lib/engine/`：
   - `CalendarService`：節氣用 `lunar`（北京時間→UTC），日柱以儒略日自算、時柱五鼠遁；時區、真太陽時（經度＋NOAA 均時差）、子時換日（`nextDay` 23 點換日預設／`lateZi` 晚子時）
   - `ShiJiaEngine`：拆補法（預設）／置閏法（芒種／大雪三元後，下一上元符頭距夏至／冬至 >9 日則閏；已對照 zyqmdj.com 公開盤例：2016 閏芒種、2015 大雪不閏、2024 閏大雪、2017-03-14 陽七、2028-10-03 陰四）；地盤、值符值使、九星（禽寄芮）、八門（值使依時干數走九宮，入中寄坤）、八神（陽順陰逆）、空亡、馬星、伏吟反吟、門迫、擊刑、入墓
-  - `ChuXingPlanner`（`chuxing.dart`，出行訣）：事類→用神門（出行＝開休生取最佳、求財生、事業開、感情休、考試景）；每時辰以中點起局，基礎 4 分，門迫／空亡／伏吟／反吟／擊刑／入墓各 −1，吉神（值符、太陰、六合、九地、九天）+1、凶神（白虎、玄武、螣蛇）−1，格局（`geju.dart`：輔禽心、三遁 +1；蓬芮、四凶格、庚丙 −1，擇時與問事同樣計入）；五級 ≥5 大吉、4 吉、3 平、2 小阻、其餘阻；`dailyBest` 取每天 7–21 點最佳且達「吉」者
+  - `ChuXingPlanner`（`chuxing.dart`，出行訣）：事類→用神門（出行＝開休生取最佳、求財生、事業開、感情休、考試景）；每時辰以中點起局，基礎 4 分，門迫／空亡／伏吟／反吟／擊刑／入墓各 −1，吉神（值符、太陰、六合、九地、九天）+1、凶神（白虎、玄武、螣蛇）−1，格局（`geju.dart`：輔禽心、三遁 +1；蓬芮、四凶格、庚丙 −1，擇時與問事同樣計入）；五級 ≥5 大吉、4 吉、3 平、2 小阻、其餘阻；`dailyBest` 取每天設定時段內最佳 N 個且達「吉」者（推播：時段可全天、每天 1–6 則，ID 1100–1159；設定頁與出行訣頁共用 `travel_notify_options.dart`）。擇時同日筆數 1／2／3／5／不限（預設 2，避免前幾名擠在同一天），說明文字隨設定連動
   - 已有單元測試：日柱／時柱／節氣與 lunar 比對（1950–2060 抽樣）、地盤、結構不變量、九宮格 widget（深淺色、英文詳情、小尺寸）；盤面顯示起局依據（符頭、超神／接氣日數、閏局）；golden 35 組（拆補，來源 kinqimen 交叉比對，說明見 `test/golden/README.md`）
 
 - 介面（`lib/app/`，羅盤等畫面請直接沿用）：
   - 主題 `theme/app_theme.dart`＋`theme/qm_palette.dart`：謙卦「天玄地黃」定案；`context.qm` 取色（深淺各一份 ThemeExtension，含吉平凶 `luck()`、五行 `element()`、圖上文字 `QmPalette.onImage`）；字型 `kSans`／`kSerif`（帶 fallback），盤面文字用 `serif()`。引擎的 `Element` 與 Flutter 撞名，UI 檔 import engine 時 `hide Element`
   - 盤面 `widgets/chart_board.dart`：`ChartBoard(chart, highlight: {宮}, onTapPalace:)`（上南下北）、`PalaceCell`、`showPalaceSheet`／`PalaceDetail`、`marksOf`、`kBoardLayout`
   - 首頁 `home_page.dart`：`ChartInfo` 盤頭＋九宮格＋前後時辰切換＋出行訣入口，橫式左右排；右上 ⓘ 重看引導、分享盤面卡片（`widgets/share_capture.dart`，share_plus，擷取時加 App 名與聲明）
-  - 設定 `settings/app_settings.dart`（`AppSettings.instance`）：外觀；排盤：定元方法、子時換日、真太陽時（選城市 `settings/cities.dart`，不取位置權限）。排盤一律用 `timeSettingsAt(instant)`＋`juMethod`；`TravelReminders.timeSettings` 已接上（出行訣 planner 尚未吃 `juMethod`）
+  - 設定 `settings/app_settings.dart`（`AppSettings.instance`）：外觀；排盤：定元方法、子時換日、真太陽時（`settings/solar_city_picker.dart`：目前位置＝GPS 概略位置，`qm_solar_city`=-2、經度存 `qm_solar_lon`，啟動時靜默更新；或搜尋全球約 190 城 `settings/cities.dart`，前 22 個為舊索引勿改順序）。排盤一律用 `timeSettingsAt(instant)`＋`juMethod`；`TravelReminders.timeSettings` 已接上（出行訣 planner 尚未吃 `juMethod`）
   - 首次引導 `widgets/guide.dart`：`showGuide(context, id, [GuidePage×3], force:)`，看過記在 `qm_guide_seen_<id>`；新功能照此加
   - 比照謙卦共通功能（2026-11-17 完成）：
     - 服務層 `app/services.dart`（`AppServices.of(context)`；測試直接 `Services()`）：Firebase（`core/firebase/`，Analytics／Crashlytics／Remote Config，事件與參數 `qm_`）、意見回饋 Firestore `qm_feedback`、RevenueCat（權限 `premium`）、AdMob（`core/admob/`，單元 ID 由 CI dart-define；沒設定用測試 ID）、Play In-App Updates（`shared/widgets/update_prompt.dart` 包在首頁）

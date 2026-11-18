@@ -28,6 +28,20 @@ void main() {
     s.ziHour = ZiHourMode.nextDay;
   });
 
+  test('真太陽時城市：舊索引不變、可用中英文與國家搜尋', () {
+    expect(kCities[0].en, 'Taipei');
+    expect(kCities[21].en, 'Vancouver');
+    expect(kCities.length, greaterThan(150));
+    expect(kCities.where((c) => c.matches('纽约')).map((c) => c.en), contains('New York'));
+    expect(kCities.where((c) => c.matches('york')).map((c) => c.zh), contains('紐約'));
+    expect(kCities.where((c) => c.matches('brazil')).length, greaterThanOrEqualTo(3));
+    // 目前位置模式但還沒取得經度＝不修正
+    final s = AppSettings.instance;
+    s.solarCityIndex = AppSettings.solarGps;
+    expect(s.timeSettingsAt(DateTime.now()).trueSolarTime, isFalse);
+    s.solarCityIndex = -1;
+  });
+
   test('引導看過後記住', () {
     final s = AppSettings.instance;
     expect(s.guideSeen('home'), isFalse);
