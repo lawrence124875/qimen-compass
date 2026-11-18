@@ -21,6 +21,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      HAS_UPLOAD_KEY: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
     steps:
       - uses: actions/checkout@v5
 
@@ -43,6 +45,27 @@ jobs:
             flutter create --platforms=android --project-name=qimen_compass --org com.lclab .
           fi
           rm -f test/widget_test.dart
+
+      # 還沒設定上傳金鑰時，用 qimen-content 的固定除錯金鑰（signing/），每次建置簽章相同，測試版可覆蓋安裝、保留紀錄
+      - name: 取得固定測試金鑰
+        if: ${{ env.HAS_UPLOAD_KEY != 'true' }}
+        uses: actions/checkout@v5
+        with:
+          repository: lawrence124875/qimen-content
+          token: ${{ secrets.BUILDS_REPO_TOKEN }}
+          path: _signing
+          sparse-checkout: signing
+
+      - name: 安裝固定測試金鑰
+        if: ${{ env.HAS_UPLOAD_KEY != 'true' }}
+        run: |
+          if [ -f _signing/signing/debug.keystore ]; then
+            mkdir -p ~/.android && cp _signing/signing/debug.keystore ~/.android/debug.keystore
+            echo "::notice title=簽署::使用固定測試金鑰，可覆蓋安裝"
+          else
+            echo "::warning::找不到 qimen-content signing/debug.keystore，本次簽章會不同，需先移除舊版"
+          fi
+          rm -rf _signing
 
       - name: 套用 App 設定（名稱、簽署）
         env:
@@ -124,7 +147,7 @@ jobs:
           ADMOB_REWARDED_AD_UNIT_ID: ${{ secrets.ADMOB_REWARDED_AD_UNIT_ID }}
         run: |
           set +e
-          flutter build apk --release ${FORCE_LANG:+--dart-define=FORCE_LANG=$FORCE_LANG} --dart-define=REVENUECAT_API_KEY="$REVENUECAT_API_KEY" --dart-define=ADMOB_BANNER_AD_UNIT_ID="$ADMOB_BANNER_AD_UNIT_ID" --dart-define=ADMOB_INTERSTITIAL_AD_UNIT_ID="$ADMOB_INTERSTITIAL_AD_UNIT_ID" --dart-define=ADMOB_REWARDED_AD_UNIT_ID="$ADMOB_REWARDED_AD_UNIT_ID" > /tmp/build.log 2>&1
+          flutter build apk --release --build-number=${{ github.run_number }} ${FORCE_LANG:+--dart-define=FORCE_LANG=$FORCE_LANG} --dart-define=REVENUECAT_API_KEY="$REVENUECAT_API_KEY" --dart-define=ADMOB_BANNER_AD_UNIT_ID="$ADMOB_BANNER_AD_UNIT_ID" --dart-define=ADMOB_INTERSTITIAL_AD_UNIT_ID="$ADMOB_INTERSTITIAL_AD_UNIT_ID" --dart-define=ADMOB_REWARDED_AD_UNIT_ID="$ADMOB_REWARDED_AD_UNIT_ID" > /tmp/build.log 2>&1
           status=$?
           tail -n 40 /tmp/build.log
           if [ $status -ne 0 ]; then
