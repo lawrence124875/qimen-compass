@@ -86,11 +86,13 @@
 
 ## 10. 商業模式（待定，先比照謙卦）
 - 免費：奇門羅盤、當下時盤、出行訣（有次數限制）、廣告
-- 訂閱：擇時、宅盤、占卜解讀、去除廣告；價格與 Play 商品 ID 待定
+- 訂閱：擇時、宅盤、占卜解讀、去除廣告。Play 商品 `qm_premium_monthly`（基本方案 monthly，USD 3.99／TWD 99）、`qm_premium_yearly`（yearly，USD 24.99／TWD 590，優惠 `trial-7d-yearly` 7 天試用），與謙卦同價。RevenueCat 專案 `qimen`：權限 `premium`、Offering `default`（$rc_monthly、$rc_annual）
 
 ## 11. 待決事項
 - [x] App 名稱：奇門羅盤／Qimen Compass（2026-11-18 定案）
-- [ ] 訂閱價格
+- [x] 訂閱價格（2026-11-18 定案，同謙卦）
+- [ ] RevenueCat 上傳 Play 服務帳戶 JSON、Secret `REVENUECAT_ANDROID_API_KEY`（使用者自行貼）
+- [ ] 封閉測試 12 人 × 14 天後才能上正式版
 - [ ] 測試盤的參考軟體由誰提供（請 Lawrence 指定）
 
 ## 12. 下一步（V1 待辦，完成一項刪一項）
