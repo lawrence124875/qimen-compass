@@ -1,5 +1,6 @@
 import 'calendar_service.dart';
 import 'ganzhi.dart';
+import 'geju.dart';
 import 'qimen_types.dart';
 import 'shijia_engine.dart';
 
@@ -152,6 +153,8 @@ enum Factor {
   kongWang, menPo, jiXing, ruMu, horse, fuYin, fanYin,
   // 同宮的門與神
   goodDoor, badDoor, goodGod, badGod,
+  // 同宮的九星與格局
+  goodStar, sanDun, badStar, siXiong, gengBing,
   // 我（日干）與用神
   sameAsSelf, supportsSelf, selfSupports, selfControls, controlsSelf,
 }
@@ -161,6 +164,7 @@ const Map<Factor, int> factorWeight = {
   Factor.palaceSupports: 1, Factor.palaceSame: 1, Factor.drainsPalace: 0, Factor.controlsPalace: -1, Factor.palaceControls: -1,
   Factor.kongWang: -2, Factor.menPo: -1, Factor.jiXing: -1, Factor.ruMu: -1, Factor.horse: 0, Factor.fuYin: -1, Factor.fanYin: -1,
   Factor.goodDoor: 1, Factor.badDoor: -1, Factor.goodGod: 1, Factor.badGod: -1,
+  Factor.goodStar: 1, Factor.sanDun: 1, Factor.badStar: -1, Factor.siXiong: -1, Factor.gengBing: -1,
   Factor.sameAsSelf: 1, Factor.supportsSelf: 2, Factor.selfSupports: -1, Factor.selfControls: 1, Factor.controlsSelf: -2,
 };
 
@@ -365,6 +369,11 @@ class DivinationEngine {
     if (main.spec.kind != YongShenKind.god) {
       if (_goodGods.contains(cell.god)) f.add(Factor.goodGod);
       if (_badGods.contains(cell.god)) f.add(Factor.badGod);
+    }
+    final star = main.spec.kind == YongShenKind.star ? null : starLuck(cell);
+    if (star != null) f.add(Factor.values.byName(star.name));
+    for (final g in stemPatterns(cell)) {
+      f.add(Factor.values.byName(g.name));
     }
     if (rule.relation && self.palace != null) {
       final sp = palaceElement[self.palace!]!;

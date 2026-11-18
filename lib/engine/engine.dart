@@ -8,3 +8,4 @@ export 'shijia_engine.dart';
 export 'chuxing.dart';
 export 'zeshi.dart';
 export 'divination.dart';
+export 'geju.dart';

@@ -40,6 +40,15 @@ jobs:
           path: _content
           sparse-checkout: app
 
+      # qimen-content 有同名分支時改用它，程式與內容可以一起改、一起測
+      - name: 同名內容分支（若有）
+        run: |
+          cd _content
+          if git fetch -q --depth 1 origin "$GITHUB_REF_NAME" 2>/dev/null; then
+            git checkout -q FETCH_HEAD
+            echo "::notice title=App 內容::使用 qimen-content 分支 $GITHUB_REF_NAME"
+          fi
+
       - name: 複製 App 內容
         run: |
           mkdir -p assets/content
