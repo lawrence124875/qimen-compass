@@ -478,5 +478,9 @@
   "recordBackupSubject": "奇門羅盤 記録のバックアップ",
   "recordRestoreDone": "{n} 件の記録を復元しました",
   "recordRestoreNone": "復元が必要な新しい記録はありません",
-  "recordRestoreFailed": "このファイルを読み込めません。奇門羅盤のバックアップファイルを選んでください"
+  "recordRestoreFailed": "このファイルを読み込めません。奇門羅盤のバックアップファイルを選んでください",
+  "homeFuTou": "符頭 {fuTou}",
+  "homeChaoShen": "超神 {days} 日",
+  "homeJieQi": "接気 {days} 日",
+  "homeLeap": "閏局"
 }

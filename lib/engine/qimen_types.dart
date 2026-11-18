@@ -153,6 +153,9 @@ class QimenChart {
     required this.ju,
     required this.yuan,
     required this.termIndex,
+    this.fuTou,
+    this.chaoShen,
+    this.leap = false,
     required this.year,
     required this.month,
     required this.day,
@@ -176,6 +179,11 @@ class QimenChart {
 
   /// 定局所用的節氣（置閏法可能與實際節氣不同）。
   final int termIndex;
+
+  /// 起局依據：符頭、置閏法的超神（正）／接氣（負）日數、是否閏局。
+  final GanZhi? fuTou;
+  final int? chaoShen;
+  final bool leap;
 
   final GanZhi year, month, day, hour;
 

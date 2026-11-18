@@ -3,7 +3,7 @@
 目前 35 組（`cases/*_kinqimen.json`，拆補法）：由開源 kinqimen 0.0.6.6 產生（`tools/golden/kinqimen_ref.py`，手動執行 `golden_ref.yml`，結果推到 `golden-ref` 分支），逐宮與本引擎交叉比對一致才收錄。排除：
 - 交節前後的年柱、月柱：kinqimen 以整日換月，本引擎以交節時刻（`lunar` 的 Exact 干支）為準，這 7 組不比對 `pillars`。
 - 時干入中五宮（星伏吟）的 2 組：kinqimen 天盤天干算錯（伏吟時天盤應同地盤），改由單元測試以規則把關。
-- 置閏法：kinqimen 與本引擎 37 組中有 12 組局數不同，兩者都無法確認，待第二個來源判定。
+- 置閏法：kinqimen 的置閏與公開盤例不符，不採用；置閏改由單元測試對照公開盤例（`test/engine/engine_test.dart`）。
 
 每個參考盤一個 JSON 檔，放在 `cases/`（檔名例如 `001_dongzhi_boundary.json`）。CI 的 `flutter test` 會自動比對。
 目前沒有檔案時，測試顯示為 skip。目標至少 30 組，涵蓋：陰陽遁交界（冬至、夏至前後）、節氣交界、子時（23 點、0 點）、置閏法。

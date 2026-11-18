@@ -478,5 +478,9 @@
   "recordBackupSubject": "Backup de registros do Bússola Qimen",
   "recordRestoreDone": "{n} registros restaurados",
   "recordRestoreNone": "Nenhum registro novo para restaurar",
-  "recordRestoreFailed": "Não foi possível ler esse arquivo. Escolha um backup do Bússola Qimen."
+  "recordRestoreFailed": "Não foi possível ler esse arquivo. Escolha um backup do Bússola Qimen.",
+  "homeFuTou": "Fu Tou {fuTou}",
+  "homeChaoShen": "Chao Shen (adiantado) {days} d",
+  "homeJieQi": "Jie Qi (atrasado) {days} d",
+  "homeLeap": "Ciclo intercalar"
 }

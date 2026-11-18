@@ -94,7 +94,6 @@
 - [ ] 測試盤的參考軟體由誰提供（請 Lawrence 指定）
 
 ## 12. 下一步（V1 待辦，完成一項刪一項）
-- [ ] 置閏法參考盤：kinqimen 置閏與本引擎有 12/37 組局數不同，需第二個來源（Lawrence 信任的軟體或書上盤例）判定後補 golden；拆補法 35 組已通過
 - [ ] 封閉測試上架
 
 - [ ] 翻譯補掃：「共通功能」串完成後跑 `tools/l10n/l10n.py status` 補新鍵（apply → hans → missing／fill → check --strict），qimen-content 改版後重跑 `tools/to_hans.py`；泰、阿上架前請母語者校閱
@@ -106,9 +105,9 @@
 - i18n：**11 語全部開放**（2026-11-17）：ARB 474 鍵齊全，課程、問事文句 11 語（qimen-content `app/course`、`app/divination/text`）。術語唯一來源 `tools/l10n/glossary.json`（帶聲調拼音，例「生門 Shēng Mén (Gate of Life)」；日韓越意譯用各自讀音）→ `l10n.py gen` 產生 `lib/l10n/terms_data.dart`；流程見 `tools/l10n/README.md`。已開放語言缺鍵測試會失敗，新增介面文字的串要通知翻譯補掃（或自行用 l10n.py 補）。簡中內容用 qimen-content `tools/to_hans.py`（乾不轉干）。字型：TC 主字型＋補字 QmFbSC／JP／KR／TH／AR（`build_fonts.py` FALLBACKS），日文漢字暫用 TC 字形
 - 引擎 `lib/engine/`：
   - `CalendarService`：節氣用 `lunar`（北京時間→UTC），日柱以儒略日自算、時柱五鼠遁；時區、真太陽時（經度＋NOAA 均時差）、子時換日（`nextDay` 23 點換日預設／`lateZi` 晚子時）
-  - `ShiJiaEngine`：拆補法（預設）／置閏法（超神 >9 日於芒種、大雪置閏，自 6 年前推算）；地盤、值符值使、九星（禽寄芮）、八門（值使依時干數走九宮，入中寄坤）、八神（陽順陰逆）、空亡、馬星、伏吟反吟、門迫、擊刑、入墓
+  - `ShiJiaEngine`：拆補法（預設）／置閏法（芒種／大雪三元後，下一上元符頭距夏至／冬至 >9 日則閏；已對照 zyqmdj.com 公開盤例：2016 閏芒種、2015 大雪不閏、2024 閏大雪、2017-03-14 陽七、2028-10-03 陰四）；地盤、值符值使、九星（禽寄芮）、八門（值使依時干數走九宮，入中寄坤）、八神（陽順陰逆）、空亡、馬星、伏吟反吟、門迫、擊刑、入墓
   - `ChuXingPlanner`（`chuxing.dart`，出行訣）：事類→用神門（出行＝開休生取最佳、求財生、事業開、感情休、考試景）；每時辰以中點起局，基礎 4 分，門迫／空亡／伏吟／反吟／擊刑／入墓各 −1，吉神（值符、太陰、六合、九地、九天）+1、凶神（白虎、玄武、螣蛇）−1，格局（`geju.dart`：輔禽心、三遁 +1；蓬芮、四凶格、庚丙 −1，擇時與問事同樣計入）；五級 ≥5 大吉、4 吉、3 平、2 小阻、其餘阻；`dailyBest` 取每天 7–21 點最佳且達「吉」者
-  - 已有單元測試：日柱／時柱／節氣與 lunar 比對（1950–2060 抽樣）、地盤、結構不變量、九宮格 widget（深淺色、英文詳情、小尺寸）；golden 35 組（拆補，來源 kinqimen 交叉比對，說明見 `test/golden/README.md`）
+  - 已有單元測試：日柱／時柱／節氣與 lunar 比對（1950–2060 抽樣）、地盤、結構不變量、九宮格 widget（深淺色、英文詳情、小尺寸）；盤面顯示起局依據（符頭、超神／接氣日數、閏局）；golden 35 組（拆補，來源 kinqimen 交叉比對，說明見 `test/golden/README.md`）
 
 - 介面（`lib/app/`，羅盤等畫面請直接沿用）：
   - 主題 `theme/app_theme.dart`＋`theme/qm_palette.dart`：謙卦「天玄地黃」定案；`context.qm` 取色（深淺各一份 ThemeExtension，含吉平凶 `luck()`、五行 `element()`、圖上文字 `QmPalette.onImage`）；字型 `kSans`／`kSerif`（帶 fallback），盤面文字用 `serif()`。引擎的 `Element` 與 Flutter 撞名，UI 檔 import engine 時 `hide Element`

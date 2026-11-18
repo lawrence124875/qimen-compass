@@ -321,6 +321,13 @@ class ChartInfo extends StatelessWidget {
               style: serif(text.titleMedium).copyWith(color: qm.text)),
           const SizedBox(height: 4),
           Text(l.homeJu(QimenTerms.dun(c.dun, lang), c.ju, QimenTerms.yuan(c.yuan, lang)), style: serif(text.titleMedium).copyWith(color: qm.primary, fontWeight: FontWeight.w700)),
+          // 起局依據：讓使用者能對照書本（節氣見上一行）
+          if (c.fuTou != null)
+            Text([
+              l.homeFuTou('${c.fuTou}'),
+              if (c.chaoShen != null) c.chaoShen! >= 0 ? l.homeChaoShen(c.chaoShen!) : l.homeJieQi(-c.chaoShen!),
+              if (c.leap) l.homeLeap,
+            ].join(l.separator), style: muted),
           const SizedBox(height: 4),
           Wrap(spacing: 16, runSpacing: 2, children: [
             Text(l.homeZhiFu(QimenTerms.star(c.zhiFu, lang)), style: muted),

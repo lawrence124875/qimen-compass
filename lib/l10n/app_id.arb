@@ -478,5 +478,9 @@
   "recordBackupSubject": "Cadangan catatan Kompas Qimen",
   "recordRestoreDone": "{n} catatan dipulihkan",
   "recordRestoreNone": "Tidak ada catatan baru untuk dipulihkan",
-  "recordRestoreFailed": "File itu tidak bisa dibaca. Pilih file cadangan Kompas Qimen."
+  "recordRestoreFailed": "File itu tidak bisa dibaca. Pilih file cadangan Kompas Qimen.",
+  "homeFuTou": "Fu Tou {fuTou}",
+  "homeChaoShen": "Chao Shen (maju) {days} hari",
+  "homeJieQi": "Jie Qi (mundur) {days} hari",
+  "homeLeap": "Siklus sisipan"
 }

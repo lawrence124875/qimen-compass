@@ -24,11 +24,20 @@ const Map<int, int> ruMuPalace = {0: 2, 1: 6, 2: 6, 3: 8, 4: 6, 5: 8, 6: 8, 7: 4
 
 /// 定局結果。
 class JuInfo {
-  const JuInfo(this.dun, this.ju, this.yuan, this.termIndex);
+  const JuInfo(this.dun, this.ju, this.yuan, this.termIndex, {this.fuTou, this.chaoShen, this.leap = false});
   final Dun dun;
   final int ju;
   final Yuan yuan;
   final int termIndex;
+
+  /// 符頭（當元起始的甲日或己日）。
+  final GanZhi? fuTou;
+
+  /// 置閏法：節氣交節日減上元符頭日（正＝超神、負＝接氣）；拆補法為 null。
+  final int? chaoShen;
+
+  /// 置閏法：目前為閏局（節氣重排的第二輪）。
+  final bool leap;
 }
 
 /// 時家轉盤奇門引擎（純 Dart）。
@@ -90,14 +99,16 @@ class ShiJiaEngine {
   /// 拆補法：節氣取真實節氣，元取符頭（最近的甲日或己日）地支。
   /// 符頭地支：子午卯酉＝上元、寅申巳亥＝中元、辰戌丑未＝下元；
   /// 等同於日柱在 15 日循環（甲子、己卯、甲午、己酉起）中的位置。
-  JuInfo juChaiBu(CalendarMoment m) => _juOf(m.term.index, _yuanOf(m.dayNumber));
+  JuInfo juChaiBu(CalendarMoment m) => _juOf(m.term.index, _yuanOf(m.dayNumber), fuTou: _fuTou(m.dayNumber));
 
   /// 置閏法：每 15 日（上元符頭甲子／己卯／甲午／己酉起）配一個節氣；
-  /// 符頭在節氣前為超神、在後為接氣；芒種、大雪時若超神超過 9 日則該節氣再排一次（置閏）。
+  /// 符頭在節氣前為超神、在後為接氣。置閏只在芒種、大雪（二至之前）：該節氣三元排完後，
+  /// 下一個上元符頭距夏至／冬至超過 9 日（>9，古籍說法；剛好 9 日不閏）時，該節氣再排一次。
+  /// 已對照公開盤例：2016 芒種閏（符頭 6/11 距夏至 10 日）、2015 大雪不閏（9 日）、2024 大雪閏（12/11 距冬至 10 日）。
   /// 自 6 年前的芒種／大雪起推算，經過一次置閏後即與起點無關。
   JuInfo juZhiRun(CalendarMoment m, TimeSettings settings) {
     final from = m.instantUtc.subtract(const Duration(days: 365 * 6));
-    final terms = calendar.termsBetween(from, m.instantUtc.add(const Duration(days: 40)));
+    final terms = calendar.termsBetween(from, m.instantUtc.add(const Duration(days: 60)));
     int dayOf(SolarTerm t) => _effectiveDay(calendar.clockTime(t.startUtc, settings), settings);
 
     var j = terms.indexWhere((t) => t.index == 11 || t.index == 23);
@@ -106,19 +117,22 @@ class ShiJiaEngine {
     var block = _blockStart(t0);
     if (t0 - block > 9) block += 15;
     var leaped = false;
+    var termBlock = block; // 目前節氣第一輪的上元符頭日
     final target = _blockStart(m.dayNumber);
     while (block < target) {
       final t = terms[j];
       final checkpoint = t.index == 11 || t.index == 23;
-      if (checkpoint && !leaped && dayOf(t) - block > 9) {
+      if (checkpoint && !leaped && dayOf(terms[j + 1]) - (block + 15) > 9) {
         leaped = true; // 下一個 15 日仍用此節氣
       } else {
         leaped = false;
         j++;
+        termBlock = block + 15;
       }
       block += 15;
     }
-    return _juOf(terms[j].index, _yuanOf(m.dayNumber));
+    return _juOf(terms[j].index, _yuanOf(m.dayNumber),
+        fuTou: _fuTou(m.dayNumber), chaoShen: dayOf(terms[j]) - termBlock, leap: leaped);
   }
 
   static int _effectiveDay(DateTime clock, TimeSettings s) {
@@ -131,8 +145,12 @@ class ShiJiaEngine {
 
   static Yuan _yuanOf(int dayNumber) => Yuan.values[((dayNumber + 49) % 15) ~/ 5];
 
-  static JuInfo _juOf(int term, Yuan yuan) =>
-      JuInfo(term < 12 ? Dun.yang : Dun.yin, juTable[term][yuan.index], yuan, term);
+  static JuInfo _juOf(int term, Yuan yuan, {GanZhi? fuTou, int? chaoShen, bool leap = false}) =>
+      JuInfo(term < 12 ? Dun.yang : Dun.yin, juTable[term][yuan.index], yuan, term,
+          fuTou: fuTou, chaoShen: chaoShen, leap: leap);
+
+  /// 符頭：該日之前（含）最近的甲日或己日。
+  static GanZhi _fuTou(int dayNumber) => CalendarService.dayGanZhi(dayNumber - (dayNumber + 49) % 5);
 
   /// 依已定的局排盤。
   /// 年盤、月盤以年柱、月柱代替時柱（旬首、值符值使、空亡、馬星都依該柱）。
@@ -208,6 +226,9 @@ class ShiJiaEngine {
       ju: info.ju,
       yuan: info.yuan,
       termIndex: info.termIndex,
+      fuTou: info.fuTou,
+      chaoShen: info.chaoShen,
+      leap: info.leap,
       year: m.year,
       month: m.month,
       day: m.day,

@@ -478,5 +478,9 @@
   "recordBackupSubject": "Copia de registros de Brújula Qimen",
   "recordRestoreDone": "{n} registros restaurados",
   "recordRestoreNone": "No hay registros nuevos para restaurar",
-  "recordRestoreFailed": "No se pudo leer ese archivo. Elige una copia de Brújula Qimen."
+  "recordRestoreFailed": "No se pudo leer ese archivo. Elige una copia de Brújula Qimen.",
+  "homeFuTou": "Fu Tou {fuTou}",
+  "homeChaoShen": "Chao Shen (adelanto) {days} d",
+  "homeJieQi": "Jie Qi (retraso) {days} d",
+  "homeLeap": "Ciclo intercalar"
 }

@@ -478,5 +478,9 @@
   "recordBackupSubject": "Sao lưu ghi chép La Bàn Kỳ Môn",
   "recordRestoreDone": "Đã khôi phục {n} ghi chép",
   "recordRestoreNone": "Không có ghi chép mới để khôi phục",
-  "recordRestoreFailed": "Không đọc được tệp này. Hãy chọn bản sao lưu của La Bàn Kỳ Môn."
+  "recordRestoreFailed": "Không đọc được tệp này. Hãy chọn bản sao lưu của La Bàn Kỳ Môn.",
+  "homeFuTou": "Phù đầu {fuTou}",
+  "homeChaoShen": "Siêu thần {days} ngày",
+  "homeJieQi": "Tiếp khí {days} ngày",
+  "homeLeap": "Cục nhuận"
 }

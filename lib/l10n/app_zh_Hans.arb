@@ -478,5 +478,9 @@
   "recordBackupSubject": "奇门罗盘纪录备份",
   "recordRestoreDone": "已还原 {n} 则纪录",
   "recordRestoreNone": "没有新的纪录需要还原",
-  "recordRestoreFailed": "无法读取这个文件，请选择奇门罗盘的备份档"
+  "recordRestoreFailed": "无法读取这个文件，请选择奇门罗盘的备份档",
+  "homeFuTou": "符头 {fuTou}",
+  "homeChaoShen": "超神 {days} 日",
+  "homeJieQi": "接气 {days} 日",
+  "homeLeap": "闰局"
 }

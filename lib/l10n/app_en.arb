@@ -489,5 +489,9 @@
   "recordBackupSubject": "Qimen Compass records backup",
   "recordRestoreDone": "Restored {n} records",
   "recordRestoreNone": "No new records to restore",
-  "recordRestoreFailed": "Couldn't read that file. Please choose a Qimen Compass backup."
+  "recordRestoreFailed": "Couldn't read that file. Please choose a Qimen Compass backup.",
+  "homeFuTou": "Fu Tou {fuTou}",
+  "homeChaoShen": "Chao Shen (ahead) {days} d",
+  "homeJieQi": "Jie Qi (behind) {days} d",
+  "homeLeap": "Intercalary cycle"
 }

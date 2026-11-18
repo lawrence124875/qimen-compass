@@ -478,5 +478,9 @@
   "recordBackupSubject": "ข้อมูลสำรองบันทึก เข็มทิศฉีเหมิน",
   "recordRestoreDone": "กู้คืน {n} รายการแล้ว",
   "recordRestoreNone": "ไม่มีบันทึกใหม่ให้กู้คืน",
-  "recordRestoreFailed": "อ่านไฟล์นี้ไม่ได้ โปรดเลือกไฟล์สำรองของ เข็มทิศฉีเหมิน"
+  "recordRestoreFailed": "อ่านไฟล์นี้ไม่ได้ โปรดเลือกไฟล์สำรองของ เข็มทิศฉีเหมิน",
+  "homeFuTou": "ฝูโถว (符頭) {fuTou}",
+  "homeChaoShen": "เชาเสิน (超神) {days} วัน",
+  "homeJieQi": "เจียชี่ (接氣) {days} วัน",
+  "homeLeap": "รอบอธิกมาส"
 }

@@ -547,5 +547,12 @@
   "recordRestoreDone": "已還原 {n} 則紀錄",
   "@recordRestoreDone": {"placeholders": {"n": {"type": "int"}}},
   "recordRestoreNone": "沒有新的紀錄需要還原",
-  "recordRestoreFailed": "無法讀取這個檔案，請選擇奇門羅盤的備份檔"
+  "recordRestoreFailed": "無法讀取這個檔案，請選擇奇門羅盤的備份檔",
+  "homeFuTou": "符頭 {fuTou}",
+  "@homeFuTou": {"placeholders": {"fuTou": {"type": "String"}}},
+  "homeChaoShen": "超神 {days} 日",
+  "@homeChaoShen": {"placeholders": {"days": {"type": "int"}}},
+  "homeJieQi": "接氣 {days} 日",
+  "@homeJieQi": {"placeholders": {"days": {"type": "int"}}},
+  "homeLeap": "閏局"
 }

@@ -478,5 +478,9 @@
   "recordBackupSubject": "نسخة احتياطية لسجلات بوصلة تشيمن",
   "recordRestoreDone": "تمت استعادة {n} سجل",
   "recordRestoreNone": "لا توجد سجلات جديدة لاستعادتها",
-  "recordRestoreFailed": "تعذّرت قراءة هذا الملف. يرجى اختيار نسخة احتياطية من بوصلة تشيمن."
+  "recordRestoreFailed": "تعذّرت قراءة هذا الملف. يرجى اختيار نسخة احتياطية من بوصلة تشيمن.",
+  "homeFuTou": "فو تو (符頭) {fuTou}",
+  "homeChaoShen": "تشاو شن (超神) {days} يوم",
+  "homeJieQi": "جيه تشي (接氣) {days} يوم",
+  "homeLeap": "دورة كبيسة"
 }
