@@ -3,6 +3,8 @@
 // 平常的 flutter test 會跳過。
 import 'dart:io';
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -97,5 +99,62 @@ void main() {
         await expectLater(find.byType(MaterialApp), matchesGoldenFile('goldens/${lang.code}/${s.key}.png'));
       });
     }
+  }
+
+  // 主題圖片 1024×500（每語一張）：圖示＋名稱＋簡短說明，文字取自 store/listing.json
+  final listing = jsonDecode(File('store/listing.json').readAsStringSync()) as Map<String, dynamic>;
+  final iconBytes = File('branding/play_icon_512.png').readAsBytesSync();
+  for (final lang in AppLanguages.all) {
+    testWidgets('${lang.code} feature', (tester) async {
+      tester.view.physicalSize = const Size(1024, 500);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      final l = listing[lang.code] as Map<String, dynamic>;
+      final theme = AppTheme.of(Brightness.dark);
+      final icon = MemoryImage(iconBytes);
+      await tester.pumpWidget(MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: theme,
+        locale: lang.locale,
+        supportedLocales: [for (final l in AppLanguages.all) l.locale],
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        home: Builder(builder: (context) {
+          final t = Theme.of(context).textTheme;
+          final cs = Theme.of(context).colorScheme;
+          return Scaffold(
+            body: Container(
+              decoration: BoxDecoration(
+                gradient: RadialGradient(
+                  center: const Alignment(-0.55, 0),
+                  radius: 1.2,
+                  colors: [cs.primary.withValues(alpha: 0.28), cs.surface],
+                ),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 64),
+              child: Row(children: [
+                ClipRRect(borderRadius: BorderRadius.circular(56), child: Image(image: icon, width: 260, height: 260)),
+                const SizedBox(width: 56),
+                Expanded(
+                  child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    Text(lookupAppLocalizations(lang.locale).appTitle,
+                        style: serif(t.displaySmall)?.copyWith(fontWeight: FontWeight.w700, color: cs.onSurface)),
+                    const SizedBox(height: 20),
+                    Text(l['short'] as String,
+                        style: t.titleLarge?.copyWith(color: cs.onSurface.withValues(alpha: 0.8), height: 1.4)),
+                  ]),
+                ),
+              ]),
+            ),
+          );
+        }),
+      ));
+      await tester.runAsync(() => precacheImage(icon, tester.element(find.byType(Scaffold))));
+      await tester.pump();
+      await expectLater(find.byType(MaterialApp), matchesGoldenFile('goldens/${lang.code}/0_feature.png'));
+    });
   }
 }

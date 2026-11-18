@@ -45,6 +45,9 @@ jobs:
           rm -rf _content
           echo "::notice title=App 內容::$(find assets/content -name '*.json' | wc -l) 個 JSON"
 
+      - name: 商店文案也收進字型子集
+        run: cp store/listing.json assets/content/store_listing.json
+
       - name: 產生字型子集
         run: |
           pip install --quiet fonttools
