@@ -16,9 +16,12 @@ if [ -z "${GOOGLE_SERVICES_JSON_BASE64:-}" ]; then
   exit 0
 fi
 
-# PowerShell 產生的 base64 可能帶換行或空白，先去掉
-if ! printf '%s' "$GOOGLE_SERVICES_JSON_BASE64" | tr -d ' \r\n\t' | base64 -d > "$OUT" 2>/dev/null; then
-  echo "::error::GOOGLE_SERVICES_JSON_BASE64 不是有效的 base64，請重新產生"
+# 可直接貼 google-services.json 的內容（以 { 開頭），也可貼 base64（PowerShell 產生的可能帶換行或空白，先去掉）
+RAW="$(printf '%s' "$GOOGLE_SERVICES_JSON_BASE64" | sed '1s/^\xEF\xBB\xBF//')"
+if printf '%s' "$RAW" | tr -d ' \r\n\t' | grep -q '^{'; then
+  printf '%s' "$RAW" > "$OUT"
+elif ! printf '%s' "$RAW" | tr -d ' \r\n\t' | base64 -d > "$OUT" 2>/dev/null; then
+  echo "::error::GOOGLE_SERVICES_JSON_BASE64 既不是 JSON 也不是有效的 base64"
   rm -f "$OUT"; exit 1
 fi
 
