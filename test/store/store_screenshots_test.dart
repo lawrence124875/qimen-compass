@@ -65,7 +65,13 @@ void main() {
   }
 
   setUpAll(() async {
-    SharedPreferences.setMockInitialValues({'qm_guide_seen_home': true, 'qm_guide_seen_house': true});
+    SharedPreferences.setMockInitialValues({
+      'qm_guide_seen_home': true,
+      'qm_guide_seen_house': true,
+      'qm_zeshi_intro_seen': true,
+      'qm_div_guide_seen': true,
+      'travel_intro_seen': true,
+    });
     await AppSettings.instance.load();
     await _loadFonts();
     debugDisableShadows = false;
