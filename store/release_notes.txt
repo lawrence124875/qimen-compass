@@ -1,0 +1,112 @@
+<zh-TW>
+首次推出奇門羅盤：
+• 時家奇門排盤（時、日、月、年盤）
+• 奇門羅盤：八門疊在真實方位上，即時找吉門
+• 出行訣與吉時提醒、擇時擇日、宅盤九宮
+• 事類占卜、紀錄與應驗回饋、奇門入門課
+• 支援 11 種語言、深淺色主題
+</zh-TW>
+<zh-CN>
+首次推出奇门罗盘：
+• 时家奇门排盘（时、日、月、年盘）
+• 奇门罗盘：八门叠在真实方位上，实时找吉门
+• 出行诀与吉时提醒、择时择日、宅盘九宫
+• 事类占卜、记录与应验反馈、奇门入门课
+• 支持 11 种语言、深浅色主题
+</zh-CN>
+<en-US>
+First release of Qimen Compass:
+• Qi Men Dun Jia charts (hour, day, month, year)
+• Live compass with the Eight Doors on real directions
+• Travel guide with reminders, date selection, house chart
+• Divination, records with outcomes, Qimen course
+• 11 languages, light and dark themes
+</en-US>
+<ja-JP>
+奇門羅盤の初回リリース：
+• 時家奇門の作盤（時・日・月・年盤）
+• 八門を実際の方位に重ねる羅盤
+• 出行訣と吉時通知、択時択日、宅盤九宮
+• 占事、記録と的中フィードバック、奇門講座
+• 11 言語、ライト／ダークテーマ
+</ja-JP>
+<ko-KR>
+기문나침반 첫 출시:
+• 시가기문 포국(시·일·월·연반)
+• 팔문을 실제 방위에 겹친 나침반
+• 출행결과 길시 알림, 택시택일, 택반 구궁
+• 점사, 기록과 적중 피드백, 기문 강좌
+• 11개 언어, 라이트/다크 테마
+</ko-KR>
+<vi>
+Phiên bản đầu tiên của La Bàn Kỳ Môn:
+• Lập bàn Kỳ Môn (giờ, ngày, tháng, năm)
+• La bàn đặt Bát Môn lên phương vị thật
+• Xuất hành quyết kèm nhắc giờ tốt, chọn ngày giờ, cửu cung nhà ở
+• Xem sự việc, ghi chép và kiểm chứng, khóa học Kỳ Môn
+• 11 ngôn ngữ, giao diện sáng và tối
+</vi>
+<es-419>
+Primera versión de Brújula Qimen:
+• Cartas Qi Men Dun Jia (hora, día, mes, año)
+• Brújula con las Ocho Puertas en direcciones reales
+• Guía de salidas con recordatorios, elección de fechas, carta de la casa
+• Consultas, registros con resultados, curso de Qimen
+• 11 idiomas, tema claro y oscuro
+</es-419>
+<es-ES>
+Primera versión de Brújula Qimen:
+• Cartas Qi Men Dun Jia (hora, día, mes, año)
+• Brújula con las Ocho Puertas en direcciones reales
+• Guía de salidas con recordatorios, elección de fechas, carta de la casa
+• Consultas, registros con resultados, curso de Qimen
+• 11 idiomas, tema claro y oscuro
+</es-ES>
+<es-US>
+Primera versión de Brújula Qimen:
+• Cartas Qi Men Dun Jia (hora, día, mes, año)
+• Brújula con las Ocho Puertas en direcciones reales
+• Guía de salidas con recordatorios, elección de fechas, carta de la casa
+• Consultas, registros con resultados, curso de Qimen
+• 11 idiomas, tema claro y oscuro
+</es-US>
+<pt-BR>
+Primeira versão da Bússola Qimen:
+• Mapas Qi Men Dun Jia (hora, dia, mês, ano)
+• Bússola com as Oito Portas nas direções reais
+• Guia de saídas com lembretes, escolha de datas, mapa da casa
+• Consultas, registros com resultados, curso de Qimen
+• 11 idiomas, tema claro e escuro
+</pt-BR>
+<pt-PT>
+Primeira versão da Bússola Qimen:
+• Mapas Qi Men Dun Jia (hora, dia, mês, ano)
+• Bússola com as Oito Portas nas direções reais
+• Guia de saídas com lembretes, escolha de datas, mapa da casa
+• Consultas, registos com resultados, curso de Qimen
+• 11 idiomas, tema claro e escuro
+</pt-PT>
+<id>
+Rilis pertama Kompas Qimen:
+• Bagan Qi Men Dun Jia (jam, hari, bulan, tahun)
+• Kompas dengan Delapan Pintu di arah nyata
+• Panduan bepergian dengan pengingat, pemilihan waktu, bagan rumah
+• Konsultasi, catatan dan hasil, kursus Qimen
+• 11 bahasa, tema terang dan gelap
+</id>
+<th>
+เปิดตัวเข็มทิศฉีเหมินครั้งแรก:
+• ผังฉีเหมิน (ชั่วโมง วัน เดือน ปี)
+• เข็มทิศวางแปดประตูบนทิศจริง
+• ตำราเดินทางพร้อมแจ้งเตือน เลือกฤกษ์ ผังบ้านเก้าวัง
+• ถามเรื่อง บันทึกและผลลัพธ์ คอร์สฉีเหมิน
+• 11 ภาษา ธีมสว่างและมืด
+</th>
+<ar>
+الإصدار الأول من بوصلة تشيمن:
+• مخططات تشي من دون جيا (الساعة واليوم والشهر والسنة)
+• بوصلة بالأبواب الثمانية على الاتجاهات الحقيقية
+• دليل الخروج مع تذكيرات، اختيار المواعيد، مخطط المنزل
+• الاستشارة، السجلات والنتائج، دورة تشيمن
+• 11 لغة، سمة فاتحة وداكنة
+</ar>
