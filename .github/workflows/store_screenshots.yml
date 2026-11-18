@@ -1,0 +1,72 @@
+name: Store screenshots
+
+# Play 商店截圖：11 語 × 5 畫面（test/store/），輸出推到 store-assets 分支。手動觸發。
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  shots:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          # 比照謙卦：stable 3.50.0 的 release lint 在 JDK 17 崩潰，固定在 3.47.9
+          flutter-version: '3.47.9'
+          cache: true
+
+      # 判讀文句、規則 JSON、課程等 App 內容放在私人 repo qimen-content 的 app/，建置時複製到 assets/content/（不進公開 repo）
+      - name: 取得 App 內容（qimen-content/app）
+        uses: actions/checkout@v5
+        with:
+          repository: lawrence124875/qimen-content
+          token: ${{ secrets.BUILDS_REPO_TOKEN }}
+          path: _content
+          sparse-checkout: app
+
+      # qimen-content 有同名分支時改用它，程式與內容可以一起改、一起測
+      - name: 同名內容分支（若有）
+        run: |
+          cd _content
+          if git fetch -q --depth 1 origin "$GITHUB_REF_NAME" 2>/dev/null; then
+            git checkout -q FETCH_HEAD
+            echo "::notice title=App 內容::使用 qimen-content 分支 $GITHUB_REF_NAME"
+          fi
+
+      - name: 複製 App 內容
+        run: |
+          mkdir -p assets/content
+          if [ -d _content/app ]; then cp -r _content/app/. assets/content/; fi
+          rm -rf _content
+          echo "::notice title=App 內容::$(find assets/content -name '*.json' | wc -l) 個 JSON"
+
+      - name: 產生字型子集
+        run: |
+          pip install --quiet fonttools
+          python3 scripts/build_fonts.py || { echo "::error::字型子集產生失敗（scripts/build_fonts.py）"; exit 1; }
+
+      - name: 安裝套件
+        run: flutter pub get
+
+      - name: 產生截圖
+        run: |
+          set +e
+          flutter test test/store --update-goldens --dart-define=STORE_SHOTS=true --reporter expanded > /tmp/t.log 2>&1
+          status=$?
+          sed 's/\x1b\[[0-9;]*m//g' /tmp/t.log | grep -E "\[E\]|EXCEPTION|Error|exception" | head -40 | while IFS= read -r l; do echo "::warning::$l"; done
+          echo "::notice title=截圖::$(find test/store/goldens -name '*.png' | wc -l) 張；exit=$status"
+
+      - name: 推到 store-assets 分支
+        run: |
+          mkdir /tmp/out && cp -r test/store/goldens/. /tmp/out/
+          cd /tmp/out
+          git init -q -b store-assets
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add -A && git commit -qm "store screenshots ${GITHUB_SHA::7}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${GITHUB_REPOSITORY}.git" store-assets
