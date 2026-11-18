@@ -90,6 +90,9 @@ class DivinationText {
   String secondary(YongShenHit h) =>
       _fill(_s([h.palace == null ? 'notFound' : 'secondary']), h);
 
+  /// 宜忌提示（[ReadingMore.tipKeys]）；沒有該句時為 null。
+  String? tip(String key, {required bool good}) => _lookup(['tips', key, good ? 'do' : 'dont']) as String?;
+
   /// 失物：方位、地點、八神提示。
   String lostWhere(Reading r, String dir) => _fill(_s(['topics', 'lost', 'where']), r.main, dir: dir);
   String? lostPlace(int palace) => _lookup(['topics', 'lost', 'place', '$palace']) as String?;

@@ -104,6 +104,34 @@ void main() {
     expect(a.seed, b.seed);
   });
 
+  test('延伸解讀：決斷、把握度、應期、方位、我方對方都有合理輸出', () {
+    for (var i = 0; i < 120; i++) {
+      final t = DateTime.utc(2026, 1, 1).add(Duration(hours: 7 * i));
+      for (final topic in ['wealth', 'lost', 'love']) {
+        final r = engine.read(rules, topic, t, settings: tz);
+        expect(Decision.values, contains(r.decision));
+        if (r.verdict == Verdict.blocked) expect(r.decision, Decision.avoid);
+        if (r.verdict == Verdict.great) expect(r.decision, Decision.go);
+        expect(r.standing == null, !r.rule.relation || r.self.palace == null);
+        final g = r.goodDirection, a = r.avoidDirection;
+        if (g != null) expect(g, isNot(5));
+        if (a != null) expect(a, isNot(5));
+        final tm = r.timing(t, tz);
+        if (tm != null) {
+          expect(tm.branches, isNotEmpty);
+          expect(tm.date.isAfter(t.subtract(const Duration(days: 1))), isTrue);
+          expect(tm.date.isBefore(t.add(const Duration(days: 420))), isTrue);
+          for (final b in tm.branches) {
+            expect(branchPalace[b], r.main.palace);
+          }
+        }
+        for (final k in r.tipKeys) {
+          expect(k, matches(RegExp(r'^(door|god|flag):')));
+        }
+      }
+    }
+  });
+
   // CI 會把私人 repo 的內容複製到 assets/content/；本機沒有時略過。
   final dir = Directory('assets/content/divination');
   final hasContent = File('${dir.path}/rules.json').existsSync();
@@ -138,6 +166,19 @@ void main() {
       }
       for (final g in God.values) {
         expect(j['topics']['lost']['god'][g.zh], isA<String>(), reason: '$name lost.god.${g.zh}');
+      }
+      for (final d in Door.values) {
+        for (final k in ['do', 'dont']) {
+          expect(j['tips']['door:${d.zh}'][k], isA<String>(), reason: '$name tips.door:${d.zh}.$k');
+        }
+      }
+      for (final g in God.values) {
+        for (final k in ['do', 'dont']) {
+          expect(j['tips']['god:${g.zh}'][k], isA<String>(), reason: '$name tips.god:${g.zh}.$k');
+        }
+      }
+      for (final f in ['kongWang', 'menPo', 'horse', 'fuYin', 'fanYin', 'jiXing', 'ruMu']) {
+        expect(j['tips']['flag:$f'], isA<Map<String, dynamic>>(), reason: '$name tips.flag:$f');
       }
       expect(j['disclaimer'], isA<String>());
       expect(j['schemaVersion'], 1);

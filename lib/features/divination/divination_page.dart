@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../app/services.dart';
 import '../../app/theme/app_theme.dart';
+import '../../core/records/record_store.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
 import 'divination_content.dart';
+import '../records/record_list_page.dart';
 import 'divination_journal.dart';
 import 'reading_page.dart';
 
@@ -47,6 +50,7 @@ class _DivinationPageState extends State<DivinationPage> {
       prefs = await SharedPreferences.getInstance();
     } catch (_) {}
     if (!mounted) return;
+    DivinationJournal.migrate(AppServices.of(context).records);
     setState(() {
       _content = content;
       _prefs = prefs;
@@ -91,13 +95,14 @@ class _DivinationPageState extends State<DivinationPage> {
       school: _schoolOf(_topic!),
       settings: TimeSettings(utcOffset: now.timeZoneOffset),
     );
-    final journal = await DivinationJournal.load();
+    final journal = DivinationJournal(AppServices.of(context).records);
     final entry = await journal.add(
       askedAt: now,
       topic: reading.topic,
       school: reading.school,
       question: _question.text.trim(),
       verdict: reading.verdict.name,
+      summary: divinationSummary(context.l10n, content.text, reading.topic, reading.verdict.name),
     );
     if (!mounted) return;
     _question.clear();
@@ -120,12 +125,12 @@ class _DivinationPageState extends State<DivinationPage> {
             tooltip: l.divGuideTitle,
             onPressed: () => showDivinationGuide(context),
           ),
-          IconButton(
+          // 明顯的「紀錄」按鈕：開統一紀錄並只顯示問事
+          TextButton.icon(
             icon: const Icon(Icons.history),
-            tooltip: l.divJournal,
-            onPressed: content == null
-                ? null
-                : () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => JournalPage(content: content))),
+            label: Text(l.divJournal),
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(
+                builder: (_) => const RecordListPage(initialKind: RecordKind.divination))),
           ),
         ],
       ),
@@ -206,104 +211,6 @@ Future<void> showDivinationGuide(BuildContext context) {
       ),
     ),
   );
-}
-
-/// 問事紀錄：點開重看解讀、左滑刪除可復原、顯示應驗統計。
-class JournalPage extends StatefulWidget {
-  const JournalPage({super.key, required this.content});
-
-  final DivinationContent content;
-
-  @override
-  State<JournalPage> createState() => _JournalPageState();
-}
-
-class _JournalPageState extends State<JournalPage> {
-  DivinationJournal? _journal;
-
-  @override
-  void initState() {
-    super.initState();
-    DivinationJournal.load().then((j) {
-      if (mounted) setState(() => _journal = j);
-    });
-  }
-
-  Future<void> _open(JournalEntry e) async {
-    final rules = widget.content.rules;
-    if (!rules.topics.contains(e.topic)) return;
-    final reading = const DivinationEngine().read(
-      rules,
-      e.topic,
-      e.askedAt,
-      school: e.school,
-      settings: TimeSettings(utcOffset: e.askedAt.toLocal().timeZoneOffset),
-    );
-    await Navigator.of(context).push(MaterialPageRoute<void>(
-      builder: (_) => ReadingPage(content: widget.content, reading: reading, entry: e, journal: _journal!),
-    ));
-    if (mounted) setState(() {});
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final j = _journal;
-    final text = widget.content.text;
-    final rated = j?.entries.where((e) => e.feedback != null).toList() ?? const [];
-    final hits = rated.where((e) => e.feedback == true).length;
-    return Scaffold(
-      appBar: AppBar(title: Text(l.divJournal)),
-      body: j == null
-          ? const Center(child: CircularProgressIndicator())
-          : j.entries.isEmpty
-              ? Center(child: Text(l.divJournalEmpty))
-              : ListView(children: [
-                  if (rated.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
-                      child: Text(l.divHitRate(hits, rated.length), style: Theme.of(context).textTheme.titleSmall),
-                    ),
-                  for (final (i, e) in j.entries.indexed)
-                    Dismissible(
-                      key: ValueKey(e.id),
-                      direction: DismissDirection.endToStart,
-                      background: Container(
-                        alignment: Alignment.centerRight,
-                        padding: const EdgeInsets.only(right: 20),
-                        color: context.qm.bad.withValues(alpha: 0.2),
-                        child: const Icon(Icons.delete_outline),
-                      ),
-                      onDismissed: (_) async {
-                        await j.remove(e);
-                        if (!context.mounted) return;
-                        setState(() {});
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(l.divDeleted),
-                          action: SnackBarAction(
-                            label: l.divUndo,
-                            onPressed: () async {
-                              await j.restore(e, i);
-                              if (mounted) setState(() {});
-                            },
-                          ),
-                        ));
-                      },
-                      child: ListTile(
-                        title: Text(e.question.isEmpty ? text.topicName(e.topic) : e.question,
-                            maxLines: 1, overflow: TextOverflow.ellipsis),
-                        subtitle: Text('${text.topicName(e.topic)}・${formatAskedAt(e.askedAt)}'),
-                        leading: VerdictBadge(verdict: Verdict.values.byName(e.verdict)),
-                        trailing: e.feedback == null
-                            ? null
-                            : Icon(e.feedback! ? Icons.check_circle_outline : Icons.highlight_off,
-                                color: e.feedback! ? context.qm.good : context.qm.textMuted),
-                        onTap: () => _open(e),
-                      ),
-                    ),
-                ]),
-    );
-  }
 }
 
 String formatAskedAt(DateTime t) {

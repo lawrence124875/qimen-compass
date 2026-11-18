@@ -225,13 +225,144 @@ class _HousePageState extends State<HousePage> {
     final l = context.l10n;
     final h = _house;
     return Scaffold(
-      appBar: AppBar(title: Text(l.houseTitle), actions: [
+      appBar: AppBar(title: h == null ? Text(l.houseTitle) : _titleSwitcher(context, h), actions: [
+        IconButton(icon: const Icon(Icons.home_work_outlined), tooltip: l.houseManage, onPressed: _openManager),
         IconButton(icon: const Icon(Icons.info_outline), tooltip: l.houseIntroTitle, onPressed: () => showHouseIntro(context, force: true)),
       ]),
       body: SafeArea(
         child: h == null ? const Center(child: CircularProgressIndicator()) : _body(context, h),
       ),
     );
+  }
+
+  String _name(AppLocalizations l, House h) => h.name.trim().isEmpty ? l.houseDefaultName : h.name;
+
+  /// 標題：目前房子名稱，點一下切換（多間時）或開管理。
+  Widget _titleSwitcher(BuildContext context, House h) {
+    final l = context.l10n;
+    return InkWell(
+      borderRadius: BorderRadius.circular(8),
+      onTap: _openManager,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(mainAxisSize: MainAxisSize.min, children: [
+          Flexible(child: Text('${l.houseTitle}・${_name(l, h)}', overflow: TextOverflow.ellipsis)),
+          const Icon(Icons.arrow_drop_down),
+        ]),
+      ),
+    );
+  }
+
+  Future<void> _switchTo(House h) async {
+    await HouseStore.select(h.id);
+    if (mounted) setState(() => _house = h);
+  }
+
+  Future<String?> _askName(String initial) {
+    final l = context.l10n;
+    final c = TextEditingController(text: initial);
+    return showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l.houseNameTitle),
+        content: TextField(controller: c, autofocus: true, maxLength: 20, decoration: InputDecoration(hintText: l.houseDefaultName)),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context), child: Text(l.houseCancel)),
+          FilledButton(onPressed: () => Navigator.pop(context, c.text.trim()), child: Text(l.houseOk)),
+        ],
+      ),
+    );
+  }
+
+  /// 房子管理：切換、新增、改名、刪除（可復原）。
+  Future<void> _openManager() async {
+    final cur = _house;
+    if (cur != null && cur.isEmpty == false) await HouseStore.save(cur);
+    if (!mounted) return;
+    final houses = await HouseStore.all();
+    if (!mounted) return;
+    if (cur != null && !houses.any((x) => x.id == cur.id)) houses.add(cur);
+    final l = context.l10n;
+    final action = await showModalBottomSheet<(String, House?)>(
+      context: context,
+      showDragHandle: true,
+      builder: (sheet) => SafeArea(
+        child: ListView(shrinkWrap: true, children: [
+          for (final h in houses)
+            ListTile(
+              leading: Icon(h.id == _house?.id ? Icons.radio_button_checked : Icons.radio_button_off, color: sheet.qm.primary),
+              title: Text(_name(l, h)),
+              subtitle: h.facing == null
+                  ? null
+                  : Text(l.houseSitFace(palaceLabel(sheet, palaceAtBearing(sittingOf(h.facing!))),
+                      palaceLabel(sheet, palaceAtBearing(h.facing!)), '${h.facing!.round()}')),
+              onTap: () => Navigator.pop(sheet, ('select', h)),
+              trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+                IconButton(icon: const Icon(Icons.edit_outlined), tooltip: l.houseRename, onPressed: () => Navigator.pop(sheet, ('rename', h))),
+                IconButton(icon: const Icon(Icons.delete_outline), tooltip: l.houseDelete, onPressed: () => Navigator.pop(sheet, ('delete', h))),
+              ]),
+            ),
+          ListTile(
+            leading: Icon(Icons.add_home_outlined, color: sheet.qm.primary),
+            title: Text(l.houseAdd),
+            onTap: () => Navigator.pop(sheet, ('add', null)),
+          ),
+        ]),
+      ),
+    );
+    if (action == null || !mounted) return;
+    final (kind, target) = action;
+    switch (kind) {
+      case 'select':
+        await _switchTo(target!);
+      case 'rename':
+        final name = await _askName(target!.name);
+        if (name == null) return;
+        target.name = name;
+        await HouseStore.save(target);
+        if (_house?.id == target.id) {
+          _house!.name = name;
+        } else {
+          await HouseStore.select(_house!.id);
+        }
+        if (mounted) setState(() {});
+      case 'add':
+        final name = await _askName('');
+        if (name == null) return;
+        final h = House(name: name);
+        await HouseStore.save(h);
+        if (mounted) setState(() => _house = h);
+      case 'delete':
+        await _delete(target!);
+    }
+  }
+
+  Future<void> _delete(House h) async {
+    final l = context.l10n;
+    final index = await HouseStore.delete(h.id);
+    final next = await HouseStore.load();
+    if (!mounted) return;
+    setState(() => _house = next);
+    final messenger = ScaffoldMessenger.of(context);
+    messenger.clearSnackBars();
+    final reason = await messenger
+        .showSnackBar(SnackBar(
+          content: Text(l.houseDeleted(_name(l, h))),
+          action: SnackBarAction(label: l.undo, onPressed: () {}),
+        ))
+        .closed;
+    if (reason == SnackBarClosedReason.action) {
+      await HouseStore.restore(h, index);
+      if (mounted) setState(() => _house = h);
+    } else {
+      // 沒復原才刪平面圖照片
+      final img = h.plan?.imagePath;
+      if (img != null) {
+        try {
+          await File(img).delete();
+        } catch (_) {}
+      }
+    }
   }
 
   Widget _body(BuildContext context, House h) {
