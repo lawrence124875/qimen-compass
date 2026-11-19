@@ -11,3 +11,4 @@ export 'divination.dart';
 export 'divination_more.dart';
 export 'geju.dart';
 export 'direction.dart';
+export 'almanac.dart';

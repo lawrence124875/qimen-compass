@@ -1292,5 +1292,33 @@
   "destNow": "現在出發",
   "destBest": "較好的出發時段",
   "destNext": "接下來的時辰",
-  "destNoneGood": "接下來 24 小時沒有「吉」以上的時段，可改天再查"
+  "destNoneGood": "接下來 24 小時沒有「吉」以上的時段，可改天再查",
+  "labelValue": "{label}：{value}",
+  "@labelValue": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "almanacTitle": "今日奇門黃曆",
+  "almanacDate": "{date}・{pillar}日",
+  "@almanacDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "pillar": {
+        "type": "String"
+      }
+    }
+  },
+  "almanacBestDir": "今日吉方",
+  "almanacBestHours": "今日吉時",
+  "almanacAllHours": "全日十二時辰",
+  "almanacNone": "今天沒有「吉」以上的時辰，宜守不宜動",
+  "shareCardFooter": "Google Play 搜尋「奇門羅盤」"
 }

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../engine/engine.dart' hide Element;
+import '../features/almanac/almanac_page.dart';
 import '../features/divination/divination_page.dart';
 import '../features/travel/travel_page.dart';
 import '../l10n/l10n.dart';
 import '../core/records/record_store.dart';
 import '../features/records/record_actions.dart';
+import 'services.dart';
 import 'settings/app_settings.dart';
 import 'theme/app_theme.dart';
 import 'widgets/chart_board.dart';
@@ -206,7 +208,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: ListView(children: [units, unitNote, const SizedBox(height: 8), hint, const SizedBox(height: 12), nav, const SizedBox(height: 8), actions, const SizedBox(height: 12), footer]),
+                  child: ListView(children: [if (AppServices.of(context).featureEnabled('almanac')) ...[const AlmanacTile(), const SizedBox(height: 8)], units, unitNote, const SizedBox(height: 8), hint, const SizedBox(height: 12), nav, const SizedBox(height: 8), actions, const SizedBox(height: 12), footer]),
                 ),
               ]),
             );
@@ -214,6 +216,7 @@ class _HomePageState extends State<HomePage> {
           return ListView(
             padding: const EdgeInsets.fromLTRB(12, 4, 12, 16),
             children: [
+              if (AppServices.of(context).featureEnabled('almanac')) ...[const AlmanacTile(), const SizedBox(height: 8)],
               units,
               unitNote,
               const SizedBox(height: 8),

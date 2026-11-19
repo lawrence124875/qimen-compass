@@ -566,5 +566,13 @@
   "destNow": "Berangkat sekarang",
   "destBest": "Waktu berangkat yang lebih baik",
   "destNext": "Periode dua jam berikutnya",
-  "destNoneGood": "Tidak ada periode \"Baik\" dalam 24 jam ke depan; cek lagi di hari lain"
+  "destNoneGood": "Tidak ada periode \"Baik\" dalam 24 jam ke depan; cek lagi di hari lain",
+  "labelValue": "{label}: {value}",
+  "almanacTitle": "Almanak Qimen hari ini",
+  "almanacDate": "{date} · Hari {pillar}",
+  "almanacBestDir": "Arah baik hari ini",
+  "almanacBestHours": "Jam baik hari ini",
+  "almanacAllHours": "Dua belas periode hari ini",
+  "almanacNone": "Tidak ada periode \"Baik\" hari ini; lebih baik tenang",
+  "shareCardFooter": "Cari \"Kompas Qimen\" di Google Play"
 }

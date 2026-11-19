@@ -566,5 +566,13 @@
   "destNow": "Leaving now",
   "destBest": "Better times to leave",
   "destNext": "Coming two-hour periods",
-  "destNoneGood": "No \"Good\" period in the next 24 hours; check again another day"
+  "destNoneGood": "No \"Good\" period in the next 24 hours; check again another day",
+  "labelValue": "{label}: {value}",
+  "almanacTitle": "Today's Qimen almanac",
+  "almanacDate": "{date} · Day {pillar}",
+  "almanacBestDir": "Lucky direction",
+  "almanacBestHours": "Lucky hours",
+  "almanacAllHours": "All twelve two-hour periods",
+  "almanacNone": "No \"Good\" period today; better to stay steady",
+  "shareCardFooter": "Search \"Qimen Compass\" on Google Play"
 }

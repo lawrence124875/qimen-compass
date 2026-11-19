@@ -566,5 +566,13 @@
   "destNow": "الانطلاق الآن",
   "destBest": "أوقات أفضل للانطلاق",
   "destNext": "الفترات القادمة (كل ساعتين)",
-  "destNoneGood": "لا توجد فترة \"جيدة\" خلال 24 ساعة القادمة؛ تحقق في يوم آخر"
+  "destNoneGood": "لا توجد فترة \"جيدة\" خلال 24 ساعة القادمة؛ تحقق في يوم آخر",
+  "labelValue": "{label}: {value}",
+  "almanacTitle": "تقويم تشيمن اليوم",
+  "almanacDate": "{date} · يوم {pillar}",
+  "almanacBestDir": "الاتجاه المبارك",
+  "almanacBestHours": "الساعات المباركة",
+  "almanacAllHours": "الفترات الاثنتا عشرة لليوم",
+  "almanacNone": "لا توجد فترة \"جيدة\" اليوم؛ الأفضل التريث",
+  "shareCardFooter": "ابحث عن \"بوصلة تشيمن\" في Google Play"
 }

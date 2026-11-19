@@ -566,5 +566,13 @@
   "destNow": "ออกเดินทางตอนนี้",
   "destBest": "ช่วงเวลาออกเดินทางที่ดีกว่า",
   "destNext": "ช่วงชั่วยามถัดไป",
-  "destNoneGood": "ไม่มีช่วง \"ดี\" ใน 24 ชั่วโมงข้างหน้า ลองดูวันอื่น"
+  "destNoneGood": "ไม่มีช่วง \"ดี\" ใน 24 ชั่วโมงข้างหน้า ลองดูวันอื่น",
+  "labelValue": "{label}: {value}",
+  "almanacTitle": "ปฏิทินฉีเหมินวันนี้",
+  "almanacDate": "{date} · วัน {pillar}",
+  "almanacBestDir": "ทิศมงคลวันนี้",
+  "almanacBestHours": "ฤกษ์ดีวันนี้",
+  "almanacAllHours": "สิบสองชั่วยามของวัน",
+  "almanacNone": "วันนี้ไม่มีช่วง \"ดี\" ควรอยู่นิ่งมากกว่าเคลื่อนไหว",
+  "shareCardFooter": "ค้นหา \"เข็มทิศฉีเหมิน\" ใน Google Play"
 }

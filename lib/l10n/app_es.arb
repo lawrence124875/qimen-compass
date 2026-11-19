@@ -566,5 +566,13 @@
   "destNow": "Si sales ahora",
   "destBest": "Mejores horas para salir",
   "destNext": "Próximos periodos de dos horas",
-  "destNoneGood": "No hay periodos \"Bueno\" en las próximas 24 horas; vuelve a consultar otro día"
+  "destNoneGood": "No hay periodos \"Bueno\" en las próximas 24 horas; vuelve a consultar otro día",
+  "labelValue": "{label}: {value}",
+  "almanacTitle": "Almanaque Qimen de hoy",
+  "almanacDate": "{date} · Día {pillar}",
+  "almanacBestDir": "Dirección favorable",
+  "almanacBestHours": "Horas favorables",
+  "almanacAllHours": "Los doce periodos del día",
+  "almanacNone": "Hoy no hay periodos \"Bueno\"; mejor mantenerse",
+  "shareCardFooter": "Busca \"Brújula Qimen\" en Google Play"
 }

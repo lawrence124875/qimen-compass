@@ -566,5 +566,13 @@
   "destNow": "지금 출발하면",
   "destBest": "더 좋은 출발 시간",
   "destNext": "다가오는 시진",
-  "destNoneGood": "앞으로 24시간 동안 '길' 이상인 시간이 없음. 다른 날 다시 확인"
+  "destNoneGood": "앞으로 24시간 동안 '길' 이상인 시간이 없음. 다른 날 다시 확인",
+  "labelValue": "{label}: {value}",
+  "almanacTitle": "오늘의 기문 책력",
+  "almanacDate": "{date} · {pillar}일",
+  "almanacBestDir": "오늘의 길방",
+  "almanacBestHours": "오늘의 길시",
+  "almanacAllHours": "하루 열두 시진",
+  "almanacNone": "오늘은 '길' 이상인 시진이 없음. 움직이기보다 지키기",
+  "shareCardFooter": "Google Play에서 '기문나침반' 검색"
 }
