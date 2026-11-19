@@ -1,84 +1,239 @@
 {
   "@@locale": "zh",
   "appTitle": "奇門羅盤",
-  "@appTitle": {"description": "App 名稱（桌面名稱另由 scripts/patch_android.sh 設定）"},
+  "@appTitle": {
+    "description": "App 名稱（桌面名稱另由 scripts/patch_android.sh 設定）"
+  },
   "homeCurrentChart": "目前時盤",
   "homeJu": "{dun}{ju}局・{yuan}",
-  "@homeJu": {"placeholders": {"dun": {"type": "String"}, "ju": {"type": "int"}, "yuan": {"type": "String"}}},
+  "@homeJu": {
+    "placeholders": {
+      "dun": {
+        "type": "String"
+      },
+      "ju": {
+        "type": "int"
+      },
+      "yuan": {
+        "type": "String"
+      }
+    }
+  },
   "homePillars": "{year}年 {month}月 {day}日 {hour}時",
-  "@homePillars": {"placeholders": {"year": {"type": "String"}, "month": {"type": "String"}, "day": {"type": "String"}, "hour": {"type": "String"}}},
+  "@homePillars": {
+    "placeholders": {
+      "year": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      },
+      "day": {
+        "type": "String"
+      },
+      "hour": {
+        "type": "String"
+      }
+    }
+  },
   "homeZhiFu": "值符：{star}",
-  "@homeZhiFu": {"placeholders": {"star": {"type": "String"}}},
+  "@homeZhiFu": {
+    "placeholders": {
+      "star": {
+        "type": "String"
+      }
+    }
+  },
   "homeZhiShi": "值使：{door}",
-  "@homeZhiShi": {"placeholders": {"door": {"type": "String"}}},
+  "@homeZhiShi": {
+    "placeholders": {
+      "door": {
+        "type": "String"
+      }
+    }
+  },
   "homeRefresh": "重新排盤",
   "homeDisclaimer": "內容僅供參考",
   "homeOpenCompass": "奇門羅盤",
   "compassTitle": "奇門羅盤",
   "compassAhead": "前方：{door}（{luck}）",
-  "@compassAhead": {"placeholders": {"door": {"type": "String"}, "luck": {"type": "String"}}},
+  "@compassAhead": {
+    "placeholders": {
+      "door": {
+        "type": "String"
+      },
+      "luck": {
+        "type": "String"
+      }
+    }
+  },
   "luckGood": "吉",
   "luckNeutral": "平",
   "luckBad": "凶",
   "compassWaiting": "正在讀取方位",
   "compassNoSensor": "這支手機沒有指南針感測器",
   "compassAccuracy": "精度：{level}",
-  "@compassAccuracy": {"placeholders": {"level": {"type": "String"}}},
+  "@compassAccuracy": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
   "accuracyHigh": "高",
   "accuracyMedium": "中",
   "accuracyLow": "低",
   "accuracyUnknown": "未知",
   "compassInterference": "磁場 {value} μT 不正常\n請遠離金屬和家電",
-  "@compassInterference": {"placeholders": {"value": {"type": "int"}}},
+  "@compassInterference": {
+    "placeholders": {
+      "value": {
+        "type": "int"
+      }
+    }
+  },
   "compassUnstable": "磁場抖動大\n請遠離金屬和家電",
   "compassCalibrate": "請拿著手機在空中畫 8 字校準",
   "compassKeepFlat": "請把手機平放",
   "compassMagneticNorth": "磁北",
   "compassTrueNorth": "真北",
   "compassDeclination": "磁偏角 {deg}°（東偏為正）",
-  "@compassDeclination": {"placeholders": {"deg": {"type": "String"}}},
+  "@compassDeclination": {
+    "placeholders": {
+      "deg": {
+        "type": "String"
+      }
+    }
+  },
   "compassLocationOff": "定位服務未開啟，維持磁北",
   "compassLocationDenied": "沒有位置權限，維持磁北",
   "compassLocationFailed": "取得位置失敗，維持磁北",
   "compassFindDoor": "找吉門",
   "compassTurnLeft": "向左轉 {deg}°",
-  "@compassTurnLeft": {"placeholders": {"deg": {"type": "int"}}},
+  "@compassTurnLeft": {
+    "placeholders": {
+      "deg": {
+        "type": "int"
+      }
+    }
+  },
   "compassTurnRight": "向右轉 {deg}°",
-  "@compassTurnRight": {"placeholders": {"deg": {"type": "int"}}},
+  "@compassTurnRight": {
+    "placeholders": {
+      "deg": {
+        "type": "int"
+      }
+    }
+  },
   "compassAligned": "已對準{door}",
-  "@compassAligned": {"placeholders": {"door": {"type": "String"}}},
+  "@compassAligned": {
+    "placeholders": {
+      "door": {
+        "type": "String"
+      }
+    }
+  },
   "compassCountdown": "距換局 {time}",
-  "@compassCountdown": {"placeholders": {"time": {"type": "String"}}},
+  "@compassCountdown": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "compassPreviewNext": "預覽下個時辰",
   "compassNextFrom": "{time} 起",
-  "@compassNextFrom": {"placeholders": {"time": {"type": "String"}}},
+  "@compassNextFrom": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "homeTravel": "出行訣",
   "travelTitle": "出行訣",
   "travelUpcoming": "接下來的時辰",
   "travelNow": "現在",
   "travelGoTo": "往{dir}方（{deg}°）",
-  "@travelGoTo": {"placeholders": {"dir": {"type": "String"}, "deg": {"type": "int"}}},
+  "@travelGoTo": {
+    "placeholders": {
+      "dir": {
+        "type": "String"
+      },
+      "deg": {
+        "type": "int"
+      }
+    }
+  },
   "travelDirDoor": "{dir}方・{door}",
-  "@travelDirDoor": {"placeholders": {"dir": {"type": "String"}, "door": {"type": "String"}}},
+  "@travelDirDoor": {
+    "placeholders": {
+      "dir": {
+        "type": "String"
+      },
+      "door": {
+        "type": "String"
+      }
+    }
+  },
   "travelNotIdeal": "這個時辰較不理想\n可以參考下方的吉時",
   "travelWalk": "走路",
   "travelRun": "跑步",
   "travelWater": "喝水法",
   "travelRemindMe": "提醒我",
   "travelRemindSet": "已設定提醒：{time} 前 10 分鐘",
-  "@travelRemindSet": {"placeholders": {"time": {"type": "String"}}},
+  "@travelRemindSet": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "travelNotifySwitch": "吉時推播",
   "travelNotifyHint": "每天提醒「{event}」的最佳吉時",
-  "@travelNotifyHint": {"placeholders": {"event": {"type": "String"}}},
+  "@travelNotifyHint": {
+    "placeholders": {
+      "event": {
+        "type": "String"
+      }
+    }
+  },
   "travelNotifyDenied": "通知未開啟",
   "travelOpenSettings": "開啟設定",
   "travelNotifyTitle": "{event}吉時將至：往{dir}方",
-  "@travelNotifyTitle": {"placeholders": {"event": {"type": "String"}, "dir": {"type": "String"}}},
+  "@travelNotifyTitle": {
+    "placeholders": {
+      "event": {
+        "type": "String"
+      },
+      "dir": {
+        "type": "String"
+      }
+    }
+  },
   "travelNotifyBody": "{time} 往{dir}方，{door}",
-  "@travelNotifyBody": {"placeholders": {"time": {"type": "String"}, "dir": {"type": "String"}, "door": {"type": "String"}}},
+  "@travelNotifyBody": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "dir": {
+        "type": "String"
+      },
+      "door": {
+        "type": "String"
+      }
+    }
+  },
   "travelChannelName": "吉時推播",
   "travelHourName": "{branch}時",
-  "@travelHourName": {"placeholders": {"branch": {"type": "String"}}},
+  "@travelHourName": {
+    "placeholders": {
+      "branch": {
+        "type": "String"
+      }
+    }
+  },
   "travelEventGeneral": "出行",
   "travelEventWealth": "求財",
   "travelEventCareer": "事業面試",
@@ -117,25 +272,76 @@
   "travelSessionDoneBody": "出行完成\n記得慢慢收操",
   "travelWaterDoneBody": "水已靜置完成\n可以慢慢喝下",
   "travelWaterGuide": "把一杯水放在{dir}方\n靜置到計時結束後喝下",
-  "@travelWaterGuide": {"placeholders": {"dir": {"type": "String"}}},
+  "@travelWaterGuide": {
+    "placeholders": {
+      "dir": {
+        "type": "String"
+      }
+    }
+  },
   "travelWalkGuide": "朝{dir}方出發\n途中保持輕鬆的步伐",
-  "@travelWalkGuide": {"placeholders": {"dir": {"type": "String"}}},
+  "@travelWalkGuide": {
+    "placeholders": {
+      "dir": {
+        "type": "String"
+      }
+    }
+  },
   "travelMinutes": "{n} 分",
-  "@travelMinutes": {"placeholders": {"n": {"type": "int"}}},
+  "@travelMinutes": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "travelSteps": "{n} 步",
-  "@travelSteps": {"placeholders": {"n": {"type": "int"}}},
+  "@travelSteps": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "travelStepsUnavailable": "無法計步",
   "travelStart": "開始",
   "travelStop": "停止",
   "travelAgain": "再來一次",
   "travelNoCompass": "沒有指南針\n請朝 {deg}° 方向",
-  "@travelNoCompass": {"placeholders": {"deg": {"type": "int"}}},
+  "@travelNoCompass": {
+    "placeholders": {
+      "deg": {
+        "type": "int"
+      }
+    }
+  },
   "travelHeading": "目前朝向 {deg}°",
-  "@travelHeading": {"placeholders": {"deg": {"type": "int"}}},
+  "@travelHeading": {
+    "placeholders": {
+      "deg": {
+        "type": "int"
+      }
+    }
+  },
   "homeTime": "{time}・{term}",
-  "@homeTime": {"placeholders": {"time": {"type": "String"}, "term": {"type": "String"}}},
+  "@homeTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "term": {
+        "type": "String"
+      }
+    }
+  },
   "homeXun": "旬首：{xun}",
-  "@homeXun": {"placeholders": {"xun": {"type": "String"}}},
+  "@homeXun": {
+    "placeholders": {
+      "xun": {
+        "type": "String"
+      }
+    }
+  },
   "homeNow": "現在",
   "homePrevHour": "上一時辰",
   "homeNextHour": "下一時辰",
@@ -151,9 +357,6 @@
   "labelEarth": "地盤",
   "labelMarks": "標記",
   "marksNone": "無",
-  "luckGood": "吉",
-  "luckNeutral": "平",
-  "luckBad": "凶",
   "dirCenter": "中",
   "markKongWang": "旬空，所臨之事多虛而難成",
   "markHorse": "驛馬，主動、出行、變動",
@@ -180,12 +383,30 @@
   "houseOverlayMonth": "月盤",
   "houseOverlayFate": "宅命盤",
   "houseOverlayHourAt": "時盤 {time}",
-  "@houseOverlayHourAt": {"placeholders": {"time": {"type": "String"}}},
+  "@houseOverlayHourAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "houseFateNoDate": "未填入宅時間，只看年盤",
   "houseFateHour": "宅命盤（入宅 {time}）",
-  "@houseFateHour": {"placeholders": {"time": {"type": "String"}}},
+  "@houseFateHour": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "houseFateDay": "宅命日盤（入宅 {date}）",
-  "@houseFateDay": {"placeholders": {"date": {"type": "String"}}},
+  "@houseFateDay": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "houseChartPending": "這種盤的引擎還在製作中",
   "houseEmpty": "還沒有房間資料\n選一種方式開始",
   "houseMethodMark": "站中心點標記房間",
@@ -198,10 +419,28 @@
   "houseReplacePlan": "要取代目前的平面圖嗎？",
   "houseFacingUnset": "坐向未量（點這裡設定）",
   "houseSitFace": "坐{sit} 向{face}（{deg}°）",
-  "@houseSitFace": {"placeholders": {"sit": {"type": "String"}, "face": {"type": "String"}, "deg": {"type": "String"}}},
+  "@houseSitFace": {
+    "placeholders": {
+      "sit": {
+        "type": "String"
+      },
+      "face": {
+        "type": "String"
+      },
+      "deg": {
+        "type": "String"
+      }
+    }
+  },
   "houseMoveInUnset": "入宅時間未填",
   "houseMoveInIs": "入宅 {time}",
-  "@houseMoveInIs": {"placeholders": {"time": {"type": "String"}}},
+  "@houseMoveInIs": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "houseFacingTitle": "坐向",
   "houseFacingNote": "找門位只需要中心點和正北；坐向只影響宅命判讀",
   "houseSitDoor": "自家門",
@@ -215,7 +454,13 @@
   "houseMeasureFacing": "量坐向",
   "houseMeasureFacingHint": "站在門內面向門外\n手機平放、頂端朝外",
   "houseFacingValue": "向 {deg}°（重量）",
-  "@houseFacingValue": {"placeholders": {"deg": {"type": "String"}}},
+  "@houseFacingValue": {
+    "placeholders": {
+      "deg": {
+        "type": "String"
+      }
+    }
+  },
   "houseMoveInTitle": "入宅或大裝修時間（選填）",
   "houseMoveInNote": "有填時間看宅命盤；只填日期用日盤；沒填只看年盤",
   "houseMoveInDate": "選日期",
@@ -223,7 +468,16 @@
   "houseClear": "清除",
   "houseNoRoomHere": "沒有房間",
   "houseFacingNow": "前方 {deg}°・{palace}",
-  "@houseFacingNow": {"placeholders": {"deg": {"type": "String"}, "palace": {"type": "String"}}},
+  "@houseFacingNow": {
+    "placeholders": {
+      "deg": {
+        "type": "String"
+      },
+      "palace": {
+        "type": "String"
+      }
+    }
+  },
   "houseRecord": "記錄",
   "houseCancel": "取消",
   "houseOk": "確定",
@@ -236,15 +490,36 @@
   "houseMarkSteps": "1. 先到門口或陽台等干擾少的地方，手機平放，開啟「室內鎖定」\n2. 走到房子中心點站好\n3. 選房間名稱，手機頂端對準那個房間，按「標記這個方向」",
   "houseChooseRoom": "選房間名稱",
   "houseRoomIs": "房間：{name}（點這裡改）",
-  "@houseRoomIs": {"placeholders": {"name": {"type": "String"}}},
+  "@houseRoomIs": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "houseMarkThis": "標記這個方向",
   "houseMarkCenter": "這間在中心",
   "houseMarked": "{name} 在 {palace}",
-  "@houseMarked": {"placeholders": {"name": {"type": "String"}, "palace": {"type": "String"}}},
+  "@houseMarked": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "palace": {
+        "type": "String"
+      }
+    }
+  },
   "houseNoRooms": "還沒有標記房間",
   "houseDelete": "刪除",
-  "houseDeleted": "已刪除 {name}",
-  "@houseDeleted": {"placeholders": {"name": {"type": "String"}}},
+  "houseDeleted": "已刪除「{name}」",
+  "@houseDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "houseUndo": "復原",
   "houseRename": "改名",
   "houseUnnamed": "未命名",
@@ -262,14 +537,29 @@
   "houseAutoCenter": "自動算中心",
   "houseToolNorthHint": "看圖上的指北針，把紅色箭頭轉到同一方向\n或用手機量一次",
   "houseUpIs": "圖的上方朝 {deg}°・{palace}",
-  "@houseUpIs": {"placeholders": {"deg": {"type": "String"}, "palace": {"type": "String"}}},
+  "@houseUpIs": {
+    "placeholders": {
+      "deg": {
+        "type": "String"
+      },
+      "palace": {
+        "type": "String"
+      }
+    }
+  },
   "houseNorthMeasure": "用手機量",
   "houseNorthMeasureHint": "手機平放、頂端朝向平面圖「上方」那一側的牆\n建議先在門口鎖定再量",
   "houseNorthUp": "北在上",
   "houseNorthNotSet": "還沒設定北方，九宮方位可能不對",
   "houseAddRoom": "加一間",
   "houseAspect": "長寬比 {ratio}",
-  "@houseAspect": {"placeholders": {"ratio": {"type": "String"}}},
+  "@houseAspect": {
+    "placeholders": {
+      "ratio": {
+        "type": "String"
+      }
+    }
+  },
   "houseRecorner": "重新校正四角",
   "compassIntroInfo": "使用說明",
   "compassIntro1Title": "盤面對準現實方位",
@@ -297,24 +587,65 @@
   "zeshiEventEngagement": "訂婚",
   "zeshiEventJourney": "遠行",
   "zeshiDays": "{n} 天",
-  "@zeshiDays": {"placeholders": {"n": {"type": "int"}}},
+  "@zeshiDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "zeshiUseBirth": "加入我的生辰",
   "zeshiBirthHint": "以年命與日干加權",
   "zeshiBirthSet": "生日 {date}",
-  "@zeshiBirthSet": {"placeholders": {"date": {"type": "String"}}},
+  "@zeshiBirthSet": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "zeshiBirthEdit": "修改生日",
   "zeshiTop": "最佳時段",
   "zeshiNone": "這段期間沒有合適的時段\n可以拉長天數再找",
   "zeshiFootnote": "時段 {window}・{limit}；點卡片看盤",
-  "@zeshiFootnote": {"placeholders": {"window": {"type": "String"}, "limit": {"type": "String"}}},
+  "@zeshiFootnote": {
+    "placeholders": {
+      "window": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
   "zeshiAddCalendar": "加入行事曆",
   "zeshiCalendarTitle": "{event}吉時",
-  "@zeshiCalendarTitle": {"placeholders": {"event": {"type": "String"}}},
+  "@zeshiCalendarTitle": {
+    "placeholders": {
+      "event": {
+        "type": "String"
+      }
+    }
+  },
   "zeshiCalendarBody": "{dir}方・{door}（{level}）",
-  "@zeshiCalendarBody": {"placeholders": {"dir": {"type": "String"}, "door": {"type": "String"}, "level": {"type": "String"}}},
+  "@zeshiCalendarBody": {
+    "placeholders": {
+      "dir": {
+        "type": "String"
+      },
+      "door": {
+        "type": "String"
+      },
+      "level": {
+        "type": "String"
+      }
+    }
+  },
   "zeshiCalendarFailed": "無法開啟行事曆",
   "zeshiWeekdays": "一,二,三,四,五,六,日",
-  "@zeshiWeekdays": {"description": "週一到週日，逗號分隔"},
+  "@zeshiWeekdays": {
+    "description": "週一到週日，逗號分隔"
+  },
   "zeshiFlagWangXiang": "用神旺相",
   "zeshiFlagFavoredGod": "喜神同宮",
   "zeshiFlagSanQi": "三奇臨宮",
@@ -369,7 +700,13 @@
   "divOthers": "其他用神",
   "divChart": "本次時盤",
   "divAskedAt": "起局時間：{time}",
-  "@divAskedAt": {"placeholders": {"time": {"type": "String"}}},
+  "@divAskedAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "divLostTitle": "失物方位",
   "divLostCenter": "用神落中宮\n多半就在住處中央附近",
   "divCopy": "複製結果",
@@ -381,7 +718,16 @@
   "divJournal": "問事紀錄",
   "divJournalEmpty": "還沒有紀錄",
   "divHitRate": "已回饋 {total} 則，應驗 {hit} 則",
-  "@divHitRate": {"placeholders": {"hit": {"type": "int"}, "total": {"type": "int"}}},
+  "@divHitRate": {
+    "placeholders": {
+      "hit": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "divDeleted": "已刪除",
   "divUndo": "復原",
   "divGuideTitle": "怎麼問事",
@@ -395,16 +741,37 @@
   "courseTitle": "奇門入門課",
   "courseEmpty": "課程內容尚未載入",
   "courseLesson": "第 {n} 課",
-  "@courseLesson": {"placeholders": {"n": {"type": "int"}}},
+  "@courseLesson": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "courseMinutes": "{n} 分鐘",
-  "@courseMinutes": {"placeholders": {"n": {"type": "int"}}},
+  "@courseMinutes": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "courseFree": "免費",
   "courseLocked": "訂閱後解鎖",
   "courseTakeaways": "重點",
   "courseNext": "下一課",
   "courseFinish": "讀完了",
   "courseProgress": "已讀 {done}／{total}",
-  "@courseProgress": {"placeholders": {"done": {"type": "int"}, "total": {"type": "int"}}},
+  "@courseProgress": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "travelIntro1Title": "找出當下的吉方",
   "travelIntro1Body": "選擇想做的事\n列出現在與接下來的吉時和方位",
   "travelIntro2Title": "往吉方走一走",
@@ -422,7 +789,9 @@
   "ok": "好",
   "undo": "復原",
   "separator": "・",
-  "@separator": {"description": "並列項目的分隔符號"},
+  "@separator": {
+    "description": "並列項目的分隔符號"
+  },
   "feedbackCategoryBug": "回報問題",
   "feedbackCategoryLabel": "類型",
   "feedbackCategoryOther": "其他",
@@ -445,12 +814,36 @@
   "otherAppTarotDesc": "塔羅、雷諾曼、符文，含入門課程",
   "planMonthly": "月訂",
   "planPerMonth": "每月約 {price}",
-  "@planPerMonth": {"placeholders": {"price": {"type": "String"}}},
+  "@planPerMonth": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
   "planTrialMonthly": "免費試用 {days} 天，之後 {price}/月",
-  "@planTrialMonthly": {"placeholders": {"days": {"type": "int"}, "price": {"type": "String"}}},
+  "@planTrialMonthly": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
   "planTrialNote": "可隨時取消；試用到期前會收到通知。",
   "planTrialYearly": "免費試用 {days} 天，之後 {price}/年",
-  "@planTrialYearly": {"placeholders": {"days": {"type": "int"}, "price": {"type": "String"}}},
+  "@planTrialYearly": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "price": {
+        "type": "String"
+      }
+    }
+  },
   "planYearly": "年訂",
   "premiumLoadFailed": "暫時讀不到訂閱方案，請確認網路後再試。",
   "premiumManage": "管理訂閱",
@@ -462,7 +855,9 @@
   "premiumSubtitle": "沒有廣告，所有功能不限次數",
   "premiumTerms": "訂閱會自動續訂，可隨時在 Google Play 的「付款和訂閱」中取消；取消後，會員資格保留到本期結束。",
   "premiumTermsIos": "訂閱會自動續訂，可隨時在 iPhone 的「設定 → Apple 帳號 → 訂閱項目」中取消；取消後，會員資格保留到本期結束。",
-  "@premiumTermsIos": {"description": "iOS 版訂閱頁續訂說明（App Store）"},
+  "@premiumTermsIos": {
+    "description": "iOS 版訂閱頁續訂說明（App Store）"
+  },
   "premiumThanks": "訂閱成功，謝謝支持！",
   "premiumUnavailable": "訂閱尚未開放，敬請期待。",
   "shareFailed": "暫時無法分享，請稍後再試。",
@@ -482,7 +877,13 @@
   "menuBackupMove": "備份與換手機",
   "menuBackupMoveHint": "匯出紀錄，到新手機再匯入",
   "shareAppText": "我在用「奇門羅盤」看吉方與吉時，推薦給你：{url}",
-  "@shareAppText": {"placeholders": {"url": {"type": "String"}}},
+  "@shareAppText": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
   "otherAppQianguaName": "謙卦",
   "otherAppQianguaDesc": "易經卦卡、梅花易數、紫微八字",
   "settingsGeneral": "一般",
@@ -498,9 +899,27 @@
   "dailyReminderHint": "每天早上告訴你今天的吉時與吉方",
   "dailyReminderTime": "提醒時間",
   "dailyTitle": "今日吉時（{event}）",
-  "@dailyTitle": {"placeholders": {"event": {"type": "String"}}},
+  "@dailyTitle": {
+    "placeholders": {
+      "event": {
+        "type": "String"
+      }
+    }
+  },
   "dailyBody": "{time} 往{dir}方・{door}",
-  "@dailyBody": {"placeholders": {"time": {"type": "String"}, "dir": {"type": "String"}, "door": {"type": "String"}}},
+  "@dailyBody": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "dir": {
+        "type": "String"
+      },
+      "door": {
+        "type": "String"
+      }
+    }
+  },
   "dailyBodyNone": "今天沒有特別突出的吉時\n可以打開看看當下時盤",
   "dailyChannelName": "每日提醒",
   "travelNotifySetting": "吉時推播",
@@ -514,26 +933,71 @@
   "recordRemindLabel": "提醒我回來記結果",
   "recordRemindNone": "不用",
   "recordRemindDays": "{days} 天後",
-  "@recordRemindDays": {"placeholders": {"days": {"type": "int"}}},
+  "@recordRemindDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "recordSave": "儲存",
   "recordSaved": "已記下",
   "recordRemindDenied": "通知沒有開啟，無法提醒",
   "recordRemindTitle": "回來記下結果吧",
   "recordRemindBody": "{days} 天前記下的那一盤，事情後來怎麼樣了？",
-  "@recordRemindBody": {"placeholders": {"days": {"type": "int"}}},
+  "@recordRemindBody": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "recordChannelName": "紀錄回顧提醒",
   "recordLimitNote": "免費版最多 {max} 則紀錄",
-  "@recordLimitNote": {"placeholders": {"max": {"type": "int"}}},
+  "@recordLimitNote": {
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
   "recordLocked": "免費版只顯示最近 {days} 天，會員可看全部",
-  "@recordLocked": {"placeholders": {"days": {"type": "int"}}},
+  "@recordLocked": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "recordSearchHint": "搜尋事由、筆記",
   "recordFilterAll": "全部",
   "recordFilterPending": "待回饋",
   "recordStats": "已回饋 {total} 則：符合 {a}、部分符合 {b}、不符合 {c}",
-  "@recordStats": {"placeholders": {"total": {"type": "int"}, "a": {"type": "int"}, "b": {"type": "int"}, "c": {"type": "int"}}},
+  "@recordStats": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      },
+      "a": {
+        "type": "int"
+      },
+      "b": {
+        "type": "int"
+      },
+      "c": {
+        "type": "int"
+      }
+    }
+  },
   "recordDeleted": "已刪除",
   "recordCreatedAt": "記於 {time}",
-  "@recordCreatedAt": {"placeholders": {"time": {"type": "String"}}},
+  "@recordCreatedAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "recordOutcomeLabel": "事後結果",
   "recordOutcomeNoteLabel": "結果筆記",
   "recordOutcomeNoteHint": "實際發生了什麼？",
@@ -551,52 +1015,123 @@
   "recordBackupEmpty": "還沒有紀錄可以備份",
   "recordBackupSubject": "奇門羅盤紀錄備份",
   "recordRestoreDone": "已還原 {n} 則紀錄",
-  "@recordRestoreDone": {"placeholders": {"n": {"type": "int"}}},
+  "@recordRestoreDone": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "recordRestoreNone": "沒有新的紀錄需要還原",
   "recordRestoreFailed": "無法讀取這個檔案，請選擇奇門羅盤的備份檔",
   "homeFuTou": "符頭 {fuTou}",
-  "@homeFuTou": {"placeholders": {"fuTou": {"type": "String"}}},
+  "@homeFuTou": {
+    "placeholders": {
+      "fuTou": {
+        "type": "String"
+      }
+    }
+  },
   "homeChaoShen": "超神 {days} 日",
-  "@homeChaoShen": {"placeholders": {"days": {"type": "int"}}},
+  "@homeChaoShen": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "homeJieQi": "接氣 {days} 日",
-  "@homeJieQi": {"placeholders": {"days": {"type": "int"}}},
+  "@homeJieQi": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
   "homeLeap": "閏局",
   "hoursWindow": "時段",
   "hoursAllDay": "全天",
   "hoursRange": "{from}:00–{to}:00",
-  "@hoursRange": {"placeholders": {"from": {"type": "int"}, "to": {"type": "int"}}},
+  "@hoursRange": {
+    "placeholders": {
+      "from": {
+        "type": "int"
+      },
+      "to": {
+        "type": "int"
+      }
+    }
+  },
   "travelNotifyOptions": "推播設定",
   "travelLead": "提前通知",
   "travelLeadMinutes": "{n} 分鐘",
-  "@travelLeadMinutes": {"placeholders": {"n": {"type": "int"}}},
+  "@travelLeadMinutes": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "travelLeadHour": "1 小時",
   "travelPerDay": "每天最多則數",
   "travelPerDayHint": "只提醒達「吉」以上的時辰，吉時不夠時會少於設定",
   "travelNotifySummary": "提前 {lead}・{window}・每天最多 {count} 則",
-  "@travelNotifySummary": {"placeholders": {"lead": {"type": "String"}, "window": {"type": "String"}, "count": {"type": "int"}}},
+  "@travelNotifySummary": {
+    "placeholders": {
+      "lead": {
+        "type": "String"
+      },
+      "window": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "travelNightTag": "（夜間）",
   "travelNightHint": "含夜間時段（22 點到 6 點），夜裡的吉時也會通知，標題會標示「夜間」",
   "zeshiOneYear": "1 年",
   "zeshiMoreOptions": "筆數與時段",
   "zeshiOptionsSummary": "前 {top} 名・{limit}・{window}",
-  "@zeshiOptionsSummary": {"placeholders": {"top": {"type": "int"}, "limit": {"type": "String"}, "window": {"type": "String"}}},
+  "@zeshiOptionsSummary": {
+    "placeholders": {
+      "top": {
+        "type": "int"
+      },
+      "limit": {
+        "type": "String"
+      },
+      "window": {
+        "type": "String"
+      }
+    }
+  },
   "zeshiTopCount": "列出筆數",
   "zeshiPerDayMax": "同一天最多",
   "zeshiNoLimit": "不限",
   "zeshiPerDayLimit": "同一天最多 {n} 筆",
-  "@zeshiPerDayLimit": {"placeholders": {"n": {"type": "int"}}},
+  "@zeshiPerDayLimit": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
   "zeshiPerDayNoLimit": "同一天不限筆數",
   "zeshiPerDayWhy": "同一天相鄰時辰分數常很接近，限制筆數是為了讓前幾名分散到不同日子；想看全部可選「不限」",
   "zeshiProgress": "計算中 {pct}%",
-  "@zeshiProgress": {"placeholders": {"pct": {"type": "int"}}},
+  "@zeshiProgress": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
   "houseManage": "我的房子",
   "houseDefaultName": "我的家",
   "houseNameTitle": "房子名稱",
-  "houseRename": "改名",
-  "houseDelete": "刪除",
   "houseAdd": "新增房子",
-  "houseDeleted": "已刪除「{name}」",
-  "@houseDeleted": {"placeholders": {"name": {"type": "String"}}},
   "divOpenReading": "看解讀",
   "divDecision": "決斷",
   "divDecisionGo": "可行",
@@ -609,26 +1144,94 @@
   "divConfidenceMixed": "吉凶參半",
   "divTimingTitle": "應期",
   "divTimingFast": "來得快：近日內，約 {date}（{branches}日）",
-  "@divTimingFast": {"placeholders": {"date": {"type": "String"}, "branches": {"type": "String"}}},
+  "@divTimingFast": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "branches": {
+        "type": "String"
+      }
+    }
+  },
   "divTimingMedium": "需要一段時間：約數週，{date}（{branches}日）前後",
-  "@divTimingMedium": {"placeholders": {"date": {"type": "String"}, "branches": {"type": "String"}}},
+  "@divTimingMedium": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "branches": {
+        "type": "String"
+      }
+    }
+  },
   "divTimingSlow": "較慢：以月計，約 {date} 起的{branches}月",
-  "@divTimingSlow": {"placeholders": {"date": {"type": "String"}, "branches": {"type": "String"}}},
+  "@divTimingSlow": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "branches": {
+        "type": "String"
+      }
+    }
+  },
   "divTimingEmpty": "；用神逢空亡，要等出空（填實）才見分曉",
   "divTimingNote": "應期依用神落宮的地支推算，只是大約時間",
   "divDoDont": "宜與忌",
   "divGoDir": "宜往{dir}方行動或洽談",
-  "@divGoDir": {"placeholders": {"dir": {"type": "String"}}},
+  "@divGoDir": {
+    "placeholders": {
+      "dir": {
+        "type": "String"
+      }
+    }
+  },
   "divAvoidDir": "忌往{dir}方",
-  "@divAvoidDir": {"placeholders": {"dir": {"type": "String"}}},
+  "@divAvoidDir": {
+    "placeholders": {
+      "dir": {
+        "type": "String"
+      }
+    }
+  },
   "divStandingTitle": "我方與對方",
   "divStandingSelf": "你佔上風：主動權在你，可以爭取條件",
   "divStandingEven": "勢均力敵：雙方條件差不多，宜協商找共識",
   "divStandingOther": "對方較強：先順勢配合，避免正面衝突",
   "divStandingDetail": "比較日干（你）與{ys}（對方）的旺衰與落宮",
-  "@divStandingDetail": {"placeholders": {"ys": {"type": "String"}}},
+  "@divStandingDetail": {
+    "placeholders": {
+      "ys": {
+        "type": "String"
+      }
+    }
+  },
   "divMarkYongShen": "標示：{ys}在{palace}",
-  "@divMarkYongShen": {"placeholders": {"ys": {"type": "String"}, "palace": {"type": "String"}}},
+  "@divMarkYongShen": {
+    "placeholders": {
+      "ys": {
+        "type": "String"
+      },
+      "palace": {
+        "type": "String"
+      }
+    }
+  },
   "divMarkSelf": "日干（你）在{palace}",
-  "@divMarkSelf": {"placeholders": {"palace": {"type": "String"}}}
+  "@divMarkSelf": {
+    "placeholders": {
+      "palace": {
+        "type": "String"
+      }
+    }
+  },
+  "tabCompass": "羅盤",
+  "tabChart": "盤面",
+  "tabZeShi": "擇時",
+  "tabMe": "我的",
+  "meHouseSub": "九宮對應房間，看佈局與門位",
+  "meRecordsSub": "回顧紀錄，看看有沒有應驗",
+  "meCourseSub": "八門、九星、八神一步步學",
+  "meSettingsSub": "外觀、排盤、提醒、會員"
 }

@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../compass/compass_page.dart';
 import '../engine/engine.dart' hide Element;
-import '../features/course/course_page.dart';
 import '../features/divination/divination_page.dart';
-import '../features/house/house_page.dart';
 import '../features/travel/travel_page.dart';
-import '../features/zeshi/zeshi_page.dart';
 import '../l10n/l10n.dart';
 import '../core/records/record_store.dart';
 import '../features/records/record_actions.dart';
-import '../features/records/record_list_page.dart';
-import '../shared/premium/ad_banner.dart';
-import 'pages/settings_page.dart';
 import 'settings/app_settings.dart';
 import 'theme/app_theme.dart';
 import 'widgets/chart_board.dart';
@@ -152,19 +145,8 @@ class _HomePageState extends State<HomePage> {
           IconButton(icon: const Icon(Icons.info_outline), tooltip: l.guideTooltip, onPressed: () => _showGuide(force: true)),
           IconButton(icon: const Icon(Icons.ios_share), tooltip: l.homeShare, onPressed: _capturing ? null : _share),
           IconButton(icon: const Icon(Icons.bookmark_add_outlined), tooltip: l.recordSaveTitle, onPressed: _saveRecord),
-          IconButton(
-            icon: const Icon(Icons.bookmarks_outlined),
-            tooltip: l.recordsTitle,
-            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const RecordListPage())),
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings_outlined),
-            tooltip: l.settingsTitle,
-            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const SettingsPage())),
-          ),
         ],
       ),
-      bottomNavigationBar: const AdBanner(),
       body: SafeArea(
         child: LayoutBuilder(builder: (context, box) {
           final wide = box.maxWidth > box.maxHeight && box.maxWidth >= 560;
@@ -187,23 +169,7 @@ class _HomePageState extends State<HomePage> {
             onSelectionChanged: (v) => _setUnit(v.first),
           );
           final board = ChartBoard(chart: _chart);
-          final compassHouse = Row(children: [
-            Expanded(
-              child: FilledButton.icon(
-                icon: const Icon(Icons.explore),
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const CompassPage())),
-                label: Text(l.homeOpenCompass),
-              ),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: FilledButton.tonal(
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const HousePage())),
-                child: Text(l.homeHouse),
-              ),
-            ),
-          ]);
-          final travel = Row(children: [
+          final actions = Row(children: [
             Expanded(
               child: FilledButton.tonal(
                 onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const TravelPage())),
@@ -213,23 +179,8 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(width: 8),
             Expanded(
               child: FilledButton.tonal(
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const ZeShiPage())),
-                child: Text(l.homeZeShi),
-              ),
-            ),
-          ]);
-          final divination = Row(children: [
-            Expanded(
-              child: FilledButton.tonal(
                 onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const DivinationPage())),
                 child: Text(l.homeDivination),
-              ),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: FilledButton.tonal(
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const CoursePage())),
-                child: Text(l.homeCourse),
               ),
             ),
           ]);
@@ -255,7 +206,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(width: 16),
                 Expanded(
-                  child: ListView(children: [units, unitNote, const SizedBox(height: 8), hint, const SizedBox(height: 12), nav, const SizedBox(height: 8), compassHouse, const SizedBox(height: 8), travel, const SizedBox(height: 8), divination, const SizedBox(height: 12), footer]),
+                  child: ListView(children: [units, unitNote, const SizedBox(height: 8), hint, const SizedBox(height: 12), nav, const SizedBox(height: 8), actions, const SizedBox(height: 12), footer]),
                 ),
               ]),
             );
@@ -272,11 +223,7 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 10),
               nav,
               const SizedBox(height: 8),
-              compassHouse,
-              const SizedBox(height: 8),
-              travel,
-              const SizedBox(height: 8),
-              divination,
+              actions,
               const SizedBox(height: 12),
               footer,
             ],

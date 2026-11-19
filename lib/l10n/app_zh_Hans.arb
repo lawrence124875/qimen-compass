@@ -539,5 +539,13 @@
   "divStandingOther": "对方较强：先顺势配合，避免正面冲突",
   "divStandingDetail": "比较日干（你）与{ys}（对方）的旺衰与落宫",
   "divMarkYongShen": "标示：{ys}在{palace}",
-  "divMarkSelf": "日干（你）在{palace}"
+  "divMarkSelf": "日干（你）在{palace}",
+  "tabCompass": "罗盘",
+  "tabChart": "盘面",
+  "tabZeShi": "择时",
+  "tabMe": "我的",
+  "meHouseSub": "九宫对应房间，看布局与门位",
+  "meRecordsSub": "回顾纪录，看看有没有应验",
+  "meCourseSub": "八门、九星、八神一步步学",
+  "meSettingsSub": "外观、排盘、提醒、会员"
 }

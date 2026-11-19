@@ -539,5 +539,13 @@
   "divStandingOther": "상대가 강함: 우선 맞춰 주고 정면 충돌은 피함",
   "divStandingDetail": "일간(당신)과 {ys}(상대)의 왕쇠와 낙궁을 비교",
   "divMarkYongShen": "표시: {ys}은(는) {palace}",
-  "divMarkSelf": "일간(당신)은 {palace}"
+  "divMarkSelf": "일간(당신)은 {palace}",
+  "tabCompass": "나침반",
+  "tabChart": "반면",
+  "tabZeShi": "택시",
+  "tabMe": "내 정보",
+  "meHouseSub": "구궁을 방에 맞춰 배치를 봄",
+  "meRecordsSub": "기록을 돌아보고 적중 여부 확인",
+  "meCourseSub": "팔문·구성·팔신을 차근차근",
+  "meSettingsSub": "화면·포국·알림·멤버십"
 }

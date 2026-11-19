@@ -57,6 +57,7 @@ flutter:
     - assets/content/divination/
     - assets/content/divination/text/ # Flutter 資料夾不含子資料夾，子資料夾要另外列
     - assets/content/course/
+    - assets/content/meaning/ # 盤面點擊解說
 
   # 字型子集由 scripts/build_fonts.py 產生（CI 自動執行；本機開發先跑一次）
   fonts:

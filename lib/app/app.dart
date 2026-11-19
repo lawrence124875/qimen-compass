@@ -4,7 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import '../l10n/l10n.dart';
 import '../services/notifications.dart';
 import '../shared/widgets/update_prompt.dart';
-import 'home_page.dart';
+import 'main_shell.dart';
 import 'settings/app_settings.dart';
 import 'theme/app_theme.dart';
 
@@ -33,7 +33,7 @@ class QimenApp extends StatelessWidget {
           L10n.language = lang;
           return lang.locale;
         },
-        home: const UpdatePrompt(child: HomePage()),
+        home: const UpdatePrompt(child: MainShell()),
       ),
     );
   }

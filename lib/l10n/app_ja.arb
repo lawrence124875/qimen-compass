@@ -539,5 +539,13 @@
   "divStandingOther": "相手が優勢：まずは相手に合わせ、正面衝突を避ける",
   "divStandingDetail": "日干（あなた）と{ys}（相手）の旺衰と落宮を比較",
   "divMarkYongShen": "表示：{ys}は{palace}",
-  "divMarkSelf": "日干（あなた）は{palace}"
+  "divMarkSelf": "日干（あなた）は{palace}",
+  "tabCompass": "羅盤",
+  "tabChart": "盤面",
+  "tabZeShi": "日時選び",
+  "tabMe": "マイページ",
+  "meHouseSub": "九宮を部屋に重ねて配置を見る",
+  "meRecordsSub": "記録を振り返り、当たったか確認",
+  "meCourseSub": "八門・九星・八神を順に学ぶ",
+  "meSettingsSub": "外観・盤の設定・通知・会員"
 }
