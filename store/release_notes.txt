@@ -1,91 +1,117 @@
 <zh-TW>
-奇門羅盤 1.1.1：
-• 奇門問事新增出行、房產、合作簽約、人際貴人、其他（自訂）五類，每類附常用問題，並記住最近問過
-• 床位朝向新增沙發、爐灶、神桌、收銀台，附測量說明、八門白話與使用引導
-• 搬家遠行可直接輸入住家地址
-• 「已刪除・復原」提示 4 秒後自動消失
+奇門羅盤 1.2.0：
+• 此刻頁新增「今日吉色」（訂閱可結合本命看個人吉色）與「發訊息時機」
+• 神煞與十二長生圖鑑，盤面宮位顯示天干長生狀態
+• 擇時新增靜坐冥想、營業時段（一週時段表）
+• 宅盤新增開運擺件與化解，含本月調整
+• 朝向新增談判座位，不理想時附化解法
+• 問事新類別、朝向新選項、住家可輸入地址
 </zh-TW>
 <zh-CN>
-奇门罗盘 1.1.1：
-• 奇门问事新增出行、房产、合作签约、人际贵人、其他（自定义）五类，每类附常用问题，并记住最近问过
-• 床位朝向新增沙发、炉灶、神桌、收银台，附测量说明、八门白话与使用引导
-• 搬家远行可直接输入住家地址
-• “已删除・恢复”提示 4 秒后自动消失
+奇门罗盘 1.2.0：
+• 此刻页添加“今日吉色”（订阅可结合本命看个人吉色）与“发消息时机”
+• 神煞与十二长生图鉴，盘面宫位显示天干长生状态
+• 择时添加静坐冥想、营业时段（一周时段表）
+• 宅盘添加开运摆件与化解，含本月调整
+• 朝向添加谈判座位，不理想时附化解法
+• 问事新类别、朝向新选项、住家可输入地址
 </zh-CN>
 <en-US>
-Qimen Compass 1.1.1:
-• Questions: five new topics (Travel, Property, Deals, People, Other/custom), common questions for each, and recent questions remembered
-• Facing: sofa, stove, altar and counter added, with measuring tips, plain-language doors and a guide
-• Move & travel: set your home by typing an address
-• "Deleted / Undo" notices now close after 4 seconds
+Qimen Compass 1.2.0:
+• Now tab: Today’s lucky colors (personal colors with your birth year for subscribers) and Best time to send
+• Glossary of spirits and the twelve life stages; palaces show each stem’s stage
+• Date picker: Meditation and Business hours (weekly timetable)
+• Home chart: lucky items and remedies, with monthly adjustments
+• Facing: negotiation seat, plus remedies when a direction isn’t ideal
+• New question topics, more facing options, home address input
 </en-US>
 <ja-JP>
-奇門羅盤 1.1.1：
-• 奇門問事に外出・不動産・提携契約・人間関係・その他（自由入力）の 5 種類を追加。よくある質問と最近の質問も
-• 向きチェックにソファ・コンロ・神棚・レジを追加、測り方・八門の解説・使い方ガイド付き
-• 引越し・遠出で自宅の住所を入力可能に
-• 「削除しました・元に戻す」は 4 秒で自動的に消えます
+奇門羅盤 1.2.0：
+• 「今」に今日のラッキーカラー（購読で生まれ年と合わせた吉色）と送信のタイミングを追加
+• 神煞と十二長生の図鑑。宮をタップで天干の長生も表示
+• 日取りに瞑想・営業時間帯（週間時間表）を追加
+• 宅盤に開運の置物と化解、今月の調整を追加
+• 向きに交渉の席を追加、合わないときの化解法つき
+• 占事の新カテゴリ、向きの選択肢、住所入力
 </ja-JP>
 <ko-KR>
-기문나침반 1.1.1:
-• 기문 문사에 외출·부동산·제휴계약·인간관계·기타(직접 입력) 5가지 추가, 자주 묻는 질문과 최근 질문
-• 방향 보기에 소파·레인지·제단·계산대 추가, 측정 방법·팔문 쉬운 설명·사용 안내
-• 이사·원행에서 집 주소를 직접 입력
-• "삭제됨·되돌리기" 알림이 4초 뒤 자동으로 사라짐
+기문 나침반 1.2.0:
+• 지금 탭에 오늘의 행운색(구독 시 출생 연도 맞춤)과 메시지 보낼 때 추가
+• 신살과 십이운성 도감, 궁을 누르면 천간의 운성 표시
+• 택일에 명상, 영업 시간대(주간 시간표) 추가
+• 택반에 개운 소품과 화해, 이번 달 조정 추가
+• 방향에 협상 자리 추가, 좋지 않을 때 화해법 제공
+• 질문 새 분류, 방향 옵션, 집 주소 입력
 </ko-KR>
 <vi>
-La bàn Kỳ Môn 1.1.1:
-• Hỏi việc thêm 5 loại: Xuất hành, Nhà đất, Hợp tác ký kết, Quý nhân, Khác (tự nhập); có câu hỏi thường gặp và lưu câu hỏi gần đây
-• Hướng đặt đồ thêm sofa, bếp, bàn thờ, quầy thu ngân, kèm cách đo, giải thích bát môn và hướng dẫn
-• Chuyển nhà, đi xa: nhập địa chỉ nhà trực tiếp
-• Thông báo "Đã xóa / Hoàn tác" tự tắt sau 4 giây
+Qimen Compass 1.2.0:
+• Thẻ Bây giờ: Màu may mắn hôm nay (người đăng ký xem màu riêng theo năm sinh) và Thời điểm gửi tin
+• Từ điển Thần Sát & Thập Nhị Trường Sinh; cung hiển thị trạng thái của can
+• Chọn ngày: Thiền định, Giờ kinh doanh (bảng tuần)
+• Bàn nhà: vật phẩm may mắn & hóa giải, có điều chỉnh tháng
+• Hướng: ghế đàm phán, kèm cách hóa giải khi hướng chưa tốt
+• Chủ đề hỏi mới, thêm lựa chọn hướng, nhập địa chỉ nhà
 </vi>
 <es-ES>
-Brújula Qimen 1.1.1:
-• Preguntas: cinco temas nuevos (Viajes, Vivienda, Acuerdos, Relaciones, Otro/libre), preguntas frecuentes y recientes
-• Orientación: sofá, cocina, altar y caja, con instrucciones, puertas explicadas y guía
-• Mudanza y viajes: fija tu casa escribiendo la dirección
-• Los avisos "Eliminado / Deshacer" se cierran a los 4 segundos
+Qimen Compass 1.2.0:
+• Ahora: colores de la suerte del día (suscriptores: según tu año de nacimiento) y Momento para enviar
+• Glosario de espíritus y doce etapas; los palacios muestran la etapa de cada tronco
+• Fechas: Meditación y Horario comercial (tabla semanal)
+• Casa: objetos de la suerte y remedios, con ajuste mensual
+• Orientación: asiento de negociación y remedios cuando no es ideal
+• Nuevos temas de consulta, más orientaciones, dirección de casa
 </es-ES>
 <es-US>
-Brújula Qimen 1.1.1:
-• Preguntas: cinco temas nuevos (Viajes, Vivienda, Acuerdos, Relaciones, Otro/libre), preguntas frecuentes y recientes
-• Orientación: sofá, cocina, altar y caja, con instrucciones, puertas explicadas y guía
-• Mudanza y viajes: fija tu casa escribiendo la dirección
-• Los avisos "Eliminado / Deshacer" se cierran a los 4 segundos
+Qimen Compass 1.2.0:
+• Ahora: colores de la suerte del día (suscriptores: según tu año de nacimiento) y Momento para enviar
+• Glosario de espíritus y doce etapas; los palacios muestran la etapa de cada tronco
+• Fechas: Meditación y Horario comercial (tabla semanal)
+• Casa: objetos de la suerte y remedios, con ajuste mensual
+• Orientación: asiento de negociación y remedios cuando no es ideal
+• Nuevos temas de consulta, más orientaciones, dirección de casa
 </es-US>
 <pt-BR>
-Bússola Qimen 1.1.1:
-• Perguntas: cinco temas novos (Viagens, Imóveis, Acordos, Relações, Outro/livre), perguntas comuns e recentes
-• Orientação: sofá, fogão, altar e caixa, com instruções, portas explicadas e guia
-• Mudança e viagens: defina sua casa digitando o endereço
-• Avisos "Excluído / Desfazer" fecham após 4 segundos
+Qimen Compass 1.2.0:
+• Agora: cores da sorte do dia (assinantes: pelo ano de nascimento) e Hora de enviar
+• Glossário de espíritos e doze estágios; palácios mostram o estágio de cada tronco
+• Datas: Meditação e Horário comercial (tabela semanal)
+• Casa: objetos da sorte e soluções, com ajuste mensal
+• Orientação: assento de negociação e soluções quando não é ideal
+• Novos temas de pergunta, mais orientações, endereço de casa
 </pt-BR>
 <pt-PT>
-Bússola Qimen 1.1.1:
-• Perguntas: cinco temas novos (Viagens, Imóveis, Acordos, Relações, Outro/livre), perguntas comuns e recentes
-• Orientação: sofá, fogão, altar e caixa, com instruções, portas explicadas e guia
-• Mudança e viagens: defina sua casa digitando o endereço
-• Avisos "Eliminado / Anular" fecham após 4 segundos
+Qimen Compass 1.2.0:
+• Agora: cores da sorte do dia (assinantes: pelo ano de nascimento) e Hora de enviar
+• Glossário de espíritos e doze estágios; palácios mostram o estágio de cada tronco
+• Datas: Meditação e Horário comercial (tabela semanal)
+• Casa: objetos da sorte e soluções, com ajuste mensal
+• Orientação: assento de negociação e soluções quando não é ideal
+• Novos temas de pergunta, mais orientações, endereço de casa
 </pt-PT>
 <id>
-Kompas Qimen 1.1.1:
-• Tanya: lima topik baru (Bepergian, Properti, Kerja sama, Relasi, Lainnya/bebas), pertanyaan umum dan terbaru
-• Arah perabot: sofa, kompor, altar, kasir, dengan cara ukur, penjelasan pintu dan panduan
-• Pindah & bepergian: atur rumah dengan mengetik alamat
-• Notifikasi "Dihapus / Urungkan" hilang sendiri setelah 4 detik
+Qimen Compass 1.2.0:
+• Tab Sekarang: warna hoki hari ini (pelanggan: sesuai tahun lahir) dan Waktu kirim pesan
+• Kamus roh & dua belas tahap; istana menampilkan tahap tiap batang
+• Pilih waktu: Meditasi dan Jam usaha (jadwal mingguan)
+• Bagan rumah: benda keberuntungan & penyeimbang, dengan penyesuaian bulanan
+• Arah: kursi negosiasi, plus penyeimbang saat arah kurang baik
+• Topik pertanyaan baru, opsi arah, input alamat rumah
 </id>
 <th>
-เข็มทิศฉีเหมิน 1.1.1:
-• ถามเรื่อง: เพิ่ม 5 หมวด (เดินทาง บ้านและที่ดิน ร่วมงานสัญญา ผู้อุปถัมภ์ อื่นๆ พิมพ์เอง) พร้อมคำถามที่พบบ่อยและคำถามล่าสุด
-• ทิศวางของ: เพิ่มโซฟา เตา โต๊ะบูชา เคาน์เตอร์ พร้อมวิธีวัด คำอธิบายแปดประตู และคู่มือ
-• ย้ายบ้าน เดินทาง: ป้อนที่อยู่บ้านได้เลย
-• ข้อความ "ลบแล้ว / เลิกทำ" หายเองใน 4 วินาที
+Qimen Compass 1.2.0:
+• แท็บตอนนี้: สีมงคลวันนี้ (สมาชิกดูสีตามปีเกิด) และจังหวะส่งข้อความ
+• คลังคำเทพดาวและสิบสองวัฏจักร วังแสดงสถานะของก้าน
+• เลือกเวลา: นั่งสมาธิ และช่วงเวลาค้าขาย (ตารางสัปดาห์)
+• ผังบ้าน: ของมงคลและวิธีแก้ พร้อมปรับรายเดือน
+• ทิศ: ที่นั่งเจรจา และวิธีแก้เมื่อทิศไม่ดี
+• หมวดคำถามใหม่ ตัวเลือกทิศ กรอกที่อยู่บ้าน
 </th>
 <ar>
-بوصلة تشيمن 1.1.1:
-• الأسئلة: خمسة مواضيع جديدة (السفر، العقار، الشراكة، العلاقات، أخرى/حر) مع أسئلة شائعة وحديثة
-• الاتجاه: إضافة الأريكة والموقد والمذبح والكاشير مع طريقة القياس وشرح الأبواب ودليل
-• الانتقال والسفر: حدّد منزلك بكتابة العنوان
-• تختفي رسائل «حُذف / تراجع» بعد 4 ثوانٍ
+Qimen Compass 1.2.0:
+• الآن: ألوان الحظ اليوم (للمشتركين حسب سنة الميلاد) ووقت الإرسال
+• معجم الأرواح والمراحل الاثنتي عشرة؛ القصور تعرض مرحلة كل جذع
+• اختيار الوقت: التأمل وساعات العمل (جدول أسبوعي)
+• خريطة المنزل: أغراض الحظ والعلاجات مع تعديل شهري
+• الاتجاه: مقعد التفاوض وعلاجات عندما لا يكون مثاليًا
+• مواضيع أسئلة جديدة وخيارات اتجاه وإدخال عنوان المنزل
 </ar>

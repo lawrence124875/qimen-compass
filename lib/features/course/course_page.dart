@@ -7,6 +7,7 @@ import '../../shared/premium/paywall_page.dart';
 import '../../shared/premium/usage_gate.dart';
 import '../travel/travel_page.dart';
 import '../zeshi/zeshi_page.dart';
+import '../lucky/glossary_page.dart';
 import 'course.dart';
 
 /// 課程目錄：課程名稱、簡介、各課（免費標記、已讀、鎖定）。
@@ -50,6 +51,15 @@ class _CoursePageState extends State<CoursePage> {
                     style: Theme.of(context).textTheme.labelMedium?.copyWith(color: context.qm.accent)),
                 const SizedBox(height: 12),
                 for (var i = 0; i < course.lessons.length; i++) _LessonTile(course: course, index: i),
+                const SizedBox(height: 8),
+                Card(
+                  child: ListTile(
+                    leading: Icon(Icons.menu_book_outlined, color: context.qm.primary),
+                    title: Text(l.glossaryTitle),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const GlossaryPage())),
+                  ),
+                ),
               ],
             ),
           );

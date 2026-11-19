@@ -6,6 +6,9 @@ import '../../app/theme/app_theme.dart';
 import '../../compass/compass_math.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
+import '../../shared/widgets/result_card.dart';
+import '../lucky/placement_page.dart';
+import '../meaning/meaning_content.dart';
 import '../travel/travel_text.dart';
 import 'heading_tracker.dart';
 
@@ -18,7 +21,10 @@ enum FacingTarget {
   sofa({Door.xiu, Door.sheng, Door.jingScene}),
   stove({Door.sheng, Door.jingScene, Door.xiu}),
   altar({Door.kai, Door.xiu, Door.sheng}),
-  cashier({Door.sheng, Door.kai, Door.jingScene});
+  cashier({Door.sheng, Door.kai, Door.jingScene}),
+
+  /// 談判座位：面向開門、景門、生門；另依時盤建議坐在開門或值符所在方位。
+  negotiation({Door.kai, Door.jingScene, Door.sheng});
 
   const FacingTarget(this.preferred);
   final Set<Door> preferred;
@@ -40,12 +46,27 @@ class _FacingPageState extends State<FacingPage> {
     return const ShiJiaEngine().compute(now, settings: s.timeSettingsAt(now), method: s.juMethod, unit: PanUnit.year);
   }();
 
+  /// 談判看當下時盤（會議是一時之事）；其他家具看年盤。
+  late QimenChart _hour = _computeHour();
+  MeaningContent? _meaning = MeaningContent.cached;
+
+  QimenChart _computeHour() {
+    final s = AppSettings.instance;
+    final now = DateTime.now();
+    return const ShiJiaEngine().compute(now, settings: s.timeSettingsAt(now), method: s.juMethod);
+  }
+
+  QimenChart get _chart => _target == FacingTarget.negotiation ? _hour : _year;
+
   static const _kGuide = 'qm_facing_guide_seen';
 
   @override
   void initState() {
     super.initState();
     _tracker.acquire();
+    MeaningContent.load(L10n.language).then((m) {
+      if (mounted && m != null) setState(() => _meaning = m);
+    });
     SharedPreferences.getInstance().then((p) async {
       if (p.getBool(_kGuide) == true) return;
       await p.setBool(_kGuide, true);
@@ -79,6 +100,7 @@ class _FacingPageState extends State<FacingPage> {
         FacingTarget.stove => l.facingStove,
         FacingTarget.altar => l.facingAltar,
         FacingTarget.cashier => l.facingCashier,
+        FacingTarget.negotiation => l.facingNegotiation,
       };
 
   String _how(AppLocalizations l, FacingTarget t) => switch (t) {
@@ -89,6 +111,7 @@ class _FacingPageState extends State<FacingPage> {
         FacingTarget.stove => l.facingHowStove,
         FacingTarget.altar => l.facingHowAltar,
         FacingTarget.cashier => l.facingHowCashier,
+        FacingTarget.negotiation => l.facingHowNegotiation,
       };
 
   /// 八門白話（吉門在前）。
@@ -111,7 +134,7 @@ class _FacingPageState extends State<FacingPage> {
     final text = Theme.of(context).textTheme;
     final suggest = [
       for (final p in const [1, 8, 3, 4, 9, 2, 7, 6])
-        if (_target.preferred.contains(_year[p].door)) p,
+        if (_target.preferred.contains(_chart[p].door)) p,
     ];
     return Scaffold(
       appBar: AppBar(title: Text(l.facingTitle), actions: [
@@ -124,11 +147,29 @@ class _FacingPageState extends State<FacingPage> {
               ChoiceChip(
                 label: Text(_targetName(l, t)),
                 selected: t == _target,
-                onSelected: (_) => setState(() => _target = t),
+                onSelected: (_) => setState(() {
+                  _target = t;
+                  if (t == FacingTarget.negotiation) _hour = _computeHour();
+                }),
               ),
           ]),
           const SizedBox(height: 8),
+          Row(children: [
+            Icon(Icons.accessibility_new, size: 20, color: qm.primary),
+            Icon(Icons.arrow_upward, size: 16, color: qm.primary),
+            const SizedBox(width: 6),
+            Expanded(child: Text(l.facingFaceNote, style: text.bodySmall?.copyWith(color: qm.primary))),
+          ]),
+          const SizedBox(height: 4),
           Text(_how(l, _target), style: text.bodyMedium?.copyWith(color: qm.textMuted)),
+          if (_target == FacingTarget.negotiation) ...[
+            const SizedBox(height: 4),
+            Text(
+                l.facingSeatPos({_hour.palaceOfDoor(Door.kai), for (final c in _hour.palaces.values) if (c.god == God.zhiFu && c.palace != 5) c.palace}
+                    .map((p) => TravelText.direction(l, p))
+                    .join(l.separator)),
+                style: text.bodySmall),
+          ],
           const SizedBox(height: 4),
           Text(l.facingPrefer([for (final d in Door.values) if (_target.preferred.contains(d)) QimenTerms.doorName(d, lang)].join(l.separator)),
               style: text.bodySmall),
@@ -139,7 +180,7 @@ class _FacingPageState extends State<FacingPage> {
               final h = _tracker.heading;
               if (h == null) return Text(l.compassWaiting, textAlign: TextAlign.center);
               final p = palaceAtBearing(h);
-              final door = _year[p].door!;
+              final door = _chart[p].door!;
               final (label, color) = _target.preferred.contains(door)
                   ? (l.facingFit, qm.good)
                   : door.luck == Luck.bad
@@ -153,6 +194,9 @@ class _FacingPageState extends State<FacingPage> {
                     Text(l.facingNow(TravelText.direction(l, p), QimenTerms.door(door, lang)), textAlign: TextAlign.center, style: text.titleMedium),
                     const SizedBox(height: 6),
                     Text(label, style: serif(text.headlineSmall).copyWith(color: color, fontWeight: FontWeight.w700)),
+                    if (!_target.preferred.contains(door))
+                      CureBlock(
+                          lines: cureLines(_meaning, door, p, door.luck == Luck.bad ? Tone.bad : Tone.neutral, _chart[p].stars)),
                     if (_tracker.disturbed) Text(l.compassUnstable, style: text.bodySmall?.copyWith(color: qm.bad), textAlign: TextAlign.center),
                   ]),
                 ),
@@ -166,7 +210,7 @@ class _FacingPageState extends State<FacingPage> {
             Text(l.facingSuggestNone, style: text.bodySmall?.copyWith(color: qm.textMuted))
           else
             Wrap(spacing: 8, runSpacing: 6, children: [
-              for (final p in suggest) Chip(label: Text('${TravelText.direction(l, p)}・${QimenTerms.doorName(_year[p].door!, lang)}')),
+              for (final p in suggest) Chip(label: Text('${TravelText.direction(l, p)}・${QimenTerms.doorName(_chart[p].door!, lang)}')),
             ]),
           const SizedBox(height: 16),
           ExpansionTile(

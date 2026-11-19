@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../shared/widgets/result_card.dart' show toneOfLuck, ToneStyle;
+import '../../features/lucky/glossary_page.dart';
 import '../../features/meaning/meaning_content.dart';
 
 import '../../engine/engine.dart' hide Element;
@@ -294,6 +295,20 @@ class _PalaceDetailState extends State<PalaceDetail> {
                 vm('${QimenTerms.door(door, lang)}  ${l.luck(door.luck)}', [mean?.lookup('door', door.zh)], color: qm.luck(door.luck))),
           row(l.labelHeaven, vm(stemsText(pc.heavenStems), stemNotes(pc.heavenStems))),
           row(l.labelEarth, vm(stemsText(pc.earthStems), stemNotes(pc.earthStems))),
+          if (palace != 5 && pc.heavenStems.isNotEmpty)
+            row(
+              l.labelChangSheng,
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                for (final st in pc.heavenStems) v('${stemNames[st]}  ${changShengText(st, palace)}'),
+                InkWell(
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const GlossaryPage())),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: Text('${l.glossaryOpen} ›', style: text.bodySmall?.copyWith(color: qm.primary)),
+                  ),
+                ),
+              ]),
+            ),
           row(
             l.labelMarks,
             marksOf(pc).isEmpty
