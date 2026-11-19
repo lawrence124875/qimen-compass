@@ -82,6 +82,8 @@ class _RecordListPageState extends State<RecordListPage> {
     messenger.hideCurrentSnackBar();
     messenger.showSnackBar(SnackBar(
       content: Text(l.recordDeleted),
+      persist: false, // 有按鈕的 SnackBar 預設不會自動消失
+      duration: const Duration(seconds: 4),
       action: SnackBarAction(label: l.undo, onPressed: () => s.records.save(r)),
     ));
   }

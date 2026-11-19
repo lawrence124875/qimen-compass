@@ -70,6 +70,8 @@ class _MarkRoomsPageState extends State<MarkRoomsPage> {
       ..hideCurrentSnackBar()
       ..showSnackBar(SnackBar(
         content: Text(context.l10n.houseDeleted(r.name)),
+        persist: false, // 有按鈕的 SnackBar 預設不會自動消失
+        duration: const Duration(seconds: 4),
         action: SnackBarAction(
           label: context.l10n.houseUndo,
           onPressed: () async {

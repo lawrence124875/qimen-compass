@@ -22,10 +22,10 @@ class MovePage extends StatefulWidget {
 }
 
 class _MovePageState extends State<MovePage> {
-  static const _kLat = 'qm_home_lat', _kLon = 'qm_home_lon';
+  static const _kLat = 'qm_home_lat', _kLon = 'qm_home_lon', _kName = 'qm_home_name';
   final _search = TextEditingController();
   (double, double)? _home, _dest;
-  String? _destName;
+  String? _destName, _homeName;
   bool _busy = false;
 
   @override
@@ -33,7 +33,12 @@ class _MovePageState extends State<MovePage> {
     super.initState();
     SharedPreferences.getInstance().then((p) {
       final la = p.getDouble(_kLat), lo = p.getDouble(_kLon);
-      if (la != null && lo != null && mounted) setState(() => _home = (la, lo));
+      if (la != null && lo != null && mounted) {
+        setState(() {
+          _home = (la, lo);
+          _homeName = p.getString(_kName);
+        });
+      }
     });
   }
 
@@ -52,10 +57,58 @@ class _MovePageState extends State<MovePage> {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.l10n.mapNoLocation.replaceAll('\n', ' '))));
       return;
     }
+    await _saveHome(p, null);
+  }
+
+  Future<void> _saveHome((double, double) p, String? name) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setDouble(_kLat, p.$1);
     await prefs.setDouble(_kLon, p.$2);
-    if (mounted) setState(() => _home = p);
+    name == null ? await prefs.remove(_kName) : await prefs.setString(_kName, name);
+    if (mounted) {
+      setState(() {
+        _home = p;
+        _homeName = name;
+      });
+    }
+  }
+
+  /// 住家用輸入地址設定（geocoding），不必人在家。
+  Future<void> _setHomeByAddress() async {
+    final l = context.l10n;
+    final ctrl = TextEditingController(text: _homeName ?? '');
+    final q = await showDialog<String>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l.moveHome),
+        content: TextField(
+          controller: ctrl,
+          autofocus: true,
+          textInputAction: TextInputAction.search,
+          onSubmitted: (v) => Navigator.of(ctx).pop(v),
+          decoration: InputDecoration(hintText: l.moveHomeAddrHint, border: const OutlineInputBorder()),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(MaterialLocalizations.of(ctx).cancelButtonLabel)),
+          FilledButton(onPressed: () => Navigator.of(ctx).pop(ctrl.text), child: Text(l.moveHomeSet)),
+        ],
+      ),
+    );
+    ctrl.dispose();
+    final addr = q?.trim() ?? '';
+    if (addr.isEmpty || !mounted) return;
+    setState(() => _busy = true);
+    List<geo.Location> r = const [];
+    try {
+      r = await geo.locationFromAddress(addr);
+    } catch (_) {}
+    if (!mounted) return;
+    setState(() => _busy = false);
+    if (r.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l.mapNotFound)));
+      return;
+    }
+    await _saveHome((r.first.latitude, r.first.longitude), addr);
   }
 
   Future<void> _find() async {
@@ -89,12 +142,23 @@ class _MovePageState extends State<MovePage> {
       Text(l.moveHint, style: text.bodySmall?.copyWith(color: qm.textMuted)),
       const SizedBox(height: 8),
       Card(
-        child: ListTile(
-          leading: const Icon(Icons.home_outlined),
-          title: Text(l.moveHome),
-          subtitle: Text(home == null ? l.moveHomeUnset : '${home.$1.toStringAsFixed(4)}, ${home.$2.toStringAsFixed(4)}'),
-          trailing: TextButton(onPressed: _busy ? null : _setHomeHere, child: Text(l.moveUseHere)),
-        ),
+        child: Column(children: [
+          ListTile(
+            leading: const Icon(Icons.home_outlined),
+            title: Text(l.moveHome),
+            subtitle: Text(home == null
+                ? l.moveHomeUnset
+                : _homeName ?? '${home.$1.toStringAsFixed(4)}, ${home.$2.toStringAsFixed(4)}'),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+            child: Wrap(alignment: WrapAlignment.end, spacing: 8, children: [
+              OutlinedButton.icon(
+                  onPressed: _busy ? null : _setHomeByAddress, icon: const Icon(Icons.edit_location_alt_outlined), label: Text(l.moveHomeAddr)),
+              OutlinedButton.icon(onPressed: _busy ? null : _setHomeHere, icon: const Icon(Icons.my_location), label: Text(l.moveUseHere)),
+            ]),
+          ),
+        ]),
       ),
       const SizedBox(height: 8),
       TextField(

@@ -350,6 +350,8 @@ class _HousePageState extends State<HousePage> {
     final reason = await messenger
         .showSnackBar(SnackBar(
           content: Text(l.houseDeleted(_name(l, h))),
+          persist: false, // 有按鈕的 SnackBar 預設不會自動消失
+          duration: const Duration(seconds: 4),
           action: SnackBarAction(label: l.undo, onPressed: () {}),
         ))
         .closed;

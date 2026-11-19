@@ -62,6 +62,9 @@ class DivinationText {
   String topicName(String t) => _s(['topics', t, 'name']);
   String topicDesc(String t) => _s(['topics', t, 'desc']);
   String topicAsk(String t) => _s(['topics', t, 'ask']);
+
+  /// 事類的常用問題（點一下帶入輸入框）。
+  List<String> topicExamples(String t) => ((_lookup(['topics', t, 'examples']) as List?) ?? const []).cast<String>();
   String schoolName(String s) => _s(['schools', s, 'name']);
   String schoolDesc(String s) => _s(['schools', s, 'desc']);
   String get disclaimer => _s(['disclaimer']);

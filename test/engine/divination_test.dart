@@ -147,6 +147,8 @@ void main() {
         for (final k in ['name', 'desc', 'ask']) {
           expect(tj[k], isA<String>(), reason: '$name $topic.$k');
         }
+        expect(tj['examples'], isA<List<dynamic>>(), reason: '$name $topic.examples');
+        expect(tj['examples'] as List, isNotEmpty, reason: '$name $topic.examples');
         for (final v in Verdict.values) {
           expect((tj['verdict'][v.name] as List), isNotEmpty, reason: '$name $topic.verdict.${v.name}');
           expect(tj['advice'][v.name], isA<String>(), reason: '$name $topic.advice.${v.name}');
