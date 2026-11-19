@@ -1,0 +1,121 @@
+name: Build iOS (no codesign)
+
+# 比照謙卦：未簽章 IPA 發佈到 qimen-content Release，自用側載（Sideloadly＋免費 Apple ID，7 天需重簽）。
+# 正式簽章與 TestFlight 等 Apple 開發者帳號。macOS 執行環境對公開 repo 免費。
+on:
+  workflow_dispatch:
+    inputs:
+      force_premium:
+        description: '自用：填 true 視為會員（付費功能全開、無廣告），留空為一般版'
+        required: false
+        default: 'true'
+
+concurrency:
+  group: ios-build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.47.9'
+          cache: true
+
+      - name: 產生 iOS 平台資料夾
+        run: |
+          flutter create --platforms=ios --project-name=qimen_compass --org com.lclab .
+          rm -f test/widget_test.dart
+
+      - name: 套用 iOS 設定
+        env:
+          ADMOB_IOS_APP_ID: ${{ secrets.ADMOB_IOS_APP_ID }}
+          MAPS_IOS_API_KEY: ${{ secrets.MAPS_IOS_API_KEY }}
+        run: bash scripts/patch_ios.sh
+
+      - name: 取得 App 內容（qimen-content/app）
+        uses: actions/checkout@v5
+        with:
+          repository: lawrence124875/qimen-content
+          token: ${{ secrets.BUILDS_REPO_TOKEN }}
+          path: _content
+          sparse-checkout: app
+
+      - name: 複製 App 內容
+        run: |
+          mkdir -p assets/content
+          if [ -d _content/app ]; then cp -r _content/app/. assets/content/; fi
+          rm -rf _content
+
+      - name: 產生字型子集
+        run: |
+          pip install --quiet fonttools
+          python3 scripts/build_fonts.py || { echo "::error::字型子集產生失敗"; exit 1; }
+
+      - name: 安裝套件
+        run: flutter pub get
+
+      - name: 建置 iOS（release，不簽章）
+        env:
+          REVENUECAT_API_KEY: ${{ secrets.REVENUECAT_IOS_API_KEY }}
+          ADMOB_BANNER_AD_UNIT_ID: ${{ secrets.ADMOB_IOS_BANNER_AD_UNIT_ID }}
+          ADMOB_INTERSTITIAL_AD_UNIT_ID: ${{ secrets.ADMOB_IOS_INTERSTITIAL_AD_UNIT_ID }}
+          ADMOB_REWARDED_AD_UNIT_ID: ${{ secrets.ADMOB_IOS_REWARDED_AD_UNIT_ID }}
+          FORCE_PREMIUM: ${{ inputs.force_premium }}
+        run: |
+          set +e
+          flutter build ios --release --no-codesign --build-number=${{ github.run_number }} ${FORCE_PREMIUM:+--dart-define=FORCE_PREMIUM=$FORCE_PREMIUM} \
+            --dart-define=MAPS_ENABLED=${{ secrets.MAPS_IOS_API_KEY != '' }} \
+            --dart-define=REVENUECAT_API_KEY="$REVENUECAT_API_KEY" --dart-define=ADMOB_BANNER_AD_UNIT_ID="$ADMOB_BANNER_AD_UNIT_ID" --dart-define=ADMOB_INTERSTITIAL_AD_UNIT_ID="$ADMOB_INTERSTITIAL_AD_UNIT_ID" --dart-define=ADMOB_REWARDED_AD_UNIT_ID="$ADMOB_REWARDED_AD_UNIT_ID" > /tmp/build.log 2>&1
+          status=$?
+          tail -n 60 /tmp/build.log
+          if [ $status -ne 0 ]; then
+            grep -E "\.dart:[0-9]+|Error|error:|failed" /tmp/build.log | head -30 | while IFS= read -r line; do echo "::error::$line"; done
+          fi
+          exit $status
+
+      - name: 打包未簽章 IPA 並發佈到私人 repo 的 Release
+        env:
+          GH_TOKEN: ${{ secrets.BUILDS_REPO_TOKEN }}
+          FORCE_PREMIUM: ${{ inputs.force_premium }}
+        run: |
+          set -euo pipefail
+          ver=$(grep '^version:' pubspec.yaml | awk '{print $2}' | cut -d+ -f1)
+          n=${{ github.run_number }}
+          f="qimen_${ver}_ios_run${n}${FORCE_PREMIUM:+_premium}_unsigned.ipa"
+          mkdir -p ipa/Payload
+          cp -R build/ios/iphoneos/Runner.app ipa/Payload/
+          (cd ipa && zip -qry "../$f" Payload)
+          echo "::notice title=IPA::$f $(du -sh "$f" | cut -f1)"
+          printf '%s\n' "commit ${{ github.sha }}；未簽章 IPA，用 Sideloadly 以 Apple ID 簽章後安裝（免費帳號 7 天需重簽）。" > notes.md
+          # 自用解鎖版用另一個 tag 前綴，不會被下方清理刪掉
+          tag="qimen-ios-run${n}"
+          [ -z "${FORCE_PREMIUM}" ] || tag="qimen-personal-ios-run${n}"
+          gh release create "$tag" "$f" \
+            --repo lawrence124875/qimen-content \
+            --title "奇門羅盤 ${ver} iOS 未簽章（run ${n}）${FORCE_PREMIUM:+［自用解鎖版］}" \
+            --notes-file notes.md
+          echo "::notice title=Release::qimen-content $tag"
+
+      # 一般版留 3 個；自用解鎖版留 2 個
+      - name: 清理舊 iOS Release
+        env:
+          GH_TOKEN: ${{ secrets.BUILDS_REPO_TOKEN }}
+        run: |
+          set -euo pipefail
+          for p in "qimen-ios-run:3" "qimen-personal-ios-run:2"; do
+            pre=${p%:*}; keep=${p#*:}
+            gh release list --repo lawrence124875/qimen-content --limit 100 --json tagName \
+              --jq "[.[] | select(.tagName | startswith(\"$pre\"))] | sort_by(.tagName | ltrimstr(\"$pre\") | tonumber) | reverse | .[$keep:] | .[].tagName" |
+            while IFS= read -r tag; do
+              gh release delete "$tag" --repo lawrence124875/qimen-content --yes --cleanup-tag
+            done
+          done
