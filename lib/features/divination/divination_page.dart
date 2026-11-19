@@ -10,7 +10,7 @@ import '../../shared/premium/usage_gate.dart';
 import '../../shared/widgets/result_card.dart';
 import 'divination_content.dart';
 import '../records/record_list_page.dart';
-import 'divination_journal.dart' show verdictLabel;
+import 'divination_journal.dart';
 import 'reading_page.dart';
 
 /// 奇門問事（HANDOFF §8）：選事類 → 以現在時間起局 → 解讀。
