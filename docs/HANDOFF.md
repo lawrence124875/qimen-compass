@@ -93,7 +93,7 @@
 - [x] App 名稱：奇門羅盤／Qimen Compass（2026-11-18 定案）
 - [x] 訂閱價格（2026-11-18 定案，同謙卦）
 - [ ] 手機實測付費牆與測試購買（run42 起含 RevenueCat key）
-- [ ] 封閉測試 12 人 × 14 天後才能上正式版（使用者找人；開始時設測試群組與邀請連結）
+- [ ] 封閉測試 12 人 × 14 天後才能上正式版（2026-11-19 已送審；審核通過後要找 12 位測試者加入，並連續 14 天）
 - Play Console 現況（2026-11-19）：應用程式內容、商店資訊 14 語（含 pt-PT、es-ES、es-US）、內部測試 v1 已發布；即時開發人員通知主題 `projects/learning-english-5ea8b/topics/Play-Store-Notifications`（與謙卦共用）；RevenueCat 專案 `qimen` 服務帳戶與通知已連線。AAB 版本代碼 = run_number
 - [ ] 測試盤的參考軟體由誰提供（請 Lawrence 指定）
 
