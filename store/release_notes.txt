@@ -1,112 +1,140 @@
 <zh-TW>
-首次推出奇門羅盤：
-• 時家奇門排盤（時、日、月、年盤）
-• 奇門羅盤：八門疊在真實方位上，即時找吉門
-• 出行訣與吉時提醒、擇時擇日、宅盤九宮
-• 事類占卜、紀錄與應驗回饋、奇門入門課
-• 支援 11 種語言、深淺色主題
+奇門羅盤 1.0：
+• 底部四分頁：羅盤、盤面、擇時、我的
+• 地圖八門與目的地吉凶，可搜尋地址
+• 今日奇門黃曆、吉方圖卡分享
+• 個人本命盤、流年流月、個人吉方
+• 雙人合盤、搬家方位、尋人尋寵物
+• 辦公室／店面九宮、床位書桌朝向
+• 桌面小工具、盤面點擊解說、課程補完
 </zh-TW>
 <zh-CN>
-首次推出奇门罗盘：
-• 时家奇门排盘（时、日、月、年盘）
-• 奇门罗盘：八门叠在真实方位上，实时找吉门
-• 出行诀与吉时提醒、择时择日、宅盘九宫
-• 事类占卜、记录与应验反馈、奇门入门课
-• 支持 11 种语言、深浅色主题
+奇门罗盘 1.0：
+• 底部四分页：罗盘、盘面、择时、我的
+• 地图八门与目的地吉凶，可搜索地址
+• 今日奇门黄历、吉方图卡分享
+• 个人本命盘、流年流月、个人吉方
+• 双人合盘、搬家方位、寻人寻宠物
+• 办公室／店面九宫、床位书桌朝向
+• 桌面小部件、盘面点击解说、课程补完
 </zh-CN>
 <en-US>
-First release of Qimen Compass:
-• Qi Men Dun Jia charts (hour, day, month, year)
-• Live compass with the Eight Doors on real directions
-• Travel guide with reminders, date selection, house chart
-• Divination, records with outcomes, Qimen course
-• 11 languages, light and dark themes
+Qimen Compass 1.0:
+• Four tabs: Compass, Chart, Timing, Me
+• Eight Doors on the map, destination luck with address search
+• Daily Qimen almanac and shareable direction cards
+• Personal natal chart, yearly and monthly fortune
+• Compatibility, moving direction, find people and pets
+• Office and shop layouts, bed and desk facing
+• Home screen widget, tap-to-explain chart, more lessons
 </en-US>
 <ja-JP>
-奇門羅盤の初回リリース：
-• 時家奇門の作盤（時・日・月・年盤）
-• 八門を実際の方位に重ねる羅盤
-• 出行訣と吉時通知、択時択日、宅盤九宮
-• 占事、記録と的中フィードバック、奇門講座
-• 11 言語、ライト／ダークテーマ
+奇門羅盤 1.0：
+• 4 つのタブ：羅盤・盤面・択時・マイページ
+• 地図に八門、目的地の吉凶（住所検索）
+• 今日の奇門暦、吉方カードの共有
+• 本命盤、年運・月運、個人の吉方
+• 相性盤、引越し方位、人・ペット探し
+• オフィス／店舗の九宮、ベッド・机の向き
+• ホームウィジェット、盤面タップ解説、講座追加
 </ja-JP>
 <ko-KR>
-기문나침반 첫 출시:
-• 시가기문 포국(시·일·월·연반)
-• 팔문을 실제 방위에 겹친 나침반
-• 출행결과 길시 알림, 택시택일, 택반 구궁
-• 점사, 기록과 적중 피드백, 기문 강좌
-• 11개 언어, 라이트/다크 테마
+기문나침반 1.0:
+• 하단 4탭: 나침반, 반면, 택시, 내 정보
+• 지도 위 팔문, 목적지 길흉(주소 검색)
+• 오늘의 기문 역서, 길방 카드 공유
+• 본명반, 연운·월운, 개인 길방
+• 궁합반, 이사 방위, 사람·반려동물 찾기
+• 사무실·매장 구궁, 침대·책상 방향
+• 홈 위젯, 반면 탭 해설, 강좌 추가
 </ko-KR>
 <vi>
-Phiên bản đầu tiên của La Bàn Kỳ Môn:
-• Lập bàn Kỳ Môn (giờ, ngày, tháng, năm)
-• La bàn đặt Bát Môn lên phương vị thật
-• Xuất hành quyết kèm nhắc giờ tốt, chọn ngày giờ, cửu cung nhà ở
-• Xem sự việc, ghi chép và kiểm chứng, khóa học Kỳ Môn
-• 11 ngôn ngữ, giao diện sáng và tối
+La Bàn Kỳ Môn 1.0:
+• Bốn thẻ: La bàn, Bàn, Chọn giờ, Tôi
+• Bát Môn trên bản đồ, cát hung nơi đến (tìm địa chỉ)
+• Lịch Kỳ Môn hằng ngày, chia sẻ thẻ hướng tốt
+• Bàn bản mệnh, vận năm và tháng, hướng tốt cá nhân
+• Hợp bàn hai người, hướng chuyển nhà, tìm người và thú cưng
+• Cửu cung văn phòng/cửa hàng, hướng giường và bàn
+• Tiện ích màn hình chính, chạm để xem giải nghĩa, thêm bài học
 </vi>
 <es-419>
-Primera versión de Brújula Qimen:
-• Cartas Qi Men Dun Jia (hora, día, mes, año)
-• Brújula con las Ocho Puertas en direcciones reales
-• Guía de salidas con recordatorios, elección de fechas, carta de la casa
-• Consultas, registros con resultados, curso de Qimen
-• 11 idiomas, tema claro y oscuro
+Brújula Qimen 1.0:
+• Cuatro pestañas: Brújula, Carta, Momentos, Yo
+• Ocho Puertas en el mapa y suerte del destino con búsqueda de dirección
+• Almanaque Qimen diario y tarjetas de dirección para compartir
+• Carta natal, suerte anual y mensual
+• Compatibilidad, dirección de mudanza, buscar personas y mascotas
+• Oficina y tienda, orientación de cama y escritorio
+• Widget de inicio, explicación al tocar, más lecciones
 </es-419>
 <es-ES>
-Primera versión de Brújula Qimen:
-• Cartas Qi Men Dun Jia (hora, día, mes, año)
-• Brújula con las Ocho Puertas en direcciones reales
-• Guía de salidas con recordatorios, elección de fechas, carta de la casa
-• Consultas, registros con resultados, curso de Qimen
-• 11 idiomas, tema claro y oscuro
+Brújula Qimen 1.0:
+• Cuatro pestañas: Brújula, Carta, Momentos, Yo
+• Ocho Puertas en el mapa y suerte del destino con búsqueda de dirección
+• Almanaque Qimen diario y tarjetas de dirección para compartir
+• Carta natal, suerte anual y mensual
+• Compatibilidad, dirección de mudanza, buscar personas y mascotas
+• Oficina y tienda, orientación de cama y escritorio
+• Widget de inicio, explicación al tocar, más lecciones
 </es-ES>
 <es-US>
-Primera versión de Brújula Qimen:
-• Cartas Qi Men Dun Jia (hora, día, mes, año)
-• Brújula con las Ocho Puertas en direcciones reales
-• Guía de salidas con recordatorios, elección de fechas, carta de la casa
-• Consultas, registros con resultados, curso de Qimen
-• 11 idiomas, tema claro y oscuro
+Brújula Qimen 1.0:
+• Cuatro pestañas: Brújula, Carta, Momentos, Yo
+• Ocho Puertas en el mapa y suerte del destino con búsqueda de dirección
+• Almanaque Qimen diario y tarjetas de dirección para compartir
+• Carta natal, suerte anual y mensual
+• Compatibilidad, dirección de mudanza, buscar personas y mascotas
+• Oficina y tienda, orientación de cama y escritorio
+• Widget de inicio, explicación al tocar, más lecciones
 </es-US>
 <pt-BR>
-Primeira versão da Bússola Qimen:
-• Mapas Qi Men Dun Jia (hora, dia, mês, ano)
-• Bússola com as Oito Portas nas direções reais
-• Guia de saídas com lembretes, escolha de datas, mapa da casa
-• Consultas, registros com resultados, curso de Qimen
-• 11 idiomas, tema claro e escuro
+Bússola Qimen 1.0:
+• Quatro abas: Bússola, Mapa, Momentos, Eu
+• Oito Portas no mapa e sorte do destino com busca de endereço
+• Almanaque Qimen diário e cartões de direção para partilhar
+• Mapa natal, sorte anual e mensal
+• Compatibilidade, direção de mudança, encontrar pessoas e animais
+• Escritório e loja, orientação de cama e mesa
+• Widget de tela inicial, explicação ao tocar, mais lições
 </pt-BR>
 <pt-PT>
-Primeira versão da Bússola Qimen:
-• Mapas Qi Men Dun Jia (hora, dia, mês, ano)
-• Bússola com as Oito Portas nas direções reais
-• Guia de saídas com lembretes, escolha de datas, mapa da casa
-• Consultas, registos com resultados, curso de Qimen
-• 11 idiomas, tema claro e escuro
+Bússola Qimen 1.0:
+• Quatro abas: Bússola, Mapa, Momentos, Eu
+• Oito Portas no mapa e sorte do destino com busca de endereço
+• Almanaque Qimen diário e cartões de direção para partilhar
+• Mapa natal, sorte anual e mensal
+• Compatibilidade, direção de mudança, encontrar pessoas e animais
+• Escritório e loja, orientação de cama e mesa
+• Widget de ecrã inicial, explicação ao tocar, mais lições
 </pt-PT>
 <id>
-Rilis pertama Kompas Qimen:
-• Bagan Qi Men Dun Jia (jam, hari, bulan, tahun)
-• Kompas dengan Delapan Pintu di arah nyata
-• Panduan bepergian dengan pengingat, pemilihan waktu, bagan rumah
-• Konsultasi, catatan dan hasil, kursus Qimen
-• 11 bahasa, tema terang dan gelap
+Kompas Qimen 1.0:
+• Empat tab: Kompas, Bagan, Waktu, Saya
+• Delapan Pintu di peta, keberuntungan tujuan dengan cari alamat
+• Almanak Qimen harian dan kartu arah untuk dibagikan
+• Bagan kelahiran, peruntungan tahunan dan bulanan
+• Kecocokan, arah pindahan, cari orang dan hewan peliharaan
+• Kantor dan toko, arah tempat tidur dan meja
+• Widget layar utama, penjelasan saat diketuk, pelajaran tambahan
 </id>
 <th>
-เปิดตัวเข็มทิศฉีเหมินครั้งแรก:
-• ผังฉีเหมิน (ชั่วโมง วัน เดือน ปี)
-• เข็มทิศวางแปดประตูบนทิศจริง
-• ตำราเดินทางพร้อมแจ้งเตือน เลือกฤกษ์ ผังบ้านเก้าวัง
-• ถามเรื่อง บันทึกและผลลัพธ์ คอร์สฉีเหมิน
-• 11 ภาษา ธีมสว่างและมืด
+เข็มทิศฉีเหมิน 1.0:
+• สี่แท็บ: เข็มทิศ ผัง เลือกฤกษ์ ฉัน
+• แปดประตูบนแผนที่ ดวงจุดหมายพร้อมค้นหาที่อยู่
+• ปฏิทินฉีเหมินรายวัน แชร์การ์ดทิศมงคล
+• ผังกำเนิด ดวงรายปีและรายเดือน
+• ผังคู่ ทิศย้ายบ้าน ตามหาคนและสัตว์เลี้ยง
+• ออฟฟิศและร้านค้า ทิศเตียงและโต๊ะ
+• วิดเจ็ตหน้าจอหลัก แตะผังเพื่อดูคำอธิบาย บทเรียนเพิ่ม
 </th>
 <ar>
-الإصدار الأول من بوصلة تشيمن:
-• مخططات تشي من دون جيا (الساعة واليوم والشهر والسنة)
-• بوصلة بالأبواب الثمانية على الاتجاهات الحقيقية
-• دليل الخروج مع تذكيرات، اختيار المواعيد، مخطط المنزل
-• الاستشارة، السجلات والنتائج، دورة تشيمن
-• 11 لغة، سمة فاتحة وداكنة
+بوصلة تشيمن 1.0:
+• أربع علامات تبويب: البوصلة، المخطط، التوقيت، أنا
+• الأبواب الثمانية على الخريطة وحظ الوجهة مع البحث عن العنوان
+• تقويم تشيمن اليومي وبطاقات الاتجاه للمشاركة
+• المخطط الشخصي والحظ السنوي والشهري
+• التوافق، اتجاه الانتقال، البحث عن الأشخاص والحيوانات
+• المكتب والمتجر، اتجاه السرير والمكتب
+• أداة الشاشة الرئيسية، شرح عند اللمس، دروس إضافية
 </ar>
