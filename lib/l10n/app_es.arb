@@ -666,5 +666,17 @@
   "trialPromptTitle": "Prueba 7 días gratis",
   "trialPromptBody": "El plan anual empieza con 7 días gratis: momentos, carta de la casa, lecturas completas, carta natal y cartas de mes y año, sin anuncios. Cancela cuando quieras en Google Play.",
   "trialPromptStart": "Empezar prueba gratis",
-  "trialPromptLater": "Quizás luego"
+  "trialPromptLater": "Quizás luego",
+  "zeshiEventWedding": "Boda",
+  "zeshiEventMoveIn": "Mudanza",
+  "zeshiEventGroundbreaking": "Obras y reformas",
+  "zeshiEventPurchase": "Comprar casa o auto",
+  "zeshiEventWealth": "Dinero e inversión",
+  "zeshiEventExam": "Examen",
+  "zeshiEventMedical": "Médico o cirugía",
+  "zeshiEventNegotiation": "Negociación o juicio",
+  "zeshiEventCustom": "Personalizado",
+  "zeshiCustomDoor": "Puerta clave",
+  "zeshiCustomGod": "Espíritu favorable",
+  "zeshiFlagFavoredStar": "Estrella favorable presente"
 }

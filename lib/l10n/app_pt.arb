@@ -666,5 +666,17 @@
   "trialPromptTitle": "Teste 7 dias grátis",
   "trialPromptBody": "O plano anual começa com 7 dias grátis: momentos, mapa da casa, leituras completas, mapa natal e mapas de mês e ano, sem anúncios. Cancele quando quiser no Google Play.",
   "trialPromptStart": "Começar teste grátis",
-  "trialPromptLater": "Talvez depois"
+  "trialPromptLater": "Talvez depois",
+  "zeshiEventWedding": "Casamento",
+  "zeshiEventMoveIn": "Mudança",
+  "zeshiEventGroundbreaking": "Obras e reformas",
+  "zeshiEventPurchase": "Comprar casa ou carro",
+  "zeshiEventWealth": "Dinheiro e investimento",
+  "zeshiEventExam": "Prova",
+  "zeshiEventMedical": "Médico ou cirurgia",
+  "zeshiEventNegotiation": "Negociação ou processo",
+  "zeshiEventCustom": "Personalizado",
+  "zeshiCustomDoor": "Porta-chave",
+  "zeshiCustomGod": "Espírito favorável",
+  "zeshiFlagFavoredStar": "Estrela favorável presente"
 }

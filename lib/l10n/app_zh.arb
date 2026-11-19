@@ -1487,5 +1487,17 @@
   "trialPromptTitle": "免費試用 7 天",
   "trialPromptBody": "年訂方案可以先免費試用 7 天：擇時、宅盤、問事完整解讀、本命盤、年月盤全部打開，也沒有廣告。試用期間在 Google Play 隨時可取消。",
   "trialPromptStart": "開始免費試用",
-  "trialPromptLater": "之後再說"
+  "trialPromptLater": "之後再說",
+  "zeshiEventWedding": "結婚",
+  "zeshiEventMoveIn": "入宅搬家",
+  "zeshiEventGroundbreaking": "動土裝修",
+  "zeshiEventPurchase": "買房買車",
+  "zeshiEventWealth": "求財投資",
+  "zeshiEventExam": "考試",
+  "zeshiEventMedical": "就醫手術",
+  "zeshiEventNegotiation": "談判訴訟",
+  "zeshiEventCustom": "自訂",
+  "zeshiCustomDoor": "用神門",
+  "zeshiCustomGod": "喜神",
+  "zeshiFlagFavoredStar": "喜星同宮"
 }

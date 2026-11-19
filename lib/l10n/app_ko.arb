@@ -666,5 +666,17 @@
   "trialPromptTitle": "7일 무료 체험",
   "trialPromptBody": "연간 플랜은 7일 무료 체험: 택시, 택반, 점사 전체 해설, 본명반, 연반·월반 모두 열리고 광고도 없습니다. 체험 중 Google Play에서 언제든 취소할 수 있습니다.",
   "trialPromptStart": "무료 체험 시작",
-  "trialPromptLater": "나중에"
+  "trialPromptLater": "나중에",
+  "zeshiEventWedding": "결혼",
+  "zeshiEventMoveIn": "입주·이사",
+  "zeshiEventGroundbreaking": "착공·인테리어",
+  "zeshiEventPurchase": "집·차 구매",
+  "zeshiEventWealth": "재물·투자",
+  "zeshiEventExam": "시험",
+  "zeshiEventMedical": "진료·수술",
+  "zeshiEventNegotiation": "협상·소송",
+  "zeshiEventCustom": "직접 설정",
+  "zeshiCustomDoor": "용신 문",
+  "zeshiCustomGod": "희신",
+  "zeshiFlagFavoredStar": "희성 동궁"
 }

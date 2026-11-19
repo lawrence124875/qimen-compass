@@ -12,6 +12,15 @@ class ZeShiText {
         ZeShiEvent.dating => l.zeshiEventDating,
         ZeShiEvent.engagement => l.zeshiEventEngagement,
         ZeShiEvent.journey => l.zeshiEventJourney,
+        ZeShiEvent.wedding => l.zeshiEventWedding,
+        ZeShiEvent.moveIn => l.zeshiEventMoveIn,
+        ZeShiEvent.groundbreaking => l.zeshiEventGroundbreaking,
+        ZeShiEvent.purchase => l.zeshiEventPurchase,
+        ZeShiEvent.wealth => l.zeshiEventWealth,
+        ZeShiEvent.exam => l.zeshiEventExam,
+        ZeShiEvent.medical => l.zeshiEventMedical,
+        ZeShiEvent.negotiation => l.zeshiEventNegotiation,
+        ZeShiEvent.custom => l.zeshiEventCustom,
       };
 
   static bool isPlus(ZeShiFlag f) => f.index <= ZeShiFlag.mingJi.index;
@@ -20,6 +29,7 @@ class ZeShiText {
         ZeShiFlag.wangXiang => l.zeshiFlagWangXiang,
         ZeShiFlag.goodGod => l.flagGoodGod,
         ZeShiFlag.favoredGod => l.zeshiFlagFavoredGod,
+        ZeShiFlag.favoredStar => l.zeshiFlagFavoredStar,
         ZeShiFlag.sanQi => l.zeshiFlagSanQi,
         ZeShiFlag.qingLong => l.zeshiFlagQingLong,
         ZeShiFlag.feiNiao => l.zeshiFlagFeiNiao,

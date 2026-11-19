@@ -666,5 +666,17 @@
   "trialPromptTitle": "7 日間無料でお試し",
   "trialPromptBody": "年額プランは 7 日間無料：択時、宅盤、占事の詳細、本命盤、年盤・月盤がすべて使え、広告もありません。期間中は Google Play でいつでも解約できます。",
   "trialPromptStart": "無料で試す",
-  "trialPromptLater": "あとで"
+  "trialPromptLater": "あとで",
+  "zeshiEventWedding": "結婚",
+  "zeshiEventMoveIn": "入居・引越し",
+  "zeshiEventGroundbreaking": "着工・リフォーム",
+  "zeshiEventPurchase": "住宅・車の購入",
+  "zeshiEventWealth": "求財・投資",
+  "zeshiEventExam": "試験",
+  "zeshiEventMedical": "受診・手術",
+  "zeshiEventNegotiation": "交渉・訴訟",
+  "zeshiEventCustom": "カスタム",
+  "zeshiCustomDoor": "用神の門",
+  "zeshiCustomGod": "喜神",
+  "zeshiFlagFavoredStar": "喜星が同宮"
 }

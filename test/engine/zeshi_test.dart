@@ -42,4 +42,15 @@ void main() {
     expect(c.length, a.length);
     expect(c.any((s) => s.flags.contains(ZeShiFlag.mingJi) || s.flags.contains(ZeShiFlag.mingXiong)), isTrue);
   });
+
+  test('自訂情境：只用使用者選的門；就醫取天心加分', () {
+    const spec = ZeShiSpec(doors: [Door.du], favoredGod: God.jiuDi);
+    final r = planner.best(from, ZeShiEvent.custom, days: 7, settings: tw, spec: spec);
+    expect(r, isNotEmpty);
+    expect(r.every((s) => s.door == Door.du), isTrue);
+    final m = planner.scan(from, ZeShiEvent.medical, days: 14, settings: tw);
+    for (final s in m) {
+      expect(s.flags.contains(ZeShiFlag.favoredStar), s.chart[s.palace].stars.contains(Star.xin));
+    }
+  });
 }

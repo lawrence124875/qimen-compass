@@ -666,5 +666,17 @@
   "trialPromptTitle": "جرّب 7 أيام مجانًا",
   "trialPromptBody": "تبدأ الخطة السنوية بـ 7 أيام مجانية: التوقيت ومخطط المنزل والقراءات الكاملة والمخطط الشخصي ومخططات الشهر والسنة بلا إعلانات. ألغِ في أي وقت عبر Google Play.",
   "trialPromptStart": "ابدأ التجربة المجانية",
-  "trialPromptLater": "لاحقًا"
+  "trialPromptLater": "لاحقًا",
+  "zeshiEventWedding": "زفاف",
+  "zeshiEventMoveIn": "الانتقال للمنزل",
+  "zeshiEventGroundbreaking": "بناء وترميم",
+  "zeshiEventPurchase": "شراء منزل أو سيارة",
+  "zeshiEventWealth": "المال والاستثمار",
+  "zeshiEventExam": "امتحان",
+  "zeshiEventMedical": "العلاج أو الجراحة",
+  "zeshiEventNegotiation": "تفاوض أو دعوى",
+  "zeshiEventCustom": "مخصص",
+  "zeshiCustomDoor": "الباب الرئيسي",
+  "zeshiCustomGod": "الروح المفضلة",
+  "zeshiFlagFavoredStar": "وجود النجم المفضل"
 }

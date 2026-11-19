@@ -666,5 +666,17 @@
   "trialPromptTitle": "Coba gratis 7 hari",
   "trialPromptBody": "Paket tahunan bisa dicoba gratis 7 hari: pemilihan waktu, bagan rumah, bacaan lengkap, bagan kelahiran, bagan bulan dan tahun, tanpa iklan. Batalkan kapan saja di Google Play.",
   "trialPromptStart": "Mulai uji coba gratis",
-  "trialPromptLater": "Nanti saja"
+  "trialPromptLater": "Nanti saja",
+  "zeshiEventWedding": "Pernikahan",
+  "zeshiEventMoveIn": "Pindah rumah",
+  "zeshiEventGroundbreaking": "Renovasi",
+  "zeshiEventPurchase": "Beli rumah atau mobil",
+  "zeshiEventWealth": "Rezeki dan investasi",
+  "zeshiEventExam": "Ujian",
+  "zeshiEventMedical": "Berobat atau operasi",
+  "zeshiEventNegotiation": "Negosiasi atau gugatan",
+  "zeshiEventCustom": "Kustom",
+  "zeshiCustomDoor": "Pintu utama",
+  "zeshiCustomGod": "Dewa pilihan",
+  "zeshiFlagFavoredStar": "Bintang pilihan hadir"
 }

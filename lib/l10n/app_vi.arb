@@ -666,5 +666,17 @@
   "trialPromptTitle": "Dùng thử miễn phí 7 ngày",
   "trialPromptBody": "Gói năm được dùng thử miễn phí 7 ngày: chọn giờ, bàn nhà, giải đầy đủ, bàn bản mệnh, bàn tháng và năm, không quảng cáo. Có thể hủy bất cứ lúc nào trên Google Play.",
   "trialPromptStart": "Bắt đầu dùng thử",
-  "trialPromptLater": "Để sau"
+  "trialPromptLater": "Để sau",
+  "zeshiEventWedding": "Cưới hỏi",
+  "zeshiEventMoveIn": "Nhập trạch",
+  "zeshiEventGroundbreaking": "Động thổ, sửa nhà",
+  "zeshiEventPurchase": "Mua nhà, mua xe",
+  "zeshiEventWealth": "Cầu tài, đầu tư",
+  "zeshiEventExam": "Thi cử",
+  "zeshiEventMedical": "Khám chữa, phẫu thuật",
+  "zeshiEventNegotiation": "Đàm phán, kiện tụng",
+  "zeshiEventCustom": "Tự chọn",
+  "zeshiCustomDoor": "Cửa dụng thần",
+  "zeshiCustomGod": "Thần hỷ",
+  "zeshiFlagFavoredStar": "Sao hỷ cùng cung"
 }
