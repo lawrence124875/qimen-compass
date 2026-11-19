@@ -85,6 +85,8 @@ class _TravelPageState extends State<TravelPage> {
   void _snack(String text, {(String, VoidCallback)? action}) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(text),
+      persist: false, // 有按鈕的 SnackBar 預設不會自動消失
+      duration: const Duration(seconds: 4),
       action: action == null ? null : SnackBarAction(label: action.$1, onPressed: action.$2),
     ));
   }

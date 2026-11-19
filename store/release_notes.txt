@@ -1,112 +1,91 @@
 <zh-TW>
-奇門羅盤 1.1：
-• 新首頁「此刻」：吉方吉門、下個吉時倒數、今日黃曆
-• 四分頁：此刻、羅盤（含地圖）、盤面、我的；擇時新增結婚、搬家等 8 情境與自訂
-• 結果卡改版，吉平凶加圖示，羅盤轉到吉門會輕震
-• 地圖八門與目的地吉凶，可搜尋地址
-• 今日奇門黃曆、吉方圖卡分享
+奇門羅盤 1.1.1：
+• 奇門問事新增出行、房產、合作簽約、人際貴人、其他（自訂）五類，每類附常用問題，並記住最近問過
+• 床位朝向新增沙發、爐灶、神桌、收銀台，附測量說明、八門白話與使用引導
+• 搬家遠行可直接輸入住家地址
+• 「已刪除・復原」提示 4 秒後自動消失
 </zh-TW>
 <zh-CN>
-奇门罗盘 1.1：
-• 新首页「此刻」：吉方吉门、下个吉时倒数、今日黄历
-• 四分页：此刻、罗盘（含地图）、盘面、我的；择时新增结婚、搬家等 8 个情境与自定义
-• 结果卡改版，吉平凶加图标，罗盘转到吉门会轻震
-• 地图八门与目的地吉凶，可搜索地址
-• 今日奇门黄历、吉方图卡分享
+奇门罗盘 1.1.1：
+• 奇门问事新增出行、房产、合作签约、人际贵人、其他（自定义）五类，每类附常用问题，并记住最近问过
+• 床位朝向新增沙发、炉灶、神桌、收银台，附测量说明、八门白话与使用引导
+• 搬家远行可直接输入住家地址
+• “已删除・恢复”提示 4 秒后自动消失
 </zh-CN>
 <en-US>
-Qimen Compass 1.1:
-• New Now home: lucky direction, next lucky hour countdown, daily almanac
-• Tabs: Now, Compass (with map), Chart, Me; Timing adds 8 occasions such as wedding and moving, plus custom
-• Clearer result cards, icons for good and bad, gentle vibration on a lucky door
-• Eight Doors on the map, destination luck with address search
-• Daily Qimen almanac and shareable direction cards
+Qimen Compass 1.1.1:
+• Questions: five new topics (Travel, Property, Deals, People, Other/custom), common questions for each, and recent questions remembered
+• Facing: sofa, stove, altar and counter added, with measuring tips, plain-language doors and a guide
+• Move & travel: set your home by typing an address
+• "Deleted / Undo" notices now close after 4 seconds
 </en-US>
 <ja-JP>
-奇門羅盤 1.1：
-• 新ホーム「いま」：吉方・吉門、次の吉時までのカウントダウン、今日の暦
-• タブ：いま・羅盤（地図付き）・盤面・マイページ。択時に結婚・引越しなど 8 項目とカスタムを追加
-• 結果カードを刷新、吉凶にアイコン、吉門で軽く振動
-• 地図に八門、目的地の吉凶（住所検索）
-• 今日の奇門暦、吉方カードの共有
+奇門羅盤 1.1.1：
+• 奇門問事に外出・不動産・提携契約・人間関係・その他（自由入力）の 5 種類を追加。よくある質問と最近の質問も
+• 向きチェックにソファ・コンロ・神棚・レジを追加、測り方・八門の解説・使い方ガイド付き
+• 引越し・遠出で自宅の住所を入力可能に
+• 「削除しました・元に戻す」は 4 秒で自動的に消えます
 </ja-JP>
 <ko-KR>
-기문나침반 1.1:
-• 새 홈 "지금": 길방·길문, 다음 길시 카운트다운, 오늘의 달력
-• 탭: 지금, 나침반(지도 포함), 반면, 내 정보. 택시에 결혼·이사 등 8가지와 사용자 지정 추가
-• 결과 카드 개편, 길흉 아이콘, 길문에서 가벼운 진동
-• 지도 위 팔문, 목적지 길흉(주소 검색)
-• 오늘의 기문 역서, 길방 카드 공유
+기문나침반 1.1.1:
+• 기문 문사에 외출·부동산·제휴계약·인간관계·기타(직접 입력) 5가지 추가, 자주 묻는 질문과 최근 질문
+• 방향 보기에 소파·레인지·제단·계산대 추가, 측정 방법·팔문 쉬운 설명·사용 안내
+• 이사·원행에서 집 주소를 직접 입력
+• "삭제됨·되돌리기" 알림이 4초 뒤 자동으로 사라짐
 </ko-KR>
 <vi>
-La Bàn Kỳ Môn 1.1:
-• Trang chủ mới "Bây giờ": hướng tốt, đếm ngược giờ tốt kế tiếp, lịch hôm nay
-• Các thẻ: Bây giờ, La bàn (kèm bản đồ), Bàn, Tôi; Chọn giờ thêm 8 dịp như cưới hỏi, chuyển nhà và tùy chỉnh
-• Thẻ kết quả mới, biểu tượng tốt xấu, rung nhẹ khi gặp cửa tốt
-• Bát Môn trên bản đồ, cát hung nơi đến (tìm địa chỉ)
-• Lịch Kỳ Môn hằng ngày, chia sẻ thẻ hướng tốt
+La bàn Kỳ Môn 1.1.1:
+• Hỏi việc thêm 5 loại: Xuất hành, Nhà đất, Hợp tác ký kết, Quý nhân, Khác (tự nhập); có câu hỏi thường gặp và lưu câu hỏi gần đây
+• Hướng đặt đồ thêm sofa, bếp, bàn thờ, quầy thu ngân, kèm cách đo, giải thích bát môn và hướng dẫn
+• Chuyển nhà, đi xa: nhập địa chỉ nhà trực tiếp
+• Thông báo "Đã xóa / Hoàn tác" tự tắt sau 4 giây
 </vi>
-<es-419>
-Brújula Qimen 1.1:
-• Nuevo inicio Ahora: dirección propicia, cuenta regresiva a la próxima hora propicia, almanaque
-• Pestañas: Ahora, Brújula (con mapa), Carta, Yo; Momentos suma 8 ocasiones como boda y mudanza, y personalizado
-• Tarjetas de resultado renovadas, íconos de bueno y malo, vibración suave en una puerta propicia
-• Ocho Puertas en el mapa y suerte del destino con búsqueda de dirección
-• Almanaque Qimen diario y tarjetas de dirección para compartir
-</es-419>
 <es-ES>
-Brújula Qimen 1.1:
-• Nuevo inicio Ahora: dirección propicia, cuenta atrás a la próxima hora propicia, almanaque
-• Pestañas: Ahora, Brújula (con mapa), Carta, Yo; Momentos suma 8 ocasiones como boda y mudanza, y personalizado
-• Tarjetas de resultado renovadas, iconos de bueno y malo, vibración suave en una puerta propicia
-• Ocho Puertas en el mapa y suerte del destino con búsqueda de dirección
-• Almanaque Qimen diario y tarjetas de dirección para compartir
+Brújula Qimen 1.1.1:
+• Preguntas: cinco temas nuevos (Viajes, Vivienda, Acuerdos, Relaciones, Otro/libre), preguntas frecuentes y recientes
+• Orientación: sofá, cocina, altar y caja, con instrucciones, puertas explicadas y guía
+• Mudanza y viajes: fija tu casa escribiendo la dirección
+• Los avisos "Eliminado / Deshacer" se cierran a los 4 segundos
 </es-ES>
 <es-US>
-Brújula Qimen 1.1:
-• Nuevo inicio Ahora: dirección propicia, cuenta regresiva a la próxima hora propicia, almanaque
-• Pestañas: Ahora, Brújula (con mapa), Carta, Yo; Momentos suma 8 ocasiones como boda y mudanza, y personalizado
-• Tarjetas de resultado renovadas, íconos de bueno y malo, vibración suave en una puerta propicia
-• Ocho Puertas en el mapa y suerte del destino con búsqueda de dirección
-• Almanaque Qimen diario y tarjetas de dirección para compartir
+Brújula Qimen 1.1.1:
+• Preguntas: cinco temas nuevos (Viajes, Vivienda, Acuerdos, Relaciones, Otro/libre), preguntas frecuentes y recientes
+• Orientación: sofá, cocina, altar y caja, con instrucciones, puertas explicadas y guía
+• Mudanza y viajes: fija tu casa escribiendo la dirección
+• Los avisos "Eliminado / Deshacer" se cierran a los 4 segundos
 </es-US>
 <pt-BR>
-Bússola Qimen 1.1:
-• Nova tela Agora: direção auspiciosa, contagem para a próxima hora boa, almanaque
-• Abas: Agora, Bússola (com mapa), Carta, Eu; Momentos ganha 8 ocasiões como casamento e mudança, e personalizado
-• Cartões de resultado renovados, ícones de bom e ruim, vibração leve numa porta auspiciosa
-• Oito Portas no mapa e sorte do destino com busca de endereço
-• Almanaque Qimen diário e cartões de direção para partilhar
+Bússola Qimen 1.1.1:
+• Perguntas: cinco temas novos (Viagens, Imóveis, Acordos, Relações, Outro/livre), perguntas comuns e recentes
+• Orientação: sofá, fogão, altar e caixa, com instruções, portas explicadas e guia
+• Mudança e viagens: defina sua casa digitando o endereço
+• Avisos "Excluído / Desfazer" fecham após 4 segundos
 </pt-BR>
 <pt-PT>
-Bússola Qimen 1.1:
-• Novo ecrã Agora: direção auspiciosa, contagem para a próxima hora boa, almanaque
-• Separadores: Agora, Bússola (com mapa), Carta, Eu; Momentos ganha 8 ocasiões como casamento e mudança, e personalizado
-• Cartões de resultado renovados, ícones de bom e mau, vibração leve numa porta auspiciosa
-• Oito Portas no mapa e sorte do destino com busca de endereço
-• Almanaque Qimen diário e cartões de direção para partilhar
+Bússola Qimen 1.1.1:
+• Perguntas: cinco temas novos (Viagens, Imóveis, Acordos, Relações, Outro/livre), perguntas comuns e recentes
+• Orientação: sofá, fogão, altar e caixa, com instruções, portas explicadas e guia
+• Mudança e viagens: defina sua casa digitando o endereço
+• Avisos "Eliminado / Anular" fecham após 4 segundos
 </pt-PT>
 <id>
-Kompas Qimen 1.1:
-• Beranda baru Sekarang: arah baik, hitung mundur jam baik berikutnya, almanak
-• Tab: Sekarang, Kompas (dengan peta), Bagan, Saya; Waktu menambah 8 acara seperti pernikahan dan pindahan, plus kustom
-• Kartu hasil baru, ikon baik dan buruk, getar halus di pintu baik
-• Delapan Pintu di peta, keberuntungan tujuan dengan cari alamat
-• Almanak Qimen harian dan kartu arah untuk dibagikan
+Kompas Qimen 1.1.1:
+• Tanya: lima topik baru (Bepergian, Properti, Kerja sama, Relasi, Lainnya/bebas), pertanyaan umum dan terbaru
+• Arah perabot: sofa, kompor, altar, kasir, dengan cara ukur, penjelasan pintu dan panduan
+• Pindah & bepergian: atur rumah dengan mengetik alamat
+• Notifikasi "Dihapus / Urungkan" hilang sendiri setelah 4 detik
 </id>
 <th>
-เข็มทิศฉีเหมิน 1.1:
-• หน้าแรกใหม่ "ตอนนี้": ทิศมงคล นับถอยหลังฤกษ์ดีถัดไป ปฏิทินวันนี้
-• แท็บ: ตอนนี้ เข็มทิศ (มีแผนที่) ผัง ฉัน; เลือกฤกษ์เพิ่ม 8 โอกาส เช่น แต่งงาน ย้ายบ้าน และกำหนดเอง
-• การ์ดผลลัพธ์ใหม่ ไอคอนดีร้าย สั่นเบาๆ เมื่อเจอประตูมงคล
-• แปดประตูบนแผนที่ ดวงจุดหมายพร้อมค้นหาที่อยู่
-• ปฏิทินฉีเหมินรายวัน แชร์การ์ดทิศมงคล
+เข็มทิศฉีเหมิน 1.1.1:
+• ถามเรื่อง: เพิ่ม 5 หมวด (เดินทาง บ้านและที่ดิน ร่วมงานสัญญา ผู้อุปถัมภ์ อื่นๆ พิมพ์เอง) พร้อมคำถามที่พบบ่อยและคำถามล่าสุด
+• ทิศวางของ: เพิ่มโซฟา เตา โต๊ะบูชา เคาน์เตอร์ พร้อมวิธีวัด คำอธิบายแปดประตู และคู่มือ
+• ย้ายบ้าน เดินทาง: ป้อนที่อยู่บ้านได้เลย
+• ข้อความ "ลบแล้ว / เลิกทำ" หายเองใน 4 วินาที
 </th>
 <ar>
-بوصلة تشيمن 1.1:
-• شاشة رئيسية جديدة "الآن": الاتجاه الميمون، عد تنازلي للساعة الميمونة التالية، التقويم
-• علامات التبويب: الآن، البوصلة (مع الخريطة)، المخطط، أنا؛ التوقيت يضيف 8 مناسبات مثل الزواج والانتقال، ومخصص
-• بطاقات نتائج أوضح، أيقونات للجيد والسيئ، اهتزاز خفيف عند باب ميمون
-• الأبواب الثمانية على الخريطة وحظ الوجهة مع البحث عن العنوان
-• تقويم تشيمن اليومي وبطاقات الاتجاه للمشاركة
+بوصلة تشيمن 1.1.1:
+• الأسئلة: خمسة مواضيع جديدة (السفر، العقار، الشراكة، العلاقات، أخرى/حر) مع أسئلة شائعة وحديثة
+• الاتجاه: إضافة الأريكة والموقد والمذبح والكاشير مع طريقة القياس وشرح الأبواب ودليل
+• الانتقال والسفر: حدّد منزلك بكتابة العنوان
+• تختفي رسائل «حُذف / تراجع» بعد 4 ثوانٍ
 </ar>

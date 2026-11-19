@@ -113,6 +113,8 @@ class _TravelLogPageState extends State<TravelLogPage> {
       ..hideCurrentSnackBar()
       ..showSnackBar(SnackBar(
         content: Text(l.travelLogDeleted),
+        persist: false, // 有按鈕的 SnackBar 預設不會自動消失
+        duration: const Duration(seconds: 4),
         action: SnackBarAction(
           label: l.travelLogUndo,
           onPressed: () {

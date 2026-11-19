@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app/settings/app_settings.dart';
 import '../../app/theme/app_theme.dart';
@@ -13,7 +14,11 @@ import 'heading_tracker.dart';
 enum FacingTarget {
   bed({Door.xiu, Door.sheng, Door.kai}),
   desk({Door.jingScene, Door.kai, Door.sheng}),
-  seat({Door.kai, Door.sheng, Door.xiu});
+  seat({Door.kai, Door.sheng, Door.xiu}),
+  sofa({Door.xiu, Door.sheng, Door.jingScene}),
+  stove({Door.sheng, Door.jingScene, Door.xiu}),
+  altar({Door.kai, Door.xiu, Door.sheng}),
+  cashier({Door.sheng, Door.kai, Door.jingScene});
 
   const FacingTarget(this.preferred);
   final Set<Door> preferred;
@@ -35,10 +40,29 @@ class _FacingPageState extends State<FacingPage> {
     return const ShiJiaEngine().compute(now, settings: s.timeSettingsAt(now), method: s.juMethod, unit: PanUnit.year);
   }();
 
+  static const _kGuide = 'qm_facing_guide_seen';
+
   @override
   void initState() {
     super.initState();
     _tracker.acquire();
+    SharedPreferences.getInstance().then((p) async {
+      if (p.getBool(_kGuide) == true) return;
+      await p.setBool(_kGuide, true);
+      if (mounted) _showGuide();
+    }).catchError((_) {});
+  }
+
+  void _showGuide() {
+    final l = context.l10n;
+    showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l.facingGuideTitle),
+        content: SingleChildScrollView(child: Text(l.facingGuide)),
+        actions: [FilledButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l.guideStart))],
+      ),
+    );
   }
 
   @override
@@ -51,6 +75,32 @@ class _FacingPageState extends State<FacingPage> {
         FacingTarget.bed => l.facingBed,
         FacingTarget.desk => l.facingDesk,
         FacingTarget.seat => l.facingSeat,
+        FacingTarget.sofa => l.facingSofa,
+        FacingTarget.stove => l.facingStove,
+        FacingTarget.altar => l.facingAltar,
+        FacingTarget.cashier => l.facingCashier,
+      };
+
+  String _how(AppLocalizations l, FacingTarget t) => switch (t) {
+        FacingTarget.bed => l.facingHowBed,
+        FacingTarget.desk => l.facingHowDesk,
+        FacingTarget.seat => l.facingHowSeat,
+        FacingTarget.sofa => l.facingHowSofa,
+        FacingTarget.stove => l.facingHowStove,
+        FacingTarget.altar => l.facingHowAltar,
+        FacingTarget.cashier => l.facingHowCashier,
+      };
+
+  /// 八門白話（吉門在前）。
+  static String doorPlain(AppLocalizations l, Door d) => switch (d) {
+        Door.kai => l.facingDoorKai,
+        Door.xiu => l.facingDoorXiu,
+        Door.sheng => l.facingDoorSheng,
+        Door.jingScene => l.facingDoorJing,
+        Door.du => l.facingDoorDu,
+        Door.shang => l.facingDoorShang,
+        Door.jing => l.facingDoorJingFear,
+        Door.si => l.facingDoorSi,
       };
 
   @override
@@ -64,17 +114,24 @@ class _FacingPageState extends State<FacingPage> {
         if (_target.preferred.contains(_year[p].door)) p,
     ];
     return Scaffold(
-      appBar: AppBar(title: Text(l.facingTitle)),
+      appBar: AppBar(title: Text(l.facingTitle), actions: [
+        IconButton(icon: const Icon(Icons.help_outline), tooltip: l.facingGuideTitle, onPressed: _showGuide),
+      ]),
       body: SafeArea(
         child: ListView(padding: const EdgeInsets.all(16), children: [
-          SegmentedButton<FacingTarget>(
-            showSelectedIcon: false,
-            segments: [for (final t in FacingTarget.values) ButtonSegment(value: t, label: Text(_targetName(l, t)))],
-            selected: {_target},
-            onSelectionChanged: (v) => setState(() => _target = v.first),
-          ),
+          Wrap(spacing: 8, runSpacing: 6, children: [
+            for (final t in FacingTarget.values)
+              ChoiceChip(
+                label: Text(_targetName(l, t)),
+                selected: t == _target,
+                onSelected: (_) => setState(() => _target = t),
+              ),
+          ]),
           const SizedBox(height: 8),
-          Text(l.facingHint, style: text.bodySmall?.copyWith(color: qm.textMuted)),
+          Text(_how(l, _target), style: text.bodyMedium?.copyWith(color: qm.textMuted)),
+          const SizedBox(height: 4),
+          Text(l.facingPrefer([for (final d in Door.values) if (_target.preferred.contains(d)) QimenTerms.doorName(d, lang)].join(l.separator)),
+              style: text.bodySmall),
           const SizedBox(height: 16),
           ListenableBuilder(
             listenable: _tracker,
@@ -105,10 +162,24 @@ class _FacingPageState extends State<FacingPage> {
           const SizedBox(height: 12),
           Text(l.facingSuggest, style: text.titleSmall?.copyWith(color: qm.primary)),
           const SizedBox(height: 4),
-          Wrap(spacing: 8, runSpacing: 6, children: [
-            for (final p in suggest) Chip(label: Text('${TravelText.direction(l, p)}・${QimenTerms.doorName(_year[p].door!, lang)}')),
-          ]),
+          if (suggest.isEmpty)
+            Text(l.facingSuggestNone, style: text.bodySmall?.copyWith(color: qm.textMuted))
+          else
+            Wrap(spacing: 8, runSpacing: 6, children: [
+              for (final p in suggest) Chip(label: Text('${TravelText.direction(l, p)}・${QimenTerms.doorName(_year[p].door!, lang)}')),
+            ]),
           const SizedBox(height: 16),
+          ExpansionTile(
+            tilePadding: EdgeInsets.zero,
+            title: Text(l.facingDoorsTitle, style: text.titleSmall?.copyWith(color: qm.primary)),
+            childrenPadding: const EdgeInsets.only(bottom: 8),
+            expandedCrossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              for (final d in const [Door.kai, Door.xiu, Door.sheng, Door.jingScene, Door.du, Door.shang, Door.jing, Door.si])
+                Padding(padding: const EdgeInsets.symmetric(vertical: 2), child: Text(doorPlain(l, d), style: text.bodySmall)),
+            ],
+          ),
+          const SizedBox(height: 8),
           Text(l.homeDisclaimer, style: text.bodySmall?.copyWith(color: qm.textMuted)),
         ]),
       ),

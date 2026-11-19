@@ -25,11 +25,14 @@ class _DivinationPageState extends State<DivinationPage> {
   static const _kTopic = 'qm_div_topic';
   static const _kSchool = 'qm_div_school';
   static const _kGuide = 'qm_div_guide_seen';
+  static const _kRecent = 'qm_div_recent';
+  static const _maxRecent = 6;
 
   DivinationContent? _content;
   bool _loaded = false;
   String? _topic;
   final Map<String, String> _schools = {};
+  List<String> _recent = [];
   final _question = TextEditingController();
   SharedPreferences? _prefs;
 
@@ -57,6 +60,7 @@ class _DivinationPageState extends State<DivinationPage> {
       _content = content;
       _prefs = prefs;
       _loaded = true;
+      _recent = prefs?.getStringList(_kRecent) ?? [];
       if (content != null) {
         final saved = prefs?.getString(_kTopic);
         _topic = content.rules.topics.contains(saved) ? saved : content.rules.topics.first;
@@ -87,6 +91,23 @@ class _DivinationPageState extends State<DivinationPage> {
     _prefs?.setStringList(_kSchool, [for (final e in _schools.entries) '${e.key}=${e.value}']);
   }
 
+  /// 自訂的問題記在「最近問過」，下次點一下就能再問（常用例句不重複記）。
+  void _remember(String q) {
+    if (q.isEmpty || _content!.text.topicExamples(_topic!).contains(q)) return;
+    _recent = [q, ..._recent.where((e) => e != q)].take(_maxRecent).toList();
+    _prefs?.setStringList(_kRecent, _recent);
+  }
+
+  void _forget(String q) {
+    setState(() => _recent = _recent.where((e) => e != q).toList());
+    _prefs?.setStringList(_kRecent, _recent);
+  }
+
+  void _fill(String q) {
+    _question.text = q;
+    _question.selection = TextSelection.collapsed(offset: q.length);
+  }
+
   Future<void> _start() async {
     // 問事解讀屬訂閱功能：免費版完整體驗一次，之後先給決斷與等級，詳解需訂閱
     final access = await peekPremium(context, feature: 'divination');
@@ -110,6 +131,7 @@ class _DivinationPageState extends State<DivinationPage> {
       summary: divinationSummary(context.l10n, content.text, reading.topic, reading.verdict.name),
     );
     if (!mounted) return;
+    setState(() => _remember(_question.text.trim()));
     _question.clear();
     await Navigator.of(context).push(MaterialPageRoute<void>(
       builder: (_) => ReadingPage(
@@ -169,6 +191,13 @@ class _DivinationPageState extends State<DivinationPage> {
                         border: const OutlineInputBorder(),
                       ),
                     ),
+                    _QuickQuestions(
+                      title: l.divExamples,
+                      items: content.text.topicExamples(_topic!),
+                      onTap: _fill,
+                    ),
+                    if (_recent.isNotEmpty)
+                      _QuickQuestions(title: l.divRecent, items: _recent, onTap: _fill, onDelete: _forget),
                     if (content.rules.schoolsFor(_topic!).length > 1) ...[
                       const SizedBox(height: 8),
                       DropdownButtonFormField<String>(
@@ -192,6 +221,35 @@ class _DivinationPageState extends State<DivinationPage> {
                         textAlign: TextAlign.center, style: theme.textTheme.bodySmall?.copyWith(color: context.qm.textMuted)),
                   ],
                 ),
+    );
+  }
+}
+
+/// 一排可點的問題（常用例句或最近問過）。
+class _QuickQuestions extends StatelessWidget {
+  const _QuickQuestions({required this.title, required this.items, required this.onTap, this.onDelete});
+
+  final String title;
+  final List<String> items;
+  final ValueChanged<String> onTap;
+  final ValueChanged<String>? onDelete;
+
+  @override
+  Widget build(BuildContext context) {
+    if (items.isEmpty) return const SizedBox.shrink();
+    final del = onDelete;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(title, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: context.qm.textMuted)),
+        const SizedBox(height: 4),
+        Wrap(spacing: 6, runSpacing: 6, children: [
+          for (final q in items)
+            del == null
+                ? ActionChip(label: Text(q), onPressed: () => onTap(q))
+                : InputChip(label: Text(q), onPressed: () => onTap(q), onDeleted: () => del(q)),
+        ]),
+      ]),
     );
   }
 }

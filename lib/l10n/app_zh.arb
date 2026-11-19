@@ -1407,7 +1407,7 @@
   "synModeMarriageGood": "逢休門或六合：利於感情與婚約",
   "moveTitle": "搬家・遠行方位",
   "moveSub": "以住家為中心，對照年盤、月盤",
-  "moveHint": "先在家中設定住家位置，再輸入新家或旅遊地",
+  "moveHint": "先設定住家位置（輸入地址或用目前位置），再輸入新家或旅遊地",
   "moveHome": "住家位置",
   "moveHomeUnset": "尚未設定",
   "moveUseHere": "用目前位置",
@@ -1576,5 +1576,41 @@
   "nowOpenChartTab": "到盤面看月盤、年盤",
   "nowZeshiSub": "挑好日子、好時辰",
   "nowDivSub": "依此刻起局，問一件事",
-  "emptyRecordsAction": "去看盤面"
+  "emptyRecordsAction": "去看盤面",
+  "divExamples": "常用問題（點一下帶入）",
+  "divRecent": "最近問過",
+  "moveHomeAddr": "輸入地址",
+  "moveHomeAddrHint": "住家地址，例如：台北市信義區市府路1號",
+  "moveHomeSet": "設為住家",
+  "facingSofa": "沙發",
+  "facingStove": "爐灶",
+  "facingAltar": "神桌",
+  "facingCashier": "收銀台",
+  "facingHowBed": "手機平放在床上，頂端指向床頭（睡覺時頭的那一側）",
+  "facingHowDesk": "坐在書桌前，手機平放桌面，頂端指向你面向的方向",
+  "facingHowSeat": "坐在辦公座位上，手機平放，頂端指向你面向的方向",
+  "facingHowSofa": "坐在沙發上，手機平放，頂端指向你面向的方向（通常是電視那邊）",
+  "facingHowStove": "站在爐前像要煮飯，手機平放，頂端指向你自己背後的方向（爐口朝向）",
+  "facingHowAltar": "站在神桌前，手機平放，頂端指向你自己背後的方向（神像面向的方向）",
+  "facingHowCashier": "站在收銀台內，手機平放，頂端指向客人進來的方向",
+  "facingDoorsTitle": "八門白話",
+  "facingDoorKai": "開門：開創、順暢，利工作、事業",
+  "facingDoorXiu": "休門：休息、人緣，利睡眠、和氣",
+  "facingDoorSheng": "生門：生機、財利，利健康、收入",
+  "facingDoorJing": "景門：文書、表現，利讀書、創意",
+  "facingDoorDu": "杜門：閉藏、保密，安靜但不通暢",
+  "facingDoorShang": "傷門：損傷、爭執，容易受傷或衝突",
+  "facingDoorJingFear": "驚門：驚嚇、不安，容易心神不寧",
+  "facingDoorSi": "死門：停滯、沉悶，缺乏活力",
+  "facingGuideTitle": "怎麼用",
+  "facingGuide": "1. 先在上方選要測的家具或位置\n2. 照灰字說明把手機平放、頂端指向該方向；遠離鐵架與電器，等度數穩定再看\n3.「適合」照擺即可；「普通」可以用；「不建議」可改朝下方「今年建議朝向」，或換個擺放位置\n4. 家具擺放看長期，所以用今年的年盤；每年立春後可再看一次",
+  "facingPrefer": "這個位置適合朝向：{doors}",
+  "@facingPrefer": {
+    "placeholders": {
+      "doors": {
+        "type": "String"
+      }
+    }
+  },
+  "facingSuggestNone": "今年沒有理想朝向，挑「普通」的方向即可"
 }
