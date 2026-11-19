@@ -253,50 +253,6 @@ class _ReadingPageState extends State<ReadingPage> {
             DetailsFold(children: [
               ...details,
             ]),
-          if (r.standing != null)
-            section(l.divStandingTitle, [
-              Text(switch (r.standing!) {
-                Standing.selfStronger => l.divStandingSelf,
-                Standing.balanced => l.divStandingEven,
-                Standing.otherStronger => l.divStandingOther,
-              }),
-              const SizedBox(height: 4),
-              Text(l.divStandingDetail(t.yongShen(r.main.spec)), style: muted),
-            ]),
-          section(l.divFactors, [
-            for (final f in r.factors)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 2),
-                child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Icon(
-                    factorWeight[f]! > 0 ? Icons.add_circle_outline : (factorWeight[f]! < 0 ? Icons.remove_circle_outline : Icons.circle_outlined),
-                    size: 16,
-                    color: factorWeight[f]! > 0 ? qm.good : (factorWeight[f]! < 0 ? qm.bad : qm.textMuted),
-                  ),
-                  const SizedBox(width: 6),
-                  Expanded(child: Text(t.factor(r, f))),
-                ]),
-              ),
-          ]),
-          if (r.hits.length > 1)
-            section(l.divOthers, [
-              for (final h in r.hits.skip(1)) Padding(padding: const EdgeInsets.symmetric(vertical: 2), child: Text(t.secondary(h))),
-              Text(t.secondary(r.self), style: muted),
-            ]),
-          section(l.divChart, [
-            Text('${r.chart.dun.zh}${r.chart.ju}局・${r.chart.yuan.zh}　${r.chart.day}日 ${r.chart.hour}時', style: muted),
-            const SizedBox(height: 8),
-            ChartBoard(chart: r.chart, highlight: {if (mainPalace != null) mainPalace, if (r.self.palace != null) r.self.palace!}),
-            const SizedBox(height: 6),
-            Text(
-              [
-                if (mainPalace != null) l.divMarkYongShen(t.yongShen(r.main.spec), QimenTerms.palace(mainPalace, L10n.language)),
-                if (r.self.palace != null) l.divMarkSelf(QimenTerms.palace(r.self.palace!, L10n.language)),
-              ].join(l.separator),
-              style: muted,
-            ),
-          ]),
-            ]),
           section(l.divFeedback, [
             Text(l.divFeedbackHint, style: muted),
             const SizedBox(height: 8),
@@ -333,3 +289,81 @@ String _confidenceText(AppLocalizations l, Confidence c) => switch (c) {
       Confidence.medium => l.divConfidenceMedium,
       Confidence.mixed => l.divConfidenceMixed,
     };
+
+String _levelText(AppLocalizations l, Verdict v) => switch (v) {
+      Verdict.great => l.levelGreat,
+      Verdict.good => l.levelGood,
+      Verdict.neutral => l.levelNeutral,
+      Verdict.minor => l.levelMinor,
+      Verdict.blocked => l.levelBlocked,
+    };
+
+/// 失物方位：用神落宮的方向＋指南針箭頭＋可能地點。
+class _LostDirection extends StatelessWidget {
+  const _LostDirection({required this.reading, required this.text});
+
+  final Reading reading;
+  final DivinationText text;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final theme = Theme.of(context);
+    final r = reading;
+    final p = r.main.palace;
+    if (p == null) return Text(text.secondary(r.main));
+    final cell = r.chart[p];
+    final near = r.factors.contains(Factor.sameAsSelf) || r.factors.contains(Factor.fuYin);
+    final far = r.factors.contains(Factor.horse) || r.factors.contains(Factor.fanYin);
+    final godHint = cell.god == null ? null : text.lostGod(cell.god!, r.topic);
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      if (p == 5)
+        Text(l.divLostCenter, textAlign: TextAlign.center, style: theme.textTheme.titleMedium)
+      else ...[
+        Text(text.lostWhere(r, l.palaceDirection(p)), textAlign: TextAlign.center, style: theme.textTheme.titleLarge),
+        if (near || far)
+          Text(near ? text.lostNear(r.topic) : text.lostFar(r.topic), textAlign: TextAlign.center, style: theme.textTheme.bodyMedium),
+        const SizedBox(height: 12),
+        Center(child: _CompassArrow(bearing: r.bearing!)),
+      ],
+      const SizedBox(height: 12),
+      if (text.lostPlace(p, r.topic) != null) Text('・${text.lostPlace(p, r.topic)}'),
+      if (godHint != null) Text('・$godHint'),
+    ]);
+  }
+}
+
+/// 指向失物方位的箭頭（依指南針即時旋轉；沒有磁力計時只顯示方位角）。
+class _CompassArrow extends StatelessWidget {
+  const _CompassArrow({required this.bearing});
+
+  final double bearing;
+
+  @override
+  Widget build(BuildContext context) {
+    final qm = context.qm;
+    return StreamBuilder<CompassEvent>(
+      stream: FlutterCompass.events,
+      builder: (context, snap) {
+        final heading = snap.data?.heading;
+        final angle = heading == null ? bearing * math.pi / 180 : (bearing - heading) * math.pi / 180;
+        return Column(children: [
+          Container(
+            width: 150,
+            height: 150,
+            decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: qm.border, width: 2)),
+            child: Transform.rotate(
+              angle: angle,
+              child: Icon(Icons.navigation, size: 88, color: heading == null ? qm.textMuted : qm.primary),
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            heading == null ? context.l10n.travelNoCompass(bearing.round()) : context.l10n.travelHeading(heading.round() % 360),
+            textAlign: TextAlign.center,
+          ),
+        ]);
+      },
+    );
+  }
+}

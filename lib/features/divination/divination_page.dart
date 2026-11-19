@@ -10,7 +10,7 @@ import '../../shared/premium/usage_gate.dart';
 import '../../shared/widgets/result_card.dart';
 import 'divination_content.dart';
 import '../records/record_list_page.dart';
-import 'divination_journal.dart';
+import 'divination_journal.dart' show verdictLabel;
 import 'reading_page.dart';
 
 /// 奇門問事（HANDOFF §8）：選事類 → 以現在時間起局 → 解讀。
@@ -239,14 +239,6 @@ class VerdictBadge extends StatelessWidget {
     return ToneBadge(tone: verdictTone(verdict), label: verdictLabel(l, verdict), large: large);
   }
 }
-
-String verdictLabel(AppLocalizations l, Verdict v) => switch (v) {
-      Verdict.great => l.levelGreat,
-      Verdict.good => l.levelGood,
-      Verdict.neutral => l.levelNeutral,
-      Verdict.minor => l.levelMinor,
-      Verdict.blocked => l.levelBlocked,
-    };
 
 Tone verdictTone(Verdict v) => switch (v) {
       Verdict.great || Verdict.good => Tone.good,
