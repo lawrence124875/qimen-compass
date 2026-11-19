@@ -566,5 +566,13 @@
   "destNow": "Đi ngay bây giờ",
   "destBest": "Giờ xuất phát tốt hơn",
   "destNext": "Các giờ tiếp theo",
-  "destNoneGood": "24 giờ tới không có giờ \"Cát\" trở lên, hãy xem lại hôm khác"
+  "destNoneGood": "24 giờ tới không có giờ \"Cát\" trở lên, hãy xem lại hôm khác",
+  "labelValue": "{label}: {value}",
+  "almanacTitle": "Lịch Kỳ Môn hôm nay",
+  "almanacDate": "{date} · ngày {pillar}",
+  "almanacBestDir": "Hướng tốt hôm nay",
+  "almanacBestHours": "Giờ tốt hôm nay",
+  "almanacAllHours": "Mười hai giờ trong ngày",
+  "almanacNone": "Hôm nay không có giờ \"Cát\" trở lên, nên giữ hơn là động",
+  "shareCardFooter": "Tìm \"La Bàn Kỳ Môn\" trên Google Play"
 }

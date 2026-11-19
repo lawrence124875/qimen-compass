@@ -566,5 +566,13 @@
   "destNow": "现在出发",
   "destBest": "较好的出发时段",
   "destNext": "接下来的时辰",
-  "destNoneGood": "接下来 24 小时没有“吉”以上的时段，可改天再查"
+  "destNoneGood": "接下来 24 小时没有“吉”以上的时段，可改天再查",
+  "labelValue": "{label}：{value}",
+  "almanacTitle": "今日奇门黄历",
+  "almanacDate": "{date}·{pillar}日",
+  "almanacBestDir": "今日吉方",
+  "almanacBestHours": "今日吉时",
+  "almanacAllHours": "全日十二时辰",
+  "almanacNone": "今天没有“吉”以上的时辰，宜守不宜动",
+  "shareCardFooter": "Google Play 搜索“奇门罗盘”"
 }

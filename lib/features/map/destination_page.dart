@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../app/settings/app_settings.dart';
 import '../../app/theme/app_theme.dart';
+import '../../app/widgets/share_capture.dart';
+import '../../app/widgets/share_card.dart';
 import '../../compass/compass_math.dart';
 import '../../compass/geo_math.dart';
 import '../../engine/engine.dart' hide Element;
@@ -11,14 +13,22 @@ import 'map_location.dart';
 
 /// 目的地吉凶（HANDOFF §12 P2）：起點→目的地的真北方位角落在哪一宮，
 /// 列出現在與接下來 12 個時辰往該方位的吉凶，挑出較好的出發時段。
-class DestinationPage extends StatelessWidget {
+class DestinationPage extends StatefulWidget {
   const DestinationPage({super.key, required this.from, required this.to, this.name});
 
   final (double, double) from, to;
   final String? name;
 
   @override
+  State<DestinationPage> createState() => _DestinationPageState();
+}
+
+class _DestinationPageState extends State<DestinationPage> {
+  final _shareKey = GlobalKey();
+
+  @override
   Widget build(BuildContext context) {
+    final from = widget.from, to = widget.to, name = widget.name;
     final l = context.l10n;
     final lang = L10n.language;
     final qm = context.qm;
@@ -53,18 +63,23 @@ class DestinationPage extends StatelessWidget {
         );
 
     return Scaffold(
-      appBar: AppBar(title: Text(l.destTitle)),
+      appBar: AppBar(title: Text(l.destTitle), actions: [
+        IconButton(
+          icon: const Icon(Icons.ios_share),
+          tooltip: l.homeShare,
+          onPressed: () => shareBoundary(_shareKey, text: '${l.appTitle}・${l.destTitle}', fileName: 'qimen_destination.png'),
+        ),
+      ]),
       body: SafeArea(
         child: ListView(padding: const EdgeInsets.all(16), children: [
-          if (name != null && name!.isNotEmpty) Text(name!, style: text.titleMedium),
-          Text(l.mapPinInfo(TravelText.direction(l, palace), '${bearing.round()}', distanceText(dist)),
-              style: text.bodyMedium?.copyWith(color: qm.textMuted)),
-          Text(l.destPalace(QimenTerms.palace(palace, lang)), style: text.bodySmall?.copyWith(color: qm.textMuted)),
-          const SizedBox(height: 16),
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(children: [
+          ShareCardFrame(
+            boundaryKey: _shareKey,
+            child: Column(children: [
+                if (name != null && name.isNotEmpty) Text(name, style: text.titleMedium, textAlign: TextAlign.center),
+                Text(l.mapPinInfo(TravelText.direction(l, palace), '${bearing.round()}', distanceText(dist)),
+                    style: text.bodyMedium?.copyWith(color: qm.textMuted)),
+                Text(l.destPalace(QimenTerms.palace(palace, lang)), style: text.bodySmall?.copyWith(color: qm.textMuted), textAlign: TextAlign.center),
+                const SizedBox(height: 12),
                 Text(l.destNow, style: text.bodyMedium?.copyWith(color: qm.textMuted)),
                 const SizedBox(height: 4),
                 Text(TravelText.level(l, cur.level),
@@ -74,8 +89,11 @@ class DestinationPage extends StatelessWidget {
                   if (cur.door != null) '${QimenTerms.door(cur.door!, lang)} ${l.luck(cur.door!.luck)}',
                   ...cur.flags.map((f) => TravelText.flag(l, f)),
                 ].join(l.separator), textAlign: TextAlign.center),
+                if (best.isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  Text(l.labelValue(l.destBest, best.map(range).join(l.separator)), textAlign: TextAlign.center),
+                ],
               ]),
-            ),
           ),
           const SizedBox(height: 12),
           Text(l.destBest, style: text.titleSmall?.copyWith(color: qm.primary)),

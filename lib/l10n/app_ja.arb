@@ -566,5 +566,13 @@
   "destNow": "今出発すると",
   "destBest": "より良い出発時間",
   "destNext": "この先の時辰",
-  "destNoneGood": "この先 24 時間に「吉」以上の時間はありません。別の日に確認を"
+  "destNoneGood": "この先 24 時間に「吉」以上の時間はありません。別の日に確認を",
+  "labelValue": "{label}：{value}",
+  "almanacTitle": "今日の奇門暦",
+  "almanacDate": "{date}・{pillar}日",
+  "almanacBestDir": "今日の吉方位",
+  "almanacBestHours": "今日の吉時",
+  "almanacAllHours": "一日の十二時辰",
+  "almanacNone": "今日は「吉」以上の時辰がありません。動くより守りを",
+  "shareCardFooter": "Google Play で「奇門羅盤」を検索"
 }
