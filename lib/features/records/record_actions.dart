@@ -11,6 +11,7 @@ import '../../core/records/record_store.dart';
 import '../../l10n/l10n.dart';
 import '../../services/notifications.dart';
 import '../../shared/premium/paywall_page.dart';
+import '../../shared/premium/usage_gate.dart';
 
 /// 記下一盤（首頁、出行訣、擇時、占卜共用）。其他功能直接呼叫：
 /// `saveRecord(context, kind: RecordKind.zeshi, chartAt: t, summary: '…')`。
@@ -178,6 +179,9 @@ class RecordBackupActions {
     final records = await store.all();
     if (!context.mounted) return;
     if (records.isEmpty) return _snack(context, l.recordBackupEmpty);
+    // 備份屬訂閱功能（還原永遠免費，避免資料拿不回來）
+    final access = await requirePremium(context, feature: 'backup');
+    if (access == PremiumAccess.titleOnly || !context.mounted) return;
     try {
       final now = DateTime.now();
       final file = File('${(await getTemporaryDirectory()).path}/${RecordBackup.fileName(now)}');

@@ -2,6 +2,7 @@ import 'package:add_2_calendar/add_2_calendar.dart' as cal;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../app/services.dart';
 import '../../app/settings/app_settings.dart';
 import '../../app/theme/app_theme.dart';
 import '../../app/widgets/chart_board.dart';
@@ -9,6 +10,7 @@ import '../../app/widgets/hour_window.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../core/records/record_store.dart';
 import '../../l10n/l10n.dart';
+import '../../shared/premium/usage_gate.dart';
 import '../records/record_actions.dart';
 import '../travel/travel_text.dart';
 import 'zeshi_text.dart';
@@ -16,7 +18,10 @@ import 'zeshi_text.dart';
 /// 擇時擇日（HANDOFF §7）：掃描未來 N 天（最長 1 年）的時盤，依情境打分，列出前 N 名，可加入行事曆。
 /// 範圍、筆數、同一天上限、時段可調；長範圍分段計算並顯示進度。
 class ZeShiPage extends StatefulWidget {
-  const ZeShiPage({super.key});
+  const ZeShiPage({super.key, this.locked = false});
+
+  /// 免費版體驗過後：只顯示時間與等級，方位、理由、盤面、行事曆、紀錄需訂閱。
+  final bool locked;
 
   @override
   State<ZeShiPage> createState() => _ZeShiPageState();
@@ -237,6 +242,14 @@ class _ZeShiPageState extends State<ZeShiPage> {
 
   @override
   Widget build(BuildContext context) {
+    final s = AppServices.of(context);
+    return ValueListenableBuilder<bool>(
+      valueListenable: s.premium.isPremium,
+      builder: (context, premium, _) => _build(context, widget.locked && !premium),
+    );
+  }
+
+  Widget _build(BuildContext context, bool locked) {
     final l = context.l10n;
     final theme = Theme.of(context);
     final result = _result;
@@ -321,15 +334,18 @@ class _ZeShiPageState extends State<ZeShiPage> {
                   )
                 else if (result.isEmpty)
                   Padding(padding: const EdgeInsets.all(24), child: Text(l.zeshiNone, textAlign: TextAlign.center))
-                else
+                else ...[
+                  if (locked) PremiumLockCard(feature: 'zeshi', text: l.zeshiLockedDetail),
                   for (var i = 0; i < result.length; i++)
                     _SlotCard(
                       rank: i + 1,
                       slot: result[i],
+                      locked: locked,
                       onChart: () => _showChart(result[i]),
                       onCalendar: () => _addToCalendar(result[i]),
                       onSave: () => _saveSlot(result[i]),
                     ),
+                ],
                 const SizedBox(height: 12),
                 Text(l.zeshiFootnote(_window.label(l), _perDayLabel(l)), style: theme.textTheme.bodySmall?.copyWith(color: context.qm.textMuted)),
                 const SizedBox(height: 4),
@@ -341,10 +357,12 @@ class _ZeShiPageState extends State<ZeShiPage> {
 }
 
 class _SlotCard extends StatelessWidget {
-  const _SlotCard({required this.rank, required this.slot, required this.onChart, required this.onCalendar, required this.onSave});
+  const _SlotCard(
+      {required this.rank, required this.slot, required this.locked, required this.onChart, required this.onCalendar, required this.onSave});
 
   final int rank;
   final ZeShiSlot slot;
+  final bool locked;
   final VoidCallback onChart, onCalendar, onSave;
 
   @override
@@ -364,7 +382,7 @@ class _SlotCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 10),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
-        onTap: onChart,
+        onTap: locked ? null : onChart,
         child: Padding(
           padding: const EdgeInsets.fromLTRB(14, 12, 6, 10),
           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -374,10 +392,18 @@ class _SlotCard extends StatelessWidget {
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(ZeShiText.when(l, s), style: theme.textTheme.titleSmall),
                 const SizedBox(height: 2),
-                Text(l.travelDirDoor(TravelText.direction(l, s.palace), QimenTerms.door(s.door, L10n.language)),
-                    style: serif(theme.textTheme.titleMedium).copyWith(color: qm.text)),
-                if (good.isNotEmpty) Text('＋ $good', style: theme.textTheme.bodySmall?.copyWith(color: qm.good)),
-                if (bad.isNotEmpty) Text('－ $bad', style: theme.textTheme.bodySmall?.copyWith(color: qm.bad)),
+                if (locked)
+                  Row(children: [
+                    Icon(Icons.lock_outline, size: 16, color: qm.textMuted),
+                    const SizedBox(width: 4),
+                    Flexible(child: Text(l.zeshiLockedRow, style: theme.textTheme.bodySmall?.copyWith(color: qm.textMuted))),
+                  ])
+                else ...[
+                  Text(l.travelDirDoor(TravelText.direction(l, s.palace), QimenTerms.door(s.door, L10n.language)),
+                      style: serif(theme.textTheme.titleMedium).copyWith(color: qm.text)),
+                  if (good.isNotEmpty) Text('＋ $good', style: theme.textTheme.bodySmall?.copyWith(color: qm.good)),
+                  if (bad.isNotEmpty) Text('－ $bad', style: theme.textTheme.bodySmall?.copyWith(color: qm.bad)),
+                ],
               ]),
             ),
             Column(children: [
@@ -386,8 +412,10 @@ class _SlotCard extends StatelessWidget {
                 decoration: BoxDecoration(border: Border.all(color: levelColor), borderRadius: BorderRadius.circular(12)),
                 child: Text(TravelText.level(l, s.level), style: TextStyle(color: levelColor)),
               ),
-              IconButton(tooltip: l.zeshiAddCalendar, icon: const Icon(Icons.event_available_outlined), onPressed: onCalendar),
-              IconButton(tooltip: l.recordSaveTitle, icon: const Icon(Icons.bookmark_add_outlined), onPressed: onSave),
+              if (!locked) ...[
+                IconButton(tooltip: l.zeshiAddCalendar, icon: const Icon(Icons.event_available_outlined), onPressed: onCalendar),
+                IconButton(tooltip: l.recordSaveTitle, icon: const Icon(Icons.bookmark_add_outlined), onPressed: onSave),
+              ],
             ]),
           ]),
         ),

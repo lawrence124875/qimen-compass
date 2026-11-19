@@ -8,6 +8,9 @@ class FreeLimits {
     this.recordMax = 30,
     this.recordDays = 30,
     this.premiumPreviewOnce = true,
+    this.notifyPerDay = 1,
+    this.trialPromptDay1 = 3,
+    this.trialPromptDay2 = 7,
   });
 
   /// 出行訣（走路、跑步、喝水計時）每天免費開始幾次。
@@ -25,6 +28,12 @@ class FreeLimits {
   /// 訂閱功能「免費完整體驗一次，之後只看標題」（謙卦做法）。
   final bool premiumPreviewOnce;
 
+  /// 免費版吉時推播每天最多幾則（訂閱最多 6）。
+  final int notifyPerDay;
+
+  /// 安裝後第幾天提示一次免費試用（0＝不提示）。
+  final int trialPromptDay1, trialPromptDay2;
+
   /// Remote Config 參數名稱與預設值（firebase_telemetry 設定預設值用）。
   static const remoteDefaults = <String, int>{
     'qm_free_travel_per_day': 1,
@@ -32,6 +41,9 @@ class FreeLimits {
     'qm_free_record_max': 30,
     'qm_free_record_days': 30,
     'qm_premium_preview_once': 1,
+    'qm_free_notify_per_day': 1,
+    'qm_trial_prompt_day1': 3,
+    'qm_trial_prompt_day2': 7,
   };
 
   /// 由遠端數值建立；讀不到或數值不合理就用預設。
@@ -48,6 +60,9 @@ class FreeLimits {
       recordMax: v('qm_free_record_max', min: 1, max: 100000),
       recordDays: v('qm_free_record_days', min: 1, max: 3650),
       premiumPreviewOnce: v('qm_premium_preview_once', max: 1) == 1,
+      notifyPerDay: v('qm_free_notify_per_day', min: 1, max: 6),
+      trialPromptDay1: v('qm_trial_prompt_day1', max: 365),
+      trialPromptDay2: v('qm_trial_prompt_day2', max: 365),
     );
   }
 }

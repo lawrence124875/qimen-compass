@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../app/widgets/hour_window.dart';
 import '../../l10n/l10n.dart';
+import '../../shared/premium/paywall_page.dart';
 import 'travel_reminders.dart';
 
 /// 吉時推播設定（提前幾分鐘、時段或全天、每天則數）。設定頁與出行訣頁共用；關閉時重排推播。
 String travelLeadLabel(AppLocalizations l, int m) => m >= 60 ? l.travelLeadHour : l.travelLeadMinutes(m);
 
 String travelNotifySummary(AppLocalizations l, TravelPrefs p) =>
-    l.travelNotifySummary(travelLeadLabel(l, p.leadMinutes), p.window.label(l), p.perDay);
+    l.travelNotifySummary(travelLeadLabel(l, p.leadMinutes), p.window.label(l), p.perDay.clamp(1, TravelReminders.maxPerDay));
 
 Future<void> showTravelNotifyOptions(BuildContext context, TravelPrefs p, {VoidCallback? onChanged}) async {
   await showModalBottomSheet<void>(
@@ -47,7 +48,19 @@ Future<void> showTravelNotifyOptions(BuildContext context, TravelPrefs p, {VoidC
             const SizedBox(height: 6),
             Wrap(spacing: 8, children: [
               for (final n in TravelPrefs.perDayOptions)
-                ChoiceChip(label: Text('$n'), selected: p.perDay == n, onSelected: (_) => update(() => p.setPerDay(n))),
+                ChoiceChip(
+                  label: Text('$n'),
+                  avatar: n > TravelReminders.maxPerDay ? const Icon(Icons.lock_outline, size: 16) : null,
+                  selected: p.perDay.clamp(1, TravelReminders.maxPerDay) == n,
+                  onSelected: (_) async {
+                    // 免費版每天 1 則（Remote Config 可調），多則需訂閱
+                    if (n > TravelReminders.maxPerDay &&
+                        !await openPaywall(sheet, source: 'notify_per_day', note: sheet.l10n.paywallPremiumNote)) {
+                      return;
+                    }
+                    await update(() => p.setPerDay(n));
+                  },
+                ),
             ]),
             const SizedBox(height: 6),
             Text(l.travelPerDayHint, style: Theme.of(sheet).textTheme.bodySmall),

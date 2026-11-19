@@ -5,6 +5,7 @@ import '../features/widget/home_widget_sync.dart';
 import '../features/zeshi/zeshi_page.dart';
 import '../l10n/l10n.dart';
 import '../shared/premium/ad_banner.dart';
+import '../shared/premium/trial_prompt.dart';
 import '../shared/premium/usage_gate.dart';
 import 'home_page.dart';
 import 'pages/me_page.dart';
@@ -35,6 +36,7 @@ class MainShell extends StatefulWidget {
 class _MainShellState extends State<MainShell> {
   late MainTab _tab = widget.initial;
   final _built = <MainTab>{};
+  bool _zeshiLocked = false;
 
   void _onRequest() {
     final t = MainShell.tabRequest.value;
@@ -48,6 +50,7 @@ class _MainShellState extends State<MainShell> {
     // 桌面小工具：每次開 App 重算 7 天
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted && AppServices.of(context).featureEnabled('widget')) QimenHomeWidget.sync(context.l10n);
+      if (mounted) TrialPrompt.maybeShow(context);
     });
   }
 
@@ -69,10 +72,11 @@ class _MainShellState extends State<MainShell> {
 
   Future<void> _select(MainTab t) async {
     if (t == _tab) return;
-    // 擇時屬訂閱功能：免費版完整體驗一次，之後開訂閱頁；沒訂閱就留在原分頁
+    // 擇時屬訂閱功能：免費版完整體驗一次，之後照樣排出時段，只顯示時間與等級（詳解需訂閱）
     if (t == MainTab.zeshi && !_built.contains(t)) {
-      final access = await requirePremium(context, feature: 'zeshi');
-      if (access == PremiumAccess.titleOnly || !mounted) return;
+      final access = await peekPremium(context, feature: 'zeshi');
+      if (!mounted) return;
+      _zeshiLocked = access == PremiumAccess.titleOnly;
     }
     setState(() => _tab = t);
   }
@@ -80,7 +84,7 @@ class _MainShellState extends State<MainShell> {
   Widget _page(MainTab t) => switch (t) {
         MainTab.compass => const CompassPage(),
         MainTab.chart => const HomePage(),
-        MainTab.zeshi => const ZeShiPage(),
+        MainTab.zeshi => ZeShiPage(locked: _zeshiLocked),
         MainTab.me => const MePage(),
       };
 

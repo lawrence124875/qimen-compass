@@ -10,6 +10,7 @@ import '../../app/widgets/chart_board.dart';
 import '../../core/records/record_store.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
+import '../../shared/premium/usage_gate.dart';
 import 'divination_content.dart';
 import 'divination_journal.dart';
 import 'divination_page.dart';
@@ -29,25 +30,33 @@ Future<bool> openSavedReading(BuildContext context, QimenRecord r) async {
     settings: TimeSettings(utcOffset: entry.askedAt.timeZoneOffset),
   );
   await Navigator.of(context).push(MaterialPageRoute<void>(
-    builder: (_) => ReadingPage(content: content, reading: reading, entry: entry, journal: DivinationJournal(store)),
+    // 免費版重看紀錄只給等級（避免先存再看完整解讀）
+    builder: (_) => ReadingPage(
+        content: content, reading: reading, entry: entry, journal: DivinationJournal(store), locked: !AppServices.of(context).isPremium),
   ));
   return true;
 }
 
 /// 解讀結果：總評、建議、失物方位（羅盤）、判斷依據、其他用神、時盤、聲明、事後回饋。
 class ReadingPage extends StatefulWidget {
-  const ReadingPage({super.key, required this.content, required this.reading, required this.entry, required this.journal});
+  const ReadingPage(
+      {super.key, required this.content, required this.reading, required this.entry, required this.journal, this.locked = false});
 
   final DivinationContent content;
   final Reading reading;
   final JournalEntry entry;
   final DivinationJournal journal;
 
+  /// 免費版體驗過後：只顯示決斷與等級，詳解上鎖。
+  final bool locked;
+
   @override
   State<ReadingPage> createState() => _ReadingPageState();
 }
 
 class _ReadingPageState extends State<ReadingPage> {
+  late bool _locked = widget.locked;
+
   Future<void> _feedback(bool v) async {
     final next = widget.entry.feedback == v ? null : v;
     await widget.journal.setFeedback(widget.entry, next);
@@ -142,6 +151,7 @@ class _ReadingPageState extends State<ReadingPage> {
       appBar: AppBar(
         title: Text(t.topicName(r.topic)),
         actions: [
+          if (!_locked)
           IconButton(
             icon: const Icon(Icons.copy_all_outlined),
             tooltip: l.divCopy,
@@ -182,12 +192,15 @@ class _ReadingPageState extends State<ReadingPage> {
                     const SizedBox(height: 8),
                     Text(t.verdict(r), style: serif(theme.textTheme.titleMedium).copyWith(color: qm.text)),
                     const SizedBox(height: 6),
-                    Text('${l.divAdvice}：${t.advice(r)}'),
+                    if (!_locked) Text('${l.divAdvice}：${t.advice(r)}'),
                   ]),
                 ),
               ]),
             ),
           ),
+          if (_locked)
+            PremiumLockCard(feature: 'divination', text: l.divLockedDetail, onUnlocked: () => setState(() => _locked = false))
+          else ...[
           if (r.rule.direction) section(l.divLostTitle, [_LostDirection(reading: r, text: t)]),
           if (_timing != null) section(l.divTimingTitle, [Text(_timingText(l, _timing!)), const SizedBox(height: 4), Text(l.divTimingNote, style: muted)]),
           if (_dos.isNotEmpty || _donts.isNotEmpty)
@@ -238,6 +251,7 @@ class _ReadingPageState extends State<ReadingPage> {
               style: muted,
             ),
           ]),
+          ],
           section(l.divFeedback, [
             Text(l.divFeedbackHint, style: muted),
             const SizedBox(height: 8),

@@ -44,10 +44,15 @@ void main() {
     expect(() => Course.parse('{"schemaVersion":99,"lessons":[]}'), throwsFormatException);
   });
 
-  test('付費牆接上前全部開放', () {
+  test('付費牆：免費課開放，其餘需訂閱', () {
     final c = Course.parse(_fixture);
-    expect(CourseAccess.unlocked(c.lessons.last), !CourseAccess.paywallEnabled || CourseAccess.premium.value);
+    expect(CourseAccess.paywallEnabled, isTrue);
+    CourseAccess.premium.value = false;
     expect(CourseAccess.unlocked(c.lessons.first), isTrue);
+    expect(CourseAccess.unlocked(c.lessons.last), isFalse);
+    CourseAccess.premium.value = true;
+    expect(CourseAccess.unlocked(c.lessons.last), isTrue);
+    CourseAccess.premium.value = false;
   });
 
   final files = _dir.existsSync() ? _dir.listSync().whereType<File>().where((f) => f.path.endsWith('.json')).toList() : <File>[];

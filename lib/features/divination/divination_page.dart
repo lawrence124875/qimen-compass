@@ -87,9 +87,9 @@ class _DivinationPageState extends State<DivinationPage> {
   }
 
   Future<void> _start() async {
-    // 問事解讀屬訂閱功能：免費版完整體驗一次，之後開訂閱頁
-    final access = await requirePremium(context, feature: 'divination');
-    if (access == PremiumAccess.titleOnly || !mounted) return;
+    // 問事解讀屬訂閱功能：免費版完整體驗一次，之後先給決斷與等級，詳解需訂閱
+    final access = await peekPremium(context, feature: 'divination');
+    if (!mounted) return;
     final content = _content!;
     final now = DateTime.now();
     final reading = const DivinationEngine().read(
@@ -111,7 +111,8 @@ class _DivinationPageState extends State<DivinationPage> {
     if (!mounted) return;
     _question.clear();
     await Navigator.of(context).push(MaterialPageRoute<void>(
-      builder: (_) => ReadingPage(content: content, reading: reading, entry: entry, journal: journal),
+      builder: (_) => ReadingPage(
+          content: content, reading: reading, entry: entry, journal: journal, locked: access == PremiumAccess.titleOnly),
     ));
   }
 

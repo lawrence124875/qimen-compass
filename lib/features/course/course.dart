@@ -126,11 +126,11 @@ class CourseRepository {
 }
 
 /// 解鎖規則：前 2 課（`free`）免費；其餘需訂閱。
-/// 付費牆（RevenueCat）接上前 [paywallEnabled] 為 false，全部開放；接上後把它改成 true 並更新 [premium]。
+/// [premium] 由 main.dart 跟訂閱狀態同步。
 class CourseAccess {
   CourseAccess._();
 
-  static const paywallEnabled = false;
+  static const paywallEnabled = true;
 
   /// 訂閱狀態，由付費功能模組更新。
   static final premium = ValueNotifier<bool>(false);
