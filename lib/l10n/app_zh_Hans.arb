@@ -666,5 +666,17 @@
   "trialPromptTitle": "免费试用 7 天",
   "trialPromptBody": "年订方案可以先免费试用 7 天：择时、宅盘、问事完整解读、本命盘、年月盘全部打开，也没有广告。试用期间在 Google Play 随时可取消。",
   "trialPromptStart": "开始免费试用",
-  "trialPromptLater": "之后再说"
+  "trialPromptLater": "之后再说",
+  "zeshiEventWedding": "结婚",
+  "zeshiEventMoveIn": "入宅搬家",
+  "zeshiEventGroundbreaking": "动土装修",
+  "zeshiEventPurchase": "买房买车",
+  "zeshiEventWealth": "求财投资",
+  "zeshiEventExam": "考试",
+  "zeshiEventMedical": "就医手术",
+  "zeshiEventNegotiation": "谈判诉讼",
+  "zeshiEventCustom": "自订",
+  "zeshiCustomDoor": "用神门",
+  "zeshiCustomGod": "喜神",
+  "zeshiFlagFavoredStar": "喜星同宫"
 }

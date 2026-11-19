@@ -666,5 +666,17 @@
   "trialPromptTitle": "ทดลองใช้ฟรี 7 วัน",
   "trialPromptBody": "แพ็กเกจรายปีทดลองใช้ฟรี 7 วัน: เลือกฤกษ์ ผังบ้าน คำอ่านเต็ม ผังกำเนิด ผังเดือนและปี และไม่มีโฆษณา ยกเลิกได้ทุกเมื่อใน Google Play",
   "trialPromptStart": "เริ่มทดลองใช้ฟรี",
-  "trialPromptLater": "ไว้ทีหลัง"
+  "trialPromptLater": "ไว้ทีหลัง",
+  "zeshiEventWedding": "แต่งงาน",
+  "zeshiEventMoveIn": "ขึ้นบ้านใหม่",
+  "zeshiEventGroundbreaking": "ลงเสาเข็ม ตกแต่ง",
+  "zeshiEventPurchase": "ซื้อบ้าน ซื้อรถ",
+  "zeshiEventWealth": "ขอโชคลาภ ลงทุน",
+  "zeshiEventExam": "สอบ",
+  "zeshiEventMedical": "รักษา ผ่าตัด",
+  "zeshiEventNegotiation": "เจรจา ฟ้องร้อง",
+  "zeshiEventCustom": "กำหนดเอง",
+  "zeshiCustomDoor": "ประตูหลัก",
+  "zeshiCustomGod": "เทพมงคล",
+  "zeshiFlagFavoredStar": "ดาวมงคลอยู่ร่วมวัง"
 }

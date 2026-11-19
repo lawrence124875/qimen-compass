@@ -30,6 +30,8 @@ class ZeShiPage extends StatefulWidget {
 class _ZeShiPageState extends State<ZeShiPage> {
   static const _planner = ZeShiPlanner();
   static const _kEvent = 'qm_zeshi_event';
+  static const _kCustomDoor = 'qm_zeshi_custom_door';
+  static const _kCustomGod = 'qm_zeshi_custom_god';
   static const _kDays = 'qm_zeshi_days';
   static const _kBirth = 'qm_birth_date';
   static const _kIntro = 'qm_zeshi_intro_seen';
@@ -44,6 +46,8 @@ class _ZeShiPageState extends State<ZeShiPage> {
 
   SharedPreferences? _prefs;
   ZeShiEvent _event = ZeShiEvent.contract;
+  Door _customDoor = Door.kai;
+  God _customGod = God.zhiFu;
   int _days = 7;
   DateTime? _birth;
   bool _useBirth = false;
@@ -67,6 +71,8 @@ class _ZeShiPageState extends State<ZeShiPage> {
     setState(() {
       _prefs = p;
       _event = ZeShiEvent.values.asNameMap()[p.getString(_kEvent)] ?? ZeShiEvent.contract;
+      _customDoor = Door.values.asNameMap()[p.getString(_kCustomDoor)] ?? Door.kai;
+      _customGod = God.values.asNameMap()[p.getString(_kCustomGod)] ?? God.zhiFu;
       final d = p.getInt(_kDays) ?? 7;
       _days = dayOptions.contains(d) ? d : 7;
       final t = p.getInt(_kTop) ?? 5;
@@ -120,7 +126,7 @@ class _ZeShiPageState extends State<ZeShiPage> {
       final from = base.add(Duration(days: done));
       final days = (_days - done).clamp(1, chunk);
       for (final s in _planner.scan(done == 0 ? from : from.subtract(const Duration(milliseconds: 1)), _event,
-          days: days, fromHour: _window.from, toHour: _window.to, birth: birth, settings: settings, method: method)) {
+          days: days, fromHour: _window.from, toHour: _window.to, birth: birth, spec: _spec, settings: settings, method: method)) {
         all[s.startUtc.millisecondsSinceEpoch] = s;
       }
       if (_days > chunk) {
@@ -134,6 +140,20 @@ class _ZeShiPageState extends State<ZeShiPage> {
       _result = r;
       _progress = null;
     });
+  }
+
+  /// 自訂情境用使用者選的門與神；其他情境用預設。
+  ZeShiSpec? get _spec =>
+      _event == ZeShiEvent.custom ? ZeShiSpec(doors: [_customDoor], favoredGod: _customGod) : null;
+
+  void _setCustom({Door? door, God? god}) {
+    setState(() {
+      _customDoor = door ?? _customDoor;
+      _customGod = god ?? _customGod;
+    });
+    _prefs?.setString(_kCustomDoor, _customDoor.name);
+    _prefs?.setString(_kCustomGod, _customGod.name);
+    _run();
   }
 
   void _setEvent(ZeShiEvent e) {
@@ -266,6 +286,28 @@ class _ZeShiPageState extends State<ZeShiPage> {
                   for (final e in ZeShiEvent.values)
                     ChoiceChip(label: Text(ZeShiText.event(l, e)), selected: e == _event, onSelected: (_) => _setEvent(e)),
                 ]),
+                if (_event == ZeShiEvent.custom) ...[
+                  const SizedBox(height: 12),
+                  Text(l.zeshiCustomDoor, style: theme.textTheme.labelLarge),
+                  const SizedBox(height: 4),
+                  Wrap(spacing: 6, runSpacing: 4, children: [
+                    for (final d in Door.values)
+                      ChoiceChip(
+                          label: Text(QimenTerms.doorName(d, L10n.language)),
+                          selected: d == _customDoor,
+                          onSelected: (_) => _setCustom(door: d)),
+                  ]),
+                  const SizedBox(height: 8),
+                  Text(l.zeshiCustomGod, style: theme.textTheme.labelLarge),
+                  const SizedBox(height: 4),
+                  Wrap(spacing: 6, runSpacing: 4, children: [
+                    for (final g in God.values)
+                      ChoiceChip(
+                          label: Text(QimenTerms.godName(g, L10n.language)),
+                          selected: g == _customGod,
+                          onSelected: (_) => _setCustom(god: g)),
+                  ]),
+                ],
                 const SizedBox(height: 12),
                 Wrap(spacing: 8, runSpacing: 4, children: [
                   for (final d in dayOptions)

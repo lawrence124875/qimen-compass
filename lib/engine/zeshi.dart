@@ -23,13 +23,54 @@ enum ZeShiEvent {
   engagement([Door.xiu, Door.sheng], God.liuHe),
 
   /// 遠行：開、休、生三吉門取佳，九天加分。
-  journey([Door.kai, Door.xiu, Door.sheng], God.jiuTian);
+  journey([Door.kai, Door.xiu, Door.sheng], God.jiuTian),
 
-  const ZeShiEvent(this.doors, this.favoredGod);
+  /// 結婚：休門、生門取佳，六合加分（婚姻和合）。
+  wedding([Door.xiu, Door.sheng], God.liuHe),
+
+  /// 入宅搬家：生門，九地加分（安居穩固）。
+  moveIn([Door.sheng], God.jiuDi),
+
+  /// 動土裝修：生門，九地加分（土地之神）。
+  groundbreaking([Door.sheng], God.jiuDi),
+
+  /// 買房買車：生門、開門取佳，太陰加分（暗中得利、議價）。
+  purchase([Door.sheng, Door.kai], God.taiYin),
+
+  /// 求財投資：生門，值符加分。
+  wealth([Door.sheng], God.zhiFu),
+
+  /// 考試：景門，九天加分（文書、揚名）。
+  exam([Door.jingScene], God.jiuTian),
+
+  /// 就醫手術：生門、開門取佳，天心星加分（醫藥之星；乙奇另由三奇加分）。
+  medical([Door.sheng, Door.kai], God.taiYin, Star.xin),
+
+  /// 談判訴訟：開門、景門取佳，值符加分（貴人、主事者）。
+  negotiation([Door.kai, Door.jingScene], God.zhiFu),
+
+  /// 自訂：門與神由使用者選（[ZeShiSpec]），這裡只是預設值。
+  custom([Door.kai], God.zhiFu);
+
+  const ZeShiEvent(this.doors, this.favoredGod, [this.favoredStar]);
   final List<Door> doors;
 
   /// 此情境特別加分的八神。
   final God favoredGod;
+
+  /// 此情境特別加分的九星（選填）。
+  final Star? favoredStar;
+
+  ZeShiSpec get spec => ZeShiSpec(doors: doors, favoredGod: favoredGod, favoredStar: favoredStar);
+}
+
+/// 一個情境實際用的用神門與喜神（自訂情境由使用者選）。
+class ZeShiSpec {
+  const ZeShiSpec({required this.doors, required this.favoredGod, this.favoredStar});
+
+  final List<Door> doors;
+  final God favoredGod;
+  final Star? favoredStar;
 }
 
 /// 計分項目（UI 用來列出理由）。
@@ -38,6 +79,7 @@ enum ZeShiFlag {
   wangXiang, // 用神門落宮旺相（宮生門或比和）
   goodGod, // 吉神同宮
   favoredGod, // 情境特別加分的神
+  favoredStar, // 情境特別加分的星（例：就醫取天心）
   sanQi, // 三奇（乙丙丁）臨用神宮
   qingLong, // 青龍返首（天盤戊加地盤丙）
   feiNiao, // 飛鳥跌穴（天盤丙加地盤戊）
@@ -130,11 +172,12 @@ class ZeShiPlanner {
     int fromHour = 7,
     int toHour = 21,
     BirthInfo? birth,
+    ZeShiSpec? spec,
     TimeSettings settings = const TimeSettings(),
     JuMethod method = JuMethod.chaiBu,
   }) {
     final all = scan(from, event,
-        days: days, fromHour: fromHour, toHour: toHour, birth: birth, settings: settings, method: method);
+        days: days, fromHour: fromHour, toHour: toHour, birth: birth, spec: spec, settings: settings, method: method);
     return pick(all, top: top, perDay: perDay, settings: settings);
   }
 
@@ -165,6 +208,7 @@ class ZeShiPlanner {
     int fromHour = 7,
     int toHour = 21,
     BirthInfo? birth,
+    ZeShiSpec? spec,
     TimeSettings settings = const TimeSettings(),
     JuMethod method = JuMethod.chaiBu,
   }) {
@@ -175,7 +219,7 @@ class ZeShiPlanner {
       final next = start.add(const Duration(hours: 2));
       final clock = engine.calendar.clockTime(start, settings);
       if (start.isAfter(from) && clock.hour >= fromHour && clock.hour < toHour) {
-        out.add(evaluate(start, next, event, birth: birth, settings: settings, method: method));
+        out.add(evaluate(start, next, event, birth: birth, spec: spec, settings: settings, method: method));
       }
       start = next;
     }
@@ -188,15 +232,17 @@ class ZeShiPlanner {
     DateTime endUtc,
     ZeShiEvent event, {
     BirthInfo? birth,
+    ZeShiSpec? spec,
     TimeSettings settings = const TimeSettings(),
     JuMethod method = JuMethod.chaiBu,
   }) {
+    final sp = spec ?? event.spec;
     final mid = startUtc.add(endUtc.difference(startUtc) ~/ 2);
     final chart = engine.compute(mid, settings: settings, method: method);
     ZeShiSlot? best;
-    for (final d in event.doors) {
+    for (final d in sp.doors) {
       final p = chart.palaceOfDoor(d);
-      final r = scorePalace(chart, d, p, event, birth: birth);
+      final r = scorePalace(chart, d, p, event, birth: birth, spec: sp);
       final slot = ZeShiSlot(
         startUtc: startUtc,
         endUtc: endUtc,
@@ -213,7 +259,8 @@ class ZeShiPlanner {
 
   /// 計分：基礎 4 分，加分、扣分各 1。
   static (int, List<ZeShiFlag>) scorePalace(QimenChart chart, Door door, int palace, ZeShiEvent event,
-      {BirthInfo? birth}) {
+      {BirthInfo? birth, ZeShiSpec? spec}) {
+    final sp = spec ?? event.spec;
     final cell = chart[palace];
     final plus = <ZeShiFlag>[];
     final minus = <ZeShiFlag>[];
@@ -232,7 +279,8 @@ class ZeShiPlanner {
     if (cell.jiXing.isNotEmpty) minus.add(ZeShiFlag.jiXing);
     if (cell.ruMu.isNotEmpty) minus.add(ZeShiFlag.ruMu);
 
-    if (cell.god == event.favoredGod) {
+    if (sp.favoredStar != null && cell.stars.contains(sp.favoredStar)) plus.add(ZeShiFlag.favoredStar);
+    if (cell.god == sp.favoredGod) {
       plus.add(ZeShiFlag.favoredGod);
     } else if (_goodGods.contains(cell.god)) {
       plus.add(ZeShiFlag.goodGod);

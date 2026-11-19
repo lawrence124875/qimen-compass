@@ -156,6 +156,24 @@ jobs:
           fi
           exit $status
 
+      # 私人解鎖版 APK（FORCE_PREMIUM，只給 Lawrence 自用；先把免費版移開，避免被覆蓋）
+      - name: 建置私人解鎖版 APK
+        env:
+          FORCE_LANG: ${{ inputs.force_lang }}
+          REVENUECAT_API_KEY: ${{ secrets.REVENUECAT_ANDROID_API_KEY }}
+        run: |
+          set +e
+          cp build/app/outputs/flutter-apk/app-release.apk /tmp/free.apk
+          flutter build apk --release --build-number=${{ github.run_number }} ${FORCE_LANG:+--dart-define=FORCE_LANG=$FORCE_LANG} --dart-define=FORCE_PREMIUM=true --dart-define=MAPS_ENABLED=${{ secrets.MAPS_API_KEY != '' }} --dart-define=REVENUECAT_API_KEY="$REVENUECAT_API_KEY" > /tmp/build_personal.log 2>&1
+          status=$?
+          tail -n 20 /tmp/build_personal.log
+          if [ $status -ne 0 ]; then
+            grep -E "\.dart:[0-9]+|Error:|error:|FAILURE|What went wrong" /tmp/build_personal.log | head -30 | while IFS= read -r line; do echo "::error::$line"; done
+            exit $status
+          fi
+          cp build/app/outputs/flutter-apk/app-release.apk /tmp/personal.apk
+          cp /tmp/free.apk build/app/outputs/flutter-apk/app-release.apk
+
       # 上架用 AAB；強制介面語言的測試版不建。
       - name: 建置 AAB（release）
         if: ${{ inputs.force_lang == '' }}
@@ -192,16 +210,28 @@ jobs:
           if [ -z "$GH_TOKEN" ]; then echo "::error::Secret BUILDS_REPO_TOKEN 沒有設定"; exit 1; fi
           ver=$(grep '^version:' pubspec.yaml | awk '{print $2}')
           n=${{ github.run_number }}
-          f="qimen_${ver}_run${n}${FORCE_LANG:+_ui-$FORCE_LANG}.apk"
-          cp build/app/outputs/flutter-apk/app-release.apk "$f"
-          files=("$f")
+          ui="${FORCE_LANG:+_ui-$FORCE_LANG}"
+          # 三個檔：免費版 APK（同上架版，有鎖）、私人解鎖版 APK（自用，全開）、上架用 AAB（免費版，訂閱解鎖）
+          free="qimen_${ver}_run${n}_free${ui}.apk"
+          personal="qimen_${ver}_run${n}_personal${ui}.apk"
+          cp build/app/outputs/flutter-apk/app-release.apk "$free"
+          cp /tmp/personal.apk "$personal"
+          files=("$free" "$personal")
           aab=build/app/outputs/bundle/release/app-release.aab
           if [ -z "${FORCE_LANG}" ] && [ -f "$aab" ]; then
-            cp "$aab" "qimen_${ver}_run${n}.aab"
-            files+=("qimen_${ver}_run${n}.aab")
+            cp "$aab" "qimen_${ver}_run${n}_play.aab"
+            files+=("qimen_${ver}_run${n}_play.aab")
           fi
           # 版本資訊（Play「版本資訊」欄可直接貼）放在 AAB 上方；內容維護在 store/release_notes.txt
-          { echo "## 版本資訊（貼到 Play）"; echo; echo '```'; cat store/release_notes.txt; echo '```'; echo; echo "commit ${{ github.sha }}；簽署：${SIGNING}"; } > notes.md
+          {
+            echo "## 檔案"
+            echo "- \`${free}\`：免費版 APK（與上架版相同，進階功能需訂閱）"
+            echo "- \`${personal}\`：私人解鎖版 APK（自用，全部功能開放，勿外流）"
+            [ -z "${FORCE_LANG}" ] && echo "- \`qimen_${ver}_run${n}_play.aab\`：上傳 Play 用 AAB（免費版，訂閱後解鎖）"
+            echo
+            echo "## 版本資訊（貼到 Play）"; echo; echo '```'; cat store/release_notes.txt; echo '```'; echo
+            echo "commit ${{ github.sha }}；簽署：${SIGNING}"
+          } > notes.md
           gh release create "qimen-android-run${n}" "${files[@]}" \
             --repo lawrence124875/qimen-content \
             --title "奇門羅盤 ${ver}（run ${n}）${FORCE_LANG:+［測試：介面 $FORCE_LANG］}" \

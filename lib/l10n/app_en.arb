@@ -666,5 +666,17 @@
   "trialPromptTitle": "Try 7 days free",
   "trialPromptBody": "The yearly plan starts with 7 free days: timing, house chart, full readings, natal chart, and month and year charts, with no ads. Cancel anytime on Google Play during the trial.",
   "trialPromptStart": "Start free trial",
-  "trialPromptLater": "Maybe later"
+  "trialPromptLater": "Maybe later",
+  "zeshiEventWedding": "Wedding",
+  "zeshiEventMoveIn": "Moving in",
+  "zeshiEventGroundbreaking": "Renovation",
+  "zeshiEventPurchase": "Buying home or car",
+  "zeshiEventWealth": "Money and investing",
+  "zeshiEventExam": "Exam",
+  "zeshiEventMedical": "Medical or surgery",
+  "zeshiEventNegotiation": "Negotiation or lawsuit",
+  "zeshiEventCustom": "Custom",
+  "zeshiCustomDoor": "Key door",
+  "zeshiCustomGod": "Favored spirit",
+  "zeshiFlagFavoredStar": "Favored star present"
 }
