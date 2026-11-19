@@ -97,9 +97,8 @@
 - Play Console 現況（2026-11-19）：應用程式內容、商店資訊 14 語（含 pt-PT、es-ES、es-US）、內部測試 v1 已發布；即時開發人員通知主題 `projects/learning-english-5ea8b/topics/Play-Store-Notifications`（與謙卦共用）；RevenueCat 專案 `qimen` 服務帳戶與通知已連線。AAB 版本代碼 = run_number
 - [ ] 測試盤的參考軟體由誰提供（請 Lawrence 指定）
 
-## 12. 下一步：延伸功能 P1→P8（2026-11-19 定案，一次做完才出正式版；完成一階段刪一階段）
-原則：全部規則＋模板、不用 AI；新功能用 Remote Config `qm_feature_<id>` 開關（預設開）；進階功能接 `requirePremium`；新介面文字 11 語齊全；中途不出 APK，只在 P8 建版。
-- [ ] P8 翻譯檢查（`l10n.py check --strict`）→ 版本 1.0.0 → `store/release_notes.txt` 14 語 → 正式版 AAB 上傳 qimen-content Releases（版本資訊寫在 AAB 上方）
+## 12. 下一步
+- 延伸功能 P1–P8 全部完成，版本 1.0.0（2026-11-19）。之後有使用者可見改動時更新 `store/release_notes.txt`。
 
 ## 13. 現況（2026-11-17）
 - CI 已打通：run 2 通過並發佈 qimen-content Release `qimen-android-run2`（0.1.0+1，APK／AAB 各約 44 MB，除錯金鑰簽署；上傳金鑰 `ANDROID_KEYSTORE_*` 等 Secrets 尚未設）
