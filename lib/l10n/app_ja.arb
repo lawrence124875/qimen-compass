@@ -654,5 +654,8 @@
   "facingFit": "適している",
   "facingOk": "普通",
   "facingAvoid": "おすすめしない",
-  "facingSuggest": "今年のおすすめの向き"
+  "facingSuggest": "今年のおすすめの向き",
+  "widgetTitle": "今の吉門",
+  "widgetLine": "{dir}・{door}",
+  "widgetOpenApp": "アプリを開いて更新"
 }

@@ -654,5 +654,8 @@
   "facingFit": "Cocok",
   "facingOk": "Biasa",
   "facingAvoid": "Tidak disarankan",
-  "facingSuggest": "Arah yang disarankan tahun ini"
+  "facingSuggest": "Arah yang disarankan tahun ini",
+  "widgetTitle": "Gerbang baik kini",
+  "widgetLine": "{dir} · {door}",
+  "widgetOpenApp": "Buka aplikasi untuk memperbarui"
 }

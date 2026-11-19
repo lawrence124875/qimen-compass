@@ -654,5 +654,8 @@
   "facingFit": "เหมาะ",
   "facingOk": "พอใช้",
   "facingAvoid": "ไม่แนะนำ",
-  "facingSuggest": "ทิศที่แนะนำปีนี้"
+  "facingSuggest": "ทิศที่แนะนำปีนี้",
+  "widgetTitle": "ประตูมงคลตอนนี้",
+  "widgetLine": "{dir} · {door}",
+  "widgetOpenApp": "เปิดแอปเพื่ออัปเดต"
 }

@@ -21,6 +21,7 @@ dependencies:
   # 地圖八門、目的地吉凶（HANDOFF §12 P2）：原生地圖免費，只需 Maps API key；地址查詢用手機內建 geocoder，不用付費 Places
   google_maps_flutter: ^2.10.0
   geocoding: ^4.0.0
+  home_widget: ^0.7.0 # 桌面小工具（HANDOFF §12 P7；原生端在 android_extra/）
   # 出行訣與吉時推播（HANDOFF §5）
   flutter_local_notifications: ^19.4.0 # 吉時推播（非精確排程，不用精確鬧鐘權限）
   timezone: ^0.10.0 # zonedSchedule 需要（一律以 UTC 排程）

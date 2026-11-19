@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../compass/compass_page.dart';
+import '../features/widget/home_widget_sync.dart';
 import '../features/zeshi/zeshi_page.dart';
 import '../l10n/l10n.dart';
 import '../shared/premium/ad_banner.dart';
@@ -44,6 +45,10 @@ class _MainShellState extends State<MainShell> {
   void initState() {
     super.initState();
     MainShell.tabRequest.addListener(_onRequest);
+    // 桌面小工具：每次開 App 重算 7 天
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted && AppServices.of(context).featureEnabled('widget')) QimenHomeWidget.sync(context.l10n);
+    });
   }
 
   @override

@@ -654,5 +654,8 @@
   "facingFit": "Phù hợp",
   "facingOk": "Bình thường",
   "facingAvoid": "Không nên",
-  "facingSuggest": "Hướng nên chọn năm nay"
+  "facingSuggest": "Hướng nên chọn năm nay",
+  "widgetTitle": "Cát môn lúc này",
+  "widgetLine": "{dir} · {door}",
+  "widgetOpenApp": "Mở ứng dụng để cập nhật"
 }

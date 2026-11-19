@@ -15,7 +15,7 @@ const _fixture = '''
    "sections":[{"heading":"小標","paragraphs":["段落一","段落二"]}],
    "takeaways":["重點一"],"action":{"type":"travel","label":"開始出行訣"}},
   {"id":"b","free":false,"minutes":4,"title":"第二課標題","summary":"摘要",
-   "sections":[],"takeaways":[],"action":{"type":"compass","label":"未來功能"}}
+   "sections":[],"takeaways":[],"action":{"type":"teleport","label":"未來功能"}}
  ]}
 ''';
 

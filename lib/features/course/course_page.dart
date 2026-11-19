@@ -119,6 +119,12 @@ class LessonPage extends StatelessWidget {
         MainShell.select(MainTab.chart);
       case CourseActionType.travel:
         nav.push(MaterialPageRoute<void>(builder: (_) => const TravelPage()));
+      case CourseActionType.compass:
+        nav.popUntil((r) => r.isFirst);
+        MainShell.select(MainTab.compass);
+      case CourseActionType.zeshi:
+        nav.popUntil((r) => r.isFirst);
+        MainShell.select(MainTab.zeshi);
     }
   }
 

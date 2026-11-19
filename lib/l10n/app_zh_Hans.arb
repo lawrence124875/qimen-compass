@@ -654,5 +654,8 @@
   "facingFit": "适合",
   "facingOk": "普通",
   "facingAvoid": "不建议",
-  "facingSuggest": "今年建议朝向"
+  "facingSuggest": "今年建议朝向",
+  "widgetTitle": "此刻吉门",
+  "widgetLine": "在{dir}·{door}",
+  "widgetOpenApp": "打开 App 更新"
 }

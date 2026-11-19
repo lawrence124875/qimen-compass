@@ -1458,5 +1458,18 @@
   "facingFit": "適合",
   "facingOk": "普通",
   "facingAvoid": "不建議",
-  "facingSuggest": "今年建議朝向"
+  "facingSuggest": "今年建議朝向",
+  "widgetTitle": "此刻吉門",
+  "widgetLine": "在{dir}・{door}",
+  "@widgetLine": {
+    "placeholders": {
+      "dir": {
+        "type": "String"
+      },
+      "door": {
+        "type": "String"
+      }
+    }
+  },
+  "widgetOpenApp": "打開 App 更新"
 }

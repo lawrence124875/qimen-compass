@@ -654,5 +654,8 @@
   "facingFit": "Adequado",
   "facingOk": "Razoável",
   "facingAvoid": "Não recomendado",
-  "facingSuggest": "Direções sugeridas este ano"
+  "facingSuggest": "Direções sugeridas este ano",
+  "widgetTitle": "Porta favorável",
+  "widgetLine": "{dir} · {door}",
+  "widgetOpenApp": "Abra o app para atualizar"
 }
