@@ -1374,5 +1374,54 @@
     }
   },
   "luckyHint": "接下來 7 天，你的年命宮逢吉的時辰；在這些時段往該方位行動較有利",
-  "luckyNone": "接下來 7 天沒有特別有利的時辰"
+  "luckyNone": "接下來 7 天沒有特別有利的時辰",
+  "synTitle": "雙人合盤",
+  "synSub": "合夥、婚配時比對兩人年命",
+  "synPartner": "合夥",
+  "synMarriage": "婚配",
+  "synMe": "我",
+  "synOther": "對方",
+  "synOtherBirth": "對方的出生日期",
+  "synNeedBoth": "填好兩人的出生日期就能比對",
+  "synYearNote": "依兩人年命，並對照 {year} 年盤",
+  "@synYearNote": {
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "synPlain": "沒有明顯的合或沖，關係平穩",
+  "synStemHe": "年干五合：彼此吸引、容易同心",
+  "synStemSheng": "年干相生：互相扶持",
+  "synStemKe": "年干相剋：想法容易衝突，要多溝通",
+  "synBranchLiuHe": "年支六合：默契好、相處融洽",
+  "synBranchSanHe": "年支三合：目標一致、能合作",
+  "synBranchChong": "年支六沖：個性差異大，需要包容",
+  "synSamePalace": "今年兩人年命同宮：步調一致",
+  "synPalaceSheng": "今年兩人所在宮相生：互相成就",
+  "synPalaceKe": "今年兩人所在宮相剋：容易有摩擦",
+  "synDoorGood": "年命宮逢吉門：運勢有助力",
+  "synDoorBad": "年命宮逢凶門：有一方今年較辛苦",
+  "synModePartnerGood": "逢生門、開門或值符：利於合作求財",
+  "synModeMarriageGood": "逢休門或六合：利於感情與婚約",
+  "moveTitle": "搬家・遠行方位",
+  "moveSub": "以住家為中心，對照年盤、月盤",
+  "moveHint": "先在家中設定住家位置，再輸入新家或旅遊地",
+  "moveHome": "住家位置",
+  "moveHomeUnset": "尚未設定",
+  "moveUseHere": "用目前位置",
+  "moveDestHint": "新家或旅遊地的地址",
+  "movePalace": "方位落在{palace}",
+  "@movePalace": {
+    "placeholders": {
+      "palace": {
+        "type": "String"
+      }
+    }
+  },
+  "moveYears": "年盤（今年、明年）",
+  "moveMonths": "月盤（接下來 12 個月）",
+  "moveGoodMonths": "較適合的月份",
+  "moveNoGoodMonth": "接下來 12 個月這個方位都未達「吉」，可考慮先往吉方暫住再搬"
 }

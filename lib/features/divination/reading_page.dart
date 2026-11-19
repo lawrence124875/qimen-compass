@@ -340,19 +340,19 @@ class _LostDirection extends StatelessWidget {
     final cell = r.chart[p];
     final near = r.factors.contains(Factor.sameAsSelf) || r.factors.contains(Factor.fuYin);
     final far = r.factors.contains(Factor.horse) || r.factors.contains(Factor.fanYin);
-    final godHint = cell.god == null ? null : text.lostGod(cell.god!);
+    final godHint = cell.god == null ? null : text.lostGod(cell.god!, r.topic);
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       if (p == 5)
         Text(l.divLostCenter, textAlign: TextAlign.center, style: theme.textTheme.titleMedium)
       else ...[
         Text(text.lostWhere(r, l.palaceDirection(p)), textAlign: TextAlign.center, style: theme.textTheme.titleLarge),
         if (near || far)
-          Text(near ? text.lostNear : text.lostFar, textAlign: TextAlign.center, style: theme.textTheme.bodyMedium),
+          Text(near ? text.lostNear(r.topic) : text.lostFar(r.topic), textAlign: TextAlign.center, style: theme.textTheme.bodyMedium),
         const SizedBox(height: 12),
         Center(child: _CompassArrow(bearing: r.bearing!)),
       ],
       const SizedBox(height: 12),
-      if (text.lostPlace(p) != null) Text('・${text.lostPlace(p)}'),
+      if (text.lostPlace(p, r.topic) != null) Text('・${text.lostPlace(p, r.topic)}'),
       if (godHint != null) Text('・$godHint'),
     ]);
   }

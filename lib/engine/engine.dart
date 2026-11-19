@@ -13,3 +13,4 @@ export 'geju.dart';
 export 'direction.dart';
 export 'almanac.dart';
 export 'personal.dart';
+export 'synastry.dart';
