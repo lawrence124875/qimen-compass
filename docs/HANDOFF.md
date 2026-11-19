@@ -92,11 +92,11 @@
 - [x] App 名稱：奇門羅盤／Qimen Compass（2026-11-18 定案）
 - [x] 訂閱價格（2026-11-18 定案，同謙卦）
 - [ ] 手機實測付費牆與測試購買（run42 起含 RevenueCat key）
-- [ ] 封閉測試 12 人 × 14 天後才能上正式版
+- [ ] 封閉測試 12 人 × 14 天後才能上正式版（使用者找人；開始時設測試群組與邀請連結）
+- Play Console 現況（2026-11-19）：應用程式內容、商店資訊 14 語（含 pt-PT、es-ES、es-US）、內部測試 v1 已發布；即時開發人員通知主題 `projects/learning-english-5ea8b/topics/Play-Store-Notifications`（與謙卦共用）；RevenueCat 專案 `qimen` 服務帳戶與通知已連線。AAB 版本代碼 = run_number
 - [ ] 測試盤的參考軟體由誰提供（請 Lawrence 指定）
 
 ## 12. 下一步（V1 待辦，完成一項刪一項）
-- [ ] 封閉測試上架
 
 - [ ] 翻譯補掃：「共通功能」串完成後跑 `tools/l10n/l10n.py status` 補新鍵（apply → hans → missing／fill → check --strict），qimen-content 改版後重跑 `tools/to_hans.py`；泰、阿上架前請母語者校閱
 
@@ -123,7 +123,7 @@
     - 紀錄＋應驗回饋 `features/records/`：**其他功能呼叫 `saveRecord(context, kind: RecordKind.xxx, chartAt:, summary:)`**；`records.json`（schemaVersion 1）、搜尋、種類／待回饋篩選、左滑刪除可復原、應驗統計、N 天後 20:00 回顧提醒（id 1100–1199）、備份還原（設定「備份與換手機」）；免費 30 則、只看近 30 天。問事紀錄已併入（`RecordKind.divination`，`meta` 帶 topic／school／verdict，舊 `qm_div_journal` 自動搬；問事不受免費 30 則限制）；`RecordListPage(initialKind:)` 可預先篩選；詳情頁「看解讀」重算
     - 每日提醒 `features/reminders/daily_reminder.dart`：預設開、8:00，排 7 天（id 1050–1056），內容為當天最佳吉時；設定頁另有吉時推播開關
     - 設定頁加：會員、備份與換手機、推薦給朋友（`features/share/share.dart` `shareApp`）、意見回饋、每日提醒、吉時推播、使用統計開關、廣告隱私、隱私權政策／使用條款（`docs/privacy.html`、`terms.html`，需開 GitHub Pages）、LC Lab 其他 App（謙卦、光穗塔羅，`app/links.dart`）
-    - CI：`scripts/patch_firebase.sh`、`patch_ads.sh`；Secrets 待設：`GOOGLE_SERVICES_JSON_BASE64`（Firebase 專案加 Android App `com.lclab.qimen` 後重新下載）、`ADMOB_APP_ID`、`ADMOB_BANNER/INTERSTITIAL/REWARDED_AD_UNIT_ID`、`REVENUECAT_ANDROID_API_KEY`；沒設時建置照常（無 Firebase、測試廣告、訂閱「尚未開放」）
+    - CI：`scripts/patch_firebase.sh`、`patch_ads.sh`；Secrets 皆已設（2026-11-18）：`GOOGLE_SERVICES_JSON_BASE64`、`ADMOB_APP_ID`、`ADMOB_BANNER/INTERSTITIAL/REWARDED_AD_UNIT_ID`、`REVENUECAT_ANDROID_API_KEY`、`ANDROID_KEYSTORE_*`；缺任一時建置照常（無 Firebase、測試廣告、訂閱「尚未開放」）
     - 謙卦 iching-cards PR #69、塔羅 tarot-cards PR #49：其他 App 加入奇門羅盤，預設隱藏；上架後 Remote Config 設 `qg_other_app_qimen`=1、`tr_other_app_com_lclab_qimen`=1（塔羅圖示放 tarot-content `branding/other_apps/com.lclab.qimen.png`）
   - 尚未做：夏令時扣回標準時
   - 圖示與各語系桌面名稱：`branding/`（見該資料夾 README），CI `patch_android.sh` 套用
