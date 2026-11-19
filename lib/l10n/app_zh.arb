@@ -1320,5 +1320,59 @@
   "almanacBestHours": "今日吉時",
   "almanacAllHours": "全日十二時辰",
   "almanacNone": "今天沒有「吉」以上的時辰，宜守不宜動",
-  "shareCardFooter": "Google Play 搜尋「奇門羅盤」"
+  "shareCardFooter": "Google Play 搜尋「奇門羅盤」",
+  "personalTitle": "我的奇門",
+  "personalSub": "本命盤、流年流月、個人吉方",
+  "profileTitle": "設定生日",
+  "profileBirthDate": "出生日期",
+  "profileBirthTime": "出生時間",
+  "profileTimeUnknown": "不知道",
+  "profileNeedBirth": "先設定出生日期\n才能看本命盤與個人吉方",
+  "natalTab": "本命盤",
+  "fortuneTab": "流年流月",
+  "luckyTab": "個人吉方",
+  "natalNoTime": "未填出生時間，以中午 12 點起局，僅供參考",
+  "natalMing": "年命 {stem} 落{palace}",
+  "@natalMing": {
+    "placeholders": {
+      "stem": {
+        "type": "String"
+      },
+      "palace": {
+        "type": "String"
+      }
+    }
+  },
+  "natalSelf": "日干 {stem}（你）落{palace}",
+  "@natalSelf": {
+    "placeholders": {
+      "stem": {
+        "type": "String"
+      },
+      "palace": {
+        "type": "String"
+      }
+    }
+  },
+  "natalMingHint": "年命宮看根基與大方向",
+  "natalSelfHint": "日干所落的宮看個性與做事方式",
+  "fortuneHint": "以年盤、月盤上你的年命宮吉凶來看",
+  "fortuneYear": "{year} 流年",
+  "@fortuneYear": {
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "fortuneMonth": "{month} 流月",
+  "@fortuneMonth": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "luckyHint": "接下來 7 天，你的年命宮逢吉的時辰；在這些時段往該方位行動較有利",
+  "luckyNone": "接下來 7 天沒有特別有利的時辰"
 }
