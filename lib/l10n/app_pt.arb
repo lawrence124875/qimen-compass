@@ -763,5 +763,7 @@
   "facingNegotiation": "Assento de negociação",
   "facingHowNegotiation": "Sente-se à mesa, celular deitado, topo para onde você olha (para a outra parte).",
   "facingSeatPos": "Onde sentar: do centro da sala, no lado {dirs}. Usa o mapa da hora atual; confira antes da reunião.",
-  "facingFaceNote": "A orientação é para onde seu rosto aponta; na cama, para onde aponta o topo da cabeça."
+  "facingFaceNote": "A orientação é para onde seu rosto aponta; na cama, para onde aponta o topo da cabeça.",
+  "cureLevelsTitle": "Conselho tradicional: aproveitar o favorável",
+  "cureLevels": "Do mais ao menos eficaz:\n1. Mover-se para uma boa direção (viajar, trocar de assento)\n2. Sentar num bom lugar olhando para uma boa direção\n3. Se precisar ficar num lugar ruim, olhar para um portão favorável suaviza\n4. Colocar objetos de equilíbrio numa direção ruim (pelos cinco elementos, ex.: água num ponto de fogo, metal num de terra)\nSuavizam, não anulam. São crenças tradicionais, sem evidência científica e sem efeito garantido."
 }

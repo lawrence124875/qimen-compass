@@ -44,6 +44,7 @@ Future<void> showCompassIntro(BuildContext context) {
     (Icons.explore, l.compassIntro1Title, l.compassIntro1Body),
     (Icons.screen_rotation_alt, l.compassIntro2Title, l.compassIntro2Body),
     (Icons.near_me, l.compassIntro3Title, l.compassIntro3Body),
+    (Icons.self_improvement, l.cureLevelsTitle, l.cureLevels),
   ];
   final controller = PageController();
   var index = 0;
@@ -61,13 +62,17 @@ Future<void> showCompassIntro(BuildContext context) {
               onPageChanged: (i) => setState(() => index = i),
               children: [
                 for (final p in pages)
-                  Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Icon(p.$1, size: 56, color: Theme.of(context).colorScheme.primary),
-                    const SizedBox(height: 16),
-                    Text(p.$2, textAlign: TextAlign.center, style: Theme.of(context).textTheme.titleLarge),
-                    const SizedBox(height: 12),
-                    Text(p.$3, textAlign: TextAlign.center),
-                  ]),
+                  Center(
+                    child: SingleChildScrollView(
+                      child: Column(mainAxisSize: MainAxisSize.min, children: [
+                        Icon(p.$1, size: 56, color: Theme.of(context).colorScheme.primary),
+                        const SizedBox(height: 16),
+                        Text(p.$2, textAlign: TextAlign.center, style: Theme.of(context).textTheme.titleLarge),
+                        const SizedBox(height: 12),
+                        Text(p.$3, textAlign: p.$3.contains('\n') ? TextAlign.start : TextAlign.center),
+                      ]),
+                    ),
+                  ),
               ],
             ),
           ),

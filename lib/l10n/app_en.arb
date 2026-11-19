@@ -763,5 +763,7 @@
   "facingNegotiation": "Negotiation seat",
   "facingHowNegotiation": "Sit at the meeting table, phone flat, top pointing the way you face (toward the other side).",
   "facingSeatPos": "Where to sit: from the room’s center, take the {dirs} side. Uses the current hour chart — check again before the meeting.",
-  "facingFaceNote": "Facing always means the direction your face points; for a bed, the direction the top of your head points."
+  "facingFaceNote": "Facing always means the direction your face points; for a bed, the direction the top of your head points.",
+  "cureLevelsTitle": "Traditional advice: making the most of directions",
+  "cureLevels": "From strongest to weakest:\n1. Move toward a good direction (travel, move your seat)\n2. Sit in a good spot facing a good direction\n3. If you must stay in a poor spot, face a good gate to soften it\n4. Place remedy items in a poor direction (bridging or draining by the five elements, e.g. water items in a fire spot, metal in an earth spot)\nThese soften rather than cancel. They are traditional beliefs with no scientific evidence and no guaranteed effect."
 }

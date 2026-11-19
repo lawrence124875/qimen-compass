@@ -86,7 +86,13 @@ class _PlacementPageState extends State<PlacementPage> {
       body: SafeArea(
         child: ListView(padding: const EdgeInsets.fromLTRB(12, 8, 12, 24), children: [
           Text(l.placeIntro, style: text.bodySmall?.copyWith(color: qm.textMuted)),
-          const SizedBox(height: 8),
+          ExpansionTile(
+            tilePadding: EdgeInsets.zero,
+            title: Text(l.cureLevelsTitle, style: text.titleSmall?.copyWith(color: qm.primary)),
+            childrenPadding: const EdgeInsets.only(bottom: 8),
+            expandedCrossAxisAlignment: CrossAxisAlignment.start,
+            children: [Text(l.cureLevels, style: text.bodySmall)],
+          ),
           for (final p in palaceRing) _tile(context, p, l, qm, text, lang),
           const SizedBox(height: 8),
           Text(l.homeDisclaimer, textAlign: TextAlign.center, style: text.bodySmall?.copyWith(color: qm.textMuted)),
