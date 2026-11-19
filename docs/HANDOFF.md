@@ -91,7 +91,7 @@
 ## 11. 待決事項
 - [x] App 名稱：奇門羅盤／Qimen Compass（2026-11-18 定案）
 - [x] 訂閱價格（2026-11-18 定案，同謙卦）
-- [ ] RevenueCat 上傳 Play 服務帳戶 JSON、Secret `REVENUECAT_ANDROID_API_KEY`（使用者自行貼）
+- [ ] 手機實測付費牆與測試購買（run42 起含 RevenueCat key）
 - [ ] 封閉測試 12 人 × 14 天後才能上正式版
 - [ ] 測試盤的參考軟體由誰提供（請 Lawrence 指定）
 
