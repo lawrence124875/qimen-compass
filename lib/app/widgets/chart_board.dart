@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../shared/widgets/result_card.dart' show toneOfLuck, ToneStyle;
 import '../../features/meaning/meaning_content.dart';
 
 import '../../engine/engine.dart' hide Element;
@@ -129,8 +130,13 @@ class PalaceCell extends StatelessWidget {
                       fit: BoxFit.scaleDown,
                       child: Column(mainAxisSize: MainAxisSize.min, children: [
                         Text(starsText(pc.stars), style: st(0.13, qm.text)),
+                        // 門的吉平凶：顏色外加小圖示（色弱可辨）
                         if (door != null)
-                          Text(QimenTerms.doorName(door, L10n.language), style: st(0.17, qm.luck(door.luck), w: FontWeight.w700)),
+                          Row(mainAxisSize: MainAxisSize.min, children: [
+                            Icon(toneOfLuck(door.luck).icon, size: s * 0.11, color: qm.luck(door.luck)),
+                            SizedBox(width: s * 0.015),
+                            Text(QimenTerms.doorName(door, L10n.language), style: st(0.17, qm.luck(door.luck), w: FontWeight.w700)),
+                          ]),
                         if (marks.isNotEmpty)
                           Padding(
                             padding: EdgeInsets.only(top: s * 0.02),

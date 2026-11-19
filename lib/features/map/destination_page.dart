@@ -9,6 +9,7 @@ import '../../compass/geo_math.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../core/records/record_store.dart';
 import '../../l10n/l10n.dart';
+import '../../shared/widgets/result_card.dart';
 import '../records/record_actions.dart';
 import '../travel/travel_text.dart';
 import 'map_location.dart';
@@ -49,11 +50,6 @@ class _DestinationPageState extends State<DestinationPage> {
       return '${hm(v.startUtc!)}–${hm(v.endUtc!)}';
     }
 
-    Color levelColor(TravelLevel v) => switch (v) {
-          TravelLevel.great || TravelLevel.good => qm.good,
-          TravelLevel.neutral => qm.neutral,
-          _ => qm.bad,
-        };
     Widget verdictRow(DirectionVerdict v, {bool bold = false}) => ListTile(
           dense: true,
           title: Text(range(v), style: bold ? const TextStyle(fontWeight: FontWeight.w700) : null),
@@ -61,7 +57,7 @@ class _DestinationPageState extends State<DestinationPage> {
             if (v.door != null) QimenTerms.door(v.door!, lang),
             ...v.flags.map((f) => TravelText.flag(l, f)),
           ].join(l.separator)),
-          trailing: Text(TravelText.level(l, v.level), style: TextStyle(color: levelColor(v.level), fontWeight: FontWeight.w700)),
+          trailing: ToneBadge(tone: toneOfLevel(v.level), label: TravelText.level(l, v.level)),
         );
 
     return Scaffold(
@@ -94,30 +90,37 @@ class _DestinationPageState extends State<DestinationPage> {
                     style: text.bodyMedium?.copyWith(color: qm.textMuted)),
                 Text(l.destPalace(QimenTerms.palace(palace, lang)), style: text.bodySmall?.copyWith(color: qm.textMuted), textAlign: TextAlign.center),
                 const SizedBox(height: 12),
-                Text(l.destNow, style: text.bodyMedium?.copyWith(color: qm.textMuted)),
-                const SizedBox(height: 4),
-                Text(TravelText.level(l, cur.level),
-                    style: serif(text.headlineMedium).copyWith(color: levelColor(cur.level), fontWeight: FontWeight.w700)),
-                const SizedBox(height: 4),
-                Text([
-                  if (cur.door != null) '${QimenTerms.door(cur.door!, lang)} ${l.luck(cur.door!.luck)}',
-                  ...cur.flags.map((f) => TravelText.flag(l, f)),
-                ].join(l.separator), textAlign: TextAlign.center),
-                if (best.isNotEmpty) ...[
-                  const SizedBox(height: 8),
-                  Text(l.labelValue(l.destBest, best.map(range).join(l.separator)), textAlign: TextAlign.center),
-                ],
+                ResultCard(
+                  margin: EdgeInsets.zero,
+                  tone: toneOfLevel(cur.level),
+                  grade: TravelText.level(l, cur.level),
+                  kicker: l.destNow,
+                  headline: cur.recommended
+                      ? l.resultGoNow(TravelText.direction(l, palace))
+                      : best.isNotEmpty
+                          ? l.resultGoAt(range(best.first).split('–').first, TravelText.direction(l, palace))
+                          : l.destNoneGood,
+                  meta: [
+                    [
+                      if (cur.door != null) '${QimenTerms.door(cur.door!, lang)} ${l.luck(cur.door!.luck)}',
+                      ...cur.flags.map((f) => TravelText.flag(l, f)),
+                    ].join(l.separator),
+                    if (best.isNotEmpty) l.labelValue(l.destBest, best.map(range).join(l.separator)),
+                  ],
+                ),
               ]),
           ),
           const SizedBox(height: 12),
-          Text(l.destBest, style: text.titleSmall?.copyWith(color: qm.primary)),
-          if (best.isEmpty)
-            Padding(padding: const EdgeInsets.symmetric(vertical: 8), child: Text(l.destNoneGood))
-          else
-            for (final v in best) verdictRow(v, bold: true),
-          const Divider(),
-          Text(l.destNext, style: text.titleSmall?.copyWith(color: qm.primary)),
-          for (final v in slots.skip(1)) verdictRow(v),
+          DetailsFold(children: [
+            Text(l.destBest, style: text.titleSmall?.copyWith(color: qm.primary)),
+            if (best.isEmpty)
+              Padding(padding: const EdgeInsets.symmetric(vertical: 8), child: Text(l.destNoneGood))
+            else
+              for (final v in best) verdictRow(v, bold: true),
+            const Divider(),
+            Text(l.destNext, style: text.titleSmall?.copyWith(color: qm.primary)),
+            for (final v in slots.skip(1)) verdictRow(v),
+          ]),
           const SizedBox(height: 12),
           Text(l.mapTrueNorthNote, style: text.bodySmall?.copyWith(color: qm.textMuted)),
           Text(l.homeDisclaimer, style: text.bodySmall?.copyWith(color: qm.textMuted)),

@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../engine/engine.dart' hide Element;
 import '../features/almanac/almanac_page.dart';
-import '../features/divination/divination_page.dart';
-import '../features/travel/travel_page.dart';
+import '../features/personal/personal_page.dart';
+import '../features/personal/synastry_page.dart';
 import '../l10n/l10n.dart';
 import '../shared/premium/usage_gate.dart';
 import '../core/records/record_store.dart';
 import '../features/records/record_actions.dart';
+import 'pages/me_page.dart';
 import 'services.dart';
 import 'settings/app_settings.dart';
 import 'theme/app_theme.dart';
@@ -15,7 +16,7 @@ import 'widgets/chart_board.dart';
 import 'widgets/guide.dart';
 import 'widgets/share_capture.dart';
 
-/// 首頁：目前的時盤／月盤／年盤（九宮格）。可前後切換；直式上下排、橫式／平板左右排。
+/// 「盤面」分頁：目前的時盤／月盤／年盤（九宮格），點字跳解說；下方進本命盤、合盤。可前後切換；直式上下排、橫式／平板左右排。
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -150,7 +151,7 @@ class _HomePageState extends State<HomePage> {
     final l = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l.appTitle),
+        title: Text(l.tabChart),
         actions: [
           IconButton(icon: const Icon(Icons.info_outline), tooltip: l.guideTooltip, onPressed: () => _showGuide(force: true)),
           IconButton(icon: const Icon(Icons.ios_share), tooltip: l.homeShare, onPressed: _capturing ? null : _share),
@@ -179,20 +180,25 @@ class _HomePageState extends State<HomePage> {
             onSelectionChanged: (v) => _setUnit(v.first),
           );
           final board = ChartBoard(chart: _chart);
+          final svc = AppServices.of(context);
           final actions = Row(children: [
-            Expanded(
-              child: FilledButton.tonal(
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const TravelPage())),
-                child: Text(l.homeTravel),
+            if (svc.featureEnabled('personal'))
+              Expanded(
+                child: FilledButton.tonalIcon(
+                  icon: const Icon(Icons.person_pin_circle_outlined),
+                  onPressed: () => MePage.openPremium(context, 'personal', (_) => const PersonalPage()),
+                  label: Text(l.personalTitle, maxLines: 1, overflow: TextOverflow.ellipsis),
+                ),
               ),
-            ),
-            const SizedBox(width: 8),
-            Expanded(
-              child: FilledButton.tonal(
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const DivinationPage())),
-                child: Text(l.homeDivination),
+            if (svc.featureEnabled('personal') && svc.featureEnabled('synastry')) const SizedBox(width: 8),
+            if (svc.featureEnabled('synastry'))
+              Expanded(
+                child: FilledButton.tonalIcon(
+                  icon: const Icon(Icons.people_outline),
+                  onPressed: () => MePage.openPremium(context, 'synastry', (_) => const SynastryPage()),
+                  label: Text(l.synTitle, maxLines: 1, overflow: TextOverflow.ellipsis),
+                ),
               ),
-            ),
           ]);
           final unitNote = _unit == PanUnit.hour
               ? const SizedBox.shrink()

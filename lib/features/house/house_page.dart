@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import '../../shared/widgets/result_card.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -399,7 +400,7 @@ class _HousePageState extends State<HousePage> {
     } else {
       diagram = Card(
         margin: EdgeInsets.zero,
-        child: Padding(padding: const EdgeInsets.all(16), child: Text(l.houseEmpty, textAlign: TextAlign.center)),
+        child: EmptyState(icon: Icons.home_work_outlined, text: l.houseEmpty, action: l.houseMethodMark, onAction: _openMark, compact: true),
       );
     }
 

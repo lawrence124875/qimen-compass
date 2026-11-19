@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show HapticFeedback;
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
@@ -14,10 +15,17 @@ import 'compass_math.dart';
 import 'declination.dart';
 import '../app/services.dart';
 import '../features/map/map_page.dart';
+import '../shared/widgets/result_card.dart';
 
 /// 奇門羅盤（HANDOFF §4）：八門盤依手機朝向反向旋轉，對準現實方位。
 class CompassPage extends StatefulWidget {
-  const CompassPage({super.key});
+  const CompassPage({super.key, this.modeSwitch});
+
+  /// 羅盤分頁的「羅盤⇄地圖」切換鈕（放在標題列）；null 時標題列顯示地圖按鈕。
+  final Widget? modeSwitch;
+
+  /// 其他頁（例：此刻頁「用羅盤找」）指定要找的門，羅盤建立時取用一次。
+  static Door? pendingTarget;
 
   @override
   State<CompassPage> createState() => _CompassPageState();
@@ -44,7 +52,9 @@ class _CompassPageState extends State<CompassPage> {
   QimenChart? _nextChart;
   DateTime? _nextAt;
   bool _showNext = false;
-  Door? _target;
+  Door? _target = CompassPage.pendingTarget;
+  Door? _lastAhead;
+  bool _wasAligned = false;
 
   // 與首頁同一套排盤設定（定元法、子時、真太陽時）。
   QimenChart _computeAt(DateTime t) => _engine.compute(t,
@@ -53,6 +63,7 @@ class _CompassPageState extends State<CompassPage> {
   @override
   void initState() {
     super.initState();
+    CompassPage.pendingTarget = null;
     _refreshCharts();
     _loadPrefs();
     _ticker = Timer.periodic(const Duration(seconds: 1), (_) {
@@ -157,9 +168,9 @@ class _CompassPageState extends State<CompassPage> {
     final heading = _heading;
     final chart = _shown;
     return Scaffold(
-      appBar: AppBar(title: Text(l.compassTitle), actions: [
-        // 地圖模式（HANDOFF §12 P2）
-        if (AppServices.of(context).featureEnabled('map'))
+      appBar: AppBar(title: widget.modeSwitch ?? Text(l.compassTitle), actions: [
+        // 地圖模式（HANDOFF §12 P2）；在羅盤分頁時改由標題列切換
+        if (widget.modeSwitch == null && AppServices.of(context).featureEnabled('map'))
           TextButton.icon(
             icon: const Icon(Icons.map_outlined),
             label: Text(l.mapTitle),
@@ -204,10 +215,18 @@ class _CompassPageState extends State<CompassPage> {
     // 前方
     if (heading != null) {
       final door = doorAtBearing(chart, heading);
-      widgets.add(Text(
-        l.compassAhead(QimenTerms.door(door, lang), _luckLabel(l, door.luck)),
-        textAlign: TextAlign.center,
-        style: theme.textTheme.titleLarge?.copyWith(color: context.qm.luck(door.luck)),
+      // 轉到吉門時輕震一下
+      if (door != _lastAhead) {
+        if (_lastAhead != null && door.luck == Luck.good) HapticFeedback.lightImpact();
+        _lastAhead = door;
+      }
+      widgets.add(Center(
+        child: ToneLabel(
+          tone: toneOfLuck(door.luck),
+          iconSize: 26,
+          text: l.compassAhead(QimenTerms.door(door, lang), _luckLabel(l, door.luck)),
+          style: theme.textTheme.titleLarge,
+        ),
       ));
       widgets.add(Text('${_dirLabel(l, palaceAtBearing(heading))} ${heading.round()}°',
           textAlign: TextAlign.center, style: theme.textTheme.bodyMedium));
@@ -287,6 +306,8 @@ class _CompassPageState extends State<CompassPage> {
     widgets.add(Wrap(spacing: 6, runSpacing: 4, children: [
       for (final d in const [Door.kai, Door.xiu, Door.sheng, Door.du, Door.jingScene, Door.si, Door.jing, Door.shang])
         ChoiceChip(
+          showCheckmark: false,
+          avatar: Icon(toneOfLuck(d.luck).icon, size: 16, color: context.qm.luck(d.luck)),
           label: Text(d.zh),
           selected: _target == d,
           selectedColor: context.qm.luck(d.luck).withValues(alpha: 0.3),
@@ -296,6 +317,8 @@ class _CompassPageState extends State<CompassPage> {
     if (_target != null && heading != null) {
       final delta = turnDelta(heading, doorBearing(chart, _target!));
       final aligned = delta.abs() <= 10;
+      if (aligned && !_wasAligned) HapticFeedback.mediumImpact();
+      _wasAligned = aligned;
       widgets.add(Padding(
         padding: const EdgeInsets.only(top: 8),
         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [

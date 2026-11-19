@@ -10,7 +10,7 @@ import '../../app/widgets/chart_board.dart';
 import '../../core/records/record_store.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
-import '../../shared/premium/usage_gate.dart';
+import '../../shared/widgets/result_card.dart';
 import 'divination_content.dart';
 import 'divination_journal.dart';
 import 'divination_page.dart';
@@ -147,61 +147,8 @@ class _ReadingPageState extends State<ReadingPage> {
             ]),
           ),
         );
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(t.topicName(r.topic)),
-        actions: [
-          if (!_locked)
-          IconButton(
-            icon: const Icon(Icons.copy_all_outlined),
-            tooltip: l.divCopy,
-            onPressed: () async {
-              await Clipboard.setData(ClipboardData(text: _plainText(l)));
-              if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l.divCopied)));
-            },
-          ),
-        ],
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          if (r.rule.disclaimer)
-            Container(
-              margin: const EdgeInsets.only(bottom: 12),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(border: Border.all(color: qm.bad), borderRadius: BorderRadius.circular(8)),
-              child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Icon(Icons.warning_amber_rounded, color: qm.bad, size: 20),
-                const SizedBox(width: 8),
-                Expanded(child: Text(t.disclaimer, style: theme.textTheme.bodySmall)),
-              ]),
-            ),
-          _DecisionCard(reading: r),
-          Card(
-            margin: const EdgeInsets.only(bottom: 12),
-            child: Padding(
-              padding: const EdgeInsets.all(14),
-              child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                VerdictBadge(verdict: r.verdict, large: true),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    if (widget.entry.question.isNotEmpty) Text(widget.entry.question, style: theme.textTheme.titleMedium),
-                    Text(l.divAskedAt(formatAskedAt(widget.entry.askedAt)), style: muted),
-                    Text('${t.schoolName(r.school)}・${t.yongShen(r.main.spec)}', style: muted),
-                    const SizedBox(height: 8),
-                    Text(t.verdict(r), style: serif(theme.textTheme.titleMedium).copyWith(color: qm.text)),
-                    const SizedBox(height: 6),
-                    if (!_locked) Text('${l.divAdvice}：${t.advice(r)}'),
-                  ]),
-                ),
-              ]),
-            ),
-          ),
-          if (_locked)
-            PremiumLockCard(feature: 'divination', text: l.divLockedDetail, onUnlocked: () => setState(() => _locked = false))
-          else ...[
-          if (r.rule.direction) section(l.divLostTitle, [_LostDirection(reading: r, text: t)]),
+    final details = <Widget>[
+          if (r.rule.direction && !_locked) section(l.divLostTitle, [_LostDirection(reading: r, text: t)]),
           if (_timing != null) section(l.divTimingTitle, [Text(_timingText(l, _timing!)), const SizedBox(height: 4), Text(l.divTimingNote, style: muted)]),
           if (_dos.isNotEmpty || _donts.isNotEmpty)
             section(l.divDoDont, [
@@ -251,7 +198,61 @@ class _ReadingPageState extends State<ReadingPage> {
               style: muted,
             ),
           ]),
-          ],
+    ];
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(t.topicName(r.topic)),
+        actions: [
+          if (!_locked)
+          IconButton(
+            icon: const Icon(Icons.copy_all_outlined),
+            tooltip: l.divCopy,
+            onPressed: () async {
+              await Clipboard.setData(ClipboardData(text: _plainText(l)));
+              if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l.divCopied)));
+            },
+          ),
+        ],
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          if (r.rule.disclaimer)
+            Container(
+              margin: const EdgeInsets.only(bottom: 12),
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(border: Border.all(color: qm.bad), borderRadius: BorderRadius.circular(8)),
+              child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Icon(Icons.warning_amber_rounded, color: qm.bad, size: 20),
+                const SizedBox(width: 8),
+                Expanded(child: Text(t.disclaimer, style: theme.textTheme.bodySmall)),
+              ]),
+            ),
+          ResultCard(
+            tone: verdictTone(r.verdict),
+            grade: verdictLabel(l, r.verdict),
+            kicker: '${l.divDecision}・${l.divConfidence} ${_confidenceText(l, r.confidence)}',
+            headline: _decisionText(l, r.decision),
+            meta: [
+              t.verdict(r),
+              if (!_locked) '${l.divAdvice}：${t.advice(r)}',
+              if (widget.entry.question.isNotEmpty) widget.entry.question,
+              '${l.divAskedAt(formatAskedAt(widget.entry.askedAt))}・${t.schoolName(r.school)}・${t.yongShen(r.main.spec)}',
+            ],
+          ),
+          if (_locked)
+            LockedPreview(
+              feature: 'divination',
+              text: l.divLockedDetail,
+              onUnlocked: () => setState(() => _locked = false),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                ...details,
+              ]),
+            )
+          else
+            DetailsFold(children: [
+              ...details,
+            ]),
           section(l.divFeedback, [
             Text(l.divFeedbackHint, style: muted),
             const SizedBox(height: 8),
@@ -288,46 +289,6 @@ String _confidenceText(AppLocalizations l, Confidence c) => switch (c) {
       Confidence.medium => l.divConfidenceMedium,
       Confidence.mixed => l.divConfidenceMixed,
     };
-
-/// 決斷卡：一眼看出可不可行與把握度。
-class _DecisionCard extends StatelessWidget {
-  const _DecisionCard({required this.reading});
-
-  final Reading reading;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final qm = context.qm;
-    final theme = Theme.of(context);
-    final d = reading.decision;
-    final color = switch (d) {
-      Decision.go => qm.good,
-      Decision.goWithCare => qm.good,
-      Decision.wait => qm.neutral,
-      Decision.avoid => qm.bad,
-    };
-    return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: BorderSide(color: color, width: 1.5)),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        child: Row(children: [
-          Expanded(
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(l.divDecision, style: theme.textTheme.bodySmall?.copyWith(color: qm.textMuted)),
-              Text(_decisionText(l, d), style: serif(theme.textTheme.headlineSmall).copyWith(color: color, fontWeight: FontWeight.w700)),
-            ]),
-          ),
-          Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-            Text(l.divConfidence, style: theme.textTheme.bodySmall?.copyWith(color: qm.textMuted)),
-            Text(_confidenceText(l, reading.confidence), style: theme.textTheme.titleSmall),
-          ]),
-        ]),
-      ),
-    );
-  }
-}
 
 String _levelText(AppLocalizations l, Verdict v) => switch (v) {
       Verdict.great => l.levelGreat,

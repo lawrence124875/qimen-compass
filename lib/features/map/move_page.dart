@@ -8,7 +8,7 @@ import '../../compass/compass_math.dart';
 import '../../compass/geo_math.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
-import '../almanac/almanac_page.dart' show levelColor;
+import '../../shared/widgets/result_card.dart';
 import '../travel/travel_text.dart';
 import 'map_location.dart';
 
@@ -123,7 +123,7 @@ class _MovePageState extends State<MovePage> {
             dense: true,
             title: Text(label),
             subtitle: Text([if (v.door != null) QimenTerms.door(v.door!, lang), ...v.flags.map((f) => TravelText.flag(l, f))].join(l.separator)),
-            trailing: Text(TravelText.level(l, v.level), style: TextStyle(color: levelColor(context, v.level), fontWeight: FontWeight.w700)),
+            trailing: ToneBadge(tone: toneOfLevel(v.level), label: TravelText.level(l, v.level)),
           );
       final months = [
         for (var i = 0; i < 12; i++)

@@ -4,8 +4,6 @@ import '../../features/course/course_page.dart';
 import '../../features/house/facing_page.dart';
 import '../../features/house/house_page.dart';
 import '../../features/map/move_page.dart';
-import '../../features/personal/personal_page.dart';
-import '../../features/personal/synastry_page.dart';
 import '../../features/records/record_list_page.dart';
 import '../../l10n/l10n.dart';
 import '../../shared/premium/usage_gate.dart';
@@ -13,7 +11,7 @@ import '../services.dart';
 import '../theme/app_theme.dart';
 import 'settings_page.dart';
 
-/// 「我的」分頁：宅盤、盤記、課程、設定（之後的個人化功能也放這裡）。
+/// 「我的」分頁：宅盤、朝向、搬家、紀錄、課程、設定。本命盤、合盤在「盤面」分頁。
 class MePage extends StatelessWidget {
   const MePage({super.key});
 
@@ -45,11 +43,6 @@ class MePage extends StatelessWidget {
       appBar: AppBar(title: Text(l.tabMe)),
       body: SafeArea(
         child: ListView(padding: const EdgeInsets.fromLTRB(12, 4, 12, 16), children: [
-          if (s.featureEnabled('personal'))
-            tile(Icons.person_pin_circle_outlined, l.personalTitle, l.personalSub,
-                () => openPremium(context, 'personal', (_) => const PersonalPage())),
-          if (s.featureEnabled('synastry'))
-            tile(Icons.people_outline, l.synTitle, l.synSub, () => openPremium(context, 'synastry', (_) => const SynastryPage())),
           if (s.featureEnabled('move'))
             tile(Icons.local_shipping_outlined, l.moveTitle, l.moveSub, () => openPremium(context, 'move', (_) => const MovePage())),
           if (s.featureEnabled('house'))

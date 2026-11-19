@@ -1,140 +1,112 @@
 <zh-TW>
-奇門羅盤 1.0：
-• 底部四分頁：羅盤、盤面、擇時、我的
+奇門羅盤 1.1：
+• 新首頁「此刻」：吉方吉門、下個吉時倒數、今日黃曆
+• 四分頁：此刻、羅盤（含地圖）、盤面、我的；擇時新增結婚、搬家等 8 情境與自訂
+• 結果卡改版，吉平凶加圖示，羅盤轉到吉門會輕震
 • 地圖八門與目的地吉凶，可搜尋地址
 • 今日奇門黃曆、吉方圖卡分享
-• 個人本命盤、流年流月、個人吉方
-• 雙人合盤、搬家方位、尋人尋寵物
-• 辦公室／店面九宮、床位書桌朝向
-• 桌面小工具、盤面點擊解說、課程補完
 </zh-TW>
 <zh-CN>
-奇门罗盘 1.0：
-• 底部四分页：罗盘、盘面、择时、我的
+奇门罗盘 1.1：
+• 新首页「此刻」：吉方吉门、下个吉时倒数、今日黄历
+• 四分页：此刻、罗盘（含地图）、盘面、我的；择时新增结婚、搬家等 8 个情境与自定义
+• 结果卡改版，吉平凶加图标，罗盘转到吉门会轻震
 • 地图八门与目的地吉凶，可搜索地址
 • 今日奇门黄历、吉方图卡分享
-• 个人本命盘、流年流月、个人吉方
-• 双人合盘、搬家方位、寻人寻宠物
-• 办公室／店面九宫、床位书桌朝向
-• 桌面小部件、盘面点击解说、课程补完
 </zh-CN>
 <en-US>
-Qimen Compass 1.0:
-• Four tabs: Compass, Chart, Timing, Me
+Qimen Compass 1.1:
+• New Now home: lucky direction, next lucky hour countdown, daily almanac
+• Tabs: Now, Compass (with map), Chart, Me; Timing adds 8 occasions such as wedding and moving, plus custom
+• Clearer result cards, icons for good and bad, gentle vibration on a lucky door
 • Eight Doors on the map, destination luck with address search
 • Daily Qimen almanac and shareable direction cards
-• Personal natal chart, yearly and monthly fortune
-• Compatibility, moving direction, find people and pets
-• Office and shop layouts, bed and desk facing
-• Home screen widget, tap-to-explain chart, more lessons
 </en-US>
 <ja-JP>
-奇門羅盤 1.0：
-• 4 つのタブ：羅盤・盤面・択時・マイページ
+奇門羅盤 1.1：
+• 新ホーム「いま」：吉方・吉門、次の吉時までのカウントダウン、今日の暦
+• タブ：いま・羅盤（地図付き）・盤面・マイページ。択時に結婚・引越しなど 8 項目とカスタムを追加
+• 結果カードを刷新、吉凶にアイコン、吉門で軽く振動
 • 地図に八門、目的地の吉凶（住所検索）
 • 今日の奇門暦、吉方カードの共有
-• 本命盤、年運・月運、個人の吉方
-• 相性盤、引越し方位、人・ペット探し
-• オフィス／店舗の九宮、ベッド・机の向き
-• ホームウィジェット、盤面タップ解説、講座追加
 </ja-JP>
 <ko-KR>
-기문나침반 1.0:
-• 하단 4탭: 나침반, 반면, 택시, 내 정보
+기문나침반 1.1:
+• 새 홈 "지금": 길방·길문, 다음 길시 카운트다운, 오늘의 달력
+• 탭: 지금, 나침반(지도 포함), 반면, 내 정보. 택시에 결혼·이사 등 8가지와 사용자 지정 추가
+• 결과 카드 개편, 길흉 아이콘, 길문에서 가벼운 진동
 • 지도 위 팔문, 목적지 길흉(주소 검색)
 • 오늘의 기문 역서, 길방 카드 공유
-• 본명반, 연운·월운, 개인 길방
-• 궁합반, 이사 방위, 사람·반려동물 찾기
-• 사무실·매장 구궁, 침대·책상 방향
-• 홈 위젯, 반면 탭 해설, 강좌 추가
 </ko-KR>
 <vi>
-La Bàn Kỳ Môn 1.0:
-• Bốn thẻ: La bàn, Bàn, Chọn giờ, Tôi
+La Bàn Kỳ Môn 1.1:
+• Trang chủ mới "Bây giờ": hướng tốt, đếm ngược giờ tốt kế tiếp, lịch hôm nay
+• Các thẻ: Bây giờ, La bàn (kèm bản đồ), Bàn, Tôi; Chọn giờ thêm 8 dịp như cưới hỏi, chuyển nhà và tùy chỉnh
+• Thẻ kết quả mới, biểu tượng tốt xấu, rung nhẹ khi gặp cửa tốt
 • Bát Môn trên bản đồ, cát hung nơi đến (tìm địa chỉ)
 • Lịch Kỳ Môn hằng ngày, chia sẻ thẻ hướng tốt
-• Bàn bản mệnh, vận năm và tháng, hướng tốt cá nhân
-• Hợp bàn hai người, hướng chuyển nhà, tìm người và thú cưng
-• Cửu cung văn phòng/cửa hàng, hướng giường và bàn
-• Tiện ích màn hình chính, chạm để xem giải nghĩa, thêm bài học
 </vi>
 <es-419>
-Brújula Qimen 1.0:
-• Cuatro pestañas: Brújula, Carta, Momentos, Yo
+Brújula Qimen 1.1:
+• Nuevo inicio Ahora: dirección propicia, cuenta regresiva a la próxima hora propicia, almanaque
+• Pestañas: Ahora, Brújula (con mapa), Carta, Yo; Momentos suma 8 ocasiones como boda y mudanza, y personalizado
+• Tarjetas de resultado renovadas, íconos de bueno y malo, vibración suave en una puerta propicia
 • Ocho Puertas en el mapa y suerte del destino con búsqueda de dirección
 • Almanaque Qimen diario y tarjetas de dirección para compartir
-• Carta natal, suerte anual y mensual
-• Compatibilidad, dirección de mudanza, buscar personas y mascotas
-• Oficina y tienda, orientación de cama y escritorio
-• Widget de inicio, explicación al tocar, más lecciones
 </es-419>
 <es-ES>
-Brújula Qimen 1.0:
-• Cuatro pestañas: Brújula, Carta, Momentos, Yo
+Brújula Qimen 1.1:
+• Nuevo inicio Ahora: dirección propicia, cuenta atrás a la próxima hora propicia, almanaque
+• Pestañas: Ahora, Brújula (con mapa), Carta, Yo; Momentos suma 8 ocasiones como boda y mudanza, y personalizado
+• Tarjetas de resultado renovadas, iconos de bueno y malo, vibración suave en una puerta propicia
 • Ocho Puertas en el mapa y suerte del destino con búsqueda de dirección
 • Almanaque Qimen diario y tarjetas de dirección para compartir
-• Carta natal, suerte anual y mensual
-• Compatibilidad, dirección de mudanza, buscar personas y mascotas
-• Oficina y tienda, orientación de cama y escritorio
-• Widget de inicio, explicación al tocar, más lecciones
 </es-ES>
 <es-US>
-Brújula Qimen 1.0:
-• Cuatro pestañas: Brújula, Carta, Momentos, Yo
+Brújula Qimen 1.1:
+• Nuevo inicio Ahora: dirección propicia, cuenta regresiva a la próxima hora propicia, almanaque
+• Pestañas: Ahora, Brújula (con mapa), Carta, Yo; Momentos suma 8 ocasiones como boda y mudanza, y personalizado
+• Tarjetas de resultado renovadas, íconos de bueno y malo, vibración suave en una puerta propicia
 • Ocho Puertas en el mapa y suerte del destino con búsqueda de dirección
 • Almanaque Qimen diario y tarjetas de dirección para compartir
-• Carta natal, suerte anual y mensual
-• Compatibilidad, dirección de mudanza, buscar personas y mascotas
-• Oficina y tienda, orientación de cama y escritorio
-• Widget de inicio, explicación al tocar, más lecciones
 </es-US>
 <pt-BR>
-Bússola Qimen 1.0:
-• Quatro abas: Bússola, Mapa, Momentos, Eu
+Bússola Qimen 1.1:
+• Nova tela Agora: direção auspiciosa, contagem para a próxima hora boa, almanaque
+• Abas: Agora, Bússola (com mapa), Carta, Eu; Momentos ganha 8 ocasiões como casamento e mudança, e personalizado
+• Cartões de resultado renovados, ícones de bom e ruim, vibração leve numa porta auspiciosa
 • Oito Portas no mapa e sorte do destino com busca de endereço
 • Almanaque Qimen diário e cartões de direção para partilhar
-• Mapa natal, sorte anual e mensal
-• Compatibilidade, direção de mudança, encontrar pessoas e animais
-• Escritório e loja, orientação de cama e mesa
-• Widget de tela inicial, explicação ao tocar, mais lições
 </pt-BR>
 <pt-PT>
-Bússola Qimen 1.0:
-• Quatro abas: Bússola, Mapa, Momentos, Eu
+Bússola Qimen 1.1:
+• Novo ecrã Agora: direção auspiciosa, contagem para a próxima hora boa, almanaque
+• Separadores: Agora, Bússola (com mapa), Carta, Eu; Momentos ganha 8 ocasiões como casamento e mudança, e personalizado
+• Cartões de resultado renovados, ícones de bom e mau, vibração leve numa porta auspiciosa
 • Oito Portas no mapa e sorte do destino com busca de endereço
 • Almanaque Qimen diário e cartões de direção para partilhar
-• Mapa natal, sorte anual e mensal
-• Compatibilidade, direção de mudança, encontrar pessoas e animais
-• Escritório e loja, orientação de cama e mesa
-• Widget de ecrã inicial, explicação ao tocar, mais lições
 </pt-PT>
 <id>
-Kompas Qimen 1.0:
-• Empat tab: Kompas, Bagan, Waktu, Saya
+Kompas Qimen 1.1:
+• Beranda baru Sekarang: arah baik, hitung mundur jam baik berikutnya, almanak
+• Tab: Sekarang, Kompas (dengan peta), Bagan, Saya; Waktu menambah 8 acara seperti pernikahan dan pindahan, plus kustom
+• Kartu hasil baru, ikon baik dan buruk, getar halus di pintu baik
 • Delapan Pintu di peta, keberuntungan tujuan dengan cari alamat
 • Almanak Qimen harian dan kartu arah untuk dibagikan
-• Bagan kelahiran, peruntungan tahunan dan bulanan
-• Kecocokan, arah pindahan, cari orang dan hewan peliharaan
-• Kantor dan toko, arah tempat tidur dan meja
-• Widget layar utama, penjelasan saat diketuk, pelajaran tambahan
 </id>
 <th>
-เข็มทิศฉีเหมิน 1.0:
-• สี่แท็บ: เข็มทิศ ผัง เลือกฤกษ์ ฉัน
+เข็มทิศฉีเหมิน 1.1:
+• หน้าแรกใหม่ "ตอนนี้": ทิศมงคล นับถอยหลังฤกษ์ดีถัดไป ปฏิทินวันนี้
+• แท็บ: ตอนนี้ เข็มทิศ (มีแผนที่) ผัง ฉัน; เลือกฤกษ์เพิ่ม 8 โอกาส เช่น แต่งงาน ย้ายบ้าน และกำหนดเอง
+• การ์ดผลลัพธ์ใหม่ ไอคอนดีร้าย สั่นเบาๆ เมื่อเจอประตูมงคล
 • แปดประตูบนแผนที่ ดวงจุดหมายพร้อมค้นหาที่อยู่
 • ปฏิทินฉีเหมินรายวัน แชร์การ์ดทิศมงคล
-• ผังกำเนิด ดวงรายปีและรายเดือน
-• ผังคู่ ทิศย้ายบ้าน ตามหาคนและสัตว์เลี้ยง
-• ออฟฟิศและร้านค้า ทิศเตียงและโต๊ะ
-• วิดเจ็ตหน้าจอหลัก แตะผังเพื่อดูคำอธิบาย บทเรียนเพิ่ม
 </th>
 <ar>
-بوصلة تشيمن 1.0:
-• أربع علامات تبويب: البوصلة، المخطط، التوقيت، أنا
+بوصلة تشيمن 1.1:
+• شاشة رئيسية جديدة "الآن": الاتجاه الميمون، عد تنازلي للساعة الميمونة التالية، التقويم
+• علامات التبويب: الآن، البوصلة (مع الخريطة)، المخطط، أنا؛ التوقيت يضيف 8 مناسبات مثل الزواج والانتقال، ومخصص
+• بطاقات نتائج أوضح، أيقونات للجيد والسيئ، اهتزاز خفيف عند باب ميمون
 • الأبواب الثمانية على الخريطة وحظ الوجهة مع البحث عن العنوان
 • تقويم تشيمن اليومي وبطاقات الاتجاه للمشاركة
-• المخطط الشخصي والحظ السنوي والشهري
-• التوافق، اتجاه الانتقال، البحث عن الأشخاص والحيوانات
-• المكتب والمتجر، اتجاه السرير والمكتب
-• أداة الشاشة الرئيسية، شرح عند اللمس، دروس إضافية
 </ar>

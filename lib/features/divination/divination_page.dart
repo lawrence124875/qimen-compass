@@ -7,6 +7,7 @@ import '../../core/records/record_store.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
 import '../../shared/premium/usage_gate.dart';
+import '../../shared/widgets/result_card.dart';
 import 'divination_content.dart';
 import '../records/record_list_page.dart';
 import 'divination_journal.dart';
@@ -234,34 +235,13 @@ class VerdictBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final qm = context.qm;
-    final label = switch (verdict) {
-      Verdict.great => l.levelGreat,
-      Verdict.good => l.levelGood,
-      Verdict.neutral => l.levelNeutral,
-      Verdict.minor => l.levelMinor,
-      Verdict.blocked => l.levelBlocked,
-    };
-    final color = switch (verdict) {
-      Verdict.great || Verdict.good => qm.good,
-      Verdict.neutral => qm.neutral,
-      _ => qm.bad,
-    };
-    // 膠囊形：寬度隨文字（「大吉」或較長的外語不會被圓圈裁切），文字單行置中。
-    final base = large ? Theme.of(context).textTheme.titleLarge : Theme.of(context).textTheme.bodyMedium;
-    return Container(
-      constraints: BoxConstraints(minWidth: large ? 64 : 40, minHeight: large ? 40 : 28),
-      padding: EdgeInsets.symmetric(horizontal: large ? 14 : 10, vertical: 4),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: color, width: large ? 2 : 1.5),
-      ),
-      child: Text(label,
-          maxLines: 1,
-          softWrap: false,
-          textAlign: TextAlign.center,
-          style: serif(base).copyWith(color: color, fontWeight: FontWeight.w700, height: 1.2)),
-    );
+    // 膠囊形：寬度隨文字（「大吉」或較長的外語不會被圓圈裁切）；顏色外加圖示（色弱可辨）。
+    return ToneBadge(tone: verdictTone(verdict), label: verdictLabel(l, verdict), large: large);
   }
 }
+
+Tone verdictTone(Verdict v) => switch (v) {
+      Verdict.great || Verdict.good => Tone.good,
+      Verdict.neutral => Tone.neutral,
+      _ => Tone.bad,
+    };
