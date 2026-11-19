@@ -5,8 +5,8 @@ import '../../app/theme/app_theme.dart';
 import '../../app/widgets/chart_board.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
-import '../almanac/almanac_page.dart' show levelColor;
 import '../meaning/meaning_content.dart';
+import '../../shared/widgets/result_card.dart';
 import '../travel/travel_text.dart';
 import 'profile.dart';
 
@@ -114,7 +114,7 @@ class _PalaceCard extends StatelessWidget {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(children: [
             Expanded(child: Text(title, style: serif(text.titleMedium).copyWith(color: qm.primary))),
-            Text(TravelText.level(l, v.level), style: TextStyle(color: levelColor(context, v.level), fontWeight: FontWeight.w700)),
+            ToneBadge(tone: toneOfLevel(v.level), label: TravelText.level(l, v.level)),
           ]),
           Text(hint, style: text.bodySmall?.copyWith(color: qm.textMuted)),
           if (c.door != null) line(QimenTerms.door(c.door!, lang), m('door', c.door!.zh)),
@@ -212,7 +212,7 @@ class _FortuneView extends StatelessWidget {
               ].join(l.separator)),
         trailing: v == null
             ? null
-            : Text(TravelText.level(l, v.level), style: TextStyle(color: levelColor(context, v.level), fontWeight: FontWeight.w700)),
+            : ToneBadge(tone: toneOfLevel(v.level), label: TravelText.level(l, v.level)),
       );
     }
 
@@ -258,7 +258,7 @@ class _LuckyView extends StatelessWidget {
           child: ListTile(
             title: Text(when(v)),
             subtitle: Text([TravelText.direction(l, v.palace), if (v.door != null) QimenTerms.door(v.door!, lang)].join(l.separator)),
-            trailing: Text(TravelText.level(l, v.level), style: TextStyle(color: levelColor(context, v.level), fontWeight: FontWeight.w700)),
+            trailing: ToneBadge(tone: toneOfLevel(v.level), label: TravelText.level(l, v.level)),
           ),
         ),
     ]);

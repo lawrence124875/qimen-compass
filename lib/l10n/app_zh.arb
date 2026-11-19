@@ -1499,5 +1499,82 @@
   "zeshiEventCustom": "自訂",
   "zeshiCustomDoor": "用神門",
   "zeshiCustomGod": "喜神",
-  "zeshiFlagFavoredStar": "喜星同宮"
+  "zeshiFlagFavoredStar": "喜星同宮",
+  "tabNow": "此刻",
+  "modeMap": "地圖",
+  "resultDetails": "詳解",
+  "resultGoNow": "現在往{dir}出發最好",
+  "@resultGoNow": {
+    "placeholders": {
+      "dir": {
+        "type": "String"
+      }
+    }
+  },
+  "resultGoAt": "{time} 往{dir}出發最好",
+  "@resultGoAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "dir": {
+        "type": "String"
+      }
+    }
+  },
+  "resultNoneGood": "接下來幾個時辰都不太理想，晚點再看看",
+  "resultBestAt": "{when} 最好，宜往{dir}",
+  "@resultBestAt": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      },
+      "dir": {
+        "type": "String"
+      }
+    }
+  },
+  "resultBestTime": "{when} 最好",
+  "@resultBestTime": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "nowBestDir": "此刻吉方",
+  "nowNextGood": "下個吉時",
+  "nowCountdownHM": "還有 {h} 小時 {m} 分",
+  "@nowCountdownHM": {
+    "placeholders": {
+      "h": {
+        "type": "int"
+      },
+      "m": {
+        "type": "int"
+      }
+    }
+  },
+  "nowCountdownM": "還有 {m} 分",
+  "@nowCountdownM": {
+    "placeholders": {
+      "m": {
+        "type": "int"
+      }
+    }
+  },
+  "nowGoodLeft": "吉時進行中，{time}",
+  "@nowGoodLeft": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "nowFindWithCompass": "用羅盤找",
+  "nowShowChart": "此刻時盤",
+  "nowOpenChartTab": "到盤面看月盤、年盤",
+  "nowZeshiSub": "挑好日子、好時辰",
+  "nowDivSub": "依此刻起局，問一件事",
+  "emptyRecordsAction": "去看盤面"
 }

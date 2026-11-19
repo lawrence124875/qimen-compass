@@ -4,7 +4,9 @@ import '../../app/main_shell.dart';
 import '../../app/theme/app_theme.dart';
 import '../../l10n/l10n.dart';
 import '../../shared/premium/paywall_page.dart';
+import '../../shared/premium/usage_gate.dart';
 import '../travel/travel_page.dart';
+import '../zeshi/zeshi_page.dart';
 import 'course.dart';
 
 /// 課程目錄：課程名稱、簡介、各課（免費標記、已讀、鎖定）。
@@ -122,8 +124,8 @@ class LessonPage extends StatelessWidget {
         nav.popUntil((r) => r.isFirst);
         MainShell.select(MainTab.compass);
       case CourseActionType.zeshi:
-        nav.popUntil((r) => r.isFirst);
-        MainShell.select(MainTab.zeshi);
+        peekPremium(context, feature: 'zeshi').then((access) =>
+            nav.push(MaterialPageRoute<void>(builder: (_) => ZeShiPage(locked: access == PremiumAccess.titleOnly))));
     }
   }
 

@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 
-import '../compass/compass_page.dart';
 import '../features/widget/home_widget_sync.dart';
-import '../features/zeshi/zeshi_page.dart';
 import '../l10n/l10n.dart';
 import '../shared/premium/ad_banner.dart';
 import '../shared/premium/trial_prompt.dart';
-import '../shared/premium/usage_gate.dart';
+import 'compass_tab.dart';
 import 'home_page.dart';
+import 'now_page.dart';
 import 'pages/me_page.dart';
 import 'services.dart';
 
-/// 底部 4 分頁：羅盤（含地圖模式）／盤面／擇時／我的（HANDOFF §12 P1）。
-/// 盤面、擇時、我的切走後保留狀態；羅盤只在選到時建立（離開就停感測器）。
-/// 羅盤、擇時可由 Remote Config `qm_feature_compass`／`qm_feature_zeshi` 關閉（關閉時不顯示分頁）。
-enum MainTab { compass, chart, zeshi, me }
+/// 底部 4 分頁：此刻／羅盤（羅盤⇄地圖）／盤面／我的（HANDOFF §12 UI 改版）。
+/// 擇時、問事是此刻頁的大按鈕。此刻、盤面、我的切走後保留狀態；羅盤只在選到時建立（離開就停感測器）。
+/// 羅盤可由 Remote Config `qm_feature_compass` 關閉（關閉時不顯示分頁）。
+enum MainTab { now, compass, chart, me }
 
 class MainShell extends StatefulWidget {
-  const MainShell({super.key, this.initial = MainTab.chart});
+  const MainShell({super.key, this.initial = MainTab.now});
 
   final MainTab initial;
 
@@ -36,7 +35,6 @@ class MainShell extends StatefulWidget {
 class _MainShellState extends State<MainShell> {
   late MainTab _tab = widget.initial;
   final _built = <MainTab>{};
-  bool _zeshiLocked = false;
 
   void _onRequest() {
     final t = MainShell.tabRequest.value;
@@ -63,28 +61,22 @@ class _MainShellState extends State<MainShell> {
   List<MainTab> _tabs(BuildContext context) {
     final s = AppServices.of(context);
     return [
+      MainTab.now,
       if (s.featureEnabled('compass')) MainTab.compass,
       MainTab.chart,
-      if (s.featureEnabled('zeshi')) MainTab.zeshi,
       MainTab.me,
     ];
   }
 
-  Future<void> _select(MainTab t) async {
+  void _select(MainTab t) {
     if (t == _tab) return;
-    // 擇時屬訂閱功能：免費版完整體驗一次，之後照樣排出時段，只顯示時間與等級（詳解需訂閱）
-    if (t == MainTab.zeshi && !_built.contains(t)) {
-      final access = await peekPremium(context, feature: 'zeshi');
-      if (!mounted) return;
-      _zeshiLocked = access == PremiumAccess.titleOnly;
-    }
     setState(() => _tab = t);
   }
 
   Widget _page(MainTab t) => switch (t) {
-        MainTab.compass => const CompassPage(),
+        MainTab.now => const NowPage(),
+        MainTab.compass => const CompassTab(),
         MainTab.chart => const HomePage(),
-        MainTab.zeshi => ZeShiPage(locked: _zeshiLocked),
         MainTab.me => const MePage(),
       };
 
@@ -92,7 +84,7 @@ class _MainShellState extends State<MainShell> {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final tabs = _tabs(context);
-    if (!tabs.contains(_tab)) _tab = MainTab.chart;
+    if (!tabs.contains(_tab)) _tab = MainTab.now;
     _built.add(_tab);
     return Scaffold(
       body: IndexedStack(
@@ -111,9 +103,9 @@ class _MainShellState extends State<MainShell> {
           destinations: [
             for (final t in tabs)
               switch (t) {
+                MainTab.now => NavigationDestination(icon: const Icon(Icons.wb_sunny_outlined), selectedIcon: const Icon(Icons.wb_sunny), label: l.tabNow),
                 MainTab.compass => NavigationDestination(icon: const Icon(Icons.explore_outlined), selectedIcon: const Icon(Icons.explore), label: l.tabCompass),
                 MainTab.chart => NavigationDestination(icon: const Icon(Icons.grid_view_outlined), selectedIcon: const Icon(Icons.grid_view_rounded), label: l.tabChart),
-                MainTab.zeshi => NavigationDestination(icon: const Icon(Icons.event_outlined), selectedIcon: const Icon(Icons.event), label: l.tabZeShi),
                 MainTab.me => NavigationDestination(icon: const Icon(Icons.person_outline), selectedIcon: const Icon(Icons.person), label: l.tabMe),
               },
           ],

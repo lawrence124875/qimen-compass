@@ -6,6 +6,7 @@ import '../../app/widgets/share_capture.dart';
 import '../../app/widgets/share_card.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
+import '../../shared/widgets/result_card.dart';
 import '../travel/travel_text.dart';
 
 DailyAlmanac todayAlmanac([DateTime? date]) {
@@ -22,7 +23,7 @@ Color levelColor(BuildContext context, TravelLevel v) => switch (v) {
 
 String fmtDate(DateTime d) => '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
 
-/// 盤面分頁頂端的小卡：今日吉方＋吉時，點開看全日。
+/// 此刻頁的小卡：今日吉方＋吉時，點開看全日。
 class AlmanacTile extends StatelessWidget {
   const AlmanacTile({super.key});
 
@@ -101,10 +102,12 @@ class _AlmanacPageState extends State<AlmanacPage> {
         for (final s in best)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 3),
-            child: Text(
-              '${TravelText.hourName(l, s)} ${TravelText.timeRange(s)}  ${TravelText.direction(l, s.palace)}・${QimenTerms.doorName(s.door, lang)}  ${TravelText.level(l, s.level)}',
-              textAlign: TextAlign.center,
-              style: text.bodyLarge?.copyWith(color: levelColor(context, s.level)),
+            child: Center(
+              child: ToneLabel(
+                tone: toneOfLevel(s.level),
+                text: '${TravelText.hourName(l, s)} ${TravelText.timeRange(s)}  ${TravelText.direction(l, s.palace)}・${QimenTerms.doorName(s.door, lang)}  ${TravelText.level(l, s.level)}',
+                style: text.bodyLarge,
+              ),
             ),
           ),
     ]);
@@ -133,8 +136,7 @@ class _AlmanacPageState extends State<AlmanacPage> {
               selected: s.contains(now),
               title: Text('${TravelText.hourName(l, s)}  ${TravelText.timeRange(s)}'),
               subtitle: Text('${TravelText.direction(l, s.palace)}・${QimenTerms.door(s.door, lang)}'),
-              trailing: Text(TravelText.level(l, s.level),
-                  style: TextStyle(color: levelColor(context, s.level), fontWeight: FontWeight.w700)),
+              trailing: ToneBadge(tone: toneOfLevel(s.level), label: TravelText.level(l, s.level)),
             ),
         ]),
       ),

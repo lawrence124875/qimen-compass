@@ -11,6 +11,7 @@ import '../../engine/engine.dart' hide Element;
 import '../../core/records/record_store.dart';
 import '../../l10n/l10n.dart';
 import '../../shared/premium/usage_gate.dart';
+import '../../shared/widgets/result_card.dart';
 import '../records/record_actions.dart';
 import '../travel/travel_text.dart';
 import 'zeshi_text.dart';
@@ -377,6 +378,17 @@ class _ZeShiPageState extends State<ZeShiPage> {
                 else if (result.isEmpty)
                   Padding(padding: const EdgeInsets.all(24), child: Text(l.zeshiNone, textAlign: TextAlign.center))
                 else ...[
+                  ResultCard(
+                    tone: toneOfLevel(result.first.level),
+                    grade: TravelText.level(l, result.first.level),
+                    kicker: l.zeshiTop,
+                    headline: locked
+                        ? l.resultBestTime(ZeShiText.when(l, result.first))
+                        : l.resultBestAt(ZeShiText.when(l, result.first), TravelText.direction(l, result.first.palace)),
+                    meta: [
+                      if (!locked) l.travelDirDoor(TravelText.direction(l, result.first.palace), QimenTerms.door(result.first.door, L10n.language)),
+                    ],
+                  ),
                   if (locked) PremiumLockCard(feature: 'zeshi', text: l.zeshiLockedDetail),
                   for (var i = 0; i < result.length; i++)
                     _SlotCard(
@@ -415,11 +427,6 @@ class _SlotCard extends StatelessWidget {
     final s = slot;
     final good = s.flags.where(ZeShiText.isPlus).map((f) => ZeShiText.flag(l, f)).join('、');
     final bad = s.flags.where((f) => !ZeShiText.isPlus(f)).map((f) => ZeShiText.flag(l, f)).join('、');
-    final levelColor = switch (s.level) {
-      TravelLevel.great || TravelLevel.good => qm.good,
-      TravelLevel.neutral => qm.neutral,
-      _ => qm.bad,
-    };
     return Card(
       margin: const EdgeInsets.only(bottom: 10),
       child: InkWell(
@@ -435,11 +442,8 @@ class _SlotCard extends StatelessWidget {
                 Text(ZeShiText.when(l, s), style: theme.textTheme.titleSmall),
                 const SizedBox(height: 2),
                 if (locked)
-                  Row(children: [
-                    Icon(Icons.lock_outline, size: 16, color: qm.textMuted),
-                    const SizedBox(width: 4),
-                    Flexible(child: Text(l.zeshiLockedRow, style: theme.textTheme.bodySmall?.copyWith(color: qm.textMuted))),
-                  ])
+                  BlurredText(l.travelDirDoor(TravelText.direction(l, s.palace), QimenTerms.door(s.door, L10n.language)),
+                      style: serif(theme.textTheme.titleMedium).copyWith(color: qm.text))
                 else ...[
                   Text(l.travelDirDoor(TravelText.direction(l, s.palace), QimenTerms.door(s.door, L10n.language)),
                       style: serif(theme.textTheme.titleMedium).copyWith(color: qm.text)),
@@ -449,11 +453,7 @@ class _SlotCard extends StatelessWidget {
               ]),
             ),
             Column(children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                decoration: BoxDecoration(border: Border.all(color: levelColor), borderRadius: BorderRadius.circular(12)),
-                child: Text(TravelText.level(l, s.level), style: TextStyle(color: levelColor)),
-              ),
+              ToneBadge(tone: toneOfLevel(s.level), label: TravelText.level(l, s.level)),
               if (!locked) ...[
                 IconButton(tooltip: l.zeshiAddCalendar, icon: const Icon(Icons.event_available_outlined), onPressed: onCalendar),
                 IconButton(tooltip: l.recordSaveTitle, icon: const Icon(Icons.bookmark_add_outlined), onPressed: onSave),

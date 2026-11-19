@@ -11,6 +11,7 @@ import '../../compass/geo_math.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
 import '../../shared/premium/usage_gate.dart';
+import '../../shared/widgets/result_card.dart';
 import '../travel/travel_text.dart';
 import 'destination_page.dart';
 import 'map_location.dart';
@@ -22,7 +23,10 @@ import 'map_location.dart';
 const mapsEnabled = bool.fromEnvironment('MAPS_ENABLED');
 
 class MapPage extends StatefulWidget {
-  const MapPage({super.key});
+  const MapPage({super.key, this.modeSwitch});
+
+  /// 羅盤分頁的「羅盤⇄地圖」切換鈕（放在標題列）。
+  final Widget? modeSwitch;
 
   @override
   State<MapPage> createState() => _MapPageState();
@@ -147,8 +151,12 @@ class _MapPageState extends State<MapPage> {
             border: Border.all(color: qm.luck(_chart[p].door!.luck)),
             borderRadius: BorderRadius.circular(6),
           ),
-          child: Text('${TravelText.direction(l, p)} ${QimenTerms.doorName(_chart[p].door!, lang)}',
-              style: Theme.of(context).textTheme.bodySmall),
+          child: Row(mainAxisSize: MainAxisSize.min, children: [
+            Icon(toneOfLuck(_chart[p].door!.luck).icon, size: 13, color: qm.luck(_chart[p].door!.luck)),
+            const SizedBox(width: 3),
+            Text('${TravelText.direction(l, p)} ${QimenTerms.doorName(_chart[p].door!, lang)}',
+                style: Theme.of(context).textTheme.bodySmall),
+          ]),
         ),
     ]);
   }
@@ -176,8 +184,9 @@ class _MapPageState extends State<MapPage> {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               if (_pinName != null) Text(_pinName!, style: Theme.of(context).textTheme.titleSmall, maxLines: 1, overflow: TextOverflow.ellipsis),
               Text(l.mapPinInfo(TravelText.direction(l, palace), '${b.round()}', distanceText(d))),
-              Text(l.mapPinDoor(QimenTerms.palace(palace, lang), QimenTerms.door(door, lang), l.luck(door.luck)),
-                  style: TextStyle(color: qm.luck(door.luck), fontWeight: FontWeight.w600)),
+              ToneLabel(
+                  tone: toneOfLuck(door.luck),
+                  text: l.mapPinDoor(QimenTerms.palace(palace, lang), QimenTerms.door(door, lang), l.luck(door.luck))),
             ]),
           ),
           FilledButton(onPressed: _openDestination, child: Text(l.destCheck)),
@@ -238,7 +247,7 @@ class _MapPageState extends State<MapPage> {
       );
     }
     return Scaffold(
-      appBar: AppBar(title: Text(l.mapTitle)),
+      appBar: AppBar(title: widget.modeSwitch ?? Text(l.mapTitle)),
       body: SafeArea(
         child: Column(children: [
           Padding(padding: const EdgeInsets.fromLTRB(12, 8, 12, 8), child: searchBar),

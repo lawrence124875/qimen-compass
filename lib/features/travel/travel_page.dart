@@ -6,6 +6,7 @@ import '../../engine/engine.dart';
 import '../../shared/premium/usage_gate.dart';
 import '../../l10n/l10n.dart';
 import '../../services/notifications.dart';
+import '../../shared/widgets/result_card.dart';
 import 'travel_intro.dart';
 import 'travel_log.dart';
 import 'travel_notify_options.dart';
@@ -273,17 +274,5 @@ class _LevelBadge extends StatelessWidget {
   final TravelLevel level;
 
   @override
-  Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-    final (bg, fg) = switch (level) {
-      TravelLevel.great || TravelLevel.good => (cs.primaryContainer, cs.onPrimaryContainer),
-      TravelLevel.neutral => (cs.surfaceContainerHighest, cs.onSurfaceVariant),
-      _ => (cs.errorContainer, cs.onErrorContainer),
-    };
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-      decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(12)),
-      child: Text(TravelText.level(context.l10n, level), style: TextStyle(color: fg)),
-    );
-  }
+  Widget build(BuildContext context) => ToneBadge(tone: toneOfLevel(level), label: TravelText.level(context.l10n, level));
 }

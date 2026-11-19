@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../app/main_shell.dart';
+import '../../shared/widgets/result_card.dart';
 import '../../app/services.dart';
 import '../../app/theme/app_theme.dart';
 import '../../core/records/record_store.dart';
@@ -112,9 +114,14 @@ class _RecordListPageState extends State<RecordListPage> {
             if (all == null) return const Center(child: CircularProgressIndicator());
             if (all.isEmpty) {
               return Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(32),
-                  child: Text(l.recordsEmpty, textAlign: TextAlign.center, style: TextStyle(color: qm.textMuted)),
+                child: EmptyState(
+                  icon: Icons.bookmarks_outlined,
+                  text: l.recordsEmpty,
+                  action: l.emptyRecordsAction,
+                  onAction: () {
+                    Navigator.of(context).popUntil((r) => r.isFirst);
+                    MainShell.select(MainTab.chart);
+                  },
                 ),
               );
             }
