@@ -99,7 +99,6 @@
 
 ## 12. 下一步：延伸功能 P1→P8（2026-11-19 定案，一次做完才出正式版；完成一階段刪一階段）
 原則：全部規則＋模板、不用 AI；新功能用 Remote Config `qm_feature_<id>` 開關（預設開）；進階功能接 `requirePremium`；新介面文字 11 語齊全；中途不出 APK，只在 P8 建版。
-- [ ] P4 個人化：個人資料（生辰）；奇門本命盤（出生時間起局＋格局文句）；流年、流月運勢（年盤／月盤對照年命宮）；個人吉方（年命篩出有利時辰與方位）
 - [ ] P5 雙人合盤（兩人年命、日干生剋；合夥／婚配）；遠行、搬家方位（住家為中心，對照年盤、月盤）；尋人、尋寵物（問事新事類，接羅盤方位）
 - [ ] P6 宅盤延伸：辦公室、店面九宮（座位、收銀台、大門）；床位、書桌朝向（羅盤量面向的門）；宅盤判讀文句；盤記補齊（擇時、目的地、本命盤可存紀錄＋應驗回饋）
 - [ ] P7 桌面小工具（`home_widget`，「此刻吉門在東南」每時辰更新）；入門課增課（羅盤、地圖、擇時、宅盤、個人化）；iOS Info.plist 權限說明
@@ -160,6 +159,7 @@
 - 延伸 P1（2026-11-19）：底部 4 分頁 `lib/app/main_shell.dart`（`MainTab`；羅盤離開即拆、其餘保留；`MainShell.select(tab)` 從推上去的頁面切分頁）；「我的」`lib/app/pages/me_page.dart`（`MePage.openPremium(context, feature, builder)` 開訂閱功能）；擇時分頁、宅盤、問事 `_start` 已接 `requirePremium`。盤面點擊解說：`PalaceDetail` 每個門／星／神／天干下方一行意義（`lib/features/meaning/`，qimen-content `app/meaning/`）。ARB 新增鍵用 `tools/l10n/add_keys.py`（一次 10 語）→ `l10n.py hans` → `check --strict`
 - 延伸 P2（2026-11-19）：地圖八門 `lib/features/map/map_page.dart`（羅盤分頁右上「地圖八門」；真北扇區、半徑 1／3／5 km、點／長按放圖釘、`geocoding` 地址搜尋）；目的地吉凶 `destination_page.dart`（`DirectionPlanner`，`lib/engine/direction.dart`：基礎 3 分＋門吉凶 ±1，其餘同出行訣；訂閱體驗一次 `destination`）；`lib/compass/geo_math.dart`（方位角、距離、扇形）。Maps key：Secret `MAPS_API_KEY` → `patch_android.sh` 寫入 manifest、`--dart-define=MAPS_ENABLED`；沒設時不建立 GoogleMap（SDK 會當），只留搜尋。加 `ACCESS_FINE_LOCATION`。iOS 上架前要在 AppDelegate 設 Maps key
 - 延伸 P3（2026-11-19）：今日奇門黃曆 `lib/engine/almanac.dart`（`DailyAlmanac.of`：子時起 12 時辰，一般出行規則，`best(3)` 吉時、`bestPalace` 吉方）＋`lib/features/almanac/`（盤面分頁頂端 `AlmanacTile`，點開可換日、分享）；分享圖卡外框 `lib/app/widgets/share_card.dart`（`ShareCardFrame`＋`shareBoundary`，黃曆、目的地已用）。ARB 通用鍵 `labelValue`（「標籤：值」，非中文用半形冒號）
+- 延伸 P4（2026-11-19）：「我的」→「我的奇門」`lib/features/personal/`（訂閱體驗一次 `personal`）。個人資料 `profile.dart`：生日沿用擇時的 `qm_birth_date`、出生時間 `qm_birth_time`（分鐘，選填；未填以 12:00 起局並提示）。引擎 `lib/engine/personal.dart`：`stemPalace`、`PersonalEngine.natal`（本命時盤、年命宮＋日干宮以 `DirectionPlanner.judge` 評級）、`fortune`（年盤／月盤上的年命宮）、`luckyHours`（7 天內年命宮達吉的時辰，方位＝年命宮）。解說沿用 `MeaningContent`。坑：簡中「日干宮」會變「日干宫」被 l10n 檢查當成乾→干誤轉，繁中改寫成「日干所落的宮」
 ## 14. 沿用謙卦／光穗塔羅的經驗（2026-11-17 整理；細節見 iching-content `HANDOFF.md`、`docs/REFERENCE.md`，tarot-content `HANDOFF.md`）
 ### 配色與 UI（配色已定案，見 §13 介面）
 - 謙卦「天玄地黃」：深色 玄墨 #1C1B22 底、玄灰 #26242E 卡片、地黃 #C9A45C 主色、稻金 #D8B56A 點綴、山褐 #7E6A52 框線、淡金 #E8D9B0 文字；淺色 宣紙 #F3ECDD 底、地黃 #946C2A。塔羅為晨光奶油＋琥珀金＋暮光紫。奇門建議沿用謙卦色系（同屬東方、利於互相導流），八門吉／平／凶用五行色標示，深淺色模式從第一版就做（設定「外觀」跟隨系統／淺／深；顏色用 getter，不放 const；圖上文字用固定 `onImage`）。

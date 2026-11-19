@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../features/course/course_page.dart';
 import '../../features/house/house_page.dart';
+import '../../features/personal/personal_page.dart';
 import '../../features/records/record_list_page.dart';
 import '../../l10n/l10n.dart';
 import '../../shared/premium/usage_gate.dart';
@@ -41,6 +42,9 @@ class MePage extends StatelessWidget {
       appBar: AppBar(title: Text(l.tabMe)),
       body: SafeArea(
         child: ListView(padding: const EdgeInsets.fromLTRB(12, 4, 12, 16), children: [
+          if (s.featureEnabled('personal'))
+            tile(Icons.person_pin_circle_outlined, l.personalTitle, l.personalSub,
+                () => openPremium(context, 'personal', (_) => const PersonalPage())),
           if (s.featureEnabled('house'))
             tile(Icons.home_work_outlined, l.homeHouse, l.meHouseSub,
                 () => openPremium(context, 'house', (_) => const HousePage())),
