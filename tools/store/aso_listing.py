@@ -1,0 +1,448 @@
+"""產生 store/listing.json（ASO 版，2026-11-19）。改文案改這裡，再跑：python3 tools/store/aso_listing.py
+限制：title ≤30、short ≤80、full ≤4000（Play 以字元計）。不用「最佳／第一」等字、不用占卜字眼。"""
+import json, pathlib
+
+L = {}
+
+L["zh-Hant"] = dict(play="zh-TW",
+title="奇門羅盤：奇門遁甲排盤・風水擇日",
+short="奇門遁甲排盤＋風水羅盤：即時找吉方八門，擇日擇時、吉時提醒、黃曆、宅盤與本命盤。",
+full="""奇門羅盤是把奇門遁甲排盤疊在真實方位上的風水羅盤。打開羅盤，八門跟著手機轉動，一眼看出開門、休門、生門此刻在哪個方向；搭配地圖、擇日擇時、今日黃曆與吉時提醒，把奇門遁甲用在出門、搬家、簽約、開幕與居家風水。
+
+【羅盤與地圖：即時找吉方】
+• 奇門羅盤：盤面對準現實方位，前方是哪一門、吉凶如何直接顯示；磁北／真北切換、磁場干擾偵測，室內也能鎖定方位。
+• 地圖八門：在地圖上畫出八門方位，搜尋地址就能看目的地吉凶。
+• 出行訣：依事類列出現在與接下來的吉時、吉方，羅盤箭頭帶你走。
+• 桌面小工具：不開 App 也能看此刻吉門。
+
+【擇日擇時與黃曆】
+• 擇時擇日：掃描未來數天到一年的時盤並評分，找出簽約、開幕、面試、相親、訂婚、遠行的吉日吉時，一鍵加入行事曆。
+• 今日奇門黃曆：每天的吉時、吉方，可做成圖卡分享。
+• 吉時推播與每日早晨提醒。
+
+【居家風水：住家、辦公室、店面】
+• 宅盤九宮：站在中心量方位、拍平面圖或手繪，把九宮與八門對應到每個房間，並附判讀。
+• 床位、書桌朝向：依今年年盤找好方向。
+• 搬家、遠行方位：對照今明兩年與每個月的吉凶。
+
+【本命盤與問事】
+• 本命盤：依生日起局，看年命宮、流年流月與個人吉時吉方。
+• 雙人合盤：看伴侶、合夥人的契合度。
+• 奇門問事：事業、感情、財運、考試、失物、尋人、尋寵物等，依用神與格局解讀。
+
+【專業排盤】
+• 時家奇門：時盤、月盤、年盤，拆補法、置閏法，真太陽時、夜子時設定。
+• 點宮位即看門、星、神、天干的意義，新手也看得懂。
+
+【學習與紀錄】
+• 奇門遁甲課程：13 課，從三奇六儀、八門九星到格局與實際應用。
+• 盤記：保存每次的盤與筆記，事後回填應驗結果。
+
+排盤、羅盤免費使用；出行訣每天可免費使用。訂閱後解鎖擇時、宅盤、問事解讀、本命盤等進階功能並移除廣告。
+
+本 App 內容為傳統術數文化參考，不構成醫療、法律、財務或任何專業建議。""")
+
+L["zh-Hans"] = dict(play="zh-CN",
+title="奇门罗盘：奇门遁甲排盘・风水择日",
+short="奇门遁甲排盘＋风水罗盘：实时找吉方八门，择日择时、吉时提醒、黄历、宅盘与本命盘。",
+full="""奇门罗盘是把奇门遁甲排盘叠在真实方位上的风水罗盘。打开罗盘，八门跟着手机转动，一眼看出开门、休门、生门此刻在哪个方向；搭配地图、择日择时、今日黄历与吉时提醒，把奇门遁甲用在出门、搬家、签约、开业与居家风水。
+
+【罗盘与地图：实时找吉方】
+• 奇门罗盘：盘面对准现实方位，前方是哪一门、吉凶如何直接显示；磁北／真北切换、磁场干扰检测，室内也能锁定方位。
+• 地图八门：在地图上画出八门方位，搜索地址就能看目的地吉凶。
+• 出行诀：依事类列出现在与接下来的吉时、吉方，罗盘箭头带你走。
+• 桌面小部件：不开 App 也能看此刻吉门。
+
+【择日择时与黄历】
+• 择时择日：扫描未来数天到一年的时盘并评分，找出签约、开业、面试、相亲、订婚、远行的吉日吉时，一键加入日历。
+• 今日奇门黄历：每天的吉时、吉方，可做成图卡分享。
+• 吉时推送与每日早晨提醒。
+
+【居家风水：住家、办公室、店面】
+• 宅盘九宫：站在中心测方位、拍平面图或手绘，把九宫与八门对应到每个房间，并附判读。
+• 床位、书桌朝向：依今年年盘找好方向。
+• 搬家、远行方位：对照今明两年与每个月的吉凶。
+
+【本命盘与问事】
+• 本命盘：依生日起局，看年命宫、流年流月与个人吉时吉方。
+• 双人合盘：看伴侣、合伙人的契合度。
+• 奇门问事：事业、感情、财运、考试、失物、寻人、寻宠物等，依用神与格局解读。
+
+【专业排盘】
+• 时家奇门：时盘、月盘、年盘，拆补法、置闰法，真太阳时、夜子时设置。
+• 点宫位即看门、星、神、天干的意义，新手也看得懂。
+
+【学习与记录】
+• 奇门遁甲课程：13 课，从三奇六仪、八门九星到格局与实际应用。
+• 盘记：保存每次的盘与笔记，事后回填应验结果。
+
+排盘、罗盘免费使用；出行诀每天可免费使用。订阅后解锁择时、宅盘、问事解读、本命盘等进阶功能并移除广告。
+
+本 App 内容为传统术数文化参考，不构成医疗、法律、财务或任何专业建议。""")
+
+L["en"] = dict(play="en-US",
+title="Qimen Compass: Feng Shui, QMDJ",
+short="Qi Men Dun Jia feng shui compass: lucky directions, auspicious dates, almanac.",
+full="""Qimen Compass is a feng shui compass that lays a Qi Men Dun Jia (QMDJ) chart, the classic Chinese art of timing and direction, over the real directions around you. Open the compass and the Eight Gates turn with your phone, so you see at a glance where the Open, Rest and Life gates are right now. With the map, auspicious date selection, the daily Chinese almanac and lucky-hour reminders, use Qi Men Dun Jia for travel, moving house, signing, opening a business and home feng shui.
+
+COMPASS & MAP: FIND LUCKY DIRECTIONS
+• Qimen compass: the chart aligns with real directions and shows which gate lies ahead and how favorable it is. Magnetic or true north, interference detection, and an indoor lock that keeps the direction steady.
+• Eight Gates on the map: see the gate sectors around you and check any destination by address.
+• Travel guide: auspicious hours and directions now and next for your purpose, with a compass arrow to lead the way.
+• Home screen widget: see the current lucky gate without opening the app.
+
+AUSPICIOUS DATES & ALMANAC
+• Date selection: scores every hour from the next few days up to a year and finds auspicious dates and times for signing, opening, interviews, dating, engagement and travel. Add them to your calendar in one tap.
+• Daily Qimen almanac: today's lucky hours and directions, shareable as an image card.
+• Lucky-hour notifications and a daily morning reminder.
+
+FENG SHUI FOR HOME, OFFICE & SHOP
+• House chart (Nine Palaces): measure from the center, photograph or draw your floor plan, and map the nine palaces and Eight Gates onto every room, with a reading for each.
+• Bed and desk facing: find good directions from this year's chart.
+• Moving and travel direction: compare a destination for this year, next year and every month.
+
+PERSONAL CHARTS & QUESTIONS
+• Natal Qimen chart from your birthday: life palace, yearly and monthly fortune, your own lucky hours and directions.
+• Compatibility chart for partners and business partners.
+• Ask Qimen: career, love, wealth, exams, lost items, missing people and pets, read from the useful god and chart patterns.
+
+FULL QI MEN DUN JIA CHARTS
+• Hour, month and year charts; Chai Bu or Zhi Run methods; true solar time and late Zi hour options.
+• Tap any palace to see what each gate, star, deity and stem means. Beginner friendly.
+
+LEARN & KEEP RECORDS
+• Qi Men Dun Jia course: 13 lessons, from the Three Wonders and Six Instruments to gates, stars, patterns and real-life use.
+• Chart journal: save charts with notes and record what actually happened.
+
+Charts and the compass are free. The travel guide is free once a day. Premium unlocks date selection, house charts, readings, personal charts and more, and removes ads.
+
+Content is offered as a reference to traditional Chinese metaphysics and is not medical, legal, financial or other professional advice.""")
+
+L["ja"] = dict(play="ja-JP",
+title="奇門羅盤：奇門遁甲・吉方位・風水",
+short="奇門遁甲の盤を実際の方位に重ねる風水コンパス。吉方位、吉日の日取り、暦、家相、本命盤。",
+full="""奇門羅盤は、奇門遁甲の盤を身の回りの実際の方位に重ねる風水コンパスです。羅盤を開くと八門がスマホと一緒に回り、開門・休門・生門がいまどの方角にあるか一目でわかります。地図、吉日・吉時の日取り、今日の暦、吉時通知と合わせて、外出、引っ越し、契約、開業、住まいの風水に奇門遁甲を活かせます。
+
+【羅盤と地図：吉方位をすぐ探す】
+• 奇門羅盤：盤面が実際の方位に合わせて回り、正面の門と吉凶をそのまま表示。磁北／真北の切替、磁気干渉の検知、室内でも方位を固定できます。
+• 地図で八門：周囲の八門の方位を地図に表示し、住所検索で目的地の吉凶を確認。
+• 出行訣：目的に合わせ、いまとこの先の吉時・吉方位を表示し、羅盤の矢印で案内。
+• ホーム画面ウィジェット：アプリを開かずに今の吉門を確認。
+
+【吉日の日取りと暦】
+• 択時・択日：数日先から1年先までの時盤を採点し、契約、開業、面接、お見合い、婚約、旅行に向く吉日吉時を探して、カレンダーに追加。
+• 今日の奇門暦：その日の吉時と吉方位を画像カードで共有。
+• 吉時通知と毎朝のリマインダー。
+
+【住まい・オフィス・店舗の風水】
+• 宅盤九宮（家相）：中心で方位を測る、間取り図を撮る、手描きするの3通りで、九宮と八門を各部屋に対応させ、判読つきで表示。
+• ベッド・机の向き：今年の年盤から良い向きを探します。
+• 引っ越し・旅行の方位：今年と来年、毎月の吉凶を比較。
+
+【本命盤と問事】
+• 本命盤：生年月日から年命宮、年運・月運、自分の吉時・吉方位。
+• 相性盤：パートナーやビジネスパートナーとの相性。
+• 奇門問事：仕事、恋愛、金運、試験、失せ物、尋ね人、ペット探しなどを用神と格局から読み解きます。
+
+【本格的な奇門遁甲の盤】
+• 時盤・月盤・年盤、拆補法・置閏法、真太陽時・夜子時の設定。
+• 宮をタップすると門・星・神・干の意味を表示。初心者にもわかりやすい。
+
+【学習と記録】
+• 奇門遁甲講座：三奇六儀、八門九星から格局と実践まで全13課。
+• 盤記：盤とメモを保存し、後から結果を記録。
+
+排盤と羅盤は無料。出行訣は毎日無料で使えます。サブスクリプションで択時、宅盤、問事の解読、本命盤などが開放され、広告が消えます。
+
+本アプリの内容は伝統的な術数文化の参考情報であり、医療・法律・財務その他の専門的な助言ではありません。""")
+
+L["ko"] = dict(play="ko-KR",
+title="기문나침반: 기문둔갑 풍수 택일 방위",
+short="기문둔갑 국을 실제 방위에 겹친 풍수 나침반. 길한 방위, 택일·길시, 기문 달력, 집 풍수, 본명반.",
+full="""기문나침반은 기문둔갑 국을 내 주변의 실제 방위에 겹쳐 보여 주는 풍수 나침반입니다. 나침반을 열면 팔문이 휴대폰과 함께 돌아가, 지금 개문·휴문·생문이 어느 방향에 있는지 한눈에 알 수 있습니다. 지도, 길일·길시 택일, 오늘의 기문 달력, 길시 알림과 함께 외출, 이사, 계약, 개업, 집 풍수에 기문둔갑을 활용해 보세요.
+
+【나침반과 지도: 길한 방위 바로 찾기】
+• 기문 나침반: 국이 실제 방위에 맞춰 돌고, 앞쪽의 문과 길흉을 바로 보여 줍니다. 자북/진북 전환, 자기장 간섭 감지, 실내 방위 고정.
+• 지도 팔문: 주변 팔문 방위를 지도에 표시하고, 주소를 검색해 목적지 길흉 확인.
+• 출행결: 목적에 맞춰 지금과 이후의 길시·길방을 보여 주고 나침반 화살표로 안내.
+• 홈 화면 위젯: 앱을 열지 않고 지금의 길문 확인.
+
+【택일과 기문 달력】
+• 택일·택시: 며칠 뒤부터 1년 뒤까지 시반을 채점해 계약, 개업, 면접, 맞선, 약혼, 여행에 좋은 날과 시간을 찾고 캘린더에 추가.
+• 오늘의 기문 달력: 그날의 길시와 길방을 이미지 카드로 공유.
+• 길시 알림과 매일 아침 알림.
+
+【집·사무실·매장 풍수】
+• 택반 구궁: 중심에서 방위 측정, 평면도 촬영, 직접 그리기로 구궁과 팔문을 방마다 대응하고 판독 제공.
+• 침대·책상 방향: 올해 연반으로 좋은 방향 찾기.
+• 이사·여행 방위: 올해와 내년, 매달의 길흉 비교.
+
+【본명반과 문사】
+• 본명반: 생년월일로 연명궁, 연운·월운, 나의 길시·길방.
+• 궁합반: 연인, 동업자와의 궁합.
+• 기문 문사: 직업, 연애, 재물, 시험, 분실물, 사람 찾기, 반려동물 찾기를 용신과 격국으로 풀이.
+
+【정통 기문둔갑 포국】
+• 시반·월반·연반, 탁보법·치윤법, 진태양시·야자시 설정.
+• 궁을 누르면 문·성·신·천간의 뜻 표시. 초보자도 쉽게.
+
+【학습과 기록】
+• 기문둔갑 강좌: 삼기육의, 팔문구성부터 격국과 실전까지 13강.
+• 반기: 국과 메모를 저장하고 나중에 결과 기록.
+
+포국과 나침반은 무료입니다. 출행결은 매일 무료로 쓸 수 있습니다. 구독하면 택시, 택반, 문사 풀이, 본명반 등이 열리고 광고가 사라집니다.
+
+본 앱의 내용은 전통 술수 문화 참고용이며 의료, 법률, 재무 또는 기타 전문적인 조언이 아닙니다.""")
+
+L["vi"] = dict(play="vi",
+title="La Bàn Kỳ Môn: Phong Thủy",
+short="La bàn phong thủy Kỳ Môn Độn Giáp: hướng tốt, ngày giờ tốt, lịch, nhà ở, lá số.",
+full="""La Bàn Kỳ Môn là la bàn phong thủy đặt lá số Kỳ Môn Độn Giáp lên đúng phương vị thật quanh bạn. Mở la bàn, Bát Môn xoay theo điện thoại, bạn thấy ngay Khai Môn, Hưu Môn, Sinh Môn đang ở hướng nào. Kết hợp bản đồ, xem ngày giờ tốt, lịch Kỳ Môn hằng ngày và nhắc giờ hoàng đạo để dùng Kỳ Môn Độn Giáp khi xuất hành, chuyển nhà, ký hợp đồng, khai trương và xem phong thủy nhà ở.
+
+LA BÀN VÀ BẢN ĐỒ: TÌM HƯỚNG TỐT NGAY
+• La bàn Kỳ Môn: lá số khớp với phương vị thật, cho biết phía trước là cửa nào, tốt hay xấu. Chuyển bắc từ/bắc thật, phát hiện nhiễu từ, khóa hướng trong nhà.
+• Bát Môn trên bản đồ: xem các hướng cửa quanh bạn, tìm địa chỉ để xem điểm đến tốt xấu.
+• Xuất hành quyết: giờ tốt, hướng tốt hiện tại và sắp tới theo mục đích, mũi tên la bàn dẫn đường.
+• Tiện ích màn hình chính: xem cửa tốt hiện tại mà không cần mở ứng dụng.
+
+XEM NGÀY GIỜ TỐT VÀ LỊCH
+• Chọn ngày giờ: chấm điểm từng giờ từ vài ngày tới một năm, tìm ngày giờ tốt để ký kết, khai trương, phỏng vấn, xem mắt, đính hôn, đi xa; thêm vào lịch chỉ một chạm.
+• Lịch Kỳ Môn hôm nay: giờ tốt, hướng tốt trong ngày, chia sẻ bằng thẻ hình.
+• Thông báo giờ tốt và nhắc mỗi sáng.
+
+PHONG THỦY NHÀ Ở, VĂN PHÒNG, CỬA HÀNG
+• Cửu cung nhà ở: đo hướng từ tâm nhà, chụp hoặc vẽ mặt bằng, đặt cửu cung và Bát Môn vào từng phòng kèm luận giải.
+• Hướng giường, bàn làm việc: chọn hướng tốt theo lá số năm nay.
+• Hướng chuyển nhà, đi xa: so sánh năm nay, năm sau và từng tháng.
+
+LÁ SỐ CÁ NHÂN VÀ HỎI VIỆC
+• Lá số bản mệnh theo ngày sinh: cung bản mệnh, vận năm, vận tháng, giờ tốt và hướng tốt của riêng bạn.
+• Hợp lá số hai người: người yêu, đối tác.
+• Hỏi việc Kỳ Môn: sự nghiệp, tình cảm, tài lộc, thi cử, đồ thất lạc, tìm người, tìm thú cưng, luận theo dụng thần và cách cục.
+
+LÁ SỐ KỲ MÔN ĐỘN GIÁP ĐẦY ĐỦ
+• Lá số giờ, tháng, năm; phép Sách Bổ hoặc Trí Nhuận; giờ mặt trời thật, giờ Tý muộn.
+• Chạm vào cung để xem ý nghĩa của môn, tinh, thần, can. Dễ hiểu cho người mới.
+
+HỌC VÀ LƯU LẠI
+• Khóa học Kỳ Môn Độn Giáp: 13 bài, từ Tam Kỳ Lục Nghi, Bát Môn Cửu Tinh đến cách cục và ứng dụng.
+• Nhật ký lá số: lưu lá số kèm ghi chú, ghi lại kết quả thực tế.
+
+Lập lá số và la bàn miễn phí. Xuất hành quyết dùng miễn phí mỗi ngày. Gói đăng ký mở khóa chọn ngày giờ, nhà ở, luận giải hỏi việc, lá số cá nhân và nhiều hơn nữa, đồng thời bỏ quảng cáo.
+
+Nội dung ứng dụng là tham khảo văn hóa thuật số truyền thống, không phải tư vấn y tế, pháp lý, tài chính hay chuyên môn nào khác.""")
+
+L["es"] = dict(play="es-419",
+title="Brújula Qimen: Feng Shui, QMDJ",
+short="Brújula feng shui Qi Men Dun Jia: direcciones y horas propicias, fechas, hogar.",
+full="""Brújula Qimen es una brújula feng shui que coloca la carta de Qi Men Dun Jia (QMDJ), el arte chino clásico del momento y la dirección, sobre las direcciones reales a tu alrededor. Abre la brújula y las Ocho Puertas giran con tu teléfono: verás al instante dónde están ahora la Puerta de la Apertura, la del Descanso y la de la Vida. Con el mapa, la elección de fechas propicias, el almanaque chino diario y los avisos de horas favorables, usa Qi Men Dun Jia para viajar, mudarte, firmar, abrir un negocio y el feng shui de tu casa.
+
+BRÚJULA Y MAPA: DIRECCIONES PROPICIAS AL INSTANTE
+• Brújula Qimen: la carta se alinea con las direcciones reales y muestra qué puerta tienes delante y si es favorable. Norte magnético o verdadero, detección de interferencias y bloqueo en interiores.
+• Ocho Puertas en el mapa: mira los sectores de cada puerta a tu alrededor y consulta cualquier destino por dirección.
+• Guía de salida: horas y direcciones propicias ahora y después según tu propósito, con una flecha que te guía.
+• Widget de pantalla de inicio: ve la puerta favorable del momento sin abrir la app.
+
+FECHAS PROPICIAS Y ALMANAQUE
+• Elección de fechas: puntúa cada hora desde los próximos días hasta un año y encuentra fechas y horas propicias para firmar, inaugurar, entrevistas, citas, compromiso y viajes. Añádelas al calendario con un toque.
+• Almanaque Qimen diario: horas y direcciones favorables del día, para compartir como tarjeta.
+• Avisos de horas favorables y recordatorio cada mañana.
+
+FENG SHUI PARA CASA, OFICINA Y TIENDA
+• Carta de la casa (Nueve Palacios): mide desde el centro, fotografía o dibuja el plano y asigna los nueve palacios y las Ocho Puertas a cada habitación, con su lectura.
+• Orientación de cama y escritorio: buenas direcciones según la carta de este año.
+• Dirección de mudanza y viaje: compara un destino este año, el próximo y cada mes.
+
+CARTAS PERSONALES Y PREGUNTAS
+• Carta natal Qimen según tu cumpleaños: palacio de vida, suerte anual y mensual, tus horas y direcciones favorables.
+• Carta de compatibilidad para pareja y socios.
+• Pregunta a Qimen: trabajo, amor, dinero, exámenes, objetos perdidos, personas y mascotas perdidas, leídos según el dios útil y los patrones.
+
+CARTAS COMPLETAS DE QI MEN DUN JIA
+• Cartas de hora, mes y año; métodos Chai Bu o Zhi Run; hora solar verdadera y hora Zi tardía.
+• Toca un palacio para ver qué significa cada puerta, estrella, deidad y tronco. Ideal para principiantes.
+
+APRENDE Y GUARDA REGISTROS
+• Curso de Qi Men Dun Jia: 13 lecciones, de las Tres Maravillas y Seis Instrumentos a puertas, estrellas, patrones y uso práctico.
+• Diario de cartas: guarda cartas con notas y registra lo que realmente pasó.
+
+Las cartas y la brújula son gratis. La guía de salida es gratis una vez al día. Premium desbloquea la elección de fechas, la carta de la casa, las lecturas, las cartas personales y más, y quita los anuncios.
+
+El contenido es una referencia a la metafísica tradicional china y no constituye consejo médico, legal, financiero ni profesional.""")
+
+L["pt-BR"] = dict(play="pt-BR",
+title="Bússola Qimen: Feng Shui, QMDJ",
+short="Bússola feng shui Qi Men Dun Jia: direções e horários favoráveis, datas, casa.",
+full="""Bússola Qimen é uma bússola feng shui que coloca o mapa de Qi Men Dun Jia (QMDJ), a arte chinesa clássica do tempo e da direção, sobre as direções reais ao seu redor. Abra a bússola e os Oito Portões giram com o seu celular: veja na hora onde estão agora o Portão da Abertura, o do Descanso e o da Vida. Com o mapa, a escolha de datas favoráveis, o almanaque chinês diário e os avisos de horários favoráveis, use Qi Men Dun Jia para viajar, mudar de casa, assinar, abrir um negócio e no feng shui da sua casa.
+
+BÚSSOLA E MAPA: DIREÇÕES FAVORÁVEIS NA HORA
+• Bússola Qimen: o mapa se alinha às direções reais e mostra qual portão está à sua frente e se é favorável. Norte magnético ou verdadeiro, detecção de interferência e trava para ambientes internos.
+• Oito Portões no mapa: veja os setores de cada portão ao seu redor e consulte qualquer destino pelo endereço.
+• Guia de saída: horários e direções favoráveis agora e a seguir conforme seu objetivo, com uma seta que guia o caminho.
+• Widget na tela inicial: veja o portão favorável do momento sem abrir o app.
+
+DATAS FAVORÁVEIS E ALMANAQUE
+• Escolha de datas: pontua cada hora dos próximos dias até um ano e encontra datas e horários favoráveis para assinar, inaugurar, entrevistas, encontros, noivado e viagens. Adicione à agenda com um toque.
+• Almanaque Qimen diário: horários e direções favoráveis do dia, para compartilhar como cartão.
+• Avisos de horários favoráveis e lembrete toda manhã.
+
+FENG SHUI PARA CASA, ESCRITÓRIO E LOJA
+• Mapa da casa (Nove Palácios): meça a partir do centro, fotografe ou desenhe a planta e associe os nove palácios e os Oito Portões a cada cômodo, com a leitura de cada um.
+• Direção da cama e da mesa: boas direções pelo mapa deste ano.
+• Direção de mudança e viagem: compare um destino neste ano, no próximo e em cada mês.
+
+MAPAS PESSOAIS E PERGUNTAS
+• Mapa natal Qimen pelo seu aniversário: palácio de vida, sorte anual e mensal, seus horários e direções favoráveis.
+• Mapa de compatibilidade para casal e sócios.
+• Pergunte ao Qimen: carreira, amor, dinheiro, provas, objetos perdidos, pessoas e animais desaparecidos, lidos pelo deus útil e pelos padrões.
+
+MAPAS COMPLETOS DE QI MEN DUN JIA
+• Mapas de hora, mês e ano; métodos Chai Bu ou Zhi Run; hora solar verdadeira e hora Zi tardia.
+• Toque em um palácio para ver o significado de cada portão, estrela, divindade e tronco. Fácil para iniciantes.
+
+APRENDA E GUARDE REGISTROS
+• Curso de Qi Men Dun Jia: 13 lições, das Três Maravilhas e Seis Instrumentos aos portões, estrelas, padrões e uso prático.
+• Diário de mapas: salve mapas com notas e registre o que realmente aconteceu.
+
+Os mapas e a bússola são gratuitos. O guia de saída é gratuito uma vez por dia. O Premium libera escolha de datas, mapa da casa, leituras, mapas pessoais e mais, e remove os anúncios.
+
+O conteúdo é uma referência à metafísica tradicional chinesa e não constitui aconselhamento médico, jurídico, financeiro ou profissional.""")
+
+L["id"] = dict(play="id",
+title="Kompas Qimen: Feng Shui, QMDJ",
+short="Kompas feng shui Qi Men Dun Jia: arah hoki, hari dan jam baik, almanak, rumah.",
+full="""Kompas Qimen adalah kompas feng shui yang menempatkan bagan Qi Men Dun Jia (QMDJ), seni klasik Tionghoa tentang waktu dan arah, di atas arah nyata di sekitar Anda. Buka kompas dan Delapan Gerbang berputar mengikuti ponsel, sehingga Anda langsung tahu di mana Gerbang Pembukaan, Gerbang Istirahat dan Gerbang Kehidupan saat ini. Dengan peta, pemilihan hari baik, almanak Tionghoa harian dan pengingat jam baik, gunakan Qi Men Dun Jia untuk bepergian, pindah rumah, tanda tangan kontrak, membuka usaha dan feng shui rumah.
+
+KOMPAS DAN PETA: CARI ARAH HOKI SEKETIKA
+• Kompas Qimen: bagan sejajar dengan arah nyata dan menunjukkan gerbang di depan Anda serta baik buruknya. Utara magnetik atau sejati, deteksi gangguan magnet, dan kunci arah di dalam ruangan.
+• Delapan Gerbang di peta: lihat sektor setiap gerbang di sekitar Anda dan cek tujuan mana pun lewat alamat.
+• Panduan bepergian: jam dan arah baik sekarang dan berikutnya sesuai tujuan, dengan panah kompas sebagai penunjuk.
+• Widget layar utama: lihat gerbang baik saat ini tanpa membuka aplikasi.
+
+HARI BAIK DAN ALMANAK
+• Pemilihan waktu: menilai setiap jam dari beberapa hari hingga satu tahun ke depan dan menemukan hari serta jam baik untuk kontrak, pembukaan usaha, wawancara, kencan, lamaran dan perjalanan. Tambahkan ke kalender dengan sekali ketuk.
+• Almanak Qimen harian: jam dan arah baik hari ini, bisa dibagikan sebagai kartu gambar.
+• Notifikasi jam baik dan pengingat setiap pagi.
+
+FENG SHUI RUMAH, KANTOR DAN TOKO
+• Bagan rumah (Sembilan Istana): ukur dari titik tengah, foto atau gambar denah, lalu petakan sembilan istana dan Delapan Gerbang ke setiap ruangan, lengkap dengan bacaannya.
+• Arah tempat tidur dan meja: cari arah baik dari bagan tahun ini.
+• Arah pindahan dan perjalanan: bandingkan tujuan untuk tahun ini, tahun depan dan setiap bulan.
+
+BAGAN PRIBADI DAN PERTANYAAN
+• Bagan kelahiran Qimen dari tanggal lahir: istana kehidupan, peruntungan tahunan dan bulanan, jam serta arah baik pribadi.
+• Bagan kecocokan untuk pasangan dan mitra usaha.
+• Tanya Qimen: karier, cinta, keuangan, ujian, barang hilang, orang hilang dan hewan peliharaan, dibaca dari dewa berguna dan pola bagan.
+
+BAGAN QI MEN DUN JIA LENGKAP
+• Bagan jam, bulan dan tahun; metode Chai Bu atau Zhi Run; waktu matahari sejati dan jam Zi akhir.
+• Ketuk istana untuk melihat arti setiap gerbang, bintang, dewa dan batang. Mudah untuk pemula.
+
+BELAJAR DAN SIMPAN CATATAN
+• Kursus Qi Men Dun Jia: 13 pelajaran, dari Tiga Keajaiban dan Enam Instrumen hingga gerbang, bintang, pola dan penerapan nyata.
+• Jurnal bagan: simpan bagan beserta catatan dan catat apa yang benar-benar terjadi.
+
+Bagan dan kompas gratis. Panduan bepergian gratis sekali sehari. Premium membuka pemilihan waktu, bagan rumah, bacaan, bagan pribadi dan lainnya, serta menghapus iklan.
+
+Konten ini adalah referensi metafisika tradisional Tionghoa, bukan nasihat medis, hukum, keuangan, atau profesional lainnya.""")
+
+L["th"] = dict(play="th",
+title="เข็มทิศฉีเหมิน: ฮวงจุ้ย ฤกษ์ดี",
+short="เข็มทิศฮวงจุ้ยฉีเหมินตุ้นเจี่ย: ทิศมงคล ฤกษ์ยามดี ปฏิทินจีน ผังบ้าน ผังดวง",
+full="""เข็มทิศฉีเหมินคือเข็มทิศฮวงจุ้ยที่วางผังฉีเหมินตุ้นเจี่ย ศาสตร์จีนโบราณว่าด้วยจังหวะเวลาและทิศทาง ลงบนทิศจริงรอบตัวคุณ เปิดเข็มทิศแล้วแปดประตูจะหมุนตามโทรศัพท์ เห็นทันทีว่าประตูเปิด ประตูพักผ่อน และประตูชีวิตอยู่ทิศไหนในตอนนี้ ใช้ร่วมกับแผนที่ การหาฤกษ์ดี ปฏิทินจีนประจำวัน และการแจ้งเตือนยามมงคล สำหรับการเดินทาง ย้ายบ้าน เซ็นสัญญา เปิดกิจการ และฮวงจุ้ยบ้าน
+
+เข็มทิศและแผนที่: หาทิศมงคลได้ทันที
+• เข็มทิศฉีเหมิน: ผังหมุนตรงกับทิศจริง บอกว่าด้านหน้าเป็นประตูใดและดีหรือไม่ เลือกทิศเหนือแม่เหล็กหรือเหนือจริง ตรวจจับสัญญาณรบกวน และล็อกทิศในอาคารได้
+• แปดประตูบนแผนที่: ดูแนวของแต่ละประตูรอบตัว และค้นหาที่อยู่เพื่อดูว่าจุดหมายดีหรือไม่
+• เคล็ดออกเดินทาง: ยามและทิศมงคลตอนนี้และถัดไปตามจุดประสงค์ พร้อมลูกศรเข็มทิศนำทาง
+• วิดเจ็ตหน้าจอหลัก: ดูประตูมงคลตอนนี้ได้โดยไม่ต้องเปิดแอป
+
+ฤกษ์ดีและปฏิทิน
+• หาฤกษ์: ให้คะแนนทุกยามตั้งแต่ไม่กี่วันข้างหน้าจนถึงหนึ่งปี หาวันและเวลามงคลสำหรับเซ็นสัญญา เปิดร้าน สัมภาษณ์งาน นัดพบ หมั้น และเดินทาง เพิ่มลงปฏิทินได้ในแตะเดียว
+• ปฏิทินฉีเหมินประจำวัน: ยามและทิศมงคลของวัน แชร์เป็นการ์ดภาพได้
+• แจ้งเตือนยามมงคลและการเตือนทุกเช้า
+
+ฮวงจุ้ยบ้าน สำนักงาน และร้านค้า
+• ผังบ้านเก้าวัง: วัดทิศจากจุดศูนย์กลาง ถ่ายรูปหรือวาดแปลนบ้าน แล้วจับคู่เก้าวังและแปดประตูกับทุกห้อง พร้อมคำอธิบาย
+• ทิศเตียงและโต๊ะทำงาน: หาทิศที่ดีจากผังประจำปีนี้
+• ทิศย้ายบ้านและเดินทาง: เทียบจุดหมายในปีนี้ ปีหน้า และแต่ละเดือน
+
+ผังดวงส่วนตัวและการถามเรื่อง
+• ผังดวงกำเนิดจากวันเกิด: วังชะตา ดวงรายปีและรายเดือน ยามและทิศมงคลเฉพาะตัว
+• ผังความเข้ากันสำหรับคู่รักและหุ้นส่วน
+• ถามฉีเหมิน: การงาน ความรัก การเงิน การสอบ ของหาย ตามหาคน และสัตว์เลี้ยง อ่านจากหย่งเสินและรูปแบบผัง
+
+ผังฉีเหมินตุ้นเจี่ยครบถ้วน
+• ผังยาม เดือน และปี วิธี Chai Bu หรือ Zhi Run เวลาสุริยะจริงและยามจื่อช่วงดึก
+• แตะวังเพื่อดูความหมายของประตู ดาว เทพ และก้านฟ้า เข้าใจง่ายสำหรับมือใหม่
+
+เรียนรู้และบันทึก
+• คอร์สฉีเหมินตุ้นเจี่ย 13 บท ตั้งแต่สามมหัศจรรย์หกเครื่องมือ ไปจนถึงประตู ดาว รูปแบบ และการใช้งานจริง
+• บันทึกผัง: เก็บผังพร้อมโน้ต และบันทึกผลที่เกิดขึ้นจริง
+
+ผังและเข็มทิศใช้ฟรี เคล็ดออกเดินทางใช้ฟรีวันละครั้ง สมาชิกพรีเมียมปลดล็อกการหาฤกษ์ ผังบ้าน คำอธิบายการถามเรื่อง ผังดวงส่วนตัว และอื่นๆ พร้อมไม่มีโฆษณา
+
+เนื้อหาในแอปเป็นข้อมูลอ้างอิงด้านศาสตร์จีนดั้งเดิม ไม่ใช่คำแนะนำทางการแพทย์ กฎหมาย การเงิน หรือวิชาชีพใดๆ""")
+
+L["ar"] = dict(play="ar",
+title="بوصلة تشيمن: فنغ شوي واتجاهات",
+short="بوصلة فنغ شوي بنظام تشي من دون جيا: اتجاهات وأوقات مناسبة، تواريخ، المنزل.",
+full="""بوصلة تشيمن هي بوصلة فنغ شوي تضع مخطط تشي من دون جيا (QMDJ)، الفن الصيني الكلاسيكي للتوقيت والاتجاه، فوق الاتجاهات الحقيقية من حولك. افتح البوصلة فتدور الأبواب الثمانية مع هاتفك، وترى فورًا أين يقع الآن باب الانفتاح وباب الراحة وباب الحياة. ومع الخريطة واختيار التواريخ المناسبة والتقويم الصيني اليومي وتنبيهات الأوقات المناسبة، استخدم تشي من دون جيا للسفر والانتقال إلى منزل جديد وتوقيع العقود وافتتاح الأعمال وفنغ شوي المنزل.
+
+البوصلة والخريطة: اتجاهات مناسبة فورًا
+• بوصلة تشيمن: يتطابق المخطط مع الاتجاهات الحقيقية ويُظهر الباب الذي أمامك ومدى ملاءمته. الشمال المغناطيسي أو الحقيقي، وكشف التداخل المغناطيسي، وتثبيت الاتجاه داخل المباني.
+• الأبواب الثمانية على الخريطة: شاهد قطاع كل باب حولك وتحقق من أي وجهة عبر العنوان.
+• دليل الخروج: الأوقات والاتجاهات المناسبة الآن وبعد ذلك حسب غرضك، مع سهم يرشدك.
+• أداة للشاشة الرئيسية: الباب المناسب الآن دون فتح التطبيق.
+
+التواريخ المناسبة والتقويم
+• اختيار التوقيت: تقييم كل ساعة من الأيام القادمة حتى سنة كاملة لإيجاد تواريخ وأوقات مناسبة للتوقيع والافتتاح والمقابلات واللقاءات والخطوبة والسفر، مع إضافتها إلى التقويم بلمسة.
+• تقويم تشيمن اليومي: أوقات اليوم واتجاهاته المناسبة، قابلة للمشاركة كبطاقة صورة.
+• تنبيهات الأوقات المناسبة وتذكير كل صباح.
+
+فنغ شوي للمنزل والمكتب والمتجر
+• مخطط المنزل (القصور التسعة): قِس من المركز أو صوّر المخطط أو ارسمه، ووزّع القصور التسعة والأبواب الثمانية على كل غرفة مع قراءة لكل منها.
+• اتجاه السرير والمكتب: اتجاهات جيدة وفق مخطط هذا العام.
+• اتجاه الانتقال والسفر: قارن الوجهة لهذا العام والعام القادم وكل شهر.
+
+المخططات الشخصية والأسئلة
+• مخطط الميلاد من تاريخ ميلادك: قصر العمر، وحظ السنة والشهر، وأوقاتك واتجاهاتك المناسبة.
+• مخطط التوافق للشريك وشركاء العمل.
+• اسأل تشيمن: العمل والحب والمال والامتحانات والأشياء المفقودة والأشخاص والحيوانات الأليفة المفقودة، وفق الإله المفيد وأنماط المخطط.
+
+مخططات تشي من دون جيا الكاملة
+• مخططات الساعة والشهر والسنة، وطريقتا Chai Bu وZhi Run، والتوقيت الشمسي الحقيقي وساعة Zi المتأخرة.
+• المس أي قصر لترى معنى كل باب ونجم وإله وجذع. سهل للمبتدئين.
+
+تعلّم واحتفظ بالسجلات
+• دورة تشي من دون جيا: 13 درسًا من العجائب الثلاث والأدوات الست إلى الأبواب والنجوم والأنماط والتطبيق العملي.
+• سجل المخططات: احفظ المخططات مع الملاحظات وسجّل ما حدث فعلًا.
+
+المخططات والبوصلة مجانية، ودليل الخروج مجاني مرة يوميًا. يفتح الاشتراك المميز اختيار التوقيت ومخطط المنزل والقراءات والمخططات الشخصية وغيرها، ويزيل الإعلانات.
+
+المحتوى مرجع للميتافيزيقا الصينية التقليدية، وليس نصيحة طبية أو قانونية أو مالية أو مهنية.""")
+
+# 變體：es-ES／es-US 同 es-419；pt-PT 由 pt-BR 調整用字
+L["es-ES"] = dict(L["es"], play="es-ES")
+L["es-US"] = dict(L["es"], play="es-US")
+pt = {"celular": "telemóvel", "na tela inicial": "no ecrã principal", "Widget na tela inicial": "Widget no ecrã principal",
+      "o app": "a app", "cômodo": "divisão", "agenda": "calendário", "compartilhar": "partilhar", "Toque em": "Toque num",
+      "detecção": "deteção", "ao seu redor": "à sua volta", "provas": "exames", "salve": "guarde"}
+def to_pt(s):
+    for a, b in pt.items(): s = s.replace(a, b)
+    return s
+L["pt-PT"] = {k: (to_pt(v) if k != "play" else "pt-PT") for k, v in L["pt-BR"].items()}
+
+LIM = dict(title=30, short=80, full=4000)
+bad = []
+for k, v in L.items():
+    for f, n in LIM.items():
+        if len(v[f]) > n: bad.append(f"{k}.{f} {len(v[f])}>{n}")
+    for w in ("占卜", "算命", "divination", "fortune-telling", "best ", "#1"):
+        if w in v["title"] + v["short"] + v["full"]: bad.append(f"{k} 含 {w}")
+if bad: raise SystemExit("\n".join(bad))
+out = {"_note": "Play 商店資訊（14 語，ASO 版 2026-11-19，由 tools/store/aso_listing.py 產生）。title ≤30、short ≤80、full ≤4000。play = Play Console 語言代碼。"}
+out.update(L)
+p = pathlib.Path(__file__).resolve().parents[2] / "store/listing.json"
+p.write_text(json.dumps(out, ensure_ascii=False, indent=1) + "\n")
+for k, v in L.items(): print(f"{k:7} {v['play']:6} {len(v['title']):2} {len(v['short']):2} {len(v['full'])}")
