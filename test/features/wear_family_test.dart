@@ -5,6 +5,8 @@ import 'package:qimen_compass/features/wear/wear_sync.dart';
 import 'package:qimen_compass/l10n/l10n.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   test('手錶資料：36 個時辰、每個 8 宮、時間連續', () {
     final l = lookupAppLocalizations(const Locale('zh'));
     final d = WearSync.build(l, DateTime.utc(2026, 11, 20, 2), locked: false);
