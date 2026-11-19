@@ -46,6 +46,18 @@ android {
     lint {
         checkReleaseBuilds = false
     }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+// Java 與 Kotlin 目標版本要一致（否則 Kotlin 預設用 JDK 版本 25，與 Java 不符）
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+    }
 }
 
 dependencies {
