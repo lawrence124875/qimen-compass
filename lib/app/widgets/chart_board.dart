@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../features/meaning/meaning_content.dart';
+
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
 import '../theme/app_theme.dart';
@@ -216,14 +218,34 @@ Future<void> showPalaceSheet(BuildContext context, QimenChart chart, int palace)
   );
 }
 
-class PalaceDetail extends StatelessWidget {
+class PalaceDetail extends StatefulWidget {
   const PalaceDetail({super.key, required this.chart, required this.palace});
 
   final QimenChart chart;
   final int palace;
 
   @override
+  State<PalaceDetail> createState() => _PalaceDetailState();
+}
+
+class _PalaceDetailState extends State<PalaceDetail> {
+  MeaningContent? _meaning = MeaningContent.cached;
+
+  @override
+  void initState() {
+    super.initState();
+    if (_meaning == null) {
+      MeaningContent.load(L10n.language).then((m) {
+        if (mounted && m != null) setState(() => _meaning = m);
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final chart = widget.chart;
+    final palace = widget.palace;
+    final mean = _meaning;
     final l = context.l10n;
     final lang = L10n.language;
     final qm = context.qm;
@@ -240,6 +262,17 @@ class PalaceDetail extends StatelessWidget {
           ]),
         );
     Text v(String s, {Color? color}) => Text(s, style: text.bodyLarge?.copyWith(color: color ?? qm.text));
+    // 點盤面元素的解說：術語下方一行小字
+    Widget vm(String s, List<String?> notes, {Color? color}) {
+      final n = notes.whereType<String>().toList();
+      if (n.isEmpty) return v(s, color: color);
+      return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        v(s, color: color),
+        for (final x in n) Text(x, style: text.bodySmall?.copyWith(color: qm.textMuted)),
+      ]);
+    }
+
+    List<String?> stemNotes(List<int> st) => [for (final i in st) mean?.lookup('stem', stemNames[i]) == null ? null : '${stemNames[i]}  ${mean!.lookup('stem', stemNames[i])}'];
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -248,11 +281,13 @@ class PalaceDetail extends StatelessWidget {
           Text('${QimenTerms.palace(palace, lang)} · ${dir[0].toUpperCase()}${dir.substring(1)}',
               style: serif(text.titleLarge).copyWith(color: qm.primary)),
           const SizedBox(height: 8),
-          if (pc.god != null) row(l.labelGod, v(QimenTerms.god(pc.god!, lang))),
-          if (pc.stars.isNotEmpty) row(l.labelStar, v(pc.stars.map((s) => QimenTerms.star(s, lang)).join('\n'))),
-          if (door != null) row(l.labelDoor, v('${QimenTerms.door(door, lang)}  ${l.luck(door.luck)}', color: qm.luck(door.luck))),
-          row(l.labelHeaven, v(stemsText(pc.heavenStems))),
-          row(l.labelEarth, v(stemsText(pc.earthStems))),
+          if (pc.god != null) row(l.labelGod, vm(QimenTerms.god(pc.god!, lang), [mean?.lookup('god', pc.god!.zh)])),
+          for (final st in pc.stars) row(l.labelStar, vm(QimenTerms.star(st, lang), [mean?.lookup('star', st.zh)])),
+          if (door != null)
+            row(l.labelDoor,
+                vm('${QimenTerms.door(door, lang)}  ${l.luck(door.luck)}', [mean?.lookup('door', door.zh)], color: qm.luck(door.luck))),
+          row(l.labelHeaven, vm(stemsText(pc.heavenStems), stemNotes(pc.heavenStems))),
+          row(l.labelEarth, vm(stemsText(pc.earthStems), stemNotes(pc.earthStems))),
           row(
             l.labelMarks,
             marksOf(pc).isEmpty

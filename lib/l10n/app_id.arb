@@ -539,5 +539,13 @@
   "divStandingOther": "Pihak lain lebih kuat: ikuti dulu dan hindari konfrontasi.",
   "divStandingDetail": "Membandingkan batang hari (Anda) dengan {ys} (pihak lain) menurut musim dan istana.",
   "divMarkYongShen": "Ditandai: {ys} di {palace}",
-  "divMarkSelf": "batang hari (Anda) di {palace}"
+  "divMarkSelf": "batang hari (Anda) di {palace}",
+  "tabCompass": "Kompas",
+  "tabChart": "Bagan",
+  "tabZeShi": "Waktu baik",
+  "tabMe": "Saya",
+  "meHouseSub": "Petakan sembilan istana ke ruangan Anda",
+  "meRecordsSub": "Tinjau catatan dan hasilnya",
+  "meCourseSub": "Pelajari gerbang, bintang, dan roh bertahap",
+  "meSettingsSub": "Tampilan, bagan, pengingat, keanggotaan"
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../app/main_shell.dart';
 import '../../app/theme/app_theme.dart';
 import '../../l10n/l10n.dart';
 import '../travel/travel_page.dart';
@@ -115,6 +116,7 @@ class LessonPage extends StatelessWidget {
     switch (type) {
       case CourseActionType.chart:
         nav.popUntil((r) => r.isFirst);
+        MainShell.select(MainTab.chart);
       case CourseActionType.travel:
         nav.push(MaterialPageRoute<void>(builder: (_) => const TravelPage()));
     }

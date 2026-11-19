@@ -539,5 +539,13 @@
   "divStandingOther": "อีกฝ่ายแข็งกว่า: คล้อยตามไปก่อน เลี่ยงการปะทะ",
   "divStandingDetail": "เทียบลำต้นวัน (คุณ) กับ{ys} (อีกฝ่าย) ตามฤดูและวังที่ตก",
   "divMarkYongShen": "ทำเครื่องหมาย: {ys} ที่{palace}",
-  "divMarkSelf": "ลำต้นวัน (คุณ) ที่{palace}"
+  "divMarkSelf": "ลำต้นวัน (คุณ) ที่{palace}",
+  "tabCompass": "เข็มทิศ",
+  "tabChart": "ผัง",
+  "tabZeShi": "ฤกษ์",
+  "tabMe": "ของฉัน",
+  "meHouseSub": "วางเก้าวังลงบนห้องในบ้าน",
+  "meRecordsSub": "ทบทวนบันทึกและผลลัพธ์",
+  "meCourseSub": "เรียนแปดประตู เก้าดาว แปดเทพทีละขั้น",
+  "meSettingsSub": "หน้าตา ผัง การแจ้งเตือน สมาชิก"
 }

@@ -539,5 +539,13 @@
   "divStandingOther": "La otra parte es más fuerte: acompaña por ahora y evita el choque.",
   "divStandingDetail": "Compara el tronco del día (tú) con {ys} (la otra parte) por estación y palacio.",
   "divMarkYongShen": "Marcado: {ys} en {palace}",
-  "divMarkSelf": "tronco del día (tú) en {palace}"
+  "divMarkSelf": "tronco del día (tú) en {palace}",
+  "tabCompass": "Brújula",
+  "tabChart": "Tablero",
+  "tabZeShi": "Fechas",
+  "tabMe": "Yo",
+  "meHouseSub": "Superpón los nueve palacios a tus habitaciones",
+  "meRecordsSub": "Revisa tus registros y resultados",
+  "meCourseSub": "Aprende puertas, estrellas y espíritus paso a paso",
+  "meSettingsSub": "Apariencia, tablero, recordatorios, suscripción"
 }

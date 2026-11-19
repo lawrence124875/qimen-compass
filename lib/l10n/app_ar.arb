@@ -539,5 +539,13 @@
   "divStandingOther": "الطرف الآخر أقوى: جارِه الآن وتجنّب المواجهة.",
   "divStandingDetail": "مقارنة جذع اليوم (أنت) مع {ys} (الطرف الآخر) حسب الموسم والقصر.",
   "divMarkYongShen": "مُعلَّم: {ys} في {palace}",
-  "divMarkSelf": "جذع اليوم (أنت) في {palace}"
+  "divMarkSelf": "جذع اليوم (أنت) في {palace}",
+  "tabCompass": "البوصلة",
+  "tabChart": "اللوحة",
+  "tabZeShi": "التوقيت",
+  "tabMe": "حسابي",
+  "meHouseSub": "طابق القصور التسعة مع غرف منزلك",
+  "meRecordsSub": "راجع سجلاتك ونتائجها",
+  "meCourseSub": "تعلّم البوابات والنجوم والأرواح خطوة بخطوة",
+  "meSettingsSub": "المظهر واللوحة والتذكيرات والاشتراك"
 }

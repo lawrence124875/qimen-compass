@@ -539,5 +539,13 @@
   "divStandingOther": "Đối phương mạnh hơn: tạm thời thuận theo, tránh đối đầu",
   "divStandingDetail": "So sánh can ngày (bạn) với {ys} (đối phương) theo vượng suy và cung",
   "divMarkYongShen": "Đánh dấu: {ys} ở {palace}",
-  "divMarkSelf": "can ngày (bạn) ở {palace}"
+  "divMarkSelf": "can ngày (bạn) ở {palace}",
+  "tabCompass": "La bàn",
+  "tabChart": "Bàn",
+  "tabZeShi": "Chọn giờ",
+  "tabMe": "Của tôi",
+  "meHouseSub": "Đặt cửu cung lên các phòng trong nhà",
+  "meRecordsSub": "Xem lại ghi chép và kết quả",
+  "meCourseSub": "Học Bát Môn, Cửu Tinh, Bát Thần từng bước",
+  "meSettingsSub": "Giao diện, lập bàn, nhắc nhở, hội viên"
 }

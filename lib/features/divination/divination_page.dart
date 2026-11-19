@@ -6,6 +6,7 @@ import '../../app/theme/app_theme.dart';
 import '../../core/records/record_store.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
+import '../../shared/premium/usage_gate.dart';
 import 'divination_content.dart';
 import '../records/record_list_page.dart';
 import 'divination_journal.dart';
@@ -86,6 +87,9 @@ class _DivinationPageState extends State<DivinationPage> {
   }
 
   Future<void> _start() async {
+    // 問事解讀屬訂閱功能：免費版完整體驗一次，之後開訂閱頁
+    final access = await requirePremium(context, feature: 'divination');
+    if (access == PremiumAccess.titleOnly || !mounted) return;
     final content = _content!;
     final now = DateTime.now();
     final reading = const DivinationEngine().read(
