@@ -14,3 +14,4 @@ export 'direction.dart';
 export 'almanac.dart';
 export 'personal.dart';
 export 'synastry.dart';
+export 'fengshui.dart';

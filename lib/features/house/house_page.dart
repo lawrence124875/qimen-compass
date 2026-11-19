@@ -14,6 +14,7 @@ import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
 import 'heading_tracker.dart';
 import 'house_geometry.dart';
+import '../lucky/placement_page.dart';
 import '../travel/travel_text.dart';
 import 'house_model.dart';
 import 'house_widgets.dart';
@@ -467,6 +468,16 @@ class _HousePageState extends State<HousePage> {
       kindSelector,
       const SizedBox(height: 8),
       facingCard,
+      const SizedBox(height: 8),
+      Card(
+        margin: EdgeInsets.zero,
+        child: ListTile(
+          leading: Icon(Icons.spa_outlined, color: qm.primary),
+          title: Text(l.placeButton),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => PlacementPage(rooms: rooms))),
+        ),
+      ),
       const SizedBox(height: 12),
       list,
       const SizedBox(height: 12),

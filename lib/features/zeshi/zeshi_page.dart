@@ -12,6 +12,7 @@ import '../../core/records/record_store.dart';
 import '../../l10n/l10n.dart';
 import '../../shared/premium/usage_gate.dart';
 import '../../shared/widgets/result_card.dart';
+import '../lucky/lucky_cards.dart';
 import '../records/record_actions.dart';
 import '../travel/travel_text.dart';
 import 'zeshi_text.dart';
@@ -56,6 +57,9 @@ class _ZeShiPageState extends State<ZeShiPage> {
   int _perDay = 2;
   HourWindow _window = HourWindow.day;
   List<ZeShiSlot>? _result;
+
+  /// 營業時段：未來 7 天全部時辰（一週時段表）。
+  List<ZeShiSlot>? _week;
   double? _progress;
   int _runId = 0;
 
@@ -137,8 +141,10 @@ class _ZeShiPageState extends State<ZeShiPage> {
     }
     if (!mounted || id != _runId) return;
     final r = _planner.pick(all.values.toList(), top: _top, perDay: _perDay == 0 ? 12 : _perDay, settings: settings);
+    final weekEnd = base.add(const Duration(days: 7));
     setState(() {
       _result = r;
+      _week = _event == ZeShiEvent.business ? [for (final x in all.values) if (x.startUtc.isBefore(weekEnd)) x] : null;
       _progress = null;
     });
   }
@@ -187,6 +193,13 @@ class _ZeShiPageState extends State<ZeShiPage> {
     _prefs?.setInt(_kTo, w.to);
     _run();
   }
+
+  String? _hint(AppLocalizations l) => switch (_event) {
+        ZeShiEvent.meditation => l.zeshiHintMeditation,
+        ZeShiEvent.business => l.zeshiHintBusiness,
+        ZeShiEvent.message => l.msgSub,
+        _ => null,
+      };
 
   String _perDayLabel(AppLocalizations l) => _perDay == 0 ? l.zeshiPerDayNoLimit : l.zeshiPerDayLimit(_perDay);
 
@@ -287,6 +300,10 @@ class _ZeShiPageState extends State<ZeShiPage> {
                   for (final e in ZeShiEvent.values)
                     ChoiceChip(label: Text(ZeShiText.event(l, e)), selected: e == _event, onSelected: (_) => _setEvent(e)),
                 ]),
+                if (_hint(l) case final h?) ...[
+                  const SizedBox(height: 8),
+                  Text(h, style: theme.textTheme.bodySmall?.copyWith(color: context.qm.textMuted)),
+                ],
                 if (_event == ZeShiEvent.custom) ...[
                   const SizedBox(height: 12),
                   Text(l.zeshiCustomDoor, style: theme.textTheme.labelLarge),
@@ -399,6 +416,10 @@ class _ZeShiPageState extends State<ZeShiPage> {
                       onCalendar: () => _addToCalendar(result[i]),
                       onSave: () => _saveSlot(result[i]),
                     ),
+                ],
+                if (_week != null && _week!.isNotEmpty && _event == ZeShiEvent.business) ...[
+                  const SizedBox(height: 12),
+                  WeekTable(slots: _week!),
                 ],
                 const SizedBox(height: 12),
                 Text(l.zeshiFootnote(_window.label(l), _perDayLabel(l)), style: theme.textTheme.bodySmall?.copyWith(color: context.qm.textMuted)),

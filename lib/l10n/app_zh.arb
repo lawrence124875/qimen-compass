@@ -1612,5 +1612,66 @@
       }
     }
   },
-  "facingSuggestNone": "今年沒有理想朝向，挑「普通」的方向即可"
+  "facingSuggestNone": "今年沒有理想朝向，挑「普通」的方向即可",
+  "luckyTitle": "今日吉色",
+  "luckyBasis": "依今日日干五行，適合穿搭與配件",
+  "luckyGreat": "大吉",
+  "luckyGood": "次吉",
+  "luckyWealth": "招財",
+  "luckyDrain": "消耗",
+  "luckyAvoid": "不宜",
+  "luckyPersonal": "你的吉色",
+  "luckyPersonalAvoid": "你今天少穿",
+  "luckyPersonalUnlock": "結合本命年命，看你的個人吉色",
+  "luckyNeedBirth": "先在「我的」填生日",
+  "msgTitle": "發訊息時機",
+  "msgSub": "投履歷、寄信、傳訊、告白、催款、提案",
+  "msgNowGood": "現在就適合送出",
+  "msgBestAt": "{time} 起較適合送出",
+  "@msgBestAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "msgNoneGood": "接下來幾小時都普通，不急就晚點再發",
+  "glossaryTitle": "神煞與十二長生圖鑑",
+  "glossaryCs": "十二長生",
+  "glossaryCsNote": "天干在各地支的旺衰循環：陽干順行、陰干逆行。點盤面宮位，可看該宮天盤干的長生狀態。",
+  "glossarySs": "神煞與格局標記",
+  "glossaryOpen": "圖鑑",
+  "labelChangSheng": "長生",
+  "zeshiEventMeditation": "靜坐冥想",
+  "zeshiEventBusiness": "營業時段",
+  "zeshiEventMessage": "發訊息",
+  "zeshiHintMeditation": "到時坐在家中這個方位，或面向這個方位靜坐。",
+  "zeshiHintBusiness": "下表是未來 7 天各時辰的吉凶，適合安排開門、促銷、直播。",
+  "zeshiWeekTitle": "一週時段表",
+  "placeButton": "開運擺件與化解",
+  "placeIntro": "以今年年盤為主，每年立春後換一次；下方「本月」看月盤微調。任何空間都能用：站在空間中心定好北方即可（辦公室、房間可各建一個空間）。",
+  "placeMonth": "本月：{door}（{level}）",
+  "@placeMonth": {
+    "placeholders": {
+      "door": {
+        "type": "String"
+      },
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "placeCure": "化解",
+  "placeNoCure": "此宮不需特別化解，保持整潔即可",
+  "facingNegotiation": "談判座位",
+  "facingHowNegotiation": "坐在會議桌前，手機平放，頂端指向你面向的方向（面向對方）",
+  "facingSeatPos": "座位位置：從會議室中心看，宜坐在 {dirs}。依現在的時盤，開會前再看一次。",
+  "@facingSeatPos": {
+    "placeholders": {
+      "dirs": {
+        "type": "String"
+      }
+    }
+  },
+  "facingFaceNote": "朝向一律以「人面向的方向」判斷；床則看睡覺時頭頂朝哪邊。"
 }

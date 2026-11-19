@@ -49,6 +49,15 @@ enum ZeShiEvent {
   /// 談判訴訟：開門、景門取佳，值符加分（貴人、主事者）。
   negotiation([Door.kai, Door.jingScene], God.zhiFu),
 
+  /// 靜坐冥想：休門（休養）、杜門（隱修）取佳，太陰加分（清靜）。
+  meditation([Door.xiu, Door.du], God.taiYin),
+
+  /// 營業時段：生門、開門取佳，值符加分（一週時段表）。
+  business([Door.sheng, Door.kai], God.zhiFu),
+
+  /// 發訊息（投履歷、寄信、傳訊、告白、催款、提案）：景門（文書訊息）、開門取佳，六合加分（溝通）。
+  message([Door.jingScene, Door.kai], God.liuHe),
+
   /// 自訂：門與神由使用者選（[ZeShiSpec]），這裡只是預設值。
   custom([Door.kai], God.zhiFu);
 
@@ -221,6 +230,25 @@ class ZeShiPlanner {
       if (start.isAfter(from) && clock.hour >= fromHour && clock.hour < toHour) {
         out.add(evaluate(start, next, event, birth: birth, spec: spec, settings: settings, method: method));
       }
+      start = next;
+    }
+    return out;
+  }
+
+  /// 從目前時辰起連續 [count] 個時辰（含目前這個），不排序；「發訊息時機」等看接下來幾小時用。
+  List<ZeShiSlot> upcoming(
+    DateTime from,
+    ZeShiEvent event, {
+    int count = 4,
+    BirthInfo? birth,
+    TimeSettings settings = const TimeSettings(),
+    JuMethod method = JuMethod.chaiBu,
+  }) {
+    final out = <ZeShiSlot>[];
+    var start = chuXing.slotStart(from, settings);
+    for (var i = 0; i < count; i++) {
+      final next = start.add(const Duration(hours: 2));
+      out.add(evaluate(start, next, event, birth: birth, settings: settings, method: method));
       start = next;
     }
     return out;

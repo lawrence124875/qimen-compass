@@ -20,6 +20,9 @@ class ZeShiText {
         ZeShiEvent.exam => l.zeshiEventExam,
         ZeShiEvent.medical => l.zeshiEventMedical,
         ZeShiEvent.negotiation => l.zeshiEventNegotiation,
+        ZeShiEvent.meditation => l.zeshiEventMeditation,
+        ZeShiEvent.business => l.zeshiEventBusiness,
+        ZeShiEvent.message => l.zeshiEventMessage,
         ZeShiEvent.custom => l.zeshiEventCustom,
       };
 
