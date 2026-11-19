@@ -30,6 +30,14 @@ else
   echo "::warning::尚未設定 MAPS_API_KEY，地圖八門只保留地址搜尋"
 fi
 
+# 桌面小工具（home_widget，HANDOFF §12 P7）：原生 Provider、版面、資源在 android_extra/
+KT_DIR="android/app/src/main/kotlin/com/lclab/qimen_compass"
+mkdir -p "$KT_DIR"
+cp android_extra/kotlin/*.kt "$KT_DIR/"
+cp -r android_extra/res/. android/app/src/main/res/
+grep -q "QimenWidgetProvider" "$MANIFEST" || sed -i 's#</application>#    <receiver android:name="com.lclab.qimen_compass.QimenWidgetProvider" android:exported="true">\n            <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE"/></intent-filter>\n            <meta-data android:name="android.appwidget.provider" android:resource="@xml/qimen_widget_info"/>\n        </receiver>\n    </application>#' "$MANIFEST"
+grep -q "QimenWidgetProvider" "$MANIFEST" && [ -f "$KT_DIR/MainActivity.kt" ] && echo "桌面小工具已加入" || { echo "::error::桌面小工具設定失敗（MainActivity 路徑可能改了）"; exit 1; }
+
 # 不鎖方向、不限制調整大小（Play Console 對大螢幕的要求）
 sed -i -E 's/[[:space:]]*android:(screenOrientation|resizeableActivity)="[^"]*"//g' "$MANIFEST"
 

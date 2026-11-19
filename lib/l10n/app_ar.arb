@@ -654,5 +654,8 @@
   "facingFit": "مناسب",
   "facingOk": "مقبول",
   "facingAvoid": "غير مستحسن",
-  "facingSuggest": "الاتجاهات المقترحة هذا العام"
+  "facingSuggest": "الاتجاهات المقترحة هذا العام",
+  "widgetTitle": "البوابة المباركة الآن",
+  "widgetLine": "{dir} · {door}",
+  "widgetOpenApp": "افتح التطبيق للتحديث"
 }

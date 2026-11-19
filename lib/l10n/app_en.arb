@@ -654,5 +654,8 @@
   "facingFit": "Suitable",
   "facingOk": "Okay",
   "facingAvoid": "Not advised",
-  "facingSuggest": "Suggested directions this year"
+  "facingSuggest": "Suggested directions this year",
+  "widgetTitle": "Lucky gate now",
+  "widgetLine": "{dir} · {door}",
+  "widgetOpenApp": "Open the app to update"
 }

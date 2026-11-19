@@ -654,5 +654,8 @@
   "facingFit": "적합",
   "facingOk": "보통",
   "facingAvoid": "권장하지 않음",
-  "facingSuggest": "올해 권장 방향"
+  "facingSuggest": "올해 권장 방향",
+  "widgetTitle": "지금의 길문",
+  "widgetLine": "{dir} · {door}",
+  "widgetOpenApp": "앱을 열어 업데이트"
 }

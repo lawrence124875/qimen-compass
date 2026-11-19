@@ -11,8 +11,10 @@ import '../../l10n/app_languages.dart';
 
 /// 課末按鈕開啟的功能。新增類型：先在這裡與 [CourseActionType.parse] 加上，再寫進內容 JSON。
 enum CourseActionType {
-  chart, // 首頁時盤
-  travel; // 出行訣
+  chart, // 盤面分頁
+  travel, // 出行訣
+  compass, // 羅盤分頁
+  zeshi; // 擇時分頁
 
   static CourseActionType? parse(String? s) {
     for (final t in values) {
