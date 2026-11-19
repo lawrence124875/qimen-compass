@@ -6,7 +6,7 @@ L = {}
 
 L["zh-Hant"] = dict(play="zh-TW",
 title="奇門羅盤：奇門遁甲排盤・風水擇日",
-short="奇門遁甲排盤＋風水羅盤：即時找吉方八門，擇日擇時、吉時提醒、黃曆、宅盤與本命盤。",
+short="奇門遁甲排盤＋風水羅盤：即時找吉方八門，擇日擇時、今日吉色、開運擺件、黃曆、宅盤與本命盤。",
 full="""奇門羅盤是把奇門遁甲排盤疊在真實方位上的風水羅盤。打開羅盤，八門跟著手機轉動，一眼看出開門、休門、生門此刻在哪個方向；搭配地圖、擇日擇時、今日黃曆與吉時提醒，把奇門遁甲用在出門、搬家、簽約、開幕與居家風水。
 
 【羅盤與地圖：即時找吉方】
@@ -18,11 +18,15 @@ full="""奇門羅盤是把奇門遁甲排盤疊在真實方位上的風水羅盤
 【擇日擇時與黃曆】
 • 擇時擇日：掃描未來數天到一年的時盤並評分，找出簽約、開幕、面試、相親、訂婚、遠行的吉日吉時，一鍵加入行事曆。
 • 今日奇門黃曆：每天的吉時、吉方，可做成圖卡分享。
+• 今日吉色：依當日五行給開運穿搭顏色與幸運色，訂閱可結合本命看個人吉色。
+• 發訊息時機：投履歷、寄信、傳訊、告白、催款、提案，看接下來幾小時哪個時辰最順。
+• 靜坐冥想與營業時段：選吉時吉方靜坐；店家看一週時段表安排開門、促銷、直播。
 • 吉時推播與每日早晨提醒。
 
 【居家風水：住家、辦公室、店面】
 • 宅盤九宮：站在中心量方位、拍平面圖或手繪，把九宮與八門對應到每個房間，並附判讀。
 • 床位、書桌朝向：依今年年盤找好方向。
+• 開運擺件與化解：依宅盤九宮的五行與八門，建議各方位擺什麼、用什麼顏色；位置不理想也附化解法。談判座位教你會議坐哪裡、面向哪裡。
 • 搬家、遠行方位：對照今明兩年與每個月的吉凶。
 
 【本命盤與問事】
@@ -33,6 +37,7 @@ full="""奇門羅盤是把奇門遁甲排盤疊在真實方位上的風水羅盤
 【專業排盤】
 • 時家奇門：時盤、月盤、年盤，拆補法、置閏法，真太陽時、夜子時設定。
 • 點宮位即看門、星、神、天干的意義，新手也看得懂。
+• 神煞與十二長生圖鑑：驛馬、空亡、擊刑、天乙貴人、桃花等，點宮位也能看天干的長生狀態。
 
 【學習與紀錄】
 • 奇門遁甲課程：13 課，從三奇六儀、八門九星到格局與實際應用。
@@ -44,7 +49,7 @@ full="""奇門羅盤是把奇門遁甲排盤疊在真實方位上的風水羅盤
 
 L["zh-Hans"] = dict(play="zh-CN",
 title="奇门罗盘：奇门遁甲排盘・风水择日",
-short="奇门遁甲排盘＋风水罗盘：实时找吉方八门，择日择时、吉时提醒、黄历、宅盘与本命盘。",
+short="奇门遁甲排盘＋风水罗盘：实时找吉方八门，择日择时、今日吉色、开运摆件、黄历、宅盘与本命盘。",
 full="""奇门罗盘是把奇门遁甲排盘叠在真实方位上的风水罗盘。打开罗盘，八门跟着手机转动，一眼看出开门、休门、生门此刻在哪个方向；搭配地图、择日择时、今日黄历与吉时提醒，把奇门遁甲用在出门、搬家、签约、开业与居家风水。
 
 【罗盘与地图：实时找吉方】
@@ -56,11 +61,15 @@ full="""奇门罗盘是把奇门遁甲排盘叠在真实方位上的风水罗盘
 【择日择时与黄历】
 • 择时择日：扫描未来数天到一年的时盘并评分，找出签约、开业、面试、相亲、订婚、远行的吉日吉时，一键加入日历。
 • 今日奇门黄历：每天的吉时、吉方，可做成图卡分享。
+• 今日吉色：依当日五行给开运穿搭颜色与幸运色，订阅可结合本命看个人吉色。
+• 发消息时机：投履历、寄信、传讯、告白、催款、提案，看接下来几小时哪个时辰最顺。
+• 静坐冥想与营业时段：选吉时吉方静坐；店家看一周时段表安排开门、促销、直播。
 • 吉时推送与每日早晨提醒。
 
 【居家风水：住家、办公室、店面】
 • 宅盘九宫：站在中心测方位、拍平面图或手绘，把九宫与八门对应到每个房间，并附判读。
 • 床位、书桌朝向：依今年年盘找好方向。
+• 开运摆件与化解：依宅盘九宫的五行与八门，建议各方位摆什么、用什么颜色；位置不理想也附化解法。谈判座位教你会议坐哪里、面向哪里。
 • 搬家、远行方位：对照今明两年与每个月的吉凶。
 
 【本命盘与问事】
@@ -71,6 +80,7 @@ full="""奇门罗盘是把奇门遁甲排盘叠在真实方位上的风水罗盘
 【专业排盘】
 • 时家奇门：时盘、月盘、年盘，拆补法、置闰法，真太阳时、夜子时设置。
 • 点宫位即看门、星、神、天干的意义，新手也看得懂。
+• 神煞与十二长生图鉴：驿马、空亡、击刑、天乙贵人、桃花等，点宫位也能看天干的长生状态。
 
 【学习与记录】
 • 奇门遁甲课程：13 课，从三奇六仪、八门九星到格局与实际应用。
@@ -94,11 +104,15 @@ COMPASS & MAP: FIND LUCKY DIRECTIONS
 AUSPICIOUS DATES & ALMANAC
 • Date selection: scores every hour from the next few days up to a year and finds auspicious dates and times for signing, opening, interviews, dating, engagement and travel. Add them to your calendar in one tap.
 • Daily Qimen almanac: today's lucky hours and directions, shareable as an image card.
+• Today’s lucky colors: daily outfit colors from the day’s five elements; subscribers get personal colors from their birth year.
+• Best time to send: résumés, emails, texts, confessions, payment reminders and proposals — see which of the next few hours flows best.
+• Meditation and business hours: pick a good time and direction to meditate; shops get a weekly timetable for opening, promotions and live streams.
 • Lucky-hour notifications and a daily morning reminder.
 
 FENG SHUI FOR HOME, OFFICE & SHOP
 • House chart (Nine Palaces): measure from the center, photograph or draw your floor plan, and map the nine palaces and Eight Gates onto every room, with a reading for each.
 • Bed and desk facing: find good directions from this year's chart.
+• Lucky items and remedies: what to place in each direction and which colors, from each palace’s element and gate — with remedies when a spot isn’t ideal. Negotiation seat shows where to sit and face in a meeting.
 • Moving and travel direction: compare a destination for this year, next year and every month.
 
 PERSONAL CHARTS & QUESTIONS
@@ -109,6 +123,7 @@ PERSONAL CHARTS & QUESTIONS
 FULL QI MEN DUN JIA CHARTS
 • Hour, month and year charts; Chai Bu or Zhi Run methods; true solar time and late Zi hour options.
 • Tap any palace to see what each gate, star, deity and stem means. Beginner friendly.
+• Glossary of spirits and the twelve life stages: Travel Horse, Void, Noble Helper, Peach Blossom and more; palaces show each stem’s stage.
 
 LEARN & KEEP RECORDS
 • Qi Men Dun Jia course: 13 lessons, from the Three Wonders and Six Instruments to gates, stars, patterns and real-life use.
@@ -132,11 +147,15 @@ full="""奇門羅盤は、奇門遁甲の盤を身の回りの実際の方位に
 【吉日の日取りと暦】
 • 択時・択日：数日先から1年先までの時盤を採点し、契約、開業、面接、お見合い、婚約、旅行に向く吉日吉時を探して、カレンダーに追加。
 • 今日の奇門暦：その日の吉時と吉方位を画像カードで共有。
+• 今日のラッキーカラー：その日の五行から開運の服の色。購読で生まれ年に合わせた吉色も。
+• 送信のタイミング：履歴書・メール・告白・提案など、この数時間でどの時辰が良いか。
+• 瞑想と営業時間帯：吉時・吉方で瞑想。お店は週間時間表で開店・セール・配信を計画。
 • 吉時通知と毎朝のリマインダー。
 
 【住まい・オフィス・店舗の風水】
 • 宅盤九宮（家相）：中心で方位を測る、間取り図を撮る、手描きするの3通りで、九宮と八門を各部屋に対応させ、判読つきで表示。
 • ベッド・机の向き：今年の年盤から良い向きを探します。
+• 開運の置物と化解：宅盤九宮の五行と八門から、各方位に置く物と色を提案。位置が悪いときの化解法も。交渉の席で会議の座る位置と向きも。
 • 引っ越し・旅行の方位：今年と来年、毎月の吉凶を比較。
 
 【本命盤と問事】
@@ -147,6 +166,7 @@ full="""奇門羅盤は、奇門遁甲の盤を身の回りの実際の方位に
 【本格的な奇門遁甲の盤】
 • 時盤・月盤・年盤、拆補法・置閏法、真太陽時・夜子時の設定。
 • 宮をタップすると門・星・神・干の意味を表示。初心者にもわかりやすい。
+• 神煞と十二長生の図鑑：駅馬・空亡・天乙貴人・桃花など。宮をタップで天干の長生も表示。
 
 【学習と記録】
 • 奇門遁甲講座：三奇六儀、八門九星から格局と実践まで全13課。
@@ -170,11 +190,15 @@ full="""기문나침반은 기문둔갑 국을 내 주변의 실제 방위에 �
 【택일과 기문 달력】
 • 택일·택시: 며칠 뒤부터 1년 뒤까지 시반을 채점해 계약, 개업, 면접, 맞선, 약혼, 여행에 좋은 날과 시간을 찾고 캘린더에 추가.
 • 오늘의 기문 달력: 그날의 길시와 길방을 이미지 카드로 공유.
+• 오늘의 행운색: 그날의 오행으로 개운 코디 색상, 구독 시 출생 연도 맞춤 행운색.
+• 메시지 보낼 때: 이력서·메일·고백·제안 등 앞으로 몇 시간 중 좋은 시진 확인.
+• 명상과 영업 시간대: 길시·길방에서 명상, 가게는 주간 시간표로 개점·할인·라이브 계획.
 • 길시 알림과 매일 아침 알림.
 
 【집·사무실·매장 풍수】
 • 택반 구궁: 중심에서 방위 측정, 평면도 촬영, 직접 그리기로 구궁과 팔문을 방마다 대응하고 판독 제공.
 • 침대·책상 방향: 올해 연반으로 좋은 방향 찾기.
+• 개운 소품과 화해: 택반 구궁의 오행과 팔문으로 방위별 소품과 색을 제안, 위치가 좋지 않으면 화해법도. 협상 자리로 회의 때 앉을 곳과 방향까지.
 • 이사·여행 방위: 올해와 내년, 매달의 길흉 비교.
 
 【본명반과 문사】
@@ -185,6 +209,7 @@ full="""기문나침반은 기문둔갑 국을 내 주변의 실제 방위에 �
 【정통 기문둔갑 포국】
 • 시반·월반·연반, 탁보법·치윤법, 진태양시·야자시 설정.
 • 궁을 누르면 문·성·신·천간의 뜻 표시. 초보자도 쉽게.
+• 신살과 십이운성 도감: 역마, 공망, 천을귀인, 도화 등, 궁을 누르면 천간의 운성도 표시.
 
 【학습과 기록】
 • 기문둔갑 강좌: 삼기육의, 팔문구성부터 격국과 실전까지 13강.
@@ -208,11 +233,15 @@ LA BÀN VÀ BẢN ĐỒ: TÌM HƯỚNG TỐT NGAY
 XEM NGÀY GIỜ TỐT VÀ LỊCH
 • Chọn ngày giờ: chấm điểm từng giờ từ vài ngày tới một năm, tìm ngày giờ tốt để ký kết, khai trương, phỏng vấn, xem mắt, đính hôn, đi xa; thêm vào lịch chỉ một chạm.
 • Lịch Kỳ Môn hôm nay: giờ tốt, hướng tốt trong ngày, chia sẻ bằng thẻ hình.
+• Màu may mắn hôm nay: màu trang phục theo ngũ hành của ngày; người đăng ký xem màu riêng theo năm sinh.
+• Thời điểm gửi tin: CV, email, tỏ tình, đề xuất — xem giờ nào trong vài giờ tới thuận nhất.
+• Thiền định và giờ kinh doanh: chọn giờ, hướng tốt để thiền; cửa hàng có bảng giờ trong tuần để mở cửa, khuyến mãi, livestream.
 • Thông báo giờ tốt và nhắc mỗi sáng.
 
 PHONG THỦY NHÀ Ở, VĂN PHÒNG, CỬA HÀNG
 • Cửu cung nhà ở: đo hướng từ tâm nhà, chụp hoặc vẽ mặt bằng, đặt cửu cung và Bát Môn vào từng phòng kèm luận giải.
 • Hướng giường, bàn làm việc: chọn hướng tốt theo lá số năm nay.
+• Vật phẩm may mắn & hóa giải: gợi ý đặt gì, màu gì ở từng hướng theo ngũ hành và cửa của cửu cung; vị trí chưa tốt cũng có cách hóa giải. Ghế đàm phán chỉ chỗ ngồi và hướng nhìn khi họp.
 • Hướng chuyển nhà, đi xa: so sánh năm nay, năm sau và từng tháng.
 
 LÁ SỐ CÁ NHÂN VÀ HỎI VIỆC
@@ -223,6 +252,7 @@ LÁ SỐ CÁ NHÂN VÀ HỎI VIỆC
 LÁ SỐ KỲ MÔN ĐỘN GIÁP ĐẦY ĐỦ
 • Lá số giờ, tháng, năm; phép Sách Bổ hoặc Trí Nhuận; giờ mặt trời thật, giờ Tý muộn.
 • Chạm vào cung để xem ý nghĩa của môn, tinh, thần, can. Dễ hiểu cho người mới.
+• Từ điển Thần Sát & Thập Nhị Trường Sinh: Dịch Mã, Không Vong, Thiên Ất Quý Nhân, Đào Hoa…; cung hiển thị trạng thái của can.
 
 HỌC VÀ LƯU LẠI
 • Khóa học Kỳ Môn Độn Giáp: 13 bài, từ Tam Kỳ Lục Nghi, Bát Môn Cửu Tinh đến cách cục và ứng dụng.
@@ -246,11 +276,15 @@ BRÚJULA Y MAPA: DIRECCIONES PROPICIAS AL INSTANTE
 FECHAS PROPICIAS Y ALMANAQUE
 • Elección de fechas: puntúa cada hora desde los próximos días hasta un año y encuentra fechas y horas propicias para firmar, inaugurar, entrevistas, citas, compromiso y viajes. Añádelas al calendario con un toque.
 • Almanaque Qimen diario: horas y direcciones favorables del día, para compartir como tarjeta.
+• Colores de la suerte del día: colores para vestir según los cinco elementos del día; los suscriptores ven sus colores personales por año de nacimiento.
+• Momento para enviar: currículums, correos, declaraciones, propuestas; mira qué franja de las próximas horas fluye mejor.
+• Meditación y horario comercial: elige hora y dirección para meditar; los negocios tienen una tabla semanal para abrir, promociones y directos.
 • Avisos de horas favorables y recordatorio cada mañana.
 
 FENG SHUI PARA CASA, OFICINA Y TIENDA
 • Carta de la casa (Nueve Palacios): mide desde el centro, fotografía o dibuja el plano y asigna los nueve palacios y las Ocho Puertas a cada habitación, con su lectura.
 • Orientación de cama y escritorio: buenas direcciones según la carta de este año.
+• Objetos de la suerte y remedios: qué poner en cada dirección y en qué colores, según el elemento y la puerta de cada palacio, con remedios cuando el lugar no es ideal. El asiento de negociación indica dónde sentarte y hacia dónde mirar.
 • Dirección de mudanza y viaje: compara un destino este año, el próximo y cada mes.
 
 CARTAS PERSONALES Y PREGUNTAS
@@ -261,6 +295,7 @@ CARTAS PERSONALES Y PREGUNTAS
 CARTAS COMPLETAS DE QI MEN DUN JIA
 • Cartas de hora, mes y año; métodos Chai Bu o Zhi Run; hora solar verdadera y hora Zi tardía.
 • Toca un palacio para ver qué significa cada puerta, estrella, deidad y tronco. Ideal para principiantes.
+• Glosario de espíritus y doce etapas vitales: Caballo viajero, Vacío, Noble auxiliador, Flor de durazno y más; los palacios muestran la etapa de cada tronco.
 
 APRENDE Y GUARDA REGISTROS
 • Curso de Qi Men Dun Jia: 13 lecciones, de las Tres Maravillas y Seis Instrumentos a puertas, estrellas, patrones y uso práctico.
@@ -284,11 +319,15 @@ BÚSSOLA E MAPA: DIREÇÕES FAVORÁVEIS NA HORA
 DATAS FAVORÁVEIS E ALMANAQUE
 • Escolha de datas: pontua cada hora dos próximos dias até um ano e encontra datas e horários favoráveis para assinar, inaugurar, entrevistas, encontros, noivado e viagens. Adicione à agenda com um toque.
 • Almanaque Qimen diário: horários e direções favoráveis do dia, para compartilhar como cartão.
+• Cores da sorte do dia: cores para vestir pelos cinco elementos do dia; assinantes veem cores pessoais pelo ano de nascimento.
+• Hora de enviar: currículos, e-mails, declarações, propostas; veja qual faixa das próximas horas flui melhor.
+• Meditação e horário comercial: escolha hora e direção para meditar; lojas têm uma tabela semanal para abrir, promoções e lives.
 • Avisos de horários favoráveis e lembrete toda manhã.
 
 FENG SHUI PARA CASA, ESCRITÓRIO E LOJA
 • Mapa da casa (Nove Palácios): meça a partir do centro, fotografe ou desenhe a planta e associe os nove palácios e os Oito Portões a cada cômodo, com a leitura de cada um.
 • Direção da cama e da mesa: boas direções pelo mapa deste ano.
+• Objetos da sorte e soluções: o que colocar em cada direção e em que cores, pelo elemento e portão de cada palácio, com soluções quando o lugar não é ideal. O assento de negociação mostra onde sentar e para onde olhar.
 • Direção de mudança e viagem: compare um destino neste ano, no próximo e em cada mês.
 
 MAPAS PESSOAIS E PERGUNTAS
@@ -299,6 +338,7 @@ MAPAS PESSOAIS E PERGUNTAS
 MAPAS COMPLETOS DE QI MEN DUN JIA
 • Mapas de hora, mês e ano; métodos Chai Bu ou Zhi Run; hora solar verdadeira e hora Zi tardia.
 • Toque em um palácio para ver o significado de cada portão, estrela, divindade e tronco. Fácil para iniciantes.
+• Glossário de espíritos e doze estágios vitais: Cavalo viajante, Vazio, Nobre auxiliador, Flor de pessegueiro e mais; palácios mostram o estágio de cada tronco.
 
 APRENDA E GUARDE REGISTROS
 • Curso de Qi Men Dun Jia: 13 lições, das Três Maravilhas e Seis Instrumentos aos portões, estrelas, padrões e uso prático.
@@ -322,11 +362,15 @@ KOMPAS DAN PETA: CARI ARAH HOKI SEKETIKA
 HARI BAIK DAN ALMANAK
 • Pemilihan waktu: menilai setiap jam dari beberapa hari hingga satu tahun ke depan dan menemukan hari serta jam baik untuk kontrak, pembukaan usaha, wawancara, kencan, lamaran dan perjalanan. Tambahkan ke kalender dengan sekali ketuk.
 • Almanak Qimen harian: jam dan arah baik hari ini, bisa dibagikan sebagai kartu gambar.
+• Warna hoki hari ini: warna pakaian dari lima unsur hari itu; pelanggan mendapat warna pribadi sesuai tahun lahir.
+• Waktu kirim pesan: lamaran, email, pernyataan cinta, proposal — lihat jam terbaik dalam beberapa jam ke depan.
+• Meditasi dan jam usaha: pilih waktu dan arah baik untuk meditasi; toko mendapat jadwal mingguan untuk buka, promo, dan siaran langsung.
 • Notifikasi jam baik dan pengingat setiap pagi.
 
 FENG SHUI RUMAH, KANTOR DAN TOKO
 • Bagan rumah (Sembilan Istana): ukur dari titik tengah, foto atau gambar denah, lalu petakan sembilan istana dan Delapan Gerbang ke setiap ruangan, lengkap dengan bacaannya.
 • Arah tempat tidur dan meja: cari arah baik dari bagan tahun ini.
+• Benda keberuntungan & penyeimbang: saran benda dan warna untuk tiap arah dari unsur dan gerbang tiap istana, plus penyeimbang saat posisi kurang baik. Kursi negosiasi menunjukkan tempat duduk dan arah saat rapat.
 • Arah pindahan dan perjalanan: bandingkan tujuan untuk tahun ini, tahun depan dan setiap bulan.
 
 BAGAN PRIBADI DAN PERTANYAAN
@@ -337,6 +381,7 @@ BAGAN PRIBADI DAN PERTANYAAN
 BAGAN QI MEN DUN JIA LENGKAP
 • Bagan jam, bulan dan tahun; metode Chai Bu atau Zhi Run; waktu matahari sejati dan jam Zi akhir.
 • Ketuk istana untuk melihat arti setiap gerbang, bintang, dewa dan batang. Mudah untuk pemula.
+• Kamus roh & dua belas tahap hidup: Kuda Perjalanan, Kosong, Penolong Mulia, Bunga Persik, dan lainnya; istana menampilkan tahap tiap batang.
 
 BELAJAR DAN SIMPAN CATATAN
 • Kursus Qi Men Dun Jia: 13 pelajaran, dari Tiga Keajaiban dan Enam Instrumen hingga gerbang, bintang, pola dan penerapan nyata.
@@ -360,11 +405,15 @@ full="""เข็มทิศฉีเหมินคือเข็มทิศ
 ฤกษ์ดีและปฏิทิน
 • หาฤกษ์: ให้คะแนนทุกยามตั้งแต่ไม่กี่วันข้างหน้าจนถึงหนึ่งปี หาวันและเวลามงคลสำหรับเซ็นสัญญา เปิดร้าน สัมภาษณ์งาน นัดพบ หมั้น และเดินทาง เพิ่มลงปฏิทินได้ในแตะเดียว
 • ปฏิทินฉีเหมินประจำวัน: ยามและทิศมงคลของวัน แชร์เป็นการ์ดภาพได้
+• สีมงคลวันนี้: สีเสื้อผ้าตามธาตุของวัน สมาชิกดูสีส่วนตัวตามปีเกิด
+• จังหวะส่งข้อความ: เรซูเม่ อีเมล สารภาพรัก ข้อเสนอ ดูว่าช่วงไหนในไม่กี่ชั่วโมงข้างหน้าดีที่สุด
+• นั่งสมาธิและช่วงเวลาค้าขาย: เลือกเวลาและทิศมงคลนั่งสมาธิ ร้านค้าดูตารางสัปดาห์เพื่อเปิดร้าน โปรโมชัน ไลฟ์สด
 • แจ้งเตือนยามมงคลและการเตือนทุกเช้า
 
 ฮวงจุ้ยบ้าน สำนักงาน และร้านค้า
 • ผังบ้านเก้าวัง: วัดทิศจากจุดศูนย์กลาง ถ่ายรูปหรือวาดแปลนบ้าน แล้วจับคู่เก้าวังและแปดประตูกับทุกห้อง พร้อมคำอธิบาย
 • ทิศเตียงและโต๊ะทำงาน: หาทิศที่ดีจากผังประจำปีนี้
+• ของมงคลและวิธีแก้: แนะนำของและสีที่ควรวางแต่ละทิศตามธาตุและประตูของเก้าวัง ตำแหน่งไม่ดีก็มีวิธีแก้ ที่นั่งเจรจาบอกที่นั่งและทิศที่ควรหันในการประชุม
 • ทิศย้ายบ้านและเดินทาง: เทียบจุดหมายในปีนี้ ปีหน้า และแต่ละเดือน
 
 ผังดวงส่วนตัวและการถามเรื่อง
@@ -375,6 +424,7 @@ full="""เข็มทิศฉีเหมินคือเข็มทิศ
 ผังฉีเหมินตุ้นเจี่ยครบถ้วน
 • ผังยาม เดือน และปี วิธี Chai Bu หรือ Zhi Run เวลาสุริยะจริงและยามจื่อช่วงดึก
 • แตะวังเพื่อดูความหมายของประตู ดาว เทพ และก้านฟ้า เข้าใจง่ายสำหรับมือใหม่
+• คลังคำเทพดาวและสิบสองวัฏจักร: ม้าเดินทาง ว่างเปล่า ผู้อุปถัมภ์สูงสุด ดอกท้อ และอื่น ๆ แตะวังเพื่อดูสถานะของก้าน
 
 เรียนรู้และบันทึก
 • คอร์สฉีเหมินตุ้นเจี่ย 13 บท ตั้งแต่สามมหัศจรรย์หกเครื่องมือ ไปจนถึงประตู ดาว รูปแบบ และการใช้งานจริง
@@ -398,11 +448,15 @@ full="""بوصلة تشيمن هي بوصلة فنغ شوي تضع مخطط تش
 التواريخ المناسبة والتقويم
 • اختيار التوقيت: تقييم كل ساعة من الأيام القادمة حتى سنة كاملة لإيجاد تواريخ وأوقات مناسبة للتوقيع والافتتاح والمقابلات واللقاءات والخطوبة والسفر، مع إضافتها إلى التقويم بلمسة.
 • تقويم تشيمن اليومي: أوقات اليوم واتجاهاته المناسبة، قابلة للمشاركة كبطاقة صورة.
+• ألوان الحظ اليوم: ألوان الملابس حسب عناصر اليوم الخمسة، وللمشتركين ألوان شخصية حسب سنة الميلاد.
+• وقت الإرسال: السير الذاتية والبريد والاعتراف والعروض — اعرف أي فترة في الساعات القادمة أنسب.
+• التأمل وساعات العمل: اختر وقتًا واتجاهًا مناسبين للتأمل، وللمتاجر جدول أسبوعي للافتتاح والعروض والبث المباشر.
 • تنبيهات الأوقات المناسبة وتذكير كل صباح.
 
 فنغ شوي للمنزل والمكتب والمتجر
 • مخطط المنزل (القصور التسعة): قِس من المركز أو صوّر المخطط أو ارسمه، ووزّع القصور التسعة والأبواب الثمانية على كل غرفة مع قراءة لكل منها.
 • اتجاه السرير والمكتب: اتجاهات جيدة وفق مخطط هذا العام.
+• أغراض الحظ والعلاجات: ماذا تضع في كل اتجاه وبأي ألوان حسب عنصر كل قصر وبابه، مع علاجات حين لا يكون المكان مثاليًا. ويوضح مقعد التفاوض أين تجلس وأي اتجاه تواجه في الاجتماع.
 • اتجاه الانتقال والسفر: قارن الوجهة لهذا العام والعام القادم وكل شهر.
 
 المخططات الشخصية والأسئلة
@@ -413,6 +467,7 @@ full="""بوصلة تشيمن هي بوصلة فنغ شوي تضع مخطط تش
 مخططات تشي من دون جيا الكاملة
 • مخططات الساعة والشهر والسنة، وطريقتا Chai Bu وZhi Run، والتوقيت الشمسي الحقيقي وساعة Zi المتأخرة.
 • المس أي قصر لترى معنى كل باب ونجم وإله وجذع. سهل للمبتدئين.
+• معجم الأرواح والمراحل الاثنتي عشرة: حصان السفر والفراغ والمعين النبيل وزهرة الخوخ وغيرها؛ وتعرض القصور مرحلة كل جذع.
 
 تعلّم واحتفظ بالسجلات
 • دورة تشي من دون جيا: 13 درسًا من العجائب الثلاث والأدوات الست إلى الأبواب والنجوم والأنماط والتطبيق العملي.
@@ -441,7 +496,7 @@ for k, v in L.items():
     for w in ("占卜", "算命", "divination", "fortune-telling", "best ", "#1"):
         if w in v["title"] + v["short"] + v["full"]: bad.append(f"{k} 含 {w}")
 if bad: raise SystemExit("\n".join(bad))
-out = {"_note": "Play 商店資訊（14 語，ASO 版 2026-11-19，由 tools/store/aso_listing.py 產生）。title ≤30、short ≤80、full ≤4000。play = Play Console 語言代碼。"}
+out = {"_note": "Play 商店資訊（14 語，ASO 版 2026-11-19，1.2.0 更新，由 tools/store/aso_listing.py 產生）。title ≤30、short ≤80、full ≤4000。play = Play Console 語言代碼。"}
 out.update(L)
 p = pathlib.Path(__file__).resolve().parents[2] / "store/listing.json"
 p.write_text(json.dumps(out, ensure_ascii=False, indent=1) + "\n")
