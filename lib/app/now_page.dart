@@ -6,6 +6,7 @@ import '../compass/compass_page.dart';
 import '../engine/engine.dart' hide Element;
 import '../features/almanac/almanac_page.dart';
 import '../features/divination/divination_page.dart';
+import '../features/family/now_cards.dart';
 import '../features/lucky/lucky_cards.dart';
 import '../features/travel/travel_page.dart';
 import '../features/travel/travel_reminders.dart';
@@ -205,6 +206,8 @@ class _NowPageState extends State<NowPage> {
               child: ListView(padding: const EdgeInsets.fromLTRB(12, 4, 12, 16), children: [
                 hero(),
                 nextCard(),
+                if (s.featureEnabled('alerts')) const DayAlertCard(),
+                if (s.featureEnabled('family')) const FamilyTodayCard(),
                 MessageTimingCard(now: _now),
                 buttons,
                 const SizedBox(height: 12),

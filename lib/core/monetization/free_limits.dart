@@ -11,6 +11,9 @@ class FreeLimits {
     this.notifyPerDay = 1,
     this.trialPromptDay1 = 3,
     this.trialPromptDay2 = 7,
+    this.familyMax = 1,
+    this.alertClashFree = false,
+    this.wearPremium = false,
   });
 
   /// 出行訣（走路、跑步、喝水計時）每天免費開始幾次。
@@ -34,6 +37,15 @@ class FreeLimits {
   /// 安裝後第幾天提示一次免費試用（0＝不提示）。
   final int trialPromptDay1, trialPromptDay2;
 
+  /// 家人盤：免費版可存幾位家人（不含自己；訂閱無限）。
+  final int familyMax;
+
+  /// 節氣與重要日提醒裡「與家人生年相沖」那一行是否免費（預設訂閱才有；換局、月破、歲破、四離四絕免費）。
+  final bool alertClashFree;
+
+  /// 手錶羅盤是否需訂閱（預設免費）。
+  final bool wearPremium;
+
   /// Remote Config 參數名稱與預設值（firebase_telemetry 設定預設值用）。
   static const remoteDefaults = <String, int>{
     'qm_free_travel_per_day': 1,
@@ -44,6 +56,9 @@ class FreeLimits {
     'qm_free_notify_per_day': 1,
     'qm_trial_prompt_day1': 3,
     'qm_trial_prompt_day2': 7,
+    'qm_free_family_max': 1,
+    'qm_free_alert_clash': 0,
+    'qm_wear_premium': 0,
   };
 
   /// 由遠端數值建立；讀不到或數值不合理就用預設。
@@ -63,6 +78,9 @@ class FreeLimits {
       notifyPerDay: v('qm_free_notify_per_day', min: 1, max: 6),
       trialPromptDay1: v('qm_trial_prompt_day1', max: 365),
       trialPromptDay2: v('qm_trial_prompt_day2', max: 365),
+      familyMax: v('qm_free_family_max', max: 100),
+      alertClashFree: v('qm_free_alert_clash', max: 1) == 1,
+      wearPremium: v('qm_wear_premium', max: 1) == 1,
     );
   }
 }

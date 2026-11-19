@@ -89,6 +89,10 @@ jobs:
           REVENUECAT_API_KEY: ${{ secrets.REVENUECAT_ANDROID_API_KEY }}
         run: bash scripts/patch_ads.sh
 
+      # Wear OS 手錶羅盤：android_extra/wear → android/wear（:wear 模組）
+      - name: 加入手錶模組
+        run: bash scripts/patch_wear.sh
+
       # 判讀文句、規則 JSON、課程等 App 內容放在私人 repo qimen-content 的 app/，建置時複製到 assets/content/（不進公開 repo）
       - name: 取得 App 內容（qimen-content/app）
         uses: actions/checkout@v5
@@ -156,24 +160,6 @@ jobs:
           fi
           exit $status
 
-      # 私人解鎖版 APK（FORCE_PREMIUM，只給 Lawrence 自用；先把免費版移開，避免被覆蓋）
-      - name: 建置私人解鎖版 APK
-        env:
-          FORCE_LANG: ${{ inputs.force_lang }}
-          REVENUECAT_API_KEY: ${{ secrets.REVENUECAT_ANDROID_API_KEY }}
-        run: |
-          set +e
-          cp build/app/outputs/flutter-apk/app-release.apk /tmp/free.apk
-          flutter build apk --release --build-number=${{ github.run_number }} ${FORCE_LANG:+--dart-define=FORCE_LANG=$FORCE_LANG} --dart-define=FORCE_PREMIUM=true --dart-define=MAPS_ENABLED=${{ secrets.MAPS_API_KEY != '' }} --dart-define=REVENUECAT_API_KEY="$REVENUECAT_API_KEY" > /tmp/build_personal.log 2>&1
-          status=$?
-          tail -n 20 /tmp/build_personal.log
-          if [ $status -ne 0 ]; then
-            grep -E "\.dart:[0-9]+|Error:|error:|FAILURE|What went wrong" /tmp/build_personal.log | head -30 | while IFS= read -r line; do echo "::error::$line"; done
-            exit $status
-          fi
-          cp build/app/outputs/flutter-apk/app-release.apk /tmp/personal.apk
-          cp /tmp/free.apk build/app/outputs/flutter-apk/app-release.apk
-
       # 上架用 AAB；強制介面語言的測試版不建。
       - name: 建置 AAB（release）
         if: ${{ inputs.force_lang == '' }}
@@ -191,6 +177,53 @@ jobs:
             grep -E "\.dart:[0-9]+|Error:|error:|FAILURE|What went wrong" /tmp/bundle.log | head -30 | while IFS= read -r line; do echo "::error::$line"; done
           fi
           exit $status
+
+      # 私人解鎖版 APK（FORCE_PREMIUM，只給 Lawrence 自用）：獨立套件 com.lclab.qimen.personal，可與免費版同時安裝。
+      # 會改 android/ 的套件名與桌面名稱，所以放在免費版 APK、AAB 之後。
+      - name: 建置私人解鎖版 APK
+        env:
+          FORCE_LANG: ${{ inputs.force_lang }}
+          REVENUECAT_API_KEY: ${{ secrets.REVENUECAT_ANDROID_API_KEY }}
+        run: |
+          set +e
+          cp build/app/outputs/flutter-apk/app-release.apk /tmp/free.apk
+          bash scripts/make_personal.sh || exit 1
+          flutter build apk --release --build-number=${{ github.run_number }} ${FORCE_LANG:+--dart-define=FORCE_LANG=$FORCE_LANG} --dart-define=FORCE_PREMIUM=true --dart-define=MAPS_ENABLED=${{ secrets.MAPS_API_KEY != '' }} --dart-define=REVENUECAT_API_KEY="$REVENUECAT_API_KEY" > /tmp/build_personal.log 2>&1
+          status=$?
+          tail -n 20 /tmp/build_personal.log
+          if [ $status -ne 0 ]; then
+            grep -E "\.dart:[0-9]+|Error:|error:|FAILURE|What went wrong" /tmp/build_personal.log | head -30 | while IFS= read -r line; do echo "::error::$line"; done
+            exit $status
+          fi
+          cp build/app/outputs/flutter-apk/app-release.apk /tmp/personal.apk
+          cp /tmp/free.apk build/app/outputs/flutter-apk/app-release.apk
+
+      # 手錶羅盤：免費版（com.lclab.qimen，配上架版／免費版 APK）與私人版（配私人版 APK）各一個 APK，上架用 AAB 一個。
+      # versionCode＝1000000＋run（與手機版不重複）。失敗不擋手機版發佈。
+      - name: 建置 Wear OS 手錶羅盤
+        id: wear
+        continue-on-error: true
+        run: |
+          set +e
+          ver=$(grep '^version:' pubspec.yaml | awk '{print $2}' | cut -d+ -f1)
+          code=$((1000000 + ${{ github.run_number }}))
+          cd android
+          args="-PqmVersionCode=$code -PqmVersionName=$ver --no-daemon --console=plain"
+          build() {
+            ./gradlew "$@" $args > /tmp/wear.log 2>&1 || {
+              tail -n 60 /tmp/wear.log
+              grep -E "^e: |error:|FAILURE|What went wrong|Could not" /tmp/wear.log | head -30 | while IFS= read -r line; do echo "::error title=手錶::$line"; done
+              exit 1
+            }
+          }
+          build :wear:assembleRelease -PqmAppId=com.lclab.qimen.personal
+          mkdir -p /tmp/wear
+          cp "$(find .. -path '*wear*' -name 'wear-release.apk' | head -1)" /tmp/wear/personal.apk
+          build :wear:assembleRelease :wear:bundleRelease -PqmAppId=com.lclab.qimen
+          cp "$(find .. -path '*wear*' -name 'wear-release.apk' | head -1)" /tmp/wear/free.apk
+          cp "$(find .. -path '*wear*' -name 'wear-release.aab' | head -1)" /tmp/wear/play.aab
+          ls -la /tmp/wear
+          echo "::notice title=手錶::APK $(( $(stat -c %s /tmp/wear/free.apk) / 1024 )) KB"
 
       - name: 大小摘要
         if: ${{ always() }}
@@ -217,10 +250,19 @@ jobs:
           cp build/app/outputs/flutter-apk/app-release.apk "$free"
           cp /tmp/personal.apk "$personal"
           files=("$free" "$personal")
+          wear_free="qimen_${ver}_run${n}_wear.apk"
+          wear_personal="qimen_${ver}_run${n}_wear_personal.apk"
+          wear_aab="qimen_${ver}_run${n}_wear_play.aab"
+          if [ -f /tmp/wear/free.apk ]; then
+            cp /tmp/wear/free.apk "$wear_free"; cp /tmp/wear/personal.apk "$wear_personal"; files+=("$wear_free" "$wear_personal")
+          fi
           aab=build/app/outputs/bundle/release/app-release.aab
           if [ -z "${FORCE_LANG}" ] && [ -f "$aab" ]; then
             cp "$aab" "qimen_${ver}_run${n}_play.aab"
             files+=("qimen_${ver}_run${n}_play.aab")
+          fi
+          if [ -z "${FORCE_LANG}" ] && [ -f /tmp/wear/play.aab ]; then
+            cp /tmp/wear/play.aab "$wear_aab"; files+=("$wear_aab")
           fi
           # 版本資訊（Play「版本資訊」欄可直接貼）放在 AAB 上方；內容維護在 store/release_notes.txt
           {
@@ -228,6 +270,15 @@ jobs:
             echo "- \`${free}\`：免費版 APK（與上架版相同，進階功能需訂閱）"
             echo "- \`${personal}\`：私人解鎖版 APK（自用，全部功能開放，勿外流）"
             [ -z "${FORCE_LANG}" ] && echo "- \`qimen_${ver}_run${n}_play.aab\`：上傳 Play 用 AAB（免費版，訂閱後解鎖）"
+            if [ -f "$wear_free" ]; then
+              echo "- \`${wear_free}\`：手錶羅盤（配免費版 APK／上架版）"
+              echo "- \`${wear_personal}\`：手錶羅盤私人版（配私人解鎖版 APK）"
+              [ -z "${FORCE_LANG}" ] && echo "- \`${wear_aab}\`：手錶羅盤上架用 AAB（Play Console「Wear OS」版本類型）"
+            else
+              echo "- （本次手錶羅盤建置失敗，見 Actions）"
+            fi
+            echo
+            echo "私人解鎖版套件名稱為 com.lclab.qimen.personal，可與免費版同時安裝（資料各自獨立）。手錶 APK 需用 adb 經無線偵錯安裝。"
             echo
             echo "## 版本資訊（貼到 Play）"; echo; echo '```'; cat store/release_notes.txt; echo '```'; echo
             echo "commit ${{ github.sha }}；簽署：${SIGNING}"

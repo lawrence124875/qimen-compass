@@ -39,6 +39,7 @@ jobs:
         env:
           ADMOB_IOS_APP_ID: ${{ secrets.ADMOB_IOS_APP_ID }}
           MAPS_IOS_API_KEY: ${{ secrets.MAPS_IOS_API_KEY }}
+          PERSONAL: ${{ inputs.force_premium }}
         run: bash scripts/patch_ios.sh
 
       - name: 取得 App 內容（qimen-content/app）

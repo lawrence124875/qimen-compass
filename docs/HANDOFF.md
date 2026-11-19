@@ -90,8 +90,9 @@
 - 訂閱功能「完整體驗 1 次」（`requirePremium`，之後開訂閱頁）：宅盤、朝向、本命盤／流年、合盤、搬家方位、目的地吉凶、月盤年盤（`pan_month_year`）、備份
 - 「先給等級、詳解需訂閱」（`peekPremium` ＋ `PremiumLockCard`）：問事（決斷與等級可看，方位、應期、宜忌、盤面上鎖；免費重看紀錄也上鎖）、擇時（時間與等級可看，方位、理由、盤面、行事曆、存紀錄上鎖）
 - 1.2.0 新功能：免費＝今日吉色（日干五行）、發訊息時機、神煞與十二長生圖鑑；訂閱＝個人吉色（`requirePremium('lucky_personal')`）、擇時靜坐冥想／營業時段（沿用擇時 peek）、開運擺件與化解（宅盤內）、談判座位與朝向化解（朝向內）
+- 1.3.0 新功能：家人盤免費，免費版可存 `qm_free_family_max`（預設 1）位家人、訂閱無限；節氣與重要日提醒免費，「日沖家人生年」那一行訂閱才有（`qm_free_alert_clash`=1 改免費）；手錶羅盤預設免費（`qm_wear_premium`=1 改訂閱，手錶顯示「訂閱後可用」）
 - 其他：應驗統計上鎖；課程 `CourseAccess.paywallEnabled = true`（main.dart 同步訂閱狀態）；推播則數上限 `TravelReminders.maxPerDay`；安裝後第 3、7 天各提示一次年訂 7 天試用（`trial_prompt.dart`）
-- Remote Config：`qm_free_travel_per_day`、`qm_free_rewarded_per_day`、`qm_free_record_max`、`qm_free_record_days`、`qm_premium_preview_once`、`qm_free_notify_per_day`、`qm_trial_prompt_day1/2`（0＝不提示）
+- Remote Config：`qm_free_travel_per_day`、`qm_free_rewarded_per_day`、`qm_free_record_max`、`qm_free_record_days`、`qm_premium_preview_once`、`qm_free_notify_per_day`、`qm_trial_prompt_day1/2`（0＝不提示）、`qm_free_family_max`、`qm_free_alert_clash`、`qm_wear_premium`；功能開關另有 `qm_feature_family／alerts／wear`
 - 訂閱：去除廣告與以上全部。Play 商品 `qm_premium_monthly`（基本方案 monthly，USD 3.99／TWD 99）、`qm_premium_yearly`（yearly，USD 24.99／TWD 590，優惠 `trial-7d-yearly` 7 天試用），與謙卦同價。RevenueCat 專案 `qimen`：權限 `premium`、Offering `default`（$rc_monthly、$rc_annual）
 
 ## 11. 待決事項
@@ -104,10 +105,16 @@
 
 ## 12. 下一步
 - 延伸功能 P1–P8 全部完成，版本 1.0.0（2026-11-19）。之後有使用者可見改動時更新 `store/release_notes.txt`。
-- 出版格式（2026-11-19 使用者要求）：每個 Android Release 同時有 `_free.apk`（同上架版，有鎖）、`_personal.apk`（FORCE_PREMIUM 私人解鎖版）、`_play.aab`（上傳 Play，免費版待訂閱）；Release 說明列出三個檔，14 語版本資訊放在 AAB 上方。iOS 自用版由 iOS 串另建。
+- 出版格式（2026-11-19 使用者要求）：每個 Android Release 同時有 `_free.apk`（同上架版，有鎖）、`_personal.apk`（FORCE_PREMIUM 私人解鎖版，**套件 `com.lclab.qimen.personal`、桌面名稱加「私」，可與免費版同時安裝、資料各自獨立**，`scripts/make_personal.sh` 在 AAB 之後才改套件名）、`_play.aab`（上傳 Play，免費版待訂閱）、`_wear.apk`／`_wear_personal.apk`（手錶羅盤，各配對應手機版）、`_wear_play.aab`（Play「Wear OS」版本類型）；14 語版本資訊放在 AAB 上方。iOS 私人版 `build_ios.yml`（force_premium=true）bundle id `com.lclab.qimen.personal`。私人版的 Maps 金鑰需在 Cloud Console 加套件 `com.lclab.qimen.personal`＋上傳金鑰 SHA-1；google-services.json 由腳本複製一筆 client（統計併入同一 Firebase App）。
 - UI／UX 改版完成（2026-11-19，1.1.0）：四分頁 此刻（`app/now_page.dart`：吉方＋下個吉時倒數＋黃曆＋擇時／問事大按鈕＋收合時盤）／羅盤（`app/compass_tab.dart`，標題列切換羅盤⇄地圖；`CompassPage.pendingTarget` 由此刻頁帶入要找的門）／盤面（時月年盤＋本命盤、合盤按鈕）／我的。共用元件 `shared/widgets/result_card.dart`：`Tone`（吉✓平–凶✕ 圖示＋顏色）、`ToneBadge`、`ResultCard`（等級徽章＋白話結論）、`DetailsFold`（摺疊詳解）、`LockedPreview`（免費版模糊預覽）、`BlurredText`、`EmptyState`。擇時改由此刻頁或課程進入（`peekPremium` 後 push）。
 
 - 1.2.0（2026-11-19）：此刻頁「今日吉色」（`engine/fengshui.dart` `LuckyColors`：生日五行大吉、同次吉、我剋招財、我生消耗、剋我不宜；個人吉色再疊年干五行打分）與「發訊息時機」（`ZeShiPlanner.upcoming`＋`ZeShiEvent.message` 景開＋六合，目前起 4 個時辰）；圖鑑 `features/lucky/glossary_page.dart`（入門課頁底、盤面宮位詳情「長生」列）；擇時新增 `meditation`（休杜＋太陰）、`business`（生開＋值符，`WeekTable` 一週時段表）；宅盤「開運擺件與化解」`placement_page.dart`（年盤為主、月盤轉凶時補化解；化解五行 `cureElement`：門宮相剋取通關、凶門洩氣、平門生扶）；朝向新增 `negotiation`（看時盤，建議坐開門／值符方位）＋不合時顯示 `CureBlock`。內容在 qimen-content `app/meaning`（鍵 color、cs、ss、place、cure、curetone、curestar）。路線吉凶暫不做。
+
+- 1.3.0（2026-11-19）：
+  - 家人盤 `features/family/`（`family_store.dart` 存 `qm_family` JSON；`family_page.dart` 今天／明天切換，每人出門＝擇時 `journey`、簽約＝`contract`，帶年命計分，7–21 點；「適合」＝分數 ≥5 且當天不沖生年；引擎 `engine/family_day.dart`）。入口：盤面分頁按鈕、此刻頁「家人今日」卡（`now_cards.dart`，有家人才顯示）。
+  - 節氣與重要日 `engine/day_alerts.dart`（交節換局、歲破、月破、四離＝二分二至前一天、四絕＝四立前一天、日沖生年）；推播 `features/reminders/day_alert_reminder.dart`：前一晚預設 20:00（設定頁可改），排 14 天，id 1200–1213，沒有重要日的晚上不發；此刻頁「重要日」卡顯示今明兩天。
+  - Wear OS 手錶羅盤：手機 `features/wear/wear_sync.dart` 算 36 個時辰八宮門與吉凶（`DirectionPlanner.judge`）→ 原生 `android_extra/kotlin/MainActivity.kt`（取代 flutter create 版，頻道 `qm/wear`）→ Data Layer `/qm/slots`。手錶端 `android_extra/wear/`（純 Kotlin View、無 Compose，minSdk 30，applicationId 同手機，versionCode＝1000000＋run），`scripts/patch_wear.sh` 加成 `:wear` 模組。啟動 5 秒後與訂閱狀態改變時同步；設定頁「手錶羅盤」可手動同步。手錶只做羅盤、不含地圖；Apple Watch 等開發者帳號。
+  - CI：`check.yml` 新增 `android-native` job（debug 建置手機＋手錶，驗證原生程式）。
 
 ## 13. 現況（2026-11-17）
 - CI 已打通：run 2 通過並發佈 qimen-content Release `qimen-android-run2`（0.1.0+1，APK／AAB 各約 44 MB，除錯金鑰簽署；上傳金鑰 `ANDROID_KEYSTORE_*` 等 Secrets 尚未設）
