@@ -80,7 +80,7 @@ class _FacingPageState extends State<FacingPage> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(l.facingGuideTitle),
-        content: SingleChildScrollView(child: Text(l.facingGuide)),
+        content: SingleChildScrollView(child: Text('${l.facingGuide}\n\n${l.cureLevelsTitle}\n${l.cureLevels}')),
         actions: [FilledButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l.guideStart))],
       ),
     );

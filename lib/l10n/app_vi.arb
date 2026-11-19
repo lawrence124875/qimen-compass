@@ -763,5 +763,7 @@
   "facingNegotiation": "Ghế đàm phán",
   "facingHowNegotiation": "Ngồi tại bàn họp, đặt phẳng điện thoại, đầu máy chỉ hướng bạn nhìn (về phía đối phương)",
   "facingSeatPos": "Vị trí ngồi: nhìn từ tâm phòng, nên ngồi phía {dirs}. Theo bàn giờ hiện tại — xem lại trước cuộc họp.",
-  "facingFaceNote": "Hướng luôn tính theo hướng mặt người nhìn; giường thì theo hướng đỉnh đầu khi ngủ."
+  "facingFaceNote": "Hướng luôn tính theo hướng mặt người nhìn; giường thì theo hướng đỉnh đầu khi ngủ.",
+  "cureLevelsTitle": "Lời khuyên truyền thống: đón cát tránh hung",
+  "cureLevels": "Hiệu quả từ mạnh đến yếu:\n1. Di chuyển về hướng tốt (đi xa, dời chỗ ngồi)\n2. Ngồi ở vị trí tốt, quay mặt về hướng tốt\n3. Nếu buộc phải ở vị trí xấu, quay mặt về hướng cửa tốt để giảm bất lợi\n4. Đặt vật hóa giải ở hướng xấu (thông quan hoặc tiết khí theo ngũ hành, ví dụ vị trí Hỏa đặt đồ hành Thủy, vị trí Thổ đặt đồ kim loại)\nĐây là giảm nhẹ chứ không triệt tiêu; là quan niệm truyền thống, không có bằng chứng khoa học, không bảo đảm hiệu quả."
 }
