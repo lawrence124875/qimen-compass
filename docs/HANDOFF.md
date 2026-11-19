@@ -85,9 +85,13 @@
 - 天盤為客、地盤為主，比較兩者旺衰 → 判斷宜先動或後動、宜攻或宜守
 - 對照我方（日干）、對方（時干）、事情三方的生剋，輸出固定建議文句；不做開放式推演
 
-## 10. 商業模式（待定，先比照謙卦）
-- 免費：奇門羅盤、當下時盤、出行訣（有次數限制）、廣告
-- 訂閱：擇時、宅盤、占卜解讀、去除廣告。Play 商品 `qm_premium_monthly`（基本方案 monthly，USD 3.99／TWD 99）、`qm_premium_yearly`（yearly，USD 24.99／TWD 590，優惠 `trial-7d-yearly` 7 天試用），與謙卦同價。RevenueCat 專案 `qimen`：權限 `premium`、Offering `default`（$rc_monthly、$rc_annual）
+## 10. 商業模式（2026-11-19 定案）
+- 免費（無限）：時盤、羅盤找吉門、盤面點擊解說、今日黃曆、桌面小工具、地圖八門（以目前位置）；出行訣每天 1 次＋看廣告 1 次；入門課前 2 課（content `free`）；吉時推播每天 1 則；紀錄 30 則、近 30 天；還原備份
+- 訂閱功能「完整體驗 1 次」（`requirePremium`，之後開訂閱頁）：宅盤、朝向、本命盤／流年、合盤、搬家方位、目的地吉凶、月盤年盤（`pan_month_year`）、備份
+- 「先給等級、詳解需訂閱」（`peekPremium` ＋ `PremiumLockCard`）：問事（決斷與等級可看，方位、應期、宜忌、盤面上鎖；免費重看紀錄也上鎖）、擇時（時間與等級可看，方位、理由、盤面、行事曆、存紀錄上鎖）
+- 其他：應驗統計上鎖；課程 `CourseAccess.paywallEnabled = true`（main.dart 同步訂閱狀態）；推播則數上限 `TravelReminders.maxPerDay`；安裝後第 3、7 天各提示一次年訂 7 天試用（`trial_prompt.dart`）
+- Remote Config：`qm_free_travel_per_day`、`qm_free_rewarded_per_day`、`qm_free_record_max`、`qm_free_record_days`、`qm_premium_preview_once`、`qm_free_notify_per_day`、`qm_trial_prompt_day1/2`（0＝不提示）
+- 訂閱：去除廣告與以上全部。Play 商品 `qm_premium_monthly`（基本方案 monthly，USD 3.99／TWD 99）、`qm_premium_yearly`（yearly，USD 24.99／TWD 590，優惠 `trial-7d-yearly` 7 天試用），與謙卦同價。RevenueCat 專案 `qimen`：權限 `premium`、Offering `default`（$rc_monthly、$rc_annual）
 
 ## 11. 待決事項
 - [x] App 名稱：奇門羅盤／Qimen Compass（2026-11-18 定案）

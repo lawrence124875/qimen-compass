@@ -65,6 +65,9 @@ class TravelReminders {
   static const lead = Duration(minutes: 10);
   static const channelId = 'qm_lucky_hours';
 
+  /// 每天最多幾則（免費版由 Remote Config `qm_free_notify_per_day`，訂閱 6）；main.dart 設定。
+  static int maxPerDay = 6;
+
   /// 排盤設定（時區取裝置；子時換日、真太陽時取設定頁）。
   static TimeSettings get timeSettings => AppSettings.instance.timeSettingsAt(DateTime.now());
 
@@ -76,7 +79,7 @@ class TravelReminders {
     final now = DateTime.now().toUtc();
     final w = prefs.window;
     final slots = const ChuXingPlanner()
-        .dailyBest(now, prefs.event, settings: timeSettings, fromHour: w.from, toHour: w.to, perDay: prefs.perDay);
+        .dailyBest(now, prefs.event, settings: timeSettings, fromHour: w.from, toHour: w.to, perDay: prefs.perDay.clamp(1, maxPerDay));
     final lead = Duration(minutes: prefs.leadMinutes);
     var id = dailyFrom;
     for (final s in slots) {

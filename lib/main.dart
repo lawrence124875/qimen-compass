@@ -12,6 +12,7 @@ import 'core/firebase/firebase_telemetry.dart';
 import 'core/monetization/free_limits.dart';
 import 'core/revenuecat/revenuecat_premium.dart';
 import 'core/telemetry/usage_sharing.dart';
+import 'features/course/course.dart';
 import 'features/reminders/daily_reminder.dart';
 import 'features/travel/travel_reminders.dart';
 import 'services/notifications.dart';
@@ -39,6 +40,19 @@ Future<void> main() async {
 
   premium.isPremium.addListener(syncAds);
   syncAds();
+  // 課程解鎖、吉時推播則數跟訂閱狀態同步
+  void syncPremium() {
+    CourseAccess.premium.value = premium.isPremium.value;
+    final cap = premium.isPremium.value ? 6 : limits.notifyPerDay;
+    if (TravelReminders.maxPerDay != cap) {
+      TravelReminders.maxPerDay = cap;
+      unawaited(TravelReminders.reschedule());
+    }
+  }
+
+  TravelReminders.maxPerDay = premium.isPremium.value ? 6 : limits.notifyPerDay;
+  CourseAccess.premium.value = premium.isPremium.value;
+  premium.isPremium.addListener(syncPremium);
   final services = Services.standard(
     analytics: telemetry.analytics,
     flags: telemetry.flags,

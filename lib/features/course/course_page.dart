@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../app/main_shell.dart';
 import '../../app/theme/app_theme.dart';
 import '../../l10n/l10n.dart';
+import '../../shared/premium/paywall_page.dart';
 import '../travel/travel_page.dart';
 import 'course.dart';
 
@@ -89,9 +90,7 @@ class _LessonTile extends StatelessWidget {
         ),
         onTap: () {
           if (!unlocked) {
-            ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(SnackBar(content: Text(l.courseLocked)));
+            openPaywall(context, source: 'course', note: l.courseLocked);
             return;
           }
           Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => LessonPage(course: course, index: index)));

@@ -156,7 +156,17 @@ class _RecordListPageState extends State<RecordListPage> {
                       ),
                   ]),
                 ),
-                if (judged.isNotEmpty) ...[
+                if (judged.isNotEmpty && !s.isPremium) ...[
+                  const SizedBox(height: 4),
+                  TextButton.icon(
+                    style: TextButton.styleFrom(padding: EdgeInsets.zero, alignment: AlignmentDirectional.centerStart),
+                    onPressed: () async {
+                      if (await openPaywall(context, source: 'record_stats') && mounted) setState(() {});
+                    },
+                    icon: const Icon(Icons.lock_outline, size: 16),
+                    label: Text(l.recordStatsLocked(judged.length)),
+                  ),
+                ] else if (judged.isNotEmpty) ...[
                   const SizedBox(height: 8),
                   Text(
                     l.recordStats(judged.length, count(RecordOutcome.matched), count(RecordOutcome.partly),

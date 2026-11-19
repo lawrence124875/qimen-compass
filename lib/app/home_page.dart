@@ -5,6 +5,7 @@ import '../features/almanac/almanac_page.dart';
 import '../features/divination/divination_page.dart';
 import '../features/travel/travel_page.dart';
 import '../l10n/l10n.dart';
+import '../shared/premium/usage_gate.dart';
 import '../core/records/record_store.dart';
 import '../features/records/record_actions.dart';
 import 'services.dart';
@@ -34,10 +35,17 @@ class _HomePageState extends State<HomePage> {
   QimenChart _compute() =>
       _engine.compute(_instant, settings: _settings.timeSettingsAt(_instant), method: _settings.juMethod, unit: _unit);
 
-  void _setUnit(PanUnit u) => setState(() {
-        _unit = u;
-        _chart = _compute();
-      });
+  /// 月盤、年盤屬訂閱功能（免費完整體驗一次）。
+  Future<void> _setUnit(PanUnit u) async {
+    if (u != PanUnit.hour && u != _unit) {
+      final access = await requirePremium(context, feature: 'pan_month_year');
+      if (access == PremiumAccess.titleOnly || !mounted) return;
+    }
+    setState(() {
+      _unit = u;
+      _chart = _compute();
+    });
+  }
 
   /// 前後切換一個單位（時辰／月／年）。月、年取同一日；遇月底則取該月最後一天。
   DateTime _shift(int n) => switch (_unit) {

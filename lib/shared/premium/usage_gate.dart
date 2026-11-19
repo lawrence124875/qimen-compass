@@ -89,6 +89,58 @@ Future<PremiumAccess> requirePremium(BuildContext context, {required String feat
   return ok ? PremiumAccess.full : PremiumAccess.titleOnly;
 }
 
+/// 「先給等級、詳解需訂閱」的功能（問事、擇時）：不先開訂閱頁。
+/// 訂閱戶 [PremiumAccess.full]；免費版第一次 [PremiumAccess.preview]（記下用過）；之後 [PremiumAccess.titleOnly]，
+/// 畫面照樣算出結果，只顯示時間與等級，詳解處放 [PremiumLockCard]。
+Future<PremiumAccess> peekPremium(BuildContext context, {required String feature}) async {
+  final s = AppServices.of(context);
+  if (s.isPremium) return PremiumAccess.full;
+  if (s.limits.premiumPreviewOnce && !await s.previews.used(feature)) {
+    await s.previews.markUsed(feature);
+    s.analytics.log('qm_premium_preview', {'feature': feature});
+    return PremiumAccess.preview;
+  }
+  s.analytics.log('qm_premium_locked_view', {'feature': feature});
+  return PremiumAccess.titleOnly;
+}
+
+/// 詳解上鎖卡：說明＋「訂閱看完整內容」按鈕。訂閱成功回呼 [onUnlocked]。
+class PremiumLockCard extends StatelessWidget {
+  const PremiumLockCard({super.key, required this.feature, required this.text, this.onUnlocked});
+
+  final String feature;
+  final String text;
+  final VoidCallback? onUnlocked;
+
+  @override
+  Widget build(BuildContext context) {
+    final qm = context.qm;
+    final l = context.l10n;
+    return Card(
+      margin: const EdgeInsets.only(bottom: 12),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: BorderSide(color: qm.primary)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          Row(children: [
+            Icon(Icons.lock_outline, color: qm.primary),
+            const SizedBox(width: 8),
+            Expanded(child: Text(text)),
+          ]),
+          const SizedBox(height: 12),
+          FilledButton(
+            onPressed: () async {
+              final ok = await openPaywall(context, source: '${feature}_locked', note: l.paywallPremiumNote);
+              if (ok) onUnlocked?.call();
+            },
+            child: Text(l.premiumUnlockFull),
+          ),
+        ]),
+      ),
+    );
+  }
+}
+
 /// 每天第一次免費使用、顯示結果前：過場文字「靜心片刻」，再播一則插頁；載入失敗或超過 3 秒就直接回傳。
 Future<void> pauseBeforeResult(BuildContext context) async {
   final s = AppServices.of(context);

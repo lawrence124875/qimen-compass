@@ -870,10 +870,10 @@
   "premiumTitle": "奇門羅盤會員",
   "premiumActive": "你已是奇門羅盤會員，謝謝支持。",
   "premiumBenefitNoAds": "無廣告",
-  "premiumBenefitTools": "擇時、宅盤、問事解讀完整開放",
-  "premiumBenefitTravel": "出行訣不限次數",
-  "premiumBenefitRecords": "紀錄不限則數、保留全部歷史",
-  "premiumFreeNote": "奇門羅盤、當下時盤永遠免費。",
+  "premiumBenefitTools": "擇時、宅盤、問事完整解讀、本命盤、合盤、搬家與目的地方位、年月盤全部開放",
+  "premiumBenefitTravel": "出行訣不限次數、吉時推播每天最多 6 則、課程全部解鎖",
+  "premiumBenefitRecords": "紀錄不限則數、保留全部歷史、應驗統計與備份",
+  "premiumFreeNote": "時盤、羅盤找吉門、盤面解說、今日黃曆、桌面小工具永遠免費。",
   "menuBackupMove": "備份與換手機",
   "menuBackupMoveHint": "匯出紀錄，到新手機再匯入",
   "shareAppText": "我在用「奇門羅盤」看吉方與吉時，推薦給你：{url}",
@@ -1471,5 +1471,21 @@
       }
     }
   },
-  "widgetOpenApp": "打開 App 更新"
+  "widgetOpenApp": "打開 App 更新",
+  "premiumUnlockFull": "訂閱看完整內容",
+  "divLockedDetail": "決斷和等級先給你看。方位、理由、應期、宜忌與盤面要訂閱才會顯示。",
+  "zeshiLockedDetail": "時段和等級先給你看。方位、加減分理由、盤面、加入行事曆與存紀錄要訂閱。",
+  "zeshiLockedRow": "方位與理由需訂閱",
+  "recordStatsLocked": "已回饋 {total} 則，訂閱看應驗統計",
+  "@recordStatsLocked": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "trialPromptTitle": "免費試用 7 天",
+  "trialPromptBody": "年訂方案可以先免費試用 7 天：擇時、宅盤、問事完整解讀、本命盤、年月盤全部打開，也沒有廣告。試用期間在 Google Play 隨時可取消。",
+  "trialPromptStart": "開始免費試用",
+  "trialPromptLater": "之後再說"
 }
