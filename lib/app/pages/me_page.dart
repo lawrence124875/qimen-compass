@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../features/course/course_page.dart';
 import '../../features/house/house_page.dart';
+import '../../features/map/move_page.dart';
 import '../../features/personal/personal_page.dart';
+import '../../features/personal/synastry_page.dart';
 import '../../features/records/record_list_page.dart';
 import '../../l10n/l10n.dart';
 import '../../shared/premium/usage_gate.dart';
@@ -45,6 +47,10 @@ class MePage extends StatelessWidget {
           if (s.featureEnabled('personal'))
             tile(Icons.person_pin_circle_outlined, l.personalTitle, l.personalSub,
                 () => openPremium(context, 'personal', (_) => const PersonalPage())),
+          if (s.featureEnabled('synastry'))
+            tile(Icons.people_outline, l.synTitle, l.synSub, () => openPremium(context, 'synastry', (_) => const SynastryPage())),
+          if (s.featureEnabled('move'))
+            tile(Icons.local_shipping_outlined, l.moveTitle, l.moveSub, () => openPremium(context, 'move', (_) => const MovePage())),
           if (s.featureEnabled('house'))
             tile(Icons.home_work_outlined, l.homeHouse, l.meHouseSub,
                 () => openPremium(context, 'house', (_) => const HousePage())),

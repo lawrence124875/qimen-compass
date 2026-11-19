@@ -93,12 +93,13 @@ class DivinationText {
   /// 宜忌提示（[ReadingMore.tipKeys]）；沒有該句時為 null。
   String? tip(String key, {required bool good}) => _lookup(['tips', key, good ? 'do' : 'dont']) as String?;
 
-  /// 失物：方位、地點、八神提示。
-  String lostWhere(Reading r, String dir) => _fill(_s(['topics', 'lost', 'where']), r.main, dir: dir);
-  String? lostPlace(int palace) => _lookup(['topics', 'lost', 'place', '$palace']) as String?;
-  String? lostGod(God g) => _lookup(['topics', 'lost', 'god', g.zh]) as String?;
-  String get lostNear => _s(['topics', 'lost', 'near']);
-  String get lostFar => _s(['topics', 'lost', 'far']);
+  /// 有方位的事類（失物、尋人、尋寵物）：方位、地點、八神提示。事類沒有專屬句子時用失物的。
+  dynamic _dirText(String topic, List<String> rest) => _lookup(['topics', topic, ...rest]) ?? _lookup(['topics', 'lost', ...rest]);
+  String lostWhere(Reading r, String dir) => _fill((_dirText(r.topic, ['where']) as String?) ?? 'where', r.main, dir: dir);
+  String? lostPlace(int palace, [String topic = 'lost']) => _dirText(topic, ['place', '$palace']) as String?;
+  String? lostGod(God g, [String topic = 'lost']) => _dirText(topic, ['god', g.zh]) as String?;
+  String lostNear([String topic = 'lost']) => (_dirText(topic, ['near']) as String?) ?? 'near';
+  String lostFar([String topic = 'lost']) => (_dirText(topic, ['far']) as String?) ?? 'far';
 
   String _fill(String tpl, YongShenHit h, {String? dir, Door? door, God? god}) => tpl
       .replaceAll('{ys}', yongShen(h.spec))
