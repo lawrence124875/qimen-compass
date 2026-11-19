@@ -19,6 +19,17 @@ grep -q "applicationId = \"${APP_ID}\"" "$GRADLE" && echo "套件名稱：${APP_
 grep -q ACCESS_COARSE_LOCATION "$MANIFEST" || sed -i 's#<application#<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>\n    <application#' "$MANIFEST"
 grep -q ACCESS_COARSE_LOCATION "$MANIFEST" && echo "權限：ACCESS_COARSE_LOCATION" || { echo "::error::位置權限設定失敗"; exit 1; }
 
+# 地圖八門（google_maps_flutter）：目前位置要較精確（Android 12+ 使用者仍可只給概略位置）；
+# Maps API key 來自 Secret MAPS_API_KEY，沒設時不寫入，App 端 MAPS_ENABLED=false 不建立地圖（否則 SDK 會當）
+grep -q ACCESS_FINE_LOCATION "$MANIFEST" || sed -i 's#<application#<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>\n    <application#' "$MANIFEST"
+if [ -n "${MAPS_API_KEY:-}" ]; then
+  grep -q "com.google.android.geo.API_KEY" "$MANIFEST" || \
+    sed -i "s#</application>#    <meta-data android:name=\"com.google.android.geo.API_KEY\" android:value=\"${MAPS_API_KEY}\"/>\n    </application>#" "$MANIFEST"
+  grep -q "com.google.android.geo.API_KEY" "$MANIFEST" && echo "Maps API key 已寫入" || { echo "::error::Maps API key 寫入失敗"; exit 1; }
+else
+  echo "::warning::尚未設定 MAPS_API_KEY，地圖八門只保留地址搜尋"
+fi
+
 # 不鎖方向、不限制調整大小（Play Console 對大螢幕的要求）
 sed -i -E 's/[[:space:]]*android:(screenOrientation|resizeableActivity)="[^"]*"//g' "$MANIFEST"
 

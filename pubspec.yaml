@@ -17,7 +17,10 @@ dependencies:
   flutter_compass: ^0.8.1 # 羅盤方位角（lib/compass/）
   sensors_plus: ^7.1.1 # 磁力計（干擾偵測）、加速度計（平放提示）
   geomag: ^0.3.0 # WMM 2025 磁偏角（真北）
-  geolocator: ^14.0.0 # 真北時取概略位置（只要求 ACCESS_COARSE_LOCATION）
+  geolocator: ^14.0.0 # 真北取概略位置；地圖八門取目前位置
+  # 地圖八門、目的地吉凶（HANDOFF §12 P2）：原生地圖免費，只需 Maps API key；地址查詢用手機內建 geocoder，不用付費 Places
+  google_maps_flutter: ^2.10.0
+  geocoding: ^4.0.0
   # 出行訣與吉時推播（HANDOFF §5）
   flutter_local_notifications: ^19.4.0 # 吉時推播（非精確排程，不用精確鬧鐘權限）
   timezone: ^0.10.0 # zonedSchedule 需要（一律以 UTC 排程）

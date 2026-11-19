@@ -73,6 +73,7 @@ jobs:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
         run: bash scripts/patch_android.sh
 
       # Firebase：與謙卦共用專案。Secret GOOGLE_SERVICES_JSON_BASE64 需含 com.lclab.qimen；沒設定就不含 Firebase。
@@ -147,7 +148,7 @@ jobs:
           ADMOB_REWARDED_AD_UNIT_ID: ${{ secrets.ADMOB_REWARDED_AD_UNIT_ID }}
         run: |
           set +e
-          flutter build apk --release --build-number=${{ github.run_number }} ${FORCE_LANG:+--dart-define=FORCE_LANG=$FORCE_LANG} --dart-define=REVENUECAT_API_KEY="$REVENUECAT_API_KEY" --dart-define=ADMOB_BANNER_AD_UNIT_ID="$ADMOB_BANNER_AD_UNIT_ID" --dart-define=ADMOB_INTERSTITIAL_AD_UNIT_ID="$ADMOB_INTERSTITIAL_AD_UNIT_ID" --dart-define=ADMOB_REWARDED_AD_UNIT_ID="$ADMOB_REWARDED_AD_UNIT_ID" > /tmp/build.log 2>&1
+          flutter build apk --release --build-number=${{ github.run_number }} ${FORCE_LANG:+--dart-define=FORCE_LANG=$FORCE_LANG} --dart-define=MAPS_ENABLED=${{ secrets.MAPS_API_KEY != '' }} --dart-define=REVENUECAT_API_KEY="$REVENUECAT_API_KEY" --dart-define=ADMOB_BANNER_AD_UNIT_ID="$ADMOB_BANNER_AD_UNIT_ID" --dart-define=ADMOB_INTERSTITIAL_AD_UNIT_ID="$ADMOB_INTERSTITIAL_AD_UNIT_ID" --dart-define=ADMOB_REWARDED_AD_UNIT_ID="$ADMOB_REWARDED_AD_UNIT_ID" > /tmp/build.log 2>&1
           status=$?
           tail -n 40 /tmp/build.log
           if [ $status -ne 0 ]; then
@@ -165,7 +166,7 @@ jobs:
           ADMOB_REWARDED_AD_UNIT_ID: ${{ secrets.ADMOB_REWARDED_AD_UNIT_ID }}
         run: |
           set +e
-          flutter build appbundle --release --build-number=${{ github.run_number }} --dart-define=REVENUECAT_API_KEY="$REVENUECAT_API_KEY" --dart-define=ADMOB_BANNER_AD_UNIT_ID="$ADMOB_BANNER_AD_UNIT_ID" --dart-define=ADMOB_INTERSTITIAL_AD_UNIT_ID="$ADMOB_INTERSTITIAL_AD_UNIT_ID" --dart-define=ADMOB_REWARDED_AD_UNIT_ID="$ADMOB_REWARDED_AD_UNIT_ID" > /tmp/bundle.log 2>&1
+          flutter build appbundle --release --build-number=${{ github.run_number }} --dart-define=MAPS_ENABLED=${{ secrets.MAPS_API_KEY != '' }} --dart-define=REVENUECAT_API_KEY="$REVENUECAT_API_KEY" --dart-define=ADMOB_BANNER_AD_UNIT_ID="$ADMOB_BANNER_AD_UNIT_ID" --dart-define=ADMOB_INTERSTITIAL_AD_UNIT_ID="$ADMOB_INTERSTITIAL_AD_UNIT_ID" --dart-define=ADMOB_REWARDED_AD_UNIT_ID="$ADMOB_REWARDED_AD_UNIT_ID" > /tmp/bundle.log 2>&1
           status=$?
           tail -n 20 /tmp/bundle.log
           if [ $status -ne 0 ]; then

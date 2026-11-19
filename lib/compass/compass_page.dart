@@ -12,6 +12,8 @@ import '../l10n/l10n.dart';
 import 'compass_intro.dart';
 import 'compass_math.dart';
 import 'declination.dart';
+import '../app/services.dart';
+import '../features/map/map_page.dart';
 
 /// 奇門羅盤（HANDOFF §4）：八門盤依手機朝向反向旋轉，對準現實方位。
 class CompassPage extends StatefulWidget {
@@ -156,6 +158,13 @@ class _CompassPageState extends State<CompassPage> {
     final chart = _shown;
     return Scaffold(
       appBar: AppBar(title: Text(l.compassTitle), actions: [
+        // 地圖模式（HANDOFF §12 P2）
+        if (AppServices.of(context).featureEnabled('map'))
+          TextButton.icon(
+            icon: const Icon(Icons.map_outlined),
+            label: Text(l.mapTitle),
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const MapPage())),
+          ),
         IconButton(
           icon: const Icon(Icons.info_outline),
           tooltip: l.compassIntroInfo,
