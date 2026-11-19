@@ -99,8 +99,6 @@
 
 ## 12. 下一步：延伸功能 P1→P8（2026-11-19 定案，一次做完才出正式版；完成一階段刪一階段）
 原則：全部規則＋模板、不用 AI；新功能用 Remote Config `qm_feature_<id>` 開關（預設開）；進階功能接 `requirePremium`；新介面文字 11 語齊全；中途不出 APK，只在 P8 建版。
-- [ ] P1 架構：底部 4 分頁（羅盤（含地圖模式）／盤面／擇時／我的（宅盤、盤記、課程、設定））；盤面點擊解說（點宮內任一元素跳出該元素意義，11 語）
-- [ ] P2 地圖八門＋目的地吉凶：`google_maps_flutter`＋`geolocator`＋`geocoding`（不用付費 Places）；以所在位置為中心畫 8 個 45° 扇區依門吉凶上色，半徑 1／3／5 km；點地圖或長按放圖釘→方位角、距離、落門；輸入地址查目的地→「現在出發吉不吉」＋接下來的吉時。地圖以真北為準。Maps API key：Secret `MAPS_API_KEY`（未設時地圖頁顯示提示，其餘照常）
 - [ ] P3 今日奇門黃曆（每天吉時、吉方小卡）＋分享吉方圖卡（黃曆、出行訣、目的地，一鍵產生直式圖卡）
 - [ ] P4 個人化：個人資料（生辰）；奇門本命盤（出生時間起局＋格局文句）；流年、流月運勢（年盤／月盤對照年命宮）；個人吉方（年命篩出有利時辰與方位）
 - [ ] P5 雙人合盤（兩人年命、日干生剋；合夥／婚配）；遠行、搬家方位（住家為中心，對照年盤、月盤）；尋人、尋寵物（問事新事類，接羅盤方位）
@@ -160,6 +158,8 @@
   - 資料：SharedPreferences `qm_houses`（schemaVersion 1：current＋houses，每間帶 id、name；舊 `qm_house` 自動搬）；標題點開「我的房子」切換、新增、改名、刪除可復原（沒復原才刪平面圖照片）；引導用共用 `showGuide`（id `house`）；排盤沿用 App 排盤設定
   - 待補：其餘 9 語的 house* 鍵；iOS `NSCameraUsageDescription`／`NSPhotoLibraryUsageDescription`；宅盤判讀文句（qimen-content）；分享卡片；付費牆（§10 宅盤屬訂閱）；實機驗證陀螺儀鎖定漂移
 
+- 延伸 P1（2026-11-19）：底部 4 分頁 `lib/app/main_shell.dart`（`MainTab`；羅盤離開即拆、其餘保留；`MainShell.select(tab)` 從推上去的頁面切分頁）；「我的」`lib/app/pages/me_page.dart`（`MePage.openPremium(context, feature, builder)` 開訂閱功能）；擇時分頁、宅盤、問事 `_start` 已接 `requirePremium`。盤面點擊解說：`PalaceDetail` 每個門／星／神／天干下方一行意義（`lib/features/meaning/`，qimen-content `app/meaning/`）。ARB 新增鍵用 `tools/l10n/add_keys.py`（一次 10 語）→ `l10n.py hans` → `check --strict`
+- 延伸 P2（2026-11-19）：地圖八門 `lib/features/map/map_page.dart`（羅盤分頁右上「地圖八門」；真北扇區、半徑 1／3／5 km、點／長按放圖釘、`geocoding` 地址搜尋）；目的地吉凶 `destination_page.dart`（`DirectionPlanner`，`lib/engine/direction.dart`：基礎 3 分＋門吉凶 ±1，其餘同出行訣；訂閱體驗一次 `destination`）；`lib/compass/geo_math.dart`（方位角、距離、扇形）。Maps key：Secret `MAPS_API_KEY` → `patch_android.sh` 寫入 manifest、`--dart-define=MAPS_ENABLED`；沒設時不建立 GoogleMap（SDK 會當），只留搜尋。加 `ACCESS_FINE_LOCATION`。iOS 上架前要在 AppDelegate 設 Maps key
 ## 14. 沿用謙卦／光穗塔羅的經驗（2026-11-17 整理；細節見 iching-content `HANDOFF.md`、`docs/REFERENCE.md`，tarot-content `HANDOFF.md`）
 ### 配色與 UI（配色已定案，見 §13 介面）
 - 謙卦「天玄地黃」：深色 玄墨 #1C1B22 底、玄灰 #26242E 卡片、地黃 #C9A45C 主色、稻金 #D8B56A 點綴、山褐 #7E6A52 框線、淡金 #E8D9B0 文字；淺色 宣紙 #F3ECDD 底、地黃 #946C2A。塔羅為晨光奶油＋琥珀金＋暮光紫。奇門建議沿用謙卦色系（同屬東方、利於互相導流），八門吉／平／凶用五行色標示，深淺色模式從第一版就做（設定「外觀」跟隨系統／淺／深；顏色用 getter，不放 const；圖上文字用固定 `onImage`）。
