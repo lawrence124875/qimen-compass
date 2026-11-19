@@ -7,7 +7,9 @@ import '../../app/widgets/share_card.dart';
 import '../../compass/compass_math.dart';
 import '../../compass/geo_math.dart';
 import '../../engine/engine.dart' hide Element;
+import '../../core/records/record_store.dart';
 import '../../l10n/l10n.dart';
+import '../records/record_actions.dart';
 import '../travel/travel_text.dart';
 import 'map_location.dart';
 
@@ -64,6 +66,18 @@ class _DestinationPageState extends State<DestinationPage> {
 
     return Scaffold(
       appBar: AppBar(title: Text(l.destTitle), actions: [
+        IconButton(
+          icon: const Icon(Icons.bookmark_add_outlined),
+          tooltip: l.recordSaveTitle,
+          onPressed: () => saveRecord(context,
+              kind: RecordKind.travel,
+              chartAt: now,
+              summary: [
+                if (name != null && name.isNotEmpty) name,
+                TravelText.direction(l, palace),
+                TravelText.level(l, cur.level),
+              ].join(l.separator)),
+        ),
         IconButton(
           icon: const Icon(Icons.ios_share),
           tooltip: l.homeShare,

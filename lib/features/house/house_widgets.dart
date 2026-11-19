@@ -2,6 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import 'house_model.dart';
+
 import '../../app/theme/app_theme.dart';
 import '../../compass/compass_math.dart';
 import '../../engine/engine.dart' hide Element;
@@ -365,7 +367,11 @@ class _MeasureDialogState extends State<_MeasureDialog> {
 Future<String?> askRoomName(BuildContext context, {String initial = ''}) {
   final ctrl = TextEditingController(text: initial);
   final l = context.l10n;
-  final presets = l.houseRoomPresets.split(',').map((s) => s.trim()).where((s) => s.isNotEmpty).toList();
+  final presets = switch (currentHouseKind) {
+    HouseKind.home => l.houseRoomPresets,
+    HouseKind.office => l.houseOfficePresets,
+    HouseKind.shop => l.houseShopPresets,
+  }.split(',').map((s) => s.trim()).where((s) => s.isNotEmpty).toList();
   return showDialog<String>(
     context: context,
     builder: (context) => AlertDialog(

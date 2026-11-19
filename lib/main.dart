@@ -17,7 +17,7 @@ import 'features/travel/travel_reminders.dart';
 import 'services/notifications.dart';
 
 /// 功能 id（Remote Config `qm_feature_<id>`，預設開）。
-const featureIds = ['compass', 'travel', 'divination', 'zeshi', 'house', 'records', 'course', 'map', 'destination', 'almanac', 'personal', 'synastry', 'move'];
+const featureIds = ['compass', 'travel', 'divination', 'zeshi', 'house', 'records', 'course', 'map', 'destination', 'almanac', 'personal', 'synastry', 'move', 'facing'];
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

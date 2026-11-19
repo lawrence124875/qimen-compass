@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../features/course/course_page.dart';
+import '../../features/house/facing_page.dart';
 import '../../features/house/house_page.dart';
 import '../../features/map/move_page.dart';
 import '../../features/personal/personal_page.dart';
@@ -54,6 +55,8 @@ class MePage extends StatelessWidget {
           if (s.featureEnabled('house'))
             tile(Icons.home_work_outlined, l.homeHouse, l.meHouseSub,
                 () => openPremium(context, 'house', (_) => const HousePage())),
+          if (s.featureEnabled('facing'))
+            tile(Icons.bed_outlined, l.facingTitle, l.facingSub, () => openPremium(context, 'facing', (_) => const FacingPage())),
           if (s.featureEnabled('records'))
             tile(Icons.bookmarks_outlined, l.recordsTitle, l.meRecordsSub, () => open(context, (_) => const RecordListPage())),
           if (s.featureEnabled('course'))

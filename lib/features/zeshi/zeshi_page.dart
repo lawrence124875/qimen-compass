@@ -7,7 +7,9 @@ import '../../app/theme/app_theme.dart';
 import '../../app/widgets/chart_board.dart';
 import '../../app/widgets/hour_window.dart';
 import '../../engine/engine.dart' hide Element;
+import '../../core/records/record_store.dart';
 import '../../l10n/l10n.dart';
+import '../records/record_actions.dart';
 import '../travel/travel_text.dart';
 import 'zeshi_text.dart';
 
@@ -180,6 +182,19 @@ class _ZeShiPageState extends State<ZeShiPage> {
     _run();
   }
 
+  /// 擇時紀錄（HANDOFF §12 P6）：記下這個時段，事後回來填應驗。
+  Future<void> _saveSlot(ZeShiSlot s) {
+    final l = context.l10n;
+    return saveRecord(context,
+        kind: RecordKind.zeshi,
+        chartAt: s.startUtc.add(s.endUtc.difference(s.startUtc) ~/ 2),
+        summary: [
+          ZeShiText.when(l, s),
+          l.travelDirDoor(TravelText.direction(l, s.palace), QimenTerms.door(s.door, L10n.language)),
+          TravelText.level(l, s.level),
+        ].join(l.separator));
+  }
+
   Future<void> _addToCalendar(ZeShiSlot s) async {
     final l = context.l10n;
     final title = l.zeshiCalendarTitle(ZeShiText.event(l, _event));
@@ -313,6 +328,7 @@ class _ZeShiPageState extends State<ZeShiPage> {
                       slot: result[i],
                       onChart: () => _showChart(result[i]),
                       onCalendar: () => _addToCalendar(result[i]),
+                      onSave: () => _saveSlot(result[i]),
                     ),
                 const SizedBox(height: 12),
                 Text(l.zeshiFootnote(_window.label(l), _perDayLabel(l)), style: theme.textTheme.bodySmall?.copyWith(color: context.qm.textMuted)),
@@ -325,11 +341,11 @@ class _ZeShiPageState extends State<ZeShiPage> {
 }
 
 class _SlotCard extends StatelessWidget {
-  const _SlotCard({required this.rank, required this.slot, required this.onChart, required this.onCalendar});
+  const _SlotCard({required this.rank, required this.slot, required this.onChart, required this.onCalendar, required this.onSave});
 
   final int rank;
   final ZeShiSlot slot;
-  final VoidCallback onChart, onCalendar;
+  final VoidCallback onChart, onCalendar, onSave;
 
   @override
   Widget build(BuildContext context) {
@@ -371,6 +387,7 @@ class _SlotCard extends StatelessWidget {
                 child: Text(TravelText.level(l, s.level), style: TextStyle(color: levelColor)),
               ),
               IconButton(tooltip: l.zeshiAddCalendar, icon: const Icon(Icons.event_available_outlined), onPressed: onCalendar),
+              IconButton(tooltip: l.recordSaveTitle, icon: const Icon(Icons.bookmark_add_outlined), onPressed: onSave),
             ]),
           ]),
         ),

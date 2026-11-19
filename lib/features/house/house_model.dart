@@ -6,6 +6,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../compass/compass_math.dart';
 import 'house_geometry.dart';
 
+/// 宅盤用途（HANDOFF §12 P6）：住家、辦公室、店面；影響房間常用名稱與判讀建議。
+enum HouseKind { home, office, shop }
+
+/// 目前開啟的宅盤用途（房間名稱對話框挑常用名稱用；宅盤頁載入或切換時更新）。
+HouseKind currentHouseKind = HouseKind.home;
+
 /// 坐向定法（HANDOFF §6）。
 enum SittingMethod { door, light, building, groundDoor }
 
@@ -143,6 +149,7 @@ class House {
     String? id,
     this.name = '',
     this.sittingMethod = SittingMethod.door,
+    this.kind = HouseKind.home,
     this.facing,
     this.moveIn,
     this.moveInHasTime = false,
@@ -158,6 +165,8 @@ class House {
   static const schemaVersion = 1;
 
   SittingMethod sittingMethod;
+
+  HouseKind kind;
 
   /// 向（面朝方位角）；null＝未量。
   double? facing;
@@ -192,6 +201,7 @@ class House {
         'id': id,
         'name': name,
         'sm': sittingMethod.name,
+        'k': kind.name,
         'f': facing,
         if (moveIn != null) 'mi': moveIn!.toIso8601String(),
         'mit': moveInHasTime,
@@ -203,6 +213,7 @@ class House {
         id: j['id'] as String?,
         name: j['name'] as String? ?? '',
         sittingMethod: SittingMethod.values.firstWhere((m) => m.name == j['sm'], orElse: () => SittingMethod.door),
+        kind: HouseKind.values.firstWhere((k) => k.name == j['k'], orElse: () => HouseKind.home),
         facing: (j['f'] as num?)?.toDouble(),
         moveIn: DateTime.tryParse(j['mi'] as String? ?? ''),
         moveInHasTime: j['mit'] as bool? ?? false,
