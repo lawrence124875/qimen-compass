@@ -13,6 +13,7 @@ import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
 import 'heading_tracker.dart';
 import 'house_geometry.dart';
+import '../travel/travel_text.dart';
 import 'house_model.dart';
 import 'house_widgets.dart';
 import 'mark_rooms_page.dart';
@@ -414,6 +415,20 @@ class _HousePageState extends State<HousePage> {
     ]);
 
     final facing = h.facing;
+    currentHouseKind = h.kind;
+    final kindSelector = SegmentedButton<HouseKind>(
+      showSelectedIcon: false,
+      segments: [
+        ButtonSegment(value: HouseKind.home, label: Text(l.houseKindHome)),
+        ButtonSegment(value: HouseKind.office, label: Text(l.houseKindOffice)),
+        ButtonSegment(value: HouseKind.shop, label: Text(l.houseKindShop)),
+      ],
+      selected: {h.kind},
+      onSelectionChanged: (v) {
+        h.kind = v.first;
+        _save();
+      },
+    );
     final facingCard = Card(
       margin: EdgeInsets.zero,
       child: ListTile(
@@ -429,7 +444,7 @@ class _HousePageState extends State<HousePage> {
 
     final rooms = h.roomsByPalace();
     final list = Column(children: [
-      for (final p in [...palaceRing, 5]) _PalaceTile(chart: chart, palace: p, rooms: rooms[p] ?? const []),
+      for (final p in [...palaceRing, 5]) _PalaceTile(chart: chart, palace: p, rooms: rooms[p] ?? const [], kind: h.kind),
     ]);
 
     return ListView(padding: const EdgeInsets.fromLTRB(12, 8, 12, 24), children: [
@@ -446,6 +461,8 @@ class _HousePageState extends State<HousePage> {
       const SizedBox(height: 12),
       actions,
       const SizedBox(height: 12),
+      kindSelector,
+      const SizedBox(height: 8),
       facingCard,
       const SizedBox(height: 12),
       list,
@@ -564,11 +581,28 @@ class _HousePageState extends State<HousePage> {
 
 /// 一宮：方位、八門（吉平凶）、九星、八神、標記、房間。
 class _PalaceTile extends StatelessWidget {
-  const _PalaceTile({required this.chart, required this.palace, required this.rooms});
+  const _PalaceTile({required this.chart, required this.palace, required this.rooms, required this.kind});
 
   final QimenChart? chart;
   final int palace;
   final List<String> rooms;
+  final HouseKind kind;
+
+  /// 宅盤判讀（HANDOFF §12 P6）：依該宮吉凶（同方位吉凶計分）給這個用途的擺放建議。
+  static String advice(AppLocalizations l, HouseKind kind, TravelLevel level) {
+    final tier = switch (level) { TravelLevel.great || TravelLevel.good => 0, TravelLevel.neutral => 1, _ => 2 };
+    return switch ((kind, tier)) {
+      (HouseKind.home, 0) => l.houseAdviceHomeGood,
+      (HouseKind.home, 1) => l.houseAdviceHomeMid,
+      (HouseKind.home, _) => l.houseAdviceHomeBad,
+      (HouseKind.office, 0) => l.houseAdviceOfficeGood,
+      (HouseKind.office, 1) => l.houseAdviceOfficeMid,
+      (HouseKind.office, _) => l.houseAdviceOfficeBad,
+      (HouseKind.shop, 0) => l.houseAdviceShopGood,
+      (HouseKind.shop, 1) => l.houseAdviceShopMid,
+      (HouseKind.shop, _) => l.houseAdviceShopBad,
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -605,8 +639,14 @@ class _PalaceTile extends StatelessWidget {
                   ]), style: serif(theme.textTheme.bodyMedium)),
                 if (marks.isNotEmpty)
                   Text(marks.map((m) => QimenTerms.markShort(m)).join(' '), style: theme.textTheme.bodySmall?.copyWith(color: qm.bad)),
-                Text(rooms.isEmpty ? l.houseNoRoomHere : rooms.join('、'),
+                Text(rooms.isEmpty ? l.houseNoRoomHere : rooms.join(l.separator),
                     style: theme.textTheme.bodySmall?.copyWith(color: rooms.isEmpty ? qm.textMuted : qm.text)),
+                if (chart != null && palace != 5)
+                  Builder(builder: (context) {
+                    final v = DirectionPlanner.judge(chart!, palace);
+                    return Text('${TravelText.level(l, v.level)}${l.separator}${advice(l, kind, v.level)}',
+                        style: theme.textTheme.bodySmall?.copyWith(color: qm.textMuted));
+                  }),
               ]),
             ),
           ]),

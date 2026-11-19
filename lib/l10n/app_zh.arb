@@ -1423,5 +1423,40 @@
   "moveYears": "年盤（今年、明年）",
   "moveMonths": "月盤（接下來 12 個月）",
   "moveGoodMonths": "較適合的月份",
-  "moveNoGoodMonth": "接下來 12 個月這個方位都未達「吉」，可考慮先往吉方暫住再搬"
+  "moveNoGoodMonth": "接下來 12 個月這個方位都未達「吉」，可考慮先往吉方暫住再搬",
+  "houseKindHome": "住家",
+  "houseKindOffice": "辦公室",
+  "houseKindShop": "店面",
+  "houseOfficePresets": "大門,我的座位,主管座位,會議室,財務,業務,接待區,茶水間,影印區,倉儲",
+  "houseShopPresets": "大門,收銀台,主力商品,櫃位,展示櫥窗,試衣間,倉庫,員工區,招牌",
+  "houseAdviceHomeGood": "適合常待：臥室、書房、客廳",
+  "houseAdviceHomeMid": "一般用途即可：餐廳、走道",
+  "houseAdviceHomeBad": "少久留：適合收納、浴廁",
+  "houseAdviceOfficeGood": "適合主管座位、業務或財務",
+  "houseAdviceOfficeMid": "適合一般座位、會議室",
+  "houseAdviceOfficeBad": "少放座位：適合倉儲、影印區",
+  "houseAdviceShopGood": "適合大門、收銀台或主力商品",
+  "houseAdviceShopMid": "適合一般櫃位、試衣間",
+  "houseAdviceShopBad": "適合倉庫、員工區，不放收銀",
+  "facingTitle": "床位・書桌朝向",
+  "facingSub": "看坐著或躺著時面向的門",
+  "facingBed": "床頭",
+  "facingDesk": "書桌",
+  "facingSeat": "座位",
+  "facingHint": "手機平放，頂端指向床頭或你面向的方向；以今年年盤判斷",
+  "facingNow": "目前朝向：{dir}・{door}",
+  "@facingNow": {
+    "placeholders": {
+      "dir": {
+        "type": "String"
+      },
+      "door": {
+        "type": "String"
+      }
+    }
+  },
+  "facingFit": "適合",
+  "facingOk": "普通",
+  "facingAvoid": "不建議",
+  "facingSuggest": "今年建議朝向"
 }
