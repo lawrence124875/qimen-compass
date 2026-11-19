@@ -246,15 +246,21 @@ class VerdictBadge extends StatelessWidget {
       Verdict.neutral => qm.neutral,
       _ => qm.bad,
     };
-    final size = large ? 64.0 : 40.0;
+    // 膠囊形：寬度隨文字（「大吉」或較長的外語不會被圓圈裁切），文字單行置中。
+    final base = large ? Theme.of(context).textTheme.titleLarge : Theme.of(context).textTheme.bodyMedium;
     return Container(
-      width: size,
-      height: size,
+      constraints: BoxConstraints(minWidth: large ? 64 : 40, minHeight: large ? 40 : 28),
+      padding: EdgeInsets.symmetric(horizontal: large ? 14 : 10, vertical: 4),
       alignment: Alignment.center,
-      decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: color, width: large ? 2 : 1.5)),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: color, width: large ? 2 : 1.5),
+      ),
       child: Text(label,
-          style: serif(large ? Theme.of(context).textTheme.titleLarge : Theme.of(context).textTheme.bodyMedium)
-              .copyWith(color: color, fontWeight: FontWeight.w700)),
+          maxLines: 1,
+          softWrap: false,
+          textAlign: TextAlign.center,
+          style: serif(base).copyWith(color: color, fontWeight: FontWeight.w700, height: 1.2)),
     );
   }
 }
