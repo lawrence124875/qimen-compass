@@ -764,6 +764,8 @@
   "facingHowNegotiation": "Siéntate a la mesa, móvil plano, la parte superior hacia donde miras (hacia la otra parte).",
   "facingSeatPos": "Dónde sentarte: desde el centro de la sala, en el lado {dirs}. Usa la carta de la hora actual; revisa antes de la reunión.",
   "facingFaceNote": "La orientación es hacia donde mira tu cara; en la cama, hacia donde apunta tu cabeza.",
+  "cureLevelsTitle": "Consejo tradicional: aprovechar lo favorable",
+  "cureLevels": "De más a menos eficaz:\n1. Moverte hacia una buena dirección (viajar, cambiar de asiento)\n2. Sentarte en un buen lugar mirando hacia una buena dirección\n3. Si debes quedarte en un mal lugar, mirar hacia una puerta favorable lo suaviza\n4. Poner objetos de equilibrio en una mala dirección (según los cinco elementos, p. ej. agua en un punto de fuego, metal en uno de tierra)\nSuavizan, no anulan. Son creencias tradicionales sin evidencia científica y sin efecto garantizado.",
   "listJoiner": ", ",
   "familyTitle": "Familia",
   "familySub": "Guarda los cumpleaños de tu familia y mira quién debe salir o firmar hoy",

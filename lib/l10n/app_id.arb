@@ -764,6 +764,8 @@
   "facingHowNegotiation": "Duduk di meja rapat, ponsel datar, ujung atas ke arah Anda menghadap (ke pihak lawan)",
   "facingSeatPos": "Posisi duduk: dari tengah ruangan, pilih sisi {dirs}. Memakai bagan jam saat ini — cek lagi sebelum rapat.",
   "facingFaceNote": "Arah selalu berarti ke mana wajah Anda menghadap; untuk ranjang, arah ubun-ubun saat tidur.",
+  "cureLevelsTitle": "Saran tradisional: meraih yang baik, menghindari yang buruk",
+  "cureLevels": "Dari yang paling kuat:\n1. Bergerak ke arah yang baik (bepergian, pindah tempat duduk)\n2. Duduk di posisi baik dan menghadap arah baik\n3. Jika harus di posisi kurang baik, hadapkan diri ke arah gerbang baik untuk meringankannya\n4. Taruh benda penyeimbang di arah kurang baik (menjembatani atau melemahkan menurut lima unsur, mis. benda air di posisi api, logam di posisi tanah)\nIni meringankan, bukan menghapus. Ini kepercayaan tradisional tanpa bukti ilmiah dan tanpa jaminan hasil.",
   "listJoiner": ", ",
   "familyTitle": "Keluarga",
   "familySub": "Simpan tanggal lahir keluarga, lihat siapa yang cocok keluar atau tanda tangan hari ini",
