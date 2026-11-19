@@ -13,12 +13,16 @@ import 'core/monetization/free_limits.dart';
 import 'core/revenuecat/revenuecat_premium.dart';
 import 'core/telemetry/usage_sharing.dart';
 import 'features/course/course.dart';
+import 'features/family/family_store.dart';
+import 'features/reminders/day_alert_reminder.dart';
 import 'features/reminders/daily_reminder.dart';
+import 'features/wear/wear_sync.dart';
+import 'l10n/l10n.dart';
 import 'features/travel/travel_reminders.dart';
 import 'services/notifications.dart';
 
 /// 功能 id（Remote Config `qm_feature_<id>`，預設開）。
-const featureIds = ['compass', 'travel', 'divination', 'zeshi', 'house', 'records', 'course', 'map', 'destination', 'almanac', 'personal', 'synastry', 'move', 'facing', 'widget'];
+const featureIds = ['compass', 'travel', 'divination', 'zeshi', 'house', 'records', 'course', 'map', 'destination', 'almanac', 'personal', 'synastry', 'move', 'facing', 'widget', 'family', 'alerts', 'wear'];
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,11 +52,21 @@ Future<void> main() async {
       TravelReminders.maxPerDay = cap;
       unawaited(TravelReminders.reschedule());
     }
+    final clash = premium.isPremium.value || limits.alertClashFree;
+    if (DayAlertReminder.clashEnabled != clash) {
+      DayAlertReminder.clashEnabled = clash;
+      unawaited(DayAlertReminder.reschedule().catchError((_) {}));
+    }
+    unawaited(_syncWear());
   }
 
   TravelReminders.maxPerDay = premium.isPremium.value ? 6 : limits.notifyPerDay;
   CourseAccess.premium.value = premium.isPremium.value;
+  DayAlertReminder.clashEnabled = premium.isPremium.value || limits.alertClashFree;
+  _wearLocked = () => limits.wearPremium && !premium.isPremium.value;
   premium.isPremium.addListener(syncPremium);
+  // 家人改了：重排重要日提醒（沖生年那一行）
+  FamilyStore.changed.addListener(() => DayAlertReminder.reschedule().catchError((_) {}));
   final services = Services.standard(
     analytics: telemetry.analytics,
     flags: telemetry.flags,
@@ -71,4 +85,16 @@ Future<void> main() async {
   AppSettings.instance.refreshGps().catchError((_) {});
   TravelReminders.reschedule().catchError((_) {});
   DailyReminder.reschedule().catchError((_) {});
+  DayAlertReminder.reschedule().catchError((_) {});
+  // 手錶資料要算 36 個時辰，等首頁畫好再做
+  unawaited(Future<void>.delayed(const Duration(seconds: 5), _syncWear));
+}
+
+bool Function() _wearLocked = () => false;
+
+/// 手錶羅盤：每次啟動、訂閱狀態改變時同步 3 天資料（沒有手錶或 Play 服務時什麼都不做）。
+Future<void> _syncWear() async {
+  try {
+    await WearSync.sync(L10n.current, locked: _wearLocked());
+  } catch (_) {}
 }

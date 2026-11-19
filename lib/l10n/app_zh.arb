@@ -1673,5 +1673,103 @@
       }
     }
   },
-  "facingFaceNote": "朝向一律以「人面向的方向」判斷；床則看睡覺時頭頂朝哪邊。"
+  "facingFaceNote": "朝向一律以「人面向的方向」判斷；床則看睡覺時頭頂朝哪邊。",
+  "listJoiner": "、",
+  "familyTitle": "家人盤",
+  "familySub": "存家人生日，看今天誰適合出門、簽約",
+  "familyToday": "今天",
+  "familyTomorrow": "明天",
+  "familyMe": "我",
+  "familyAdd": "新增家人",
+  "familyEdit": "編輯",
+  "familyDelete": "刪除",
+  "familyName": "稱呼",
+  "familyEmpty": "新增家人的生日，就能一鍵比較今天誰適合出門、簽約。",
+  "familyGoOut": "出門",
+  "familySign": "簽約",
+  "familyNone": "沒有合適時段",
+  "familyClash": "當天沖生年：重要決定延後，出行多留意",
+  "familySuitGo": "適合出門：{names}",
+  "@familySuitGo": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "familySuitSign": "適合簽約：{names}",
+  "@familySuitSign": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "familySuitNobody": "沒有特別適合的人，可用擇時另選時間",
+  "familyLimitNote": "免費版可存 {n} 位家人，訂閱可無限新增",
+  "@familyLimitNote": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "familyHint": "依每個人的年命在時盤上評分，看 7–21 點；「適合」指達吉以上且當天不沖生年。",
+  "alertTitle": "節氣與重要日提醒",
+  "alertHint": "前一晚提醒明天換局、月破、歲破等日子，附具體建議",
+  "alertOn": "開啟提醒",
+  "alertChannel": "節氣與重要日",
+  "alertCardTitle": "重要日",
+  "alertNotifyTitle": "明天：{items}",
+  "@alertNotifyTitle": {
+    "placeholders": {
+      "items": {
+        "type": "String"
+      }
+    }
+  },
+  "alertTermShort": "交{term}換局",
+  "@alertTermShort": {
+    "placeholders": {
+      "term": {
+        "type": "String"
+      }
+    }
+  },
+  "alertTermBody": "{time} 交{term}，奇門換局，吉方會整批改變；出門前再打開羅盤看一次。",
+  "@alertTermBody": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "term": {
+        "type": "String"
+      }
+    }
+  },
+  "alertSuiPo": "歲破日",
+  "alertSuiPoBody": "歲破日：諸事不宜，避免簽約、搬家、動土、遠行。",
+  "alertYuePo": "月破日",
+  "alertYuePoBody": "月破日：不宜簽約、搬家、開市、嫁娶；重要事改天，或用擇時另選日子。",
+  "alertSiLi": "四離日",
+  "alertSiLiBody": "四離日（春分、夏至、秋分、冬至前一天）：不宜出遠門、開市、嫁娶。",
+  "alertSiJue": "四絕日",
+  "alertSiJueBody": "四絕日（立春、立夏、立秋、立冬前一天）：不宜出遠門、開市、新事開工。",
+  "alertClashShort": "沖家人生年",
+  "alertClashBody": "日沖{names}的生年：避免重大決定，出行多留意。",
+  "@alertClashBody": {
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "wearTitle": "手錶羅盤",
+  "wearSub": "Wear OS 手錶顯示此刻吉門，轉向吉門會震動",
+  "wearFront": "前方",
+  "wearOpenPhone": "打開手機上的奇門羅盤同步",
+  "wearLocked": "訂閱後可在手錶使用",
+  "wearCalib": "不準時手腕畫 8 字校準",
+  "wearSynced": "已同步到手錶",
+  "wearNoWatch": "找不到已連線的 Wear OS 手錶；請先在手錶安裝奇門羅盤"
 }

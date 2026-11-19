@@ -7,10 +7,13 @@ PB=/usr/libexec/PlistBuddy
 set_str() { $PB -c "Set :$1 $2" "$PLIST" 2>/dev/null || $PB -c "Add :$1 string $2" "$PLIST"; }
 
 # Bundle ID 與 Android applicationId 相同
-sed -i '' 's/PRODUCT_BUNDLE_IDENTIFIER = com\.lclab\.qimenCompass;/PRODUCT_BUNDLE_IDENTIFIER = com.lclab.qimen;/' ios/Runner.xcodeproj/project.pbxproj
-grep -q 'PRODUCT_BUNDLE_IDENTIFIER = com.lclab.qimen;' ios/Runner.xcodeproj/project.pbxproj
+# 私人解鎖版（PERSONAL 非空）用 com.lclab.qimen.personal、名稱加「私」，可與一般版同時安裝（2026-11-19 使用者要求）
+BUNDLE=com.lclab.qimen; NAME="奇門羅盤"
+if [ -n "${PERSONAL:-}" ]; then BUNDLE=com.lclab.qimen.personal; NAME="奇門羅盤私"; fi
+sed -i '' "s/PRODUCT_BUNDLE_IDENTIFIER = com\.lclab\.qimenCompass;/PRODUCT_BUNDLE_IDENTIFIER = ${BUNDLE};/" ios/Runner.xcodeproj/project.pbxproj
+grep -q "PRODUCT_BUNDLE_IDENTIFIER = ${BUNDLE};" ios/Runner.xcodeproj/project.pbxproj
 
-set_str CFBundleDisplayName "奇門羅盤"
+set_str CFBundleDisplayName "$NAME"
 
 # 介面語言：少了這份清單 iOS 一律退回英文
 $PB -c "Delete :CFBundleLocalizations" "$PLIST" 2>/dev/null || true
@@ -65,4 +68,4 @@ ICONSET=ios/Runner/Assets.xcassets/AppIcon.appiconset
 rm -rf "$ICONSET"
 cp -R branding/ios/AppIcon.appiconset "$ICONSET"
 
-echo "iOS 設定完成：com.lclab.qimen、11 種介面語言、AdMob ${ADMOB_IOS_APP_ID:+正式}${ADMOB_IOS_APP_ID:-測試} App ID、權限說明、${MAPS}、App 圖示"
+echo "iOS 設定完成：${BUNDLE}、11 種介面語言、AdMob ${ADMOB_IOS_APP_ID:+正式}${ADMOB_IOS_APP_ID:-測試} App ID、權限說明、${MAPS}、App 圖示"

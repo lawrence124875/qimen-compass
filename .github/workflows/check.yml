@@ -89,3 +89,44 @@ jobs:
             grep -E "\[E\]|Expected|Actual|Error|reason" /tmp/test.log | head -30 | while IFS= read -r line; do echo "::error::$line"; done
           fi
           exit $status
+
+  # 原生程式（MainActivity 手錶同步、:wear 手錶羅盤）只在建置時才會編譯，分支上先用 debug 建置驗證。
+  android-native:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.47.9'
+          cache: true
+
+      - name: 產生 Android 平台資料夾並套用設定
+        run: |
+          flutter create --platforms=android --project-name=qimen_compass --org com.lclab .
+          rm -f test/widget_test.dart
+          bash scripts/patch_android.sh
+          bash scripts/patch_wear.sh
+
+      - name: 產生字型子集
+        run: |
+          pip install --quiet fonttools
+          python3 scripts/build_fonts.py
+
+      - name: 建置 debug APK（手機＋手錶）
+        run: |
+          set +e
+          flutter pub get > /dev/null
+          flutter build apk --debug --target-platform android-arm64 > /tmp/build.log 2>&1
+          status=$?
+          if [ $status -eq 0 ]; then
+            (cd android && ./gradlew :wear:assembleDebug --no-daemon --console=plain) > /tmp/wear.log 2>&1
+            status=$?
+            tail -n 40 /tmp/wear.log
+            [ $status -eq 0 ] || grep -E "^e: |error:|FAILURE|What went wrong|Could not" /tmp/wear.log | head -30 | while IFS= read -r line; do echo "::error title=手錶::$line"; done
+          else
+            tail -n 60 /tmp/build.log
+            grep -E "^e: |\.dart:[0-9]+|\.kt:|error:|FAILURE|What went wrong|Could not" /tmp/build.log | head -30 | while IFS= read -r line; do echo "::error::$line"; done
+          fi
+          exit $status

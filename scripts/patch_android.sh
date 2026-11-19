@@ -37,6 +37,10 @@ cp android_extra/kotlin/*.kt "$KT_DIR/"
 cp -r android_extra/res/. android/app/src/main/res/
 grep -q "QimenWidgetProvider" "$MANIFEST" || sed -i 's#</application>#    <receiver android:name="com.lclab.qimen_compass.QimenWidgetProvider" android:exported="true">\n            <intent-filter><action android:name="android.appwidget.action.APPWIDGET_UPDATE"/></intent-filter>\n            <meta-data android:name="android.appwidget.provider" android:resource="@xml/qimen_widget_info"/>\n        </receiver>\n    </application>#' "$MANIFEST"
 grep -q "QimenWidgetProvider" "$MANIFEST" && [ -f "$KT_DIR/MainActivity.kt" ] && echo "桌面小工具已加入" || { echo "::error::桌面小工具設定失敗（MainActivity 路徑可能改了）"; exit 1; }
+# 手錶羅盤同步（android_extra/kotlin/MainActivity.kt 取代 flutter create 的版本，用 Wearable Data Layer）
+grep -q "qm/wear" "$KT_DIR/MainActivity.kt" || { echo "::error::MainActivity 未換成手錶同步版"; exit 1; }
+printf '\ndependencies {\n    implementation("com.google.android.gms:play-services-wearable:19.0.0")\n}\n' >> "$GRADLE"
+echo "手錶同步：play-services-wearable 已加入"
 
 # 不鎖方向、不限制調整大小（Play Console 對大螢幕的要求）
 sed -i -E 's/[[:space:]]*android:(screenOrientation|resizeableActivity)="[^"]*"//g' "$MANIFEST"

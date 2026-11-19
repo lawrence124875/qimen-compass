@@ -1,117 +1,91 @@
 <zh-TW>
-奇門羅盤 1.2.0：
-• 此刻頁新增「今日吉色」（訂閱可結合本命看個人吉色）與「發訊息時機」
-• 神煞與十二長生圖鑑，盤面宮位顯示天干長生狀態
-• 擇時新增靜坐冥想、營業時段（一週時段表）
-• 宅盤新增開運擺件與化解，含本月調整
-• 朝向新增談判座位，不理想時附化解法
-• 問事新類別、朝向新選項、住家可輸入地址
+奇門羅盤 1.3.0：
+• 家人盤：存多位家人生日，一鍵看今天、明天誰適合出門、簽約
+• 節氣與重要日提醒：前一晚提醒明天換局、月破、歲破、四離四絕，附具體建議
+• Wear OS 手錶羅盤：轉向吉門會震動
+• 也含 1.2.0：今日吉色、發訊息時機、神煞長生圖鑑、開運擺件與化解、談判座位
 </zh-TW>
 <zh-CN>
-奇门罗盘 1.2.0：
-• 此刻页添加“今日吉色”（订阅可结合本命看个人吉色）与“发消息时机”
-• 神煞与十二长生图鉴，盘面宫位显示天干长生状态
-• 择时添加静坐冥想、营业时段（一周时段表）
-• 宅盘添加开运摆件与化解，含本月调整
-• 朝向添加谈判座位，不理想时附化解法
-• 问事新类别、朝向新选项、住家可输入地址
+奇门罗盘 1.3.0：
+• 家人盘：存多位家人生日，一键看今天、明天谁适合出门、签约
+• 节气与重要日提醒：前一晚提醒明天换局、月破、岁破、四离四绝，附具体建议
+• Wear OS 手表罗盘：转向吉门会震动
+• 也含 1.2.0：今日吉色、发消息时机、神煞长生图鉴、开运摆件与化解、谈判座位
 </zh-CN>
 <en-US>
-Qimen Compass 1.2.0:
-• Now tab: Today’s lucky colors (personal colors with your birth year for subscribers) and Best time to send
-• Glossary of spirits and the twelve life stages; palaces show each stem’s stage
-• Date picker: Meditation and Business hours (weekly timetable)
-• Home chart: lucky items and remedies, with monthly adjustments
-• Facing: negotiation seat, plus remedies when a direction isn’t ideal
-• New question topics, more facing options, home address input
+Qimen Compass 1.3.0:
+• Family chart: save family birthdays and see who should go out or sign today or tomorrow
+• Key day alerts: the evening before a chart change, Month/Year-Breaker, Four Separations or Four Endings day, with practical tips
+• Wear OS watch compass: vibrates when you face a lucky gate
+• Also includes 1.2.0: lucky colors, best time to send, glossary, lucky items and remedies, negotiation seat
 </en-US>
 <ja-JP>
-奇門羅盤 1.2.0：
-• 「今」に今日のラッキーカラー（購読で生まれ年と合わせた吉色）と送信のタイミングを追加
-• 神煞と十二長生の図鑑。宮をタップで天干の長生も表示
-• 日取りに瞑想・営業時間帯（週間時間表）を追加
-• 宅盤に開運の置物と化解、今月の調整を追加
-• 向きに交渉の席を追加、合わないときの化解法つき
-• 占事の新カテゴリ、向きの選択肢、住所入力
+奇門羅盤 1.3.0：
+• 家族盤：家族の誕生日を登録し、今日・明日に外出・契約に向く人を確認
+• 節気・重要日の通知：前夜に局替わり・月破・歳破・四離・四絶日を具体的なアドバイス付きで
+• Wear OS ウォッチ羅盤：吉門を向くと振動
+• 1.2.0 の内容も含む：今日の吉色、送信のタイミング、図鑑、開運アイテムと化解、交渉の席
 </ja-JP>
 <ko-KR>
-기문 나침반 1.2.0:
-• 지금 탭에 오늘의 행운색(구독 시 출생 연도 맞춤)과 메시지 보낼 때 추가
-• 신살과 십이운성 도감, 궁을 누르면 천간의 운성 표시
-• 택일에 명상, 영업 시간대(주간 시간표) 추가
-• 택반에 개운 소품과 화해, 이번 달 조정 추가
-• 방향에 협상 자리 추가, 좋지 않을 때 화해법 제공
-• 질문 새 분류, 방향 옵션, 집 주소 입력
+기문 나침반 1.3.0:
+• 가족반: 가족 생일을 저장하고 오늘·내일 외출·계약에 좋은 사람 확인
+• 절기·중요일 알림: 전날 밤 국 변경, 월파·세파·사리·사절일을 구체적인 조언과 함께
+• Wear OS 워치 나침반: 길문을 향하면 진동
+• 1.2.0 포함: 오늘의 길색, 보내기 좋은 시간, 도감, 개운 소품과 화해, 협상 자리
 </ko-KR>
 <vi>
-Qimen Compass 1.2.0:
-• Thẻ Bây giờ: Màu may mắn hôm nay (người đăng ký xem màu riêng theo năm sinh) và Thời điểm gửi tin
-• Từ điển Thần Sát & Thập Nhị Trường Sinh; cung hiển thị trạng thái của can
-• Chọn ngày: Thiền định, Giờ kinh doanh (bảng tuần)
-• Bàn nhà: vật phẩm may mắn & hóa giải, có điều chỉnh tháng
-• Hướng: ghế đàm phán, kèm cách hóa giải khi hướng chưa tốt
-• Chủ đề hỏi mới, thêm lựa chọn hướng, nhập địa chỉ nhà
+Qimen Compass 1.3.0:
+• Bàn gia đình: lưu ngày sinh người thân, xem hôm nay, ngày mai ai nên ra ngoài, ký kết
+• Nhắc ngày quan trọng: tối hôm trước báo đổi cục, nguyệt phá, tuế phá, tứ ly, tứ tuyệt kèm lời khuyên
+• La bàn đồng hồ Wear OS: rung khi quay về cửa tốt
+• Gồm cả 1.2.0: màu may mắn, thời điểm gửi tin, từ điển, vật phẩm và hóa giải, chỗ ngồi đàm phán
 </vi>
 <es-ES>
-Qimen Compass 1.2.0:
-• Ahora: colores de la suerte del día (suscriptores: según tu año de nacimiento) y Momento para enviar
-• Glosario de espíritus y doce etapas; los palacios muestran la etapa de cada tronco
-• Fechas: Meditación y Horario comercial (tabla semanal)
-• Casa: objetos de la suerte y remedios, con ajuste mensual
-• Orientación: asiento de negociación y remedios cuando no es ideal
-• Nuevos temas de consulta, más orientaciones, dirección de casa
+Qimen Compass 1.3.0:
+• Carta familiar: guarda cumpleaños y mira quién debe salir o firmar hoy o mañana
+• Avisos de días clave: la noche anterior a un cambio de carta o un día Rompe-Mes/Año, Cuatro Separaciones o Cuatro Finales, con consejos
+• Brújula en el reloj Wear OS: vibra al mirar una puerta favorable
+• Incluye 1.2.0: colores de la suerte, momento para enviar, glosario, objetos y remedios, asiento de negociación
 </es-ES>
 <es-US>
-Qimen Compass 1.2.0:
-• Ahora: colores de la suerte del día (suscriptores: según tu año de nacimiento) y Momento para enviar
-• Glosario de espíritus y doce etapas; los palacios muestran la etapa de cada tronco
-• Fechas: Meditación y Horario comercial (tabla semanal)
-• Casa: objetos de la suerte y remedios, con ajuste mensual
-• Orientación: asiento de negociación y remedios cuando no es ideal
-• Nuevos temas de consulta, más orientaciones, dirección de casa
+Qimen Compass 1.3.0:
+• Carta familiar: guarda cumpleaños y mira quién debe salir o firmar hoy o mañana
+• Avisos de días clave: la noche anterior a un cambio de carta o un día Rompe-Mes/Año, Cuatro Separaciones o Cuatro Finales, con consejos
+• Brújula en el reloj Wear OS: vibra al mirar una puerta favorable
+• Incluye 1.2.0: colores de la suerte, momento para enviar, glosario, objetos y remedios, asiento de negociación
 </es-US>
 <pt-BR>
-Qimen Compass 1.2.0:
-• Agora: cores da sorte do dia (assinantes: pelo ano de nascimento) e Hora de enviar
-• Glossário de espíritos e doze estágios; palácios mostram o estágio de cada tronco
-• Datas: Meditação e Horário comercial (tabela semanal)
-• Casa: objetos da sorte e soluções, com ajuste mensal
-• Orientação: assento de negociação e soluções quando não é ideal
-• Novos temas de pergunta, mais orientações, endereço de casa
+Qimen Compass 1.3.0:
+• Mapa da família: salve aniversários e veja quem deve sair ou assinar hoje ou amanhã
+• Avisos de dias-chave: na noite anterior a uma mudança de mapa ou dia Quebra-Mês/Ano, Quatro Separações ou Quatro Finais, com dicas
+• Bússola no relógio Wear OS: vibra ao encarar uma porta favorável
+• Inclui 1.2.0: cores da sorte, hora de enviar, glossário, objetos e remédios, assento de negociação
 </pt-BR>
 <pt-PT>
-Qimen Compass 1.2.0:
-• Agora: cores da sorte do dia (assinantes: pelo ano de nascimento) e Hora de enviar
-• Glossário de espíritos e doze estágios; palácios mostram o estágio de cada tronco
-• Datas: Meditação e Horário comercial (tabela semanal)
-• Casa: objetos da sorte e soluções, com ajuste mensal
-• Orientação: assento de negociação e soluções quando não é ideal
-• Novos temas de pergunta, mais orientações, endereço de casa
+Qimen Compass 1.3.0:
+• Mapa da família: guarde aniversários e veja quem deve sair ou assinar hoje ou amanhã
+• Avisos de dias-chave: na noite anterior a uma mudança de mapa ou dia Quebra-Mês/Ano, Quatro Separações ou Quatro Finais, com dicas
+• Bússola no relógio Wear OS: vibra ao encarar uma porta favorável
+• Inclui 1.2.0: cores da sorte, hora de enviar, glossário, objetos e remédios, assento de negociação
 </pt-PT>
 <id>
-Qimen Compass 1.2.0:
-• Tab Sekarang: warna hoki hari ini (pelanggan: sesuai tahun lahir) dan Waktu kirim pesan
-• Kamus roh & dua belas tahap; istana menampilkan tahap tiap batang
-• Pilih waktu: Meditasi dan Jam usaha (jadwal mingguan)
-• Bagan rumah: benda keberuntungan & penyeimbang, dengan penyesuaian bulanan
-• Arah: kursi negosiasi, plus penyeimbang saat arah kurang baik
-• Topik pertanyaan baru, opsi arah, input alamat rumah
+Qimen Compass 1.3.0:
+• Bagan keluarga: simpan tanggal lahir dan lihat siapa yang cocok keluar atau tanda tangan hari ini atau besok
+• Pengingat hari penting: malam sebelum pergantian bagan, hari Pemecah Bulan/Tahun, Empat Pemisahan atau Empat Akhir, dengan saran
+• Kompas jam Wear OS: bergetar saat menghadap gerbang baik
+• Termasuk 1.2.0: warna keberuntungan, waktu kirim, glosarium, benda keberuntungan dan penawar, kursi negosiasi
 </id>
 <th>
-Qimen Compass 1.2.0:
-• แท็บตอนนี้: สีมงคลวันนี้ (สมาชิกดูสีตามปีเกิด) และจังหวะส่งข้อความ
-• คลังคำเทพดาวและสิบสองวัฏจักร วังแสดงสถานะของก้าน
-• เลือกเวลา: นั่งสมาธิ และช่วงเวลาค้าขาย (ตารางสัปดาห์)
-• ผังบ้าน: ของมงคลและวิธีแก้ พร้อมปรับรายเดือน
-• ทิศ: ที่นั่งเจรจา และวิธีแก้เมื่อทิศไม่ดี
-• หมวดคำถามใหม่ ตัวเลือกทิศ กรอกที่อยู่บ้าน
+Qimen Compass 1.3.0:
+• ผังครอบครัว: บันทึกวันเกิด ดูว่าวันนี้หรือพรุ่งนี้ใครควรออกเดินทาง เซ็นสัญญา
+• แจ้งเตือนวันสำคัญ: คืนก่อนเปลี่ยนผัง วันเดือนแตก ปีแตก สี่แยก สี่สิ้น พร้อมคำแนะนำ
+• เข็มทิศนาฬิกา Wear OS: สั่นเมื่อหันไปทางประตูมงคล
+• รวม 1.2.0: สีมงคล เวลาส่งข้อความ อภิธานศัพท์ ของมงคลและวิธีแก้ ที่นั่งเจรจา
 </th>
 <ar>
-Qimen Compass 1.2.0:
-• الآن: ألوان الحظ اليوم (للمشتركين حسب سنة الميلاد) ووقت الإرسال
-• معجم الأرواح والمراحل الاثنتي عشرة؛ القصور تعرض مرحلة كل جذع
-• اختيار الوقت: التأمل وساعات العمل (جدول أسبوعي)
-• خريطة المنزل: أغراض الحظ والعلاجات مع تعديل شهري
-• الاتجاه: مقعد التفاوض وعلاجات عندما لا يكون مثاليًا
-• مواضيع أسئلة جديدة وخيارات اتجاه وإدخال عنوان المنزل
+Qimen Compass 1.3.0:
+• مخطط العائلة: احفظ تواريخ الميلاد واعرف من يناسبه الخروج أو التوقيع اليوم أو غدًا
+• تنبيهات الأيام المهمة: في الليلة السابقة لتغيّر المخطط وأيام كاسر الشهر والسنة والافتراقات والنهايات الأربع، مع نصائح
+• بوصلة ساعة Wear OS: تهتز عند مواجهة بوابة ميمونة
+• يشمل 1.2.0: ألوان الحظ ووقت الإرسال والمعجم وأغراض الحظ والعلاجات ومقعد التفاوض
 </ar>

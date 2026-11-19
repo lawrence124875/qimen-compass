@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -6,6 +8,8 @@ import '../../l10n/l10n.dart';
 import '../settings/app_settings.dart';
 import '../settings/solar_city_picker.dart';
 import '../theme/app_theme.dart';
+import '../../features/reminders/day_alert_reminder.dart';
+import '../../features/wear/wear_sync.dart';
 import '../../features/feedback/feedback_page.dart';
 import '../../features/records/record_actions.dart';
 import '../../features/reminders/daily_reminder.dart';
@@ -131,6 +135,24 @@ class SettingsPage extends StatelessWidget {
                 onTap: () => showDailyReminderDialog(context),
               ),
               const _TravelNotifyTile(),
+              if (sv.featureEnabled('alerts'))
+                ListTile(
+                  leading: Icon(Icons.event_note_outlined, color: qm.primary),
+                  title: Text(l.alertTitle),
+                  subtitle: Text(l.alertHint),
+                  onTap: () => showDayAlertDialog(context),
+                ),
+              if (Platform.isAndroid && sv.featureEnabled('wear'))
+                ListTile(
+                  leading: Icon(Icons.watch_outlined, color: qm.primary),
+                  title: Text(l.wearTitle),
+                  subtitle: Text(l.wearSub),
+                  onTap: () async {
+                    final messenger = ScaffoldMessenger.of(context);
+                    final n = await WearSync.sync(l, locked: sv.limits.wearPremium && !sv.isPremium);
+                    messenger.showSnackBar(SnackBar(content: Text(n > 0 ? l.wearSynced : l.wearNoWatch)));
+                  },
+                ),
               if (usage != null)
                 ValueListenableBuilder<bool>(
                   valueListenable: usage.enabled,

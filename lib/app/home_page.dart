@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../engine/engine.dart' hide Element;
 import '../features/almanac/almanac_page.dart';
 import '../features/personal/personal_page.dart';
+import '../features/family/family_page.dart';
 import '../features/personal/synastry_page.dart';
 import '../l10n/l10n.dart';
 import '../shared/premium/usage_gate.dart';
@@ -199,6 +200,16 @@ class _HomePageState extends State<HomePage> {
                   label: Text(l.synTitle, maxLines: 1, overflow: TextOverflow.ellipsis),
                 ),
               ),
+            if (svc.featureEnabled('family')) ...[
+              const SizedBox(width: 8),
+              Expanded(
+                child: FilledButton.tonalIcon(
+                  icon: const Icon(Icons.family_restroom_outlined),
+                  onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const FamilyPage())),
+                  label: Text(l.familyTitle, maxLines: 1, overflow: TextOverflow.ellipsis),
+                ),
+              ),
+            ],
           ]);
           final unitNote = _unit == PanUnit.hour
               ? const SizedBox.shrink()

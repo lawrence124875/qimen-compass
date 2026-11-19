@@ -265,7 +265,7 @@ Nội dung ứng dụng là tham khảo văn hóa thuật số truyền thống,
 L["es"] = dict(play="es-419",
 title="Brújula Qimen: Feng Shui, QMDJ",
 short="Brújula feng shui Qi Men Dun Jia: direcciones y horas propicias, fechas, hogar.",
-full="""Brújula Qimen es una brújula feng shui que coloca la carta de Qi Men Dun Jia (QMDJ), el arte chino clásico del momento y la dirección, sobre las direcciones reales a tu alrededor. Abre la brújula y las Ocho Puertas giran con tu teléfono: verás al instante dónde están ahora la Puerta de la Apertura, la del Descanso y la de la Vida. Con el mapa, la elección de fechas propicias, el almanaque chino diario y los avisos de horas favorables, usa Qi Men Dun Jia para viajar, mudarte, firmar, abrir un negocio y el feng shui de tu casa.
+full="""Brújula Qimen es una brújula feng shui que coloca la carta de Qi Men Dun Jia (QMDJ) sobre las direcciones reales a tu alrededor. Abre la brújula y las Ocho Puertas giran con tu teléfono: verás al instante dónde están ahora la Puerta de la Apertura, la del Descanso y la de la Vida. Con el mapa, la elección de fechas propicias, el almanaque chino diario y los avisos de horas favorables, usa Qi Men Dun Jia para viajar, mudarte, firmar, abrir un negocio y el feng shui de tu casa.
 
 BRÚJULA Y MAPA: DIRECCIONES PROPICIAS AL INSTANTE
 • Brújula Qimen: la carta se alinea con las direcciones reales y muestra qué puerta tienes delante y si es favorable. Norte magnético o verdadero, detección de interferencias y bloqueo en interiores.
@@ -478,6 +478,50 @@ full="""بوصلة تشيمن هي بوصلة فنغ شوي تضع مخطط تش
 المحتوى مرجع للميتافيزيقا الصينية التقليدية، وليس نصيحة طبية أو قانونية أو مالية أو مهنية.""")
 
 # 變體：es-ES／es-US 同 es-419；pt-PT 由 pt-BR 調整用字
+# 1.3.0 新功能（2026-11-19）：手錶羅盤（羅盤段末）、節氣與重要日提醒（擇日段末）、家人盤（本命盤段第 2 項後）
+ADD13 = {
+ "zh-Hant": ("• Wear OS 手錶羅盤：手錶上顯示八門方位，轉向吉門會震動提醒，不用拿出手機。",
+             "• 節氣與重要日提醒：前一晚告訴你明天交節換局（吉方會變）、月破、歲破、四離四絕日，附「不宜簽約、搬家」等具體建議。",
+             "• 家人盤：存多位家人的生日，一鍵看今天、明天誰適合出門、誰適合簽約，以及誰當天沖生年。"),
+ "zh-Hans": ("• Wear OS 手表罗盘：手表上显示八门方位，转向吉门会震动提醒，不用拿出手机。",
+             "• 节气与重要日提醒：前一晚告诉你明天交节换局（吉方会变）、月破、岁破、四离四绝日，附“不宜签约、搬家”等具体建议。",
+             "• 家人盘：存多位家人的生日，一键看今天、明天谁适合出门、谁适合签约，以及谁当天冲生年。"),
+ "en": ("• Wear OS watch compass: vibrates when you face a lucky gate.",
+        "• Key day alerts: the evening before a chart change or a Month/Year-Breaker day, with tips like “avoid signing or moving”.",
+        "• Family chart: see who in your family should go out or sign today."),
+ "ja": ("• Wear OS ウォッチ羅盤：手首で八門の方位を表示し、吉門を向くと振動でお知らせ。",
+        "• 節気・重要日の通知：前夜に、明日の局替わり（吉方が変わる）や月破・歳破・四離・四絶日を「契約・引っ越しは控えて」などの具体的なアドバイス付きでお知らせ。",
+        "• 家族盤：家族の誕生日を登録し、今日・明日に外出や契約に向く人、生まれ年と冲する人をひと目で確認。"),
+ "ko": ("• Wear OS 워치 나침반: 손목에서 팔문 방위를 보여 주고, 길문을 향하면 진동으로 알려 줘요.",
+        "• 절기·중요일 알림: 전날 밤 내일의 국 변경(길방이 바뀜), 월파·세파·사리·사절일을 ‘계약·이사는 피하세요’ 같은 구체적인 조언과 함께 알려 줘요.",
+        "• 가족반: 가족 생일을 저장하고 오늘·내일 외출이나 계약에 좋은 사람, 생년과 충하는 사람을 한눈에 확인."),
+ "vi": ("• La bàn trên đồng hồ Wear OS: hiển thị hướng Bát Môn trên cổ tay, rung khi bạn quay về cửa tốt.",
+        "• Nhắc tiết khí và ngày quan trọng: tối hôm trước báo ngày mai đổi cục (hướng tốt thay đổi), ngày nguyệt phá, tuế phá, tứ ly, tứ tuyệt, kèm lời khuyên cụ thể như “tránh ký kết, chuyển nhà”.",
+        "• Bàn gia đình: lưu ngày sinh người thân, xem nhanh hôm nay, ngày mai ai nên ra ngoài, ai nên ký kết và ai bị xung năm sinh."),
+ "es": ("• Brújula en el reloj Wear OS: vibra al mirar una puerta favorable.",
+        "• Avisos de días clave: cambio de carta y días Rompe-Mes/Año, con consejos.",
+        "• Carta familiar: quién debe salir o firmar hoy."),
+ "pt-BR": ("• Bússola no relógio Wear OS: vibra ao encarar uma porta favorável.",
+           "• Avisos de dias-chave: mudança de mapa e dias Quebra-Mês/Ano, com dicas.",
+           "• Mapa da família: quem deve sair ou assinar hoje."),
+ "id": ("• Kompas jam Wear OS: bergetar saat menghadap gerbang baik.",
+        "• Pengingat hari penting: pergantian bagan dan hari Pemecah Bulan/Tahun, dengan saran.",
+        "• Bagan keluarga: siapa yang cocok keluar atau tanda tangan hari ini."),
+ "th": ("• เข็มทิศบนนาฬิกา Wear OS: แสดงทิศแปดประตูบนข้อมือ สั่นเตือนเมื่อหันไปทางประตูมงคล",
+        "• แจ้งเตือนสารทและวันสำคัญ: คืนก่อนหน้าบอกว่าพรุ่งนี้เปลี่ยนผัง (ทิศมงคลเปลี่ยน) วันเดือนแตก ปีแตก วันสี่แยก วันสี่สิ้น พร้อมคำแนะนำเช่น “เลี่ยงเซ็นสัญญา ย้ายบ้าน”",
+        "• ผังครอบครัว: บันทึกวันเกิดคนในบ้าน ดูได้ทันทีว่าวันนี้หรือพรุ่งนี้ใครควรออกเดินทาง ใครควรเซ็นสัญญา และใครชงปีเกิด"),
+ "ar": ("• بوصلة على ساعة Wear OS: البوابات الثماني على معصمك، وتهتز الساعة عند مواجهة بوابة ميمونة.",
+        "• تنبيهات الفصول الشمسية والأيام المهمة: في الليلة السابقة تعرف متى يتغير المخطط (تتبدل الاتجاهات الميمونة) وأيام كاسر الشهر وكاسر السنة والافتراقات والنهايات الأربع، مع نصائح مثل «تجنب التوقيع أو الانتقال».",
+        "• مخطط العائلة: احفظ تواريخ ميلاد العائلة واعرف بسرعة من يناسبه الخروج أو التوقيع اليوم أو غدًا، ومن تتعارض سنة ميلاده مع اليوم."),
+}
+for lang, (watch, alert, family) in ADD13.items():
+    sec = L[lang]["full"].split("\n\n")
+    sec[1] += "\n" + watch
+    sec[2] += "\n" + alert
+    lines = sec[4].split("\n")
+    sec[4] = "\n".join(lines[:3] + [family] + lines[3:])
+    L[lang]["full"] = "\n\n".join(sec)
+
 L["es-ES"] = dict(L["es"], play="es-ES")
 L["es-US"] = dict(L["es"], play="es-US")
 pt = {"celular": "telemóvel", "na tela inicial": "no ecrã principal", "Widget na tela inicial": "Widget no ecrã principal",
@@ -496,7 +540,7 @@ for k, v in L.items():
     for w in ("占卜", "算命", "divination", "fortune-telling", "best ", "#1"):
         if w in v["title"] + v["short"] + v["full"]: bad.append(f"{k} 含 {w}")
 if bad: raise SystemExit("\n".join(bad))
-out = {"_note": "Play 商店資訊（14 語，ASO 版 2026-11-19，1.2.0 更新，由 tools/store/aso_listing.py 產生）。title ≤30、short ≤80、full ≤4000。play = Play Console 語言代碼。"}
+out = {"_note": "Play 商店資訊（14 語，ASO 版 2026-11-19，1.3.0 更新，由 tools/store/aso_listing.py 產生）。title ≤30、short ≤80、full ≤4000。play = Play Console 語言代碼。"}
 out.update(L)
 p = pathlib.Path(__file__).resolve().parents[2] / "store/listing.json"
 p.write_text(json.dumps(out, ensure_ascii=False, indent=1) + "\n")
