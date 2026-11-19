@@ -175,6 +175,8 @@
 - App 內更新提示（Play In-App Updates）每版保留；設定頁「LC Lab 其他 App」；意見回饋表單（Firestore 集合 `qm_feedback`）；分享卡片。
 - 交叉解讀規則：五級（大吉／吉／平／小阻／阻，不用「凶」字）、應期只給區間、ar／id 不顯示應期；文案避開占卜、保證、療效字眼（商店也是）。
 
+- iOS 自用解鎖版（2026-11-19）：`build_ios.yml`（手動，macOS，比照謙卦）→ `scripts/patch_ios.sh`（bundle com.lclab.qimen、11 語、權限說明、AdMob 測試 ID、圖示 `branding/ios`）→ 未簽章 IPA 發到 qimen-content `qimen-personal-ios-run<N>`（force_premium 預設 true＝`FORCE_PREMIUM`）。Sideloadly＋免費 Apple ID 安裝，7 天重簽。地圖：Secret `MAPS_IOS_API_KEY` 有設才寫進 AppDelegate 並 `MAPS_ENABLED=true`。
+
 ### 已知坑
 - pubspec 的資料夾 asset 不含子資料夾：assets/content 下每個子資料夾都要另列（run 11–25 問事文句沒打包；`divination_test` 已檢查）。
 - Flutter 固定 3.47.9（3.50.0 release lint 在 JDK 17 崩潰）；要升先加 `setup-java` 21。
