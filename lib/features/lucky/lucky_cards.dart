@@ -24,11 +24,6 @@ class _Swatch extends StatelessWidget {
   const _Swatch(this.e);
   final Element e;
 
-  Future<void> _setBirth() async {
-    final np = await editProfile(context, _profile);
-    if (np != null && mounted) setState(() => _profile = np);
-  }
-
   @override
   Widget build(BuildContext context) => Container(
         width: 18,
@@ -64,6 +59,11 @@ class _LuckyColorCardState extends State<LuckyColorCard> {
       if (mounted && m != null) setState(() => _meaning = m);
     });
     _loadProfile();
+  }
+
+  Future<void> _setBirth() async {
+    final np = await editProfile(context, _profile);
+    if (np != null && mounted) setState(() => _profile = np);
   }
 
   Future<void> _loadProfile() async {
