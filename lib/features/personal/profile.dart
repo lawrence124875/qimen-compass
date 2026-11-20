@@ -5,25 +5,32 @@ import '../../l10n/l10n.dart';
 
 /// 個人資料（HANDOFF §12 P4）：出生日期（與擇時共用 `qm_birth_date`）＋出生時間（選填，`qm_birth_time` 分鐘數）。
 class Profile {
-  const Profile({required this.birthDate, this.birthMinutes});
+  const Profile({required this.birthDate, this.birthMinutes, this.male});
 
   final DateTime birthDate;
 
   /// 出生時間（當天第幾分鐘）；null＝不知道。
   final int? birthMinutes;
 
+  /// 性別（排大運用）；null＝未設定。
+  final bool? male;
+
+  Profile withGender(bool? m) => Profile(birthDate: birthDate, birthMinutes: birthMinutes, male: m);
+
   /// 起本命盤用的時刻：不知道時間時取當天 12:00。
   DateTime get birthInstant => DateTime(birthDate.year, birthDate.month, birthDate.day, 0, birthMinutes ?? 12 * 60);
 
   static const _kDate = 'qm_birth_date';
   static const _kTime = 'qm_birth_time';
+  static const _kGender = 'qm_gender';
 
   static Future<Profile?> load() async {
     final p = await SharedPreferences.getInstance();
     final d = DateTime.tryParse(p.getString(_kDate) ?? '');
     if (d == null) return null;
     final m = p.getInt(_kTime);
-    return Profile(birthDate: d, birthMinutes: m);
+    final g = p.getString(_kGender);
+    return Profile(birthDate: d, birthMinutes: m, male: g == null ? null : g == 'm');
   }
 
   Future<void> save() async {
@@ -34,6 +41,11 @@ class Profile {
       await p.remove(_kTime);
     } else {
       await p.setInt(_kTime, birthMinutes!);
+    }
+    if (male == null) {
+      await p.remove(_kGender);
+    } else {
+      await p.setString(_kGender, male! ? 'm' : 'f');
     }
   }
 }
@@ -58,7 +70,31 @@ Future<Profile?> editProfile(BuildContext context, Profile? current) async {
     initialTime: m0 == null ? const TimeOfDay(hour: 12, minute: 0) : TimeOfDay(hour: m0 ~/ 60, minute: m0 % 60),
     initialEntryMode: TimePickerEntryMode.input,
   );
-  final p = Profile(birthDate: d, birthMinutes: t == null ? null : t.hour * 60 + t.minute);
+  if (!context.mounted) return null;
+  final g = await pickGender(context, current?.male);
+  final p = Profile(birthDate: d, birthMinutes: t == null ? null : t.hour * 60 + t.minute, male: g ?? current?.male);
   await p.save();
   return p;
+}
+
+/// 選性別（排大運用）；取消回傳 null。
+Future<bool?> pickGender(BuildContext context, bool? current) {
+  final l = context.l10n;
+  return showDialog<bool>(
+    context: context,
+    builder: (ctx) => SimpleDialog(
+      title: Text(l.profileGender),
+      children: [
+        for (final m in const [true, false])
+          SimpleDialogOption(
+            onPressed: () => Navigator.pop(ctx, m),
+            child: Row(children: [
+              Icon(current == m ? Icons.radio_button_checked : Icons.radio_button_unchecked, size: 20),
+              const SizedBox(width: 12),
+              Text(m ? l.genderMale : l.genderFemale),
+            ]),
+          ),
+      ],
+    ),
+  );
 }

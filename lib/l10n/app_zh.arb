@@ -1773,5 +1773,76 @@
   "wearLocked": "訂閱後可在手錶使用",
   "wearCalib": "不準時手腕畫 8 字校準",
   "wearSynced": "已同步到手錶",
-  "wearNoWatch": "找不到已連線的 Wear OS 手錶；請先在手錶安裝奇門羅盤"
+  "wearNoWatch": "找不到已連線的 Wear OS 手錶；請先在手錶安裝奇門羅盤",
+  "reportTitle": "本命報告",
+  "reportPersonality": "性格",
+  "reportThisYear": "{year} 年運勢",
+  "@reportThisYear": {
+    "placeholders": {
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "reportCareer": "事業",
+  "reportCareerHint": "看開門所落的宮",
+  "reportWealth": "財運",
+  "reportWealthHint": "看生門所落的宮",
+  "reportLove": "感情",
+  "reportLoveMale": "男命看乙（妻星）所落的宮",
+  "reportLoveFemale": "女命看庚（夫星）所落的宮",
+  "reportLoveNone": "未設定性別，暫看六合所落的宮",
+  "reportKin": "六親",
+  "reportParents": "父母長輩（年干）",
+  "reportSiblings": "兄弟同輩（月干）",
+  "reportChildren": "子女晚輩（時干）",
+  "reportNoTimeChildren": "未填出生時間，不論子女",
+  "reportRelSame": "就落在你日干所在的宮，與你本身息息相關",
+  "reportRelShengWo": "這一宮生扶你，容易得到助力",
+  "reportRelWoSheng": "你生這一宮，付出多、回收慢，量力而為",
+  "reportRelKeWo": "這一宮剋你，壓力較大，宜借力不宜硬碰",
+  "reportRelWoKe": "你剋這一宮，掌控力強，可主動爭取",
+  "reportRelBiHe": "與你比和，關係平穩、互相支持",
+  "reportAdviceGreat": "條件極佳，可積極把握",
+  "reportAdviceGood": "條件良好，順勢而為",
+  "reportAdviceNeutral": "平穩，宜穩紮穩打",
+  "reportAdviceMinor": "有小阻，多做準備",
+  "reportAdviceBlocked": "阻力大，宜守不宜攻",
+  "reportJoin": "；",
+  "reportDaYun": "大運",
+  "reportDaYunHint": "借八字大運，每十年一步，看大運天干落在本命盤哪一宮",
+  "reportStartAge": "{age} 歲起運・{dir}",
+  "@reportStartAge": {
+    "placeholders": {
+      "age": {
+        "type": "String"
+      },
+      "dir": {
+        "type": "String"
+      }
+    }
+  },
+  "reportForward": "順排",
+  "reportBackward": "逆排",
+  "reportDaYunRow": "{age} 歲起（{year} 年）",
+  "@reportDaYunRow": {
+    "placeholders": {
+      "age": {
+        "type": "String"
+      },
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "reportNeedGender": "設定性別後才能排大運（陽男陰女順排、陰男陽女逆排）",
+  "reportKeyYears": "關鍵年份",
+  "reportKeyYearsHint": "未來 10 年中，年命宮大吉、受阻或交大運的年份",
+  "reportDaYunChange": "交大運",
+  "reportNoKeyYears": "未來 10 年沒有特別的關鍵年",
+  "reportLocked": "訂閱看完整報告：事業、財運、感情、六親、大運與關鍵年份",
+  "reportBasis": "本命盤以時家轉盤起局（定局法依設定，預設拆補法）；大運借子平八字大運，起運歲依出生到節氣的時間計算。",
+  "profileGender": "性別",
+  "genderMale": "男",
+  "genderFemale": "女"
 }
