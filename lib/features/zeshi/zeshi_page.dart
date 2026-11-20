@@ -13,6 +13,7 @@ import '../../l10n/l10n.dart';
 import '../../shared/premium/usage_gate.dart';
 import '../../shared/widgets/result_card.dart';
 import '../lucky/lucky_cards.dart';
+import '../personal/profile.dart';
 import '../records/record_actions.dart';
 import '../travel/travel_text.dart';
 import 'zeshi_text.dart';
@@ -119,9 +120,15 @@ class _ZeShiPageState extends State<ZeShiPage> {
       _progress = 0;
     });
     await Future<void>.delayed(const Duration(milliseconds: 16));
-    final birth = _useBirth && _birth != null
-        ? BirthInfo.fromInstant(DateTime.utc(_birth!.year, _birth!.month, _birth!.day, 4), settings: const TimeSettings())
-        : null;
+    BirthInfo? birth;
+    if (_useBirth && _birth != null) {
+      // 本命用神：有完整生辰時以本命盤的本命吉方加分（出生時間沿用「我的奇門」設定）。
+      final prof = await Profile.load();
+      final at = DateTime(_birth!.year, _birth!.month, _birth!.day, 0, prof?.birthMinutes ?? 12 * 60);
+      final ts = AppSettings.instance.timeSettingsAt(at);
+      final natal = const PersonalEngine().natal(at, settings: ts, method: AppSettings.instance.juMethod);
+      birth = BirthInfo.fromInstant(at, settings: ts).withNatal(natalFavoredPalaces(natal));
+    }
     final settings = _settings;
     final method = AppSettings.instance.juMethod;
     final base = DateTime.now().toUtc();

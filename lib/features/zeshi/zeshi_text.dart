@@ -36,6 +36,7 @@ class ZeShiText {
         ZeShiFlag.sanQi => l.zeshiFlagSanQi,
         ZeShiFlag.qingLong => l.zeshiFlagQingLong,
         ZeShiFlag.feiNiao => l.zeshiFlagFeiNiao,
+        ZeShiFlag.natalFit => l.zeshiFlagNatalFit,
         ZeShiFlag.mingJi => l.zeshiFlagMingJi,
         ZeShiFlag.qiuSi => l.zeshiFlagQiuSi,
         ZeShiFlag.menPo => l.flagMenPo,

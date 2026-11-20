@@ -878,5 +878,20 @@
   "reportBasis": "Birth chart uses the hour-based rotating plate (chart method per settings, default Chai Bu); luck cycles follow BaZi rules, start age from birth to the nearest solar term.",
   "profileGender": "Gender",
   "genderMale": "Male",
-  "genderFemale": "Female"
+  "genderFemale": "Female",
+  "compassNatal": "Your Natal Directions",
+  "compassNatalHint": "Directions on your birth chart that support you, ranked by this year's chart",
+  "houseNatalBest": "Best rooms / seats for you",
+  "houseNatalBestHint": "From your natal directions, combined with the current house chart",
+  "houseNatalFit": "Suits you",
+  "houseNatalNoRoom": "No room marked in this palace yet",
+  "zeshiFlagNatalFit": "Use-god direction is one of your natal directions",
+  "natalAlertChannel": "Key personal periods",
+  "natalAlertTitleGood": "Favorable period from {term}",
+  "natalAlertTitleBad": "Watch your luck from {term}",
+  "natalAlertGood": "Your year-stem palace is {level} this month: push ahead",
+  "natalAlertBad": "Your year-stem palace is {level} this month: hold back and prepare",
+  "natalAlertBest": "Better timing: {when}, toward {dir}",
+  "natalAlertNoHour": "No especially good hours in the first week; postpone big moves",
+  "natalAlertYear": "{year} outlook: {level}"
 }

@@ -7,6 +7,7 @@ import '../../l10n/l10n.dart';
 import '../../services/notifications.dart';
 import '../family/family_store.dart';
 import '../personal/profile.dart';
+import 'natal_alert_reminder.dart';
 
 /// 節氣與重要日提醒（HANDOFF §12 1.3.0）：前一晚（預設 20:00）提醒明天換局、歲破、月破、四離、四絕，
 /// 每項附一句具體建議；訂閱（或 `qm_free_alert_clash`=1）再加「日沖誰的生年」。
@@ -149,4 +150,5 @@ Future<void> showDayAlertDialog(BuildContext context) async {
   if (saved != true) return;
   if (on && !await Notifications.enabled()) await Notifications.requestPermission();
   await DayAlertReminder.set(on: on, at: at);
+  await NatalAlertReminder.reschedule().catchError((_) {});
 }

@@ -39,4 +39,26 @@ void main() {
     expect(relationTo(6, 3), Relation.keWo); // 乾金剋震木
     expect(relationTo(3, 4), Relation.biHe);
   });
+
+  test('本命吉方、關鍵期推播、擇時本命加分', () {
+    final n = const PersonalEngine().natal(birth, settings: s);
+    final fav = natalFavoredPalaces(n);
+    expect(fav.length, 2);
+    expect(fav.every(palaceRing.contains), isTrue);
+    final year = const ShiJiaEngine().compute(DateTime.utc(2026, 7, 1), settings: s, unit: PanUnit.year);
+    for (final v in natalLuckyIn(n, year)) {
+      expect(v.level, isNot(TravelLevel.blocked));
+    }
+    final alerts = fortuneAlerts(n.birth, DateTime.utc(2026, 11, 20), months: 6, settings: s);
+    expect(alerts.length, lessThanOrEqualTo(6));
+    for (final a in alerts) {
+      expect(a.term.index.isOdd, isTrue);
+      expect(a.verdict.level == TravelLevel.great || a.verdict.level == TravelLevel.blocked, isTrue);
+    }
+    final b = n.birth.withNatal([1, 2, 3, 4, 6, 7, 8, 9]);
+    final chart = const ShiJiaEngine().compute(DateTime.utc(2026, 11, 20, 2), settings: s);
+    final p = chart.palaceOfDoor(Door.kai);
+    final r = ZeShiPlanner.scorePalace(chart, Door.kai, p, ZeShiEvent.contract, birth: b);
+    expect(r.$2, contains(ZeShiFlag.natalFit));
+  });
 }

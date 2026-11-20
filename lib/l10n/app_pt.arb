@@ -878,5 +878,20 @@
   "reportBasis": "O mapa natal usa o prato giratório horário (método conforme ajustes, padrão Chai Bu); os ciclos seguem regras BaZi e a idade inicial é calculada do nascimento ao termo solar.",
   "profileGender": "Gênero",
   "genderMale": "Masculino",
-  "genderFemale": "Feminino"
+  "genderFemale": "Feminino",
+  "compassNatal": "Suas direções natais",
+  "compassNatalHint": "Direções do seu mapa natal que te apoiam, ordenadas pelo mapa deste ano",
+  "houseNatalBest": "Melhores cômodos / lugares para você",
+  "houseNatalBestHint": "Pelas suas direções natais e o mapa da casa atual",
+  "houseNatalFit": "Combina com você",
+  "houseNatalNoRoom": "Ainda não há cômodo neste palácio",
+  "zeshiFlagNatalFit": "A direção do deus útil é uma das suas direções natais",
+  "natalAlertChannel": "Períodos pessoais-chave",
+  "natalAlertTitleGood": "Período favorável a partir de {term}",
+  "natalAlertTitleBad": "Atenção a partir de {term}",
+  "natalAlertGood": "Seu palácio do ano está {level} este mês: avance",
+  "natalAlertBad": "Seu palácio do ano está {level} este mês: segure e prepare-se",
+  "natalAlertBest": "Melhor momento: {when}, rumo a {dir}",
+  "natalAlertNoHour": "Sem horas especialmente boas na primeira semana; adie decisões grandes",
+  "natalAlertYear": "Ano {year}: {level}"
 }
