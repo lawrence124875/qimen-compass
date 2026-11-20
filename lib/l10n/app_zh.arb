@@ -2007,7 +2007,7 @@
   "pdayNoHour": "今天沒有特別適合你的時辰",
   "pdayDaYun": "大運",
   "pdayNeedGender": "在個人資料設定性別，可加看大運",
-  "pdayBasis": "依本命年干在今日日盤的宮位，與目前大運天干落宮判斷。",
+  "pdayBasis": "依本命年干與目前大運天干，在今天 7–21 點各時盤的落宮吉凶綜合判斷。",
   "reportMonths": "流月（未來 12 個月）",
   "reportMonthsHint": "每月交節起的月盤上，你的年命宮吉凶。",
   "houseMonthChannel": "宅盤流月提醒",

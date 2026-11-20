@@ -932,7 +932,7 @@
   "pdayNoHour": "今天没有特别适合你的时辰",
   "pdayDaYun": "大运",
   "pdayNeedGender": "在个人资料设定性别，可加看大运",
-  "pdayBasis": "依本命年干在今日日盘的宫位，与目前大运天干落宫判断。",
+  "pdayBasis": "依本命年干与目前大运天干，在今天 7–21 点各时盘的落宫吉凶综合判断。",
   "reportMonths": "流月（未来 12 个月）",
   "reportMonthsHint": "每月交节起的月盘上，你的年命宫吉凶。",
   "houseMonthChannel": "宅盘流月提醒",

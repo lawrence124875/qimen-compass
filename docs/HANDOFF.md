@@ -90,7 +90,7 @@
 - 訂閱功能「完整體驗 1 次」（`requirePremium`，之後開訂閱頁）：朝向、本命盤／流年、月盤年盤（`pan_month_year`）、備份
 - 1.6.0 訂閱平衡（2026-11-20 定案）：原則＝每天用的基本功能免費（羅盤、時盤、黃曆、基本小工具、出行訣），一次性需求只給等級，付費版要有每天／每月更新的個人化內容。
   - 搬家、合盤、目的地、宅盤改 `peekPremium`（`MePage.openPeek`）：第一次完整體驗，之後 搬家＝今明年等級＋吉月數、合盤＝等級、目的地＝現在吉凶、宅盤＝各宮等級；詳解 `PremiumLockCard`。
-  - 今日個人運（`engine/personal_day.dart`、`features/personal/personal_day_card.dart`，此刻頁、功能 id `personal_day`）：日盤年命宮＋今天個人吉時（最多 3）＋目前大運天干落日盤宮。免費只給等級；小工具項目 `pday`（訂閱）。
+  - 今日個人運（`engine/personal_day.dart`、`features/personal/personal_day_card.dart`，此刻頁、功能 id `personal_day`）：今天各時盤年命宮中位數＋個人吉時（最多 3）＋目前大運天干落日盤宮。免費只給等級；小工具項目 `pday`（訂閱）。
   - 看廣告解鎖（`AdUnlock`）：問事、擇時詳解（本次進入有效）、今日個人運（當天有效），每項每天 `qm_free_ad_unlock_per_day`（預設 1，0＝關）。一次性功能不給看廣告。
   - 續訂點：本命報告流月（未來 12 個節）；宅盤流月提醒 `HouseMonthReminder`（訂閱、節前一晚、id 1310–1312、有存宅盤才排）；訂閱戶每日提醒多一行個人吉時（`DailyReminder.premium`）。
 - 「先給等級、詳解需訂閱」（`peekPremium` ＋ `PremiumLockCard`）：問事（決斷與等級可看，方位、應期、宜忌、盤面上鎖；免費重看紀錄也上鎖）、擇時（時間與等級可看，方位、理由、盤面、行事曆、存紀錄上鎖）

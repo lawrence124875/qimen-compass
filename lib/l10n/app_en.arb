@@ -932,7 +932,7 @@
   "pdayNoHour": "No especially good hours for you today",
   "pdayDaYun": "Luck cycle",
   "pdayNeedGender": "Set your gender in your profile to add the luck cycle",
-  "pdayBasis": "Based on where your birth-year stem falls in today's day chart, and your current luck-cycle stem.",
+  "pdayBasis": "Based on where your birth-year stem and current luck-cycle stem fall across today's hourly charts (7am–9pm).",
   "reportMonths": "Monthly outlook (next 12 months)",
   "reportMonthsHint": "Your year-stem palace in each month's chart, from each solar term.",
   "houseMonthChannel": "Home monthly reminder",
