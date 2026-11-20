@@ -8,6 +8,10 @@ class Declination {
   static double at(double lat, double lon, [DateTime? date]) =>
       GeoMag().calculate(lat, lon, 0, date ?? DateTime.now()).dec;
 
+  /// 當地地磁總強度（μT），用來判斷磁場是否正常。
+  static double fieldAt(double lat, double lon, [DateTime? date]) =>
+      GeoMag().calculate(lat, lon, 0, date ?? DateTime.now()).ti / 1000;
+
   /// 取大概位置（只要求「概略位置」權限，不要求精確位置）算磁偏角；被拒或失敗回傳 null。
   static Future<DeclinationResult> locate() async {
     try {
@@ -21,7 +25,7 @@ class Declination {
           await Geolocator.getCurrentPosition(
             locationSettings: const LocationSettings(accuracy: LocationAccuracy.low, timeLimit: Duration(seconds: 15)),
           );
-      return DeclinationResult(at(pos.latitude, pos.longitude));
+      return DeclinationResult(at(pos.latitude, pos.longitude), fieldAt(pos.latitude, pos.longitude));
     } catch (_) {
       return const DeclinationResult.failed(DeclinationError.unavailable);
     }
@@ -31,9 +35,14 @@ class Declination {
 enum DeclinationError { serviceOff, denied, unavailable }
 
 class DeclinationResult {
-  const DeclinationResult(double this.degrees) : error = null;
-  const DeclinationResult.failed(DeclinationError this.error) : degrees = null;
+  const DeclinationResult(double this.degrees, [this.fieldUt]) : error = null;
+  const DeclinationResult.failed(DeclinationError this.error)
+      : degrees = null,
+        fieldUt = null;
 
   final double? degrees;
+
+  /// 當地地磁總強度（μT）。
+  final double? fieldUt;
   final DeclinationError? error;
 }
