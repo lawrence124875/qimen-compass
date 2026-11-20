@@ -7,9 +7,8 @@ PB=/usr/libexec/PlistBuddy
 set_str() { $PB -c "Set :$1 $2" "$PLIST" 2>/dev/null || $PB -c "Add :$1 string $2" "$PLIST"; }
 
 # Bundle ID 與 Android applicationId 相同
-# 私人解鎖版（PERSONAL 非空）用 com.lclab.qimen.personal、名稱加「私」，可與一般版同時安裝（2026-11-19 使用者要求）
+# Bundle ID 固定 com.lclab.qimen（2026-11-20 使用者決定：iOS 只裝私人版、覆蓋安裝保留資料；iOS 地圖金鑰也只限此 bundle）
 BUNDLE=com.lclab.qimen; NAME="奇門羅盤"
-if [ -n "${PERSONAL:-}" ]; then BUNDLE=com.lclab.qimen.personal; NAME="奇門羅盤私"; fi
 sed -i '' "s/PRODUCT_BUNDLE_IDENTIFIER = com\.lclab\.qimenCompass;/PRODUCT_BUNDLE_IDENTIFIER = ${BUNDLE};/" ios/Runner.xcodeproj/project.pbxproj
 grep -q "PRODUCT_BUNDLE_IDENTIFIER = ${BUNDLE};" ios/Runner.xcodeproj/project.pbxproj
 
