@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../l10n/l10n.dart';
+import '../reminders/natal_alert_reminder.dart';
 import '../../shared/widgets/ymd_date_picker.dart';
 
 /// 個人資料（HANDOFF §12 P4）：出生日期（與擇時共用 `qm_birth_date`）＋出生時間（選填，`qm_birth_time` 分鐘數）。
@@ -74,6 +75,7 @@ Future<Profile?> editProfile(BuildContext context, Profile? current) async {
   final g = await pickGender(context, current?.male);
   final p = Profile(birthDate: d, birthMinutes: t == null ? null : t.hour * 60 + t.minute, male: g ?? current?.male);
   await p.save();
+  NatalAlertReminder.reschedule().catchError((_) {});
   return p;
 }
 

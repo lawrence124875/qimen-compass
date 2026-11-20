@@ -878,5 +878,20 @@
   "reportBasis": "Lá số dùng bàn xoay theo giờ (phép định cục theo cài đặt, mặc định Sách Bổ); đại vận theo Bát Tự, tuổi khởi vận tính từ lúc sinh đến tiết khí.",
   "profileGender": "Giới tính",
   "genderMale": "Nam",
-  "genderFemale": "Nữ"
+  "genderFemale": "Nữ",
+  "compassNatal": "Hướng tốt bản mệnh",
+  "compassNatalHint": "Các hướng sinh trợ bạn trên lá số, xếp theo bàn năm nay",
+  "houseNatalBest": "Phòng / chỗ ngồi hợp với bạn nhất",
+  "houseNatalBestHint": "Theo hướng tốt bản mệnh và cát hung bàn nhà hiện tại",
+  "houseNatalFit": "Hợp với bạn",
+  "houseNatalNoRoom": "Cung này chưa đánh dấu phòng",
+  "zeshiFlagNatalFit": "Hướng dụng thần là hướng tốt bản mệnh",
+  "natalAlertChannel": "Thời kỳ then chốt",
+  "natalAlertTitleGood": "Thời kỳ tốt từ {term}",
+  "natalAlertTitleBad": "Lưu ý vận từ {term}",
+  "natalAlertGood": "Tháng này cung năm mệnh {level}: hãy chủ động",
+  "natalAlertBad": "Tháng này cung năm mệnh {level}: nên giữ và chuẩn bị",
+  "natalAlertBest": "Thời điểm tốt: {when}, hướng {dir}",
+  "natalAlertNoHour": "Tuần đầu không có giờ đặc biệt tốt; hoãn việc lớn",
+  "natalAlertYear": "Vận năm {year}: {level}"
 }

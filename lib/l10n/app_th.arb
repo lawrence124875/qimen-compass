@@ -878,5 +878,20 @@
   "reportBasis": "ผังกำเนิดใช้จานหมุนรายยาม (วิธีตามการตั้งค่า ค่าเริ่มต้นไชปู่) วัยจรใช้กฎปาจื้อ อายุเริ่มคำนวณจากเวลาเกิดถึงสารทฤดู",
   "profileGender": "เพศ",
   "genderMale": "ชาย",
-  "genderFemale": "หญิง"
+  "genderFemale": "หญิง",
+  "compassNatal": "ทิศมงคลประจำตัว",
+  "compassNatalHint": "ทิศในผังกำเนิดที่ส่งเสริมคุณ เรียงตามผังปีนี้",
+  "houseNatalBest": "ห้อง / ที่นั่งที่เหมาะกับคุณที่สุด",
+  "houseNatalBestHint": "จากทิศมงคลประจำตัวและผังบ้านปัจจุบัน",
+  "houseNatalFit": "เข้ากับคุณ",
+  "houseNatalNoRoom": "วังนี้ยังไม่มีห้อง",
+  "zeshiFlagNatalFit": "ทิศของเทพใช้เป็นทิศมงคลประจำตัว",
+  "natalAlertChannel": "ช่วงสำคัญของคุณ",
+  "natalAlertTitleGood": "ช่วงดีเริ่ม {term}",
+  "natalAlertTitleBad": "ระวังดวงเริ่ม {term}",
+  "natalAlertGood": "เดือนนี้วังปีเกิด{level} ควรรุก",
+  "natalAlertBad": "เดือนนี้วังปีเกิด{level} ควรตั้งรับและเตรียมพร้อม",
+  "natalAlertBest": "จังหวะที่ดี: {when} ไปทาง{dir}",
+  "natalAlertNoHour": "สัปดาห์แรกไม่มียามที่ดีเป็นพิเศษ เลื่อนเรื่องใหญ่ไปก่อน",
+  "natalAlertYear": "ปี {year}: {level}"
 }

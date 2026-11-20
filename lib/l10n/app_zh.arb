@@ -1884,5 +1884,68 @@
   "reportBasis": "本命盤以時家轉盤起局（定局法依設定，預設拆補法）；大運借子平八字大運，起運歲依出生到節氣的時間計算。",
   "profileGender": "性別",
   "genderMale": "男",
-  "genderFemale": "女"
+  "genderFemale": "女",
+  "compassNatal": "本命吉方",
+  "compassNatalHint": "本命盤裡生扶你的方位，依今年年盤排序",
+  "houseNatalBest": "最適合你的房間／座位",
+  "houseNatalBestHint": "依你的本命吉方，配合目前宅盤吉凶",
+  "houseNatalFit": "與你相合",
+  "houseNatalNoRoom": "這一宮還沒標房間",
+  "zeshiFlagNatalFit": "用神方位是你的本命吉方",
+  "natalAlertChannel": "本命關鍵期",
+  "natalAlertTitleGood": "{term}起進入吉期",
+  "@natalAlertTitleGood": {
+    "placeholders": {
+      "term": {
+        "type": "String"
+      }
+    }
+  },
+  "natalAlertTitleBad": "{term}起留意運勢",
+  "@natalAlertTitleBad": {
+    "placeholders": {
+      "term": {
+        "type": "String"
+      }
+    }
+  },
+  "natalAlertGood": "這個月你的年命宮{level}，宜主動推進",
+  "@natalAlertGood": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "natalAlertBad": "這個月你的年命宮{level}，宜守不宜攻、多做準備",
+  "@natalAlertBad": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "natalAlertBest": "較佳時機：{when}，往{dir}",
+  "@natalAlertBest": {
+    "placeholders": {
+      "when": {
+        "type": "String"
+      },
+      "dir": {
+        "type": "String"
+      }
+    }
+  },
+  "natalAlertNoHour": "第一週沒有特別有利的時辰，重要事可延後",
+  "natalAlertYear": "{year} 流年：{level}",
+  "@natalAlertYear": {
+    "placeholders": {
+      "year": {
+        "type": "String"
+      },
+      "level": {
+        "type": "String"
+      }
+    }
+  }
 }

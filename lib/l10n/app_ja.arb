@@ -878,5 +878,20 @@
   "reportBasis": "本命盤は時家転盤（定局法は設定に従い既定は拆補法）、大運は四柱推命の規則で、起運年齢は出生から節気までの時間で計算。",
   "profileGender": "性別",
   "genderMale": "男性",
-  "genderFemale": "女性"
+  "genderFemale": "女性",
+  "compassNatal": "本命吉方",
+  "compassNatalHint": "本命盤であなたを生じる方位（今年の年盤で並べ替え）",
+  "houseNatalBest": "あなたに最適な部屋・席",
+  "houseNatalBestHint": "本命吉方と現在の宅盤の吉凶から",
+  "houseNatalFit": "あなたと相性良",
+  "houseNatalNoRoom": "この宮にはまだ部屋がありません",
+  "zeshiFlagNatalFit": "用神の方位があなたの本命吉方",
+  "natalAlertChannel": "本命の重要期",
+  "natalAlertTitleGood": "{term}から吉期",
+  "natalAlertTitleBad": "{term}から運勢に注意",
+  "natalAlertGood": "今月の年命宮は{level}、積極的に進めて",
+  "natalAlertBad": "今月の年命宮は{level}、守りと準備を",
+  "natalAlertBest": "好機：{when}、{dir}へ",
+  "natalAlertNoHour": "第1週に特に良い時刻はありません。大事は延期を",
+  "natalAlertYear": "{year}年の流年：{level}"
 }

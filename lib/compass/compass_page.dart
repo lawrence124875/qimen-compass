@@ -15,6 +15,7 @@ import 'compass_math.dart';
 import 'declination.dart';
 import '../app/services.dart';
 import '../features/map/map_page.dart';
+import '../features/personal/profile.dart';
 import '../shared/widgets/result_card.dart';
 
 /// 奇門羅盤（HANDOFF §4）：八門盤依手機朝向反向旋轉，對準現實方位。
@@ -53,6 +54,10 @@ class _CompassPageState extends State<CompassPage> {
   DateTime? _nextAt;
   bool _showNext = false;
   Door? _target = CompassPage.pendingTarget;
+
+  /// 本命吉方（依今年年盤排序）與目前要找的本命吉方宮（與 [_target] 擇一）。
+  List<DirectionVerdict> _natal = const [];
+  int? _palaceTarget;
   Door? _lastAhead;
   bool _wasAligned = false;
 
@@ -66,6 +71,7 @@ class _CompassPageState extends State<CompassPage> {
     CompassPage.pendingTarget = null;
     _refreshCharts();
     _loadPrefs();
+    _loadNatal();
     _ticker = Timer.periodic(const Duration(seconds: 1), (_) {
       if (!mounted) return;
       final at = _nextAt;
@@ -96,6 +102,17 @@ class _CompassPageState extends State<CompassPage> {
         .listen((e) => _gyro.update(e.z, DateTime.now()), onError: (_) {}));
     _subs.add(accelerometerEventStream(samplingPeriod: SensorInterval.uiInterval)
         .listen((e) => _tilt = tiltDegrees(e.x, e.y, e.z), onError: (_) {}));
+  }
+
+  Future<void> _loadNatal() async {
+    final p = await Profile.load();
+    if (p == null || !mounted) return;
+    final s = AppSettings.instance;
+    final at = p.birthInstant;
+    final natal = const PersonalEngine().natal(at, settings: s.timeSettingsAt(at), method: s.juMethod);
+    final now = DateTime.now();
+    final year = _engine.compute(now, settings: s.timeSettingsAt(now), method: s.juMethod, unit: PanUnit.year);
+    if (mounted) setState(() => _natal = natalLuckyIn(natal, year));
   }
 
   Future<void> _loadPrefs() async {
@@ -311,11 +328,36 @@ class _CompassPageState extends State<CompassPage> {
           label: Text(d.zh),
           selected: _target == d,
           selectedColor: context.qm.luck(d.luck).withValues(alpha: 0.3),
-          onSelected: (on) => setState(() => _target = on ? d : null),
+          onSelected: (on) => setState(() {
+            _target = on ? d : null;
+            if (on) _palaceTarget = null;
+          }),
         ),
     ]));
-    if (_target != null && heading != null) {
-      final delta = turnDelta(heading, doorBearing(chart, _target!));
+    // 本命吉方（免費）：本命盤生扶你的方位，依今年年盤排序。
+    if (_natal.isNotEmpty) {
+      widgets.add(const SizedBox(height: 8));
+      widgets.add(Text(l.compassNatal, style: theme.textTheme.titleSmall));
+      widgets.add(Text(l.compassNatalHint, style: theme.textTheme.bodySmall?.copyWith(color: context.qm.textMuted)));
+      widgets.add(Wrap(spacing: 6, runSpacing: 4, children: [
+        for (final v in _natal)
+          ChoiceChip(
+            showCheckmark: false,
+            avatar: Icon(Icons.person_pin_circle_outlined, size: 16, color: context.qm.primary),
+            label: Text(_dirLabel(l, v.palace)),
+            selected: _palaceTarget == v.palace,
+            onSelected: (on) => setState(() {
+              _palaceTarget = on ? v.palace : null;
+              if (on) _target = null;
+            }),
+          ),
+      ]));
+    }
+    final targetBearing = _target != null
+        ? doorBearing(chart, _target!)
+        : (_palaceTarget != null ? palaceBearing[_palaceTarget!] : null);
+    if (targetBearing != null && heading != null) {
+      final delta = turnDelta(heading, targetBearing);
       final aligned = delta.abs() <= 10;
       if (aligned && !_wasAligned) HapticFeedback.mediumImpact();
       _wasAligned = aligned;
@@ -328,7 +370,7 @@ class _CompassPageState extends State<CompassPage> {
           Flexible(
             child: Text(
               aligned
-                  ? l.compassAligned(QimenTerms.door(_target!, lang))
+                  ? l.compassAligned(_target != null ? QimenTerms.door(_target!, lang) : _dirLabel(l, _palaceTarget!))
                   : (delta < 0 ? l.compassTurnLeft(delta.abs().round()) : l.compassTurnRight(delta.round())),
               style: theme.textTheme.titleMedium,
             ),

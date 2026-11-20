@@ -183,3 +183,76 @@ class NatalReportEngine {
     return minutes / (3 * 24 * 60);
   }
 }
+
+/// 本命吉方（終身）：本命盤外八宮依「本命評分＋與日干宮關係」排序（日干宮、生扶、比和 +1，剋你 −1），
+/// 取前 [limit] 宮。擇時、宅盤、羅盤共用。
+List<int> natalFavoredPalaces(NatalReading n, {int limit = 2}) {
+  final self = n.self?.palace;
+  int rank(int p) {
+    var s = DirectionPlanner.judge(n.chart, p).score;
+    if (self != null) {
+      if (p == self) {
+        s += 1;
+      } else {
+        s += switch (relationTo(p, self)) { Relation.shengWo || Relation.biHe => 1, Relation.keWo => -1, _ => 0 };
+      }
+    }
+    return s;
+  }
+
+  final ranked = [...palaceRing]..sort((a, b) => rank(b).compareTo(rank(a)));
+  return ranked.take(limit).toList();
+}
+
+/// 目前（[chart]：年盤、宅盤或時盤）的本命吉方：[natalFavoredPalaces] 前 [pool] 宮，依 [chart] 同宮吉凶排序，
+/// 去掉受阻的宮，取前 [limit] 個。
+List<DirectionVerdict> natalLuckyIn(NatalReading n, QimenChart chart, {int pool = 3, int limit = 2}) {
+  final vs = [for (final p in natalFavoredPalaces(n, limit: pool)) DirectionPlanner.judge(chart, p)]
+    ..removeWhere((v) => v.level == TravelLevel.blocked)
+    ..sort((a, b) => b.score.compareTo(a.score));
+  return vs.take(limit).toList();
+}
+
+/// 流月關鍵期：接下來 [months] 個「節」（月令交接）起的月盤，年命宮達大吉或受阻者。
+class FortuneAlert {
+  const FortuneAlert({required this.term, required this.verdict, this.best, this.year});
+
+  /// 該月起始的節。
+  final SolarTerm term;
+
+  /// 月盤上年命宮的吉凶。
+  final DirectionVerdict verdict;
+
+  /// 該月第一週年命宮最佳的時辰（方位＝年命宮）；沒有時 null。
+  final DirectionVerdict? best;
+
+  /// 立春（換年）時附上新一年的流年吉凶。
+  final DirectionVerdict? year;
+
+  bool get good => verdict.recommended;
+}
+
+List<FortuneAlert> fortuneAlerts(
+  BirthInfo birth,
+  DateTime fromUtc, {
+  int months = 3,
+  TimeSettings settings = const TimeSettings(),
+  JuMethod method = JuMethod.chaiBu,
+  ShiJiaEngine engine = const ShiJiaEngine(),
+}) {
+  final personal = PersonalEngine(engine: engine);
+  final terms = engine.calendar
+      .termsBetween(fromUtc, fromUtc.add(Duration(days: 31 * months + 1)))
+      .where((t) => t.index.isOdd && t.startUtc.isAfter(fromUtc))
+      .take(months);
+  final out = <FortuneAlert>[];
+  for (final t in terms) {
+    final at = t.startUtc.add(const Duration(days: 1));
+    final v = personal.fortune(birth, at, PanUnit.month, settings: settings, method: method).verdict;
+    if (v == null || (v.level != TravelLevel.great && v.level != TravelLevel.blocked)) continue;
+    final best = personal.luckyHours(birth, t.startUtc, settings: settings, method: method, limit: 1);
+    final year = t.index == 3 ? personal.fortune(birth, at, PanUnit.year, settings: settings, method: method).verdict : null;
+    out.add(FortuneAlert(term: t, verdict: v, best: best.isEmpty ? null : best.first, year: year));
+  }
+  return out;
+}
