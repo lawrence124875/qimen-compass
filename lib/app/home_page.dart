@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../engine/engine.dart' hide Element;
 import '../features/almanac/almanac_page.dart';
+import '../features/personal/natal_report_page.dart';
 import '../features/personal/personal_page.dart';
 import '../features/family/family_page.dart';
 import '../features/personal/synastry_page.dart';
@@ -182,7 +183,20 @@ class _HomePageState extends State<HomePage> {
           );
           final board = ChartBoard(chart: _chart);
           final svc = AppServices.of(context);
-          final actions = Row(children: [
+          final report = svc.featureEnabled('natal_report')
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: FilledButton.tonalIcon(
+                      icon: const Icon(Icons.auto_stories_outlined),
+                      onPressed: () => NatalReportPage.open(context),
+                      label: Text(l.reportTitle),
+                    ),
+                  ),
+                )
+              : const SizedBox.shrink();
+          final actionsRow = Row(children: [
             if (svc.featureEnabled('personal'))
               Expanded(
                 child: FilledButton.tonalIcon(
@@ -211,6 +225,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ]);
+          final actions = Column(mainAxisSize: MainAxisSize.min, children: [actionsRow, report]);
           final unitNote = _unit == PanUnit.hour
               ? const SizedBox.shrink()
               : Padding(

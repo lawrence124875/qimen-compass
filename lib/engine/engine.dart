@@ -17,3 +17,4 @@ export 'synastry.dart';
 export 'fengshui.dart';
 export 'day_alerts.dart';
 export 'family_day.dart';
+export 'natal_report.dart';
