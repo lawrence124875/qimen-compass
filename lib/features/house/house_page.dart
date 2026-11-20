@@ -21,6 +21,7 @@ import 'house_widgets.dart';
 import 'mark_rooms_page.dart';
 import 'plan_corners_page.dart';
 import 'plan_editor_page.dart';
+import '../../shared/widgets/ymd_date_picker.dart';
 
 /// 疊加的盤（HANDOFF §6）：時盤（現在或指定時間）、年盤、月盤（看格局）、宅命盤。
 enum HouseOverlay { now, pick, year, month, house }
@@ -104,7 +105,8 @@ class _HousePageState extends State<HousePage> {
   }
 
   Future<void> _pickTime() async {
-    final d = await showDatePicker(
+    final d = await showYmdDatePicker(
+      calendarFirst: true,
       context: context,
       initialDate: _picked,
       firstDate: DateTime(1950),
@@ -553,7 +555,8 @@ class _HousePageState extends State<HousePage> {
               Wrap(spacing: 8, runSpacing: 8, children: [
                 OutlinedButton(
                   onPressed: () async {
-                    final d = await showDatePicker(
+                    final d = await showYmdDatePicker(
+                      calendarFirst: true,
                       context: context,
                       initialDate: h.moveIn ?? DateTime.now(),
                       firstDate: DateTime(1900),

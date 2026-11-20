@@ -4,6 +4,7 @@
 • 節氣與重要日提醒：前一晚提醒明天換局、月破、歲破、四離四絕，附具體建議
 • Wear OS 手錶羅盤：轉向吉門會震動
 • 也含 1.2.0：今日吉色、發訊息時機、神煞長生圖鑑、開運擺件與化解、談判座位
+• 地址搜尋支援各國，找不到可在地圖上點選；日期改 yyyy/mm/dd
 </zh-TW>
 <zh-CN>
 奇门罗盘 1.3.0：
@@ -11,6 +12,7 @@
 • 节气与重要日提醒：前一晚提醒明天换局、月破、岁破、四离四绝，附具体建议
 • Wear OS 手表罗盘：转向吉门会震动
 • 也含 1.2.0：今日吉色、发消息时机、神煞长生图鉴、开运摆件与化解、谈判座位
+• 地址搜索支持各国，找不到可在地图上点选；日期改 yyyy/mm/dd
 </zh-CN>
 <en-US>
 Qimen Compass 1.3.0:
@@ -18,6 +20,7 @@ Qimen Compass 1.3.0:
 • Key day alerts: the evening before a chart change, Month/Year-Breaker, Four Separations or Four Endings day, with practical tips
 • Wear OS watch compass: vibrates when you face a lucky gate
 • Also includes 1.2.0: lucky colors, best time to send, glossary, lucky items and remedies, negotiation seat
+• Worldwide address search plus map picking; dates as yyyy/mm/dd
 </en-US>
 <ja-JP>
 奇門羅盤 1.3.0：
@@ -25,6 +28,7 @@ Qimen Compass 1.3.0:
 • 節気・重要日の通知：前夜に局替わり・月破・歳破・四離・四絶日を具体的なアドバイス付きで
 • Wear OS ウォッチ羅盤：吉門を向くと振動
 • 1.2.0 の内容も含む：今日の吉色、送信のタイミング、図鑑、開運アイテムと化解、交渉の席
+• 住所検索が各国対応、地図で選択も可。日付は yyyy/mm/dd
 </ja-JP>
 <ko-KR>
 기문 나침반 1.3.0:
@@ -32,6 +36,7 @@ Qimen Compass 1.3.0:
 • 절기·중요일 알림: 전날 밤 국 변경, 월파·세파·사리·사절일을 구체적인 조언과 함께
 • Wear OS 워치 나침반: 길문을 향하면 진동
 • 1.2.0 포함: 오늘의 길색, 보내기 좋은 시간, 도감, 개운 소품과 화해, 협상 자리
+• 주소 검색 전 세계 지원, 지도 선택 가능. 날짜는 yyyy/mm/dd
 </ko-KR>
 <vi>
 Qimen Compass 1.3.0:
@@ -39,6 +44,7 @@ Qimen Compass 1.3.0:
 • Nhắc ngày quan trọng: tối hôm trước báo đổi cục, nguyệt phá, tuế phá, tứ ly, tứ tuyệt kèm lời khuyên
 • La bàn đồng hồ Wear OS: rung khi quay về cửa tốt
 • Gồm cả 1.2.0: màu may mắn, thời điểm gửi tin, từ điển, vật phẩm và hóa giải, chỗ ngồi đàm phán
+• Tìm địa chỉ mọi quốc gia, chọn trên bản đồ; ngày nhập yyyy/mm/dd
 </vi>
 <es-ES>
 Qimen Compass 1.3.0:
@@ -46,6 +52,7 @@ Qimen Compass 1.3.0:
 • Avisos de días clave: la noche anterior a un cambio de carta o un día Rompe-Mes/Año, Cuatro Separaciones o Cuatro Finales, con consejos
 • Brújula en el reloj Wear OS: vibra al mirar una puerta favorable
 • Incluye 1.2.0: colores de la suerte, momento para enviar, glosario, objetos y remedios, asiento de negociación
+• Direcciones de todo el mundo y elección en mapa; fechas yyyy/mm/dd
 </es-ES>
 <es-US>
 Qimen Compass 1.3.0:
@@ -53,6 +60,7 @@ Qimen Compass 1.3.0:
 • Avisos de días clave: la noche anterior a un cambio de carta o un día Rompe-Mes/Año, Cuatro Separaciones o Cuatro Finales, con consejos
 • Brújula en el reloj Wear OS: vibra al mirar una puerta favorable
 • Incluye 1.2.0: colores de la suerte, momento para enviar, glosario, objetos y remedios, asiento de negociación
+• Direcciones de todo el mundo y elección en mapa; fechas yyyy/mm/dd
 </es-US>
 <pt-BR>
 Qimen Compass 1.3.0:
@@ -60,6 +68,7 @@ Qimen Compass 1.3.0:
 • Avisos de dias-chave: na noite anterior a uma mudança de mapa ou dia Quebra-Mês/Ano, Quatro Separações ou Quatro Finais, com dicas
 • Bússola no relógio Wear OS: vibra ao encarar uma porta favorável
 • Inclui 1.2.0: cores da sorte, hora de enviar, glossário, objetos e remédios, assento de negociação
+• Endereços do mundo todo e escolha no mapa; datas yyyy/mm/dd
 </pt-BR>
 <pt-PT>
 Qimen Compass 1.3.0:
@@ -67,6 +76,7 @@ Qimen Compass 1.3.0:
 • Avisos de dias-chave: na noite anterior a uma mudança de mapa ou dia Quebra-Mês/Ano, Quatro Separações ou Quatro Finais, com dicas
 • Bússola no relógio Wear OS: vibra ao encarar uma porta favorável
 • Inclui 1.2.0: cores da sorte, hora de enviar, glossário, objetos e remédios, assento de negociação
+• Endereços de todo o mundo e escolha no mapa; datas yyyy/mm/dd
 </pt-PT>
 <id>
 Qimen Compass 1.3.0:
@@ -74,6 +84,7 @@ Qimen Compass 1.3.0:
 • Pengingat hari penting: malam sebelum pergantian bagan, hari Pemecah Bulan/Tahun, Empat Pemisahan atau Empat Akhir, dengan saran
 • Kompas jam Wear OS: bergetar saat menghadap gerbang baik
 • Termasuk 1.2.0: warna keberuntungan, waktu kirim, glosarium, benda keberuntungan dan penawar, kursi negosiasi
+• Cari alamat seluruh dunia, pilih di peta; tanggal yyyy/mm/dd
 </id>
 <th>
 Qimen Compass 1.3.0:
@@ -81,6 +92,7 @@ Qimen Compass 1.3.0:
 • แจ้งเตือนวันสำคัญ: คืนก่อนเปลี่ยนผัง วันเดือนแตก ปีแตก สี่แยก สี่สิ้น พร้อมคำแนะนำ
 • เข็มทิศนาฬิกา Wear OS: สั่นเมื่อหันไปทางประตูมงคล
 • รวม 1.2.0: สีมงคล เวลาส่งข้อความ อภิธานศัพท์ ของมงคลและวิธีแก้ ที่นั่งเจรจา
+• ค้นหาที่อยู่ได้ทุกประเทศ เลือกบนแผนที่ได้ วันที่ใช้ yyyy/mm/dd
 </th>
 <ar>
 Qimen Compass 1.3.0:
@@ -88,4 +100,5 @@ Qimen Compass 1.3.0:
 • تنبيهات الأيام المهمة: في الليلة السابقة لتغيّر المخطط وأيام كاسر الشهر والسنة والافتراقات والنهايات الأربع، مع نصائح
 • بوصلة ساعة Wear OS: تهتز عند مواجهة بوابة ميمونة
 • يشمل 1.2.0: ألوان الحظ ووقت الإرسال والمعجم وأغراض الحظ والعلاجات ومقعد التفاوض
+• بحث عن العناوين في كل الدول والاختيار على الخريطة؛ التاريخ yyyy/mm/dd
 </ar>

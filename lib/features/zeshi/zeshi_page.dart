@@ -16,6 +16,7 @@ import '../lucky/lucky_cards.dart';
 import '../records/record_actions.dart';
 import '../travel/travel_text.dart';
 import 'zeshi_text.dart';
+import '../../shared/widgets/ymd_date_picker.dart';
 
 /// 擇時擇日（HANDOFF §7）：掃描未來 N 天（最長 1 年）的時盤，依情境打分，列出前 N 名，可加入行事曆。
 /// 範圍、筆數、同一天上限、時段可調；長範圍分段計算並顯示進度。
@@ -194,12 +195,35 @@ class _ZeShiPageState extends State<ZeShiPage> {
     _run();
   }
 
-  String? _hint(AppLocalizations l) => switch (_event) {
-        ZeShiEvent.meditation => l.zeshiHintMeditation,
-        ZeShiEvent.business => l.zeshiHintBusiness,
-        ZeShiEvent.message => l.msgSub,
-        _ => null,
-      };
+  /// 情境說明：涵蓋哪些事、用法，再加用神門與加分的八神／九星（自訂由使用者選，不列）。
+  String _hint(AppLocalizations l) {
+    final e = _event;
+    final lang = L10n.language;
+    final cover = switch (e) {
+      ZeShiEvent.contract => l.zeshiCoverContract,
+      ZeShiEvent.opening => l.zeshiCoverOpening,
+      ZeShiEvent.interview => l.zeshiCoverInterview,
+      ZeShiEvent.dating => l.zeshiCoverDating,
+      ZeShiEvent.engagement => l.zeshiCoverEngagement,
+      ZeShiEvent.journey => l.zeshiCoverJourney,
+      ZeShiEvent.wedding => l.zeshiCoverWedding,
+      ZeShiEvent.moveIn => l.zeshiCoverMoveIn,
+      ZeShiEvent.groundbreaking => l.zeshiCoverGroundbreaking,
+      ZeShiEvent.purchase => l.zeshiCoverPurchase,
+      ZeShiEvent.wealth => l.zeshiCoverWealth,
+      ZeShiEvent.exam => l.zeshiCoverExam,
+      ZeShiEvent.medical => l.zeshiCoverMedical,
+      ZeShiEvent.negotiation => l.zeshiCoverNegotiation,
+      ZeShiEvent.meditation => l.zeshiHintMeditation,
+      ZeShiEvent.business => l.zeshiHintBusiness,
+      ZeShiEvent.message => l.msgSub,
+      ZeShiEvent.custom => l.zeshiCoverCustom,
+    };
+    if (e == ZeShiEvent.custom) return cover;
+    final doors = e.doors.map((d) => QimenTerms.door(d, lang)).join(l.separator);
+    final bonus = [QimenTerms.god(e.favoredGod, lang), if (e.favoredStar != null) QimenTerms.star(e.favoredStar!, lang)].join(l.separator);
+    return '$cover\n${l.zeshiUseGod(doors, bonus)}';
+  }
 
   String _perDayLabel(AppLocalizations l) => _perDay == 0 ? l.zeshiPerDayNoLimit : l.zeshiPerDayLimit(_perDay);
 
@@ -207,12 +231,11 @@ class _ZeShiPageState extends State<ZeShiPage> {
 
   Future<void> _pickBirth() async {
     final now = DateTime.now();
-    final d = await showDatePicker(
+    final d = await showYmdDatePicker(
       context: context,
       initialDate: _birth ?? DateTime(1990, 1, 1),
       firstDate: DateTime(1920),
       lastDate: now,
-      initialEntryMode: DatePickerEntryMode.input,
     );
     if (d == null) return;
     _birth = d;
@@ -300,10 +323,8 @@ class _ZeShiPageState extends State<ZeShiPage> {
                   for (final e in ZeShiEvent.values)
                     ChoiceChip(label: Text(ZeShiText.event(l, e)), selected: e == _event, onSelected: (_) => _setEvent(e)),
                 ]),
-                if (_hint(l) case final h?) ...[
-                  const SizedBox(height: 8),
-                  Text(h, style: theme.textTheme.bodySmall?.copyWith(color: context.qm.textMuted)),
-                ],
+                const SizedBox(height: 8),
+                Text(_hint(l), style: theme.textTheme.bodySmall?.copyWith(color: context.qm.textMuted)),
                 if (_event == ZeShiEvent.custom) ...[
                   const SizedBox(height: 12),
                   Text(l.zeshiCustomDoor, style: theme.textTheme.labelLarge),
