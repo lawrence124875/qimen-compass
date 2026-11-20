@@ -33,5 +33,6 @@ for t in tracks:
         'releases': [{'versionCodes': [code], 'status': status, 'releaseNotes': notes}],
     }).execute()
     print('指派到', t, status)
-edits.commit(packageName=PKG, editId=eid, changesNotSentForReview=(status == 'draft')).execute()
+# 草稿版本不會發布；此 app 未開「受管理的發布」，不能帶 changesNotSentForReview
+edits.commit(packageName=PKG, editId=eid).execute()
 print(f'::notice title=Play::versionCode {code} → {", ".join(tracks)}（{status}）')
