@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../app/main_shell.dart';
 import '../../app/services.dart';
 import '../../app/settings/app_settings.dart';
 import '../../app/theme/app_theme.dart';
@@ -58,6 +57,11 @@ class _PersonalDayCardState extends State<PersonalDayCard> {
         method: s.juMethod);
   }
 
+  Future<void> _setBirth() async {
+    final np = await editProfile(context, _profile);
+    if (np != null && mounted) setState(() => _profile = np);
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
@@ -81,8 +85,8 @@ class _PersonalDayCardState extends State<PersonalDayCard> {
         TextButton.icon(
           style: TextButton.styleFrom(padding: EdgeInsets.zero),
           icon: const Icon(Icons.cake_outlined, size: 18),
-          label: Text(l.luckyNeedBirth),
-          onPressed: () => MainShell.select(MainTab.me),
+          label: Text(l.profileTitle),
+          onPressed: _setBirth, // 直接開生日設定，不跳到「我的」
         ),
       ];
     } else {
