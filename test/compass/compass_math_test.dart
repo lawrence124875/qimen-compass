@@ -62,6 +62,17 @@ void main() {
     expect(tiltDegrees(9.8, 0, 0), closeTo(90, 1e-9));
   });
 
+  test('Android 系統精度卡在低：磁場正常就不擋', () {
+    expect(effectiveAccuracy(CompassAccuracy.low, FieldStatus.ok), CompassAccuracy.medium);
+    expect(effectiveAccuracy(CompassAccuracy.unknown, FieldStatus.ok), CompassAccuracy.medium);
+    expect(effectiveAccuracy(CompassAccuracy.high, FieldStatus.ok), CompassAccuracy.high);
+    expect(effectiveAccuracy(CompassAccuracy.low, FieldStatus.unknown), CompassAccuracy.low); // iOS
+    expect(needsCalibration(CompassAccuracy.medium, FieldStatus.ok), isFalse);
+    expect(needsCalibration(CompassAccuracy.high, FieldStatus.unstable), isTrue);
+    expect(needsCalibration(CompassAccuracy.high, FieldStatus.outOfRange), isTrue);
+    expect(needsCalibration(CompassAccuracy.low, FieldStatus.unknown), isTrue);
+  });
+
   test('八門方位：每門落在外八宮，前方門與方位一致', () {
     const engine = ShiJiaEngine();
     final chart = engine.compute(DateTime.utc(2026, 3, 10, 2, 20));

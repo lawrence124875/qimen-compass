@@ -48,6 +48,20 @@ CompassAccuracy accuracyFromDegrees(double? deg) {
   return CompassAccuracy.low;
 }
 
+/// 實際顯示的精度。Android 部分機型（小米等）的旋轉向量感測器精度常一直回報 LOW／UNRELIABLE，
+/// 即使已校準也不會更新；所以磁場強度正常且穩定時（[field] 為 ok），至少視為「中」。
+/// iOS 不讀磁力計（field 一直是 unknown），維持系統精度。
+CompassAccuracy effectiveAccuracy(CompassAccuracy system, FieldStatus field) {
+  if (field == FieldStatus.ok && (system == CompassAccuracy.low || system == CompassAccuracy.unknown)) {
+    return CompassAccuracy.medium;
+  }
+  return system;
+}
+
+/// 是否要提示畫 8 字校準：磁場異常，或（磁場未確認正常時）精度低。
+bool needsCalibration(CompassAccuracy effective, FieldStatus field) =>
+    field == FieldStatus.outOfRange || field == FieldStatus.unstable || effective == CompassAccuracy.low;
+
 /// 磁場狀態。
 enum FieldStatus { ok, outOfRange, unstable, unknown }
 

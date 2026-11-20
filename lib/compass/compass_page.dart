@@ -267,8 +267,8 @@ class _CompassPageState extends State<CompassPage> {
       case FieldStatus.unknown:
         break;
     }
-    final acc = accuracyFromDegrees(_accuracyDeg);
-    if (acc == CompassAccuracy.low || _field.status != FieldStatus.ok && _field.status != FieldStatus.unknown) {
+    final acc = effectiveAccuracy(accuracyFromDegrees(_accuracyDeg), _field.status);
+    if (needsCalibration(acc, _field.status)) {
       notes.add(l.compassCalibrate);
     }
     if (_tilt > 25) notes.add(l.compassKeepFlat);
