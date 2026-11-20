@@ -36,7 +36,7 @@ class FirebaseTelemetry {
     // 當機回報：release 版才收集。
     try {
       final crash = FirebaseCrashlytics.instance;
-      await crash.setCrashlyticsCollectionEnabled(!kDebugMode && sharing);
+      unawaited(crash.setCrashlyticsCollectionEnabled(!kDebugMode && sharing).catchError((Object e) => debugPrint('Crashlytics 設定失敗：$e')));
       FlutterError.onError = crash.recordFlutterFatalError;
       PlatformDispatcher.instance.onError = (error, stack) {
         crash.recordError(error, stack, fatal: true);
@@ -46,11 +46,10 @@ class FirebaseTelemetry {
       debugPrint('Crashlytics 設定失敗：$e');
     }
 
-    try {
-      await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(sharing);
-    } catch (e) {
-      debugPrint('Analytics 設定失敗：$e');
-    }
+    // 不必等：設定送出即可，啟動不卡在這
+    unawaited(FirebaseAnalytics.instance
+        .setAnalyticsCollectionEnabled(sharing)
+        .catchError((Object e) => debugPrint('Analytics 設定失敗：$e')));
 
     final RemoteFlags flags = await _FirebaseRemoteFlags.init(featureIds);
     return FirebaseTelemetry._(const _FirebaseAnalytics(), flags, available: true);
@@ -96,15 +95,18 @@ class _FirebaseRemoteFlags implements RemoteFlags {
   static Future<RemoteFlags> init(Iterable<String> featureIds) async {
     try {
       final rc = FirebaseRemoteConfig.instance;
-      await rc.setConfigSettings(RemoteConfigSettings(
+      // 三個呼叫彼此獨立，一起送；activate 只套用上次抓到的值（本機），不連網
+      await Future.wait([
+        rc.setConfigSettings(RemoteConfigSettings(
         fetchTimeout: const Duration(seconds: 10),
         // Spark 免費方案；開關不必即時，12 小時抓一次即可（官方預設值）
         minimumFetchInterval: kDebugMode ? const Duration(minutes: 1) : const Duration(hours: 12),
-      ));
-      await rc.setDefaults({
-        for (final id in featureIds) featureFlagKey(id): true,
-        ...FreeLimits.remoteDefaults,
-      });
+        )),
+        rc.setDefaults({
+          for (final id in featureIds) featureFlagKey(id): true,
+          ...FreeLimits.remoteDefaults,
+        }),
+      ]);
       await rc.activate();
       unawaited(rc.fetch().catchError((Object e) => debugPrint('Remote Config 抓取失敗：$e')));
       return _FirebaseRemoteFlags(rc);
