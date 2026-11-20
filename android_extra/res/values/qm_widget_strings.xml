@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="qm_widget_desc">Lucky gate direction right now</string>
+    <string name="qm_widget_desc_m">Choose 2–3 items: lucky gate, next lucky hour, lucky color…</string>
+    <string name="qm_widget_desc_l">Mini nine-palace hour chart plus 2 items</string>
 </resources>

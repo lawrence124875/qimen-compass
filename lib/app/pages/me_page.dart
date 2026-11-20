@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 
 import '../../features/course/course_page.dart';
@@ -5,6 +7,7 @@ import '../../features/house/facing_page.dart';
 import '../../features/house/house_page.dart';
 import '../../features/map/move_page.dart';
 import '../../features/records/record_list_page.dart';
+import '../../features/widget/widget_settings_page.dart';
 import '../../l10n/l10n.dart';
 import '../../shared/premium/usage_gate.dart';
 import '../services.dart';
@@ -54,6 +57,9 @@ class MePage extends StatelessWidget {
             tile(Icons.bookmarks_outlined, l.recordsTitle, l.meRecordsSub, () => open(context, (_) => const RecordListPage())),
           if (s.featureEnabled('course'))
             tile(Icons.school_outlined, l.homeCourse, l.meCourseSub, () => open(context, (_) => const CoursePage())),
+          if (s.featureEnabled('widget') && Platform.isAndroid)
+            tile(Icons.widgets_outlined, l.widgetSettingsTitle, l.widgetSettingsSub,
+                () => open(context, (_) => const WidgetSettingsPage())),
           tile(Icons.settings_outlined, l.settingsTitle, l.meSettingsSub, () => open(context, (_) => const SettingsPage())),
         ]),
       ),

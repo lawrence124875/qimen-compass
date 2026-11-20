@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="qm_widget_desc">此刻吉門方位</string>
+    <string name="qm_widget_desc_m">自選 2–3 項：吉門、下個吉時、吉色…</string>
+    <string name="qm_widget_desc_l">迷你九宮時盤＋2 項</string>
 </resources>

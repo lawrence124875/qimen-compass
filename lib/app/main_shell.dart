@@ -1,8 +1,14 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
+import 'package:flutter/foundation.dart' show ValueListenable;
+import 'package:flutter/material.dart';
+import 'package:home_widget/home_widget.dart';
+
+import '../features/travel/travel_page.dart';
 import '../features/widget/home_widget_sync.dart';
 import '../l10n/l10n.dart';
 import '../shared/premium/ad_banner.dart';
+import '../shared/premium/paywall_page.dart';
 import '../shared/premium/trial_prompt.dart';
 import 'compass_tab.dart';
 import 'home_page.dart';
@@ -45,16 +51,44 @@ class _MainShellState extends State<MainShell> {
   void initState() {
     super.initState();
     MainShell.tabRequest.addListener(_onRequest);
-    // 桌面小工具：每次開 App 重算 7 天
+    // 桌面小工具：每次開 App、訂閱狀態改變時重算 7 天；點小工具開對應頁面
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted && AppServices.of(context).featureEnabled('widget')) QimenHomeWidget.sync(context.l10n);
-      if (mounted) TrialPrompt.maybeShow(context);
+      if (!mounted) return;
+      final s = AppServices.of(context);
+      if (s.featureEnabled('widget')) {
+        _premium = s.premium.isPremium..addListener(_syncWidget);
+        _syncWidget();
+        HomeWidget.initiallyLaunchedFromHomeWidget().then(_onWidgetUri, onError: (_) {});
+        _widgetSub = HomeWidget.widgetClicked.listen(_onWidgetUri, onError: (_) {});
+      }
+      TrialPrompt.maybeShow(context);
     });
+  }
+
+  ValueListenable<bool>? _premium;
+  StreamSubscription<Uri?>? _widgetSub;
+
+  void _syncWidget() {
+    if (mounted) QimenHomeWidget.sync(context.l10n, premium: AppServices.of(context).isPremium);
+  }
+
+  void _onWidgetUri(Uri? u) {
+    if (!mounted || u == null) return;
+    switch (u.host) {
+      case 'travel':
+        Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const TravelPage()));
+      case 'paywall':
+        openPaywall(context, source: 'widget');
+      case 'me':
+        _select(MainTab.me);
+    }
   }
 
   @override
   void dispose() {
     MainShell.tabRequest.removeListener(_onRequest);
+    _premium?.removeListener(_syncWidget);
+    _widgetSub?.cancel();
     super.dispose();
   }
 
