@@ -1,0 +1,47 @@
+# 把某次 Build Android 的上架用 AAB 上傳到 Play 內部測試與封閉測試（預設存草稿，再到 Play Console 與商店資訊一起送審）。
+# 需要 Secret PLAY_SERVICE_ACCOUNT_JSON（Play Console 已授權「發布到測試群組」的服務帳戶金鑰）。
+# 版本資訊取自 store/release_notes.txt（14 語，Play 語言標籤）。
+name: Upload to Play
+
+on:
+  workflow_dispatch:
+    inputs:
+      run:
+        description: 'Build Android 的 run 編號（qimen-content Release qimen-android-run<N>）'
+        required: true
+      tracks:
+        description: '要上傳的測試軌（逗號分隔；封閉測試預設軌為 alpha）'
+        required: false
+        default: 'internal,alpha'
+      status:
+        description: 'draft＝存草稿（之後手動送審）；completed＝直接發布並送審'
+        required: false
+        default: 'draft'
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 下載 AAB
+        env:
+          GH_TOKEN: ${{ secrets.BUILDS_REPO_TOKEN }}
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          gh release download "qimen-android-run${{ inputs.run }}" --repo lawrence124875/qimen-content \
+            --pattern '*_play.aab' --dir dist
+          ls dist
+          f=$(ls dist/*_play.aab | grep -v wear | head -1)
+          echo "AAB=$f" >> "$GITHUB_ENV"
+
+      - name: 上傳（一次上傳，指派到各測試軌）
+        env:
+          SA: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          TRACKS: ${{ inputs.tracks }}
+          STATUS: ${{ inputs.status }}
+        run: |
+          if [ -z "$SA" ]; then echo "::error::Secret PLAY_SERVICE_ACCOUNT_JSON 沒有設定"; exit 1; fi
+          pip install -q google-api-python-client google-auth
+          python3 tools/store/play_upload.py "$AAB"
