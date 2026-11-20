@@ -14,7 +14,8 @@ dependencies:
     sdk: flutter
   intl: any # 版本由 flutter_localizations 決定
   lunar: ^1.7.8 # 節氣與干支（6tail，純 Dart；包在 lib/engine/calendar_service.dart）
-  flutter_compass: ^0.8.1 # 羅盤方位角（lib/compass/）
+  flutter_compass: # 羅盤方位角（lib/compass/）；本地修改版，見 packages/flutter_compass
+    path: packages/flutter_compass
   sensors_plus: ^7.1.1 # 磁力計（干擾偵測）、加速度計（平放提示）
   geomag: ^0.3.0 # WMM 2025 磁偏角（真北）
   geolocator: ^14.0.0 # 真北取概略位置；地圖八門取目前位置

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show HapticFeedback;
 import 'package:flutter_compass/flutter_compass.dart';
@@ -96,8 +97,12 @@ class _CompassPageState extends State<CompassPage> {
         });
       }, onError: (_) => setState(() => _noSensor = true)));
     }
-    _subs.add(magnetometerEventStream(samplingPeriod: SensorInterval.uiInterval)
-        .listen((e) => _field.add(e.x, e.y, e.z), onError: (_) {}));
+    // iOS 的磁力計是未校正原始值（含機身與 MagSafe 磁鐵偏差，常達數百 μT），不能拿來判斷干擾；
+    // iOS 只靠系統羅盤的精度（headingAccuracy）提示校正。
+    if (defaultTargetPlatform != TargetPlatform.iOS) {
+      _subs.add(magnetometerEventStream(samplingPeriod: SensorInterval.uiInterval)
+          .listen((e) => _field.add(e.x, e.y, e.z), onError: (_) {}));
+    }
     _subs.add(gyroscopeEventStream(samplingPeriod: SensorInterval.gameInterval)
         .listen((e) => _gyro.update(e.z, DateTime.now()), onError: (_) {}));
     _subs.add(accelerometerEventStream(samplingPeriod: SensorInterval.uiInterval)
