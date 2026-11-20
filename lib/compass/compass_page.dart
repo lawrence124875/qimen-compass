@@ -202,7 +202,7 @@ class _CompassPageState extends State<CompassPage> {
       body: SafeArea(
         child: LayoutBuilder(builder: (context, box) {
           final wide = box.maxWidth > box.maxHeight && box.maxWidth > 600;
-          final dial = _Dial(chart: chart, heading: heading ?? 0, target: _target, live: heading != null);
+          final dial = _Dial(chart: chart, heading: heading ?? 0, target: _target, targetPalace: _palaceTarget, live: heading != null);
           final panel = _panel(context, heading, chart);
           if (wide) {
             return Row(children: [
@@ -439,11 +439,14 @@ String _dirLabel(AppLocalizations l, int palace) => switch (palace) {
 
 /// 羅盤盤面：八宮扇形依 [heading] 反向旋轉；上方固定指針。
 class _Dial extends StatelessWidget {
-  const _Dial({required this.chart, required this.heading, required this.target, required this.live});
+  const _Dial({required this.chart, required this.heading, required this.target, this.targetPalace, required this.live});
 
   final QimenChart chart;
   final double heading;
   final Door? target;
+
+  /// 要找的宮（本命吉方）；與 [target] 擇一。
+  final int? targetPalace;
   final bool live;
 
   @override
@@ -457,6 +460,7 @@ class _Dial extends StatelessWidget {
           chart: chart,
           heading: heading,
           target: target,
+          targetPalace: targetPalace,
           qm: context.qm,
           line: theme.colorScheme.outline,
           text: theme.colorScheme.onSurface,
@@ -474,6 +478,7 @@ class _DialPainter extends CustomPainter {
     required this.chart,
     required this.heading,
     required this.target,
+    this.targetPalace,
     required this.qm,
     required this.line,
     required this.text,
@@ -485,6 +490,7 @@ class _DialPainter extends CustomPainter {
   final QimenChart chart;
   final double heading;
   final Door? target;
+  final int? targetPalace;
   final QmPalette qm;
   final Color line, text, accent;
   final Map<int, String> dirs;
@@ -497,6 +503,9 @@ class _DialPainter extends CustomPainter {
     final c = size.center(Offset.zero);
     final r = size.shortestSide / 2 - 14;
     final inner = r * 0.34;
+    // 目標宮與是否已對準（±10°）：對準時目標扇形與中央改成吉色實心色塊。
+    final tp = target != null ? chart.palaceOfDoor(target!) : targetPalace;
+    final aligned = live && tp != null && turnDelta(heading, palaceBearing[tp]!).abs() <= 10;
 
     canvas.save();
     canvas.translate(c.dx, c.dy);
@@ -512,8 +521,9 @@ class _DialPainter extends CustomPainter {
       final color = qm.luck(door.luck);
       final start = _rad(e.value - 22.5 - 90);
       final sweep = _rad(45);
-      final isTarget = door == target;
-      final fill = Paint()..color = color.withValues(alpha: isTarget ? 0.45 : 0.16);
+      final isTarget = e.key == tp;
+      final fill = Paint()
+        ..color = isTarget && aligned ? qm.good.withValues(alpha: 0.8) : color.withValues(alpha: isTarget ? 0.45 : 0.16);
       final path = Path()
         ..arcTo(Rect.fromCircle(center: Offset.zero, radius: r), start, sweep, true)
         ..arcTo(Rect.fromCircle(center: Offset.zero, radius: inner), start + sweep, -sweep, false)
@@ -525,8 +535,8 @@ class _DialPainter extends CustomPainter {
             path,
             Paint()
               ..style = PaintingStyle.stroke
-              ..color = color
-              ..strokeWidth = 3);
+              ..color = aligned ? qm.good : color
+              ..strokeWidth = aligned ? 5 : 3);
       }
 
       // 文字沿半徑排列，字頭朝外。
@@ -542,7 +552,7 @@ class _DialPainter extends CustomPainter {
     canvas.restore();
 
     // 中央與固定指針
-    canvas.drawCircle(c, inner, Paint()..color = accent.withValues(alpha: 0.08));
+    canvas.drawCircle(c, inner, Paint()..color = aligned ? qm.good.withValues(alpha: 0.35) : accent.withValues(alpha: 0.08));
     final pointer = Path()
       ..moveTo(c.dx, c.dy - r - 12)
       ..lineTo(c.dx - 9, c.dy - r + 8)
@@ -570,5 +580,5 @@ class _DialPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_DialPainter old) =>
-      old.heading != heading || old.chart != chart || old.target != target || old.qm != qm || old.live != live;
+      old.heading != heading || old.chart != chart || old.target != target || old.targetPalace != targetPalace || old.qm != qm || old.live != live;
 }
