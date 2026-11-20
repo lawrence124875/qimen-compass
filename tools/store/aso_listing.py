@@ -95,7 +95,7 @@ full="""奇门罗盘是把奇门遁甲排盘叠在真实方位上的风水罗盘
 L["en"] = dict(play="en-US",
 title="Qimen Compass: Feng Shui, QMDJ",
 short="Qi Men Dun Jia feng shui compass: lucky directions, auspicious dates, almanac.",
-full="""Qimen Compass is a feng shui compass that lays a Qi Men Dun Jia (QMDJ) chart, the classic Chinese art of timing and direction, over the real directions around you. Open the compass and the Eight Gates turn with your phone, so you see at a glance where the Open, Rest and Life gates are right now. With the map, auspicious date selection, the daily Chinese almanac and lucky-hour reminders, use Qi Men Dun Jia for travel, moving house, signing, opening a business and home feng shui.
+full="""Qimen Compass is a feng shui compass that lays a Qi Men Dun Jia (QMDJ) chart, the classic Chinese art of timing and direction, over the real directions around you. Open the compass and the Eight Gates turn with your phone, so you see at a glance where the Open, Rest and Life gates are right now. Use it for travel, moving house, signing, opening a business and home feng shui.
 
 COMPASS & MAP: FIND LUCKY DIRECTIONS
 • Qimen compass: the chart aligns with real directions and shows which gate lies ahead and how favorable it is. Magnetic or true north, interference detection, and an indoor lock that keeps the direction steady.
@@ -271,7 +271,7 @@ Nội dung ứng dụng là tham khảo văn hóa thuật số truyền thống,
 L["es"] = dict(play="es-419",
 title="Brújula Qimen: Feng Shui, QMDJ",
 short="Brújula feng shui Qi Men Dun Jia: direcciones y horas propicias, fechas, hogar.",
-full="""Brújula Qimen es una brújula feng shui que coloca la carta de Qi Men Dun Jia (QMDJ) sobre las direcciones reales a tu alrededor. Abre la brújula y las Ocho Puertas giran con tu teléfono: verás al instante dónde están ahora la Puerta de la Apertura, la del Descanso y la de la Vida. Con el mapa, la elección de fechas propicias, el almanaque chino diario y los avisos de horas favorables, usa Qi Men Dun Jia para viajar, mudarte, firmar, abrir un negocio y el feng shui de tu casa.
+full="""Brújula Qimen es una brújula feng shui que coloca la carta de Qi Men Dun Jia (QMDJ) sobre las direcciones reales a tu alrededor. Abre la brújula y las Ocho Puertas giran con tu teléfono: verás al instante dónde están ahora la Puerta de la Apertura, la del Descanso y la de la Vida. Úsala para viajar, mudarte, firmar, abrir un negocio y el feng shui de tu casa.
 
 BRÚJULA Y MAPA: DIRECCIONES PROPICIAS AL INSTANTE
 • Brújula Qimen: la carta se alinea con las direcciones reales y muestra qué puerta tienes delante y si es favorable. Norte magnético o verdadero, detección de interferencias y bloqueo en interiores.
@@ -315,7 +315,7 @@ El contenido es una referencia a la metafísica tradicional china y no constituy
 L["pt-BR"] = dict(play="pt-BR",
 title="Bússola Qimen: Feng Shui, QMDJ",
 short="Bússola feng shui Qi Men Dun Jia: direções e horários favoráveis, datas, casa.",
-full="""Bússola Qimen é uma bússola feng shui que coloca o mapa de Qi Men Dun Jia (QMDJ), a arte chinesa clássica do tempo e da direção, sobre as direções reais ao seu redor. Abra a bússola e os Oito Portões giram com o seu celular: veja na hora onde estão agora o Portão da Abertura, o do Descanso e o da Vida. Com o mapa, a escolha de datas favoráveis, o almanaque chinês diário e os avisos de horários favoráveis, use Qi Men Dun Jia para viajar, mudar de casa, assinar, abrir um negócio e no feng shui da sua casa.
+full="""Bússola Qimen é uma bússola feng shui que coloca o mapa de Qi Men Dun Jia (QMDJ), a arte chinesa clássica do tempo e da direção, sobre as direções reais ao seu redor. Abra a bússola e os Oito Portões giram com o seu celular: veja na hora onde estão agora o Portão da Abertura, o do Descanso e o da Vida. Use-a para viajar, mudar de casa, assinar, abrir um negócio e no feng shui da sua casa.
 
 BÚSSOLA E MAPA: DIREÇÕES FAVORÁVEIS NA HORA
 • Bússola Qimen: o mapa se alinha às direções reais e mostra qual portão está à sua frente e se é favorável. Norte magnético ou verdadeiro, detecção de interferência e trava para ambientes internos.
@@ -359,7 +359,7 @@ O conteúdo é uma referência à metafísica tradicional chinesa e não constit
 L["id"] = dict(play="id",
 title="Kompas Qimen: Feng Shui, QMDJ",
 short="Kompas feng shui Qi Men Dun Jia: arah hoki, hari dan jam baik, almanak, rumah.",
-full="""Kompas Qimen adalah kompas feng shui yang menempatkan bagan Qi Men Dun Jia (QMDJ), seni klasik Tionghoa tentang waktu dan arah, di atas arah nyata di sekitar Anda. Buka kompas dan Delapan Gerbang berputar mengikuti ponsel, sehingga Anda langsung tahu di mana Gerbang Pembukaan, Gerbang Istirahat dan Gerbang Kehidupan saat ini. Dengan peta, pemilihan hari baik, almanak Tionghoa harian dan pengingat jam baik, gunakan Qi Men Dun Jia untuk bepergian, pindah rumah, tanda tangan kontrak, membuka usaha dan feng shui rumah.
+full="""Kompas Qimen adalah kompas feng shui yang menempatkan bagan Qi Men Dun Jia (QMDJ), seni klasik Tionghoa tentang waktu dan arah, di atas arah nyata di sekitar Anda. Buka kompas dan Delapan Gerbang berputar mengikuti ponsel, sehingga Anda langsung tahu di mana Gerbang Pembukaan, Gerbang Istirahat dan Gerbang Kehidupan saat ini. Gunakan untuk bepergian, pindah rumah, tanda tangan kontrak, membuka usaha dan feng shui rumah.
 
 KOMPAS DAN PETA: CARI ARAH HOKI SEKETIKA
 • Kompas Qimen: bagan sejajar dengan arah nyata dan menunjukkan gerbang di depan Anda serta baik buruknya. Utara magnetik atau sejati, deteksi gangguan magnet, dan kunci arah di dalam ruangan.
@@ -533,6 +533,26 @@ for lang, (watch, alert, family) in ADD13.items():
     sec[4] = "\n".join(lines[:3] + [family] + lines[3:])
     L[lang]["full"] = "\n\n".join(sec)
 
+# 本命串接（2026-11-20，#30）：本命盤段「本命報告與大運」之後
+NATAL2 = {
+ "zh-Hant": "• 本命串接：羅盤直接標出你的本命吉方；宅盤看每宮與你是否相合、最適合你的房間與座位；擇時依本命加分；交節前 3 天推播流年流月關鍵期，附最佳時辰與方位。",
+ "zh-Hans": "• 本命串接：罗盘直接标出你的本命吉方；宅盘看每宫与你是否相合、最适合你的房间与座位；择时依本命加分；交节前 3 天推送流年流月关键期，附最佳时辰与方位。",
+ "en": "• Natal links: your lucky direction on the compass, top rooms and seats, natal timing, key period alerts.",
+ "ja": "• 本命の連動：羅盤に本命の吉方位を表示、宅盤で各宮との相性と最適な部屋・席、択時は本命で加点、節入り 3 日前に年運・月運の重要期を最良の時刻・方位付きで通知。",
+ "ko": "• 본명 연동: 나침반에 본명 길방 표시, 택반에서 궁별 궁합과 나에게 맞는 방·자리, 택시는 본명으로 가점, 절입 3일 전 연운·월운 중요 시기를 최적의 시간·방위와 함께 알림.",
+ "vi": "• Kết nối bản mệnh: la bàn đánh dấu hướng tốt của bạn, bàn nhà chỉ phòng và chỗ ngồi hợp với bạn, chọn giờ theo bản mệnh, nhắc giai đoạn quan trọng trước 3 ngày kèm giờ và hướng tốt nhất.",
+ "es": "• Carta natal en todo: tu dirección en la brújula, mejores cuartos y asientos, horarios y avisos de periodos clave.",
+ "pt-BR": "• Mapa natal em tudo: sua direção na bússola, melhores cômodos e assentos, horários pessoais e avisos de períodos-chave.",
+ "id": "• Bagan natal terhubung: arah baikmu di kompas, ruang dan kursi terbaik, waktu personal, dan pengingat periode penting.",
+ "th": "• เชื่อมกับดวงกำเนิด: เข็มทิศแสดงทิศมงคลประจำตัว ผังบ้านบอกห้องและที่นั่งที่เหมาะกับคุณ เลือกเวลาโดยถ่วงตามดวงกำเนิด และแจ้งเตือนช่วงสำคัญล่วงหน้า 3 วันก่อนเปลี่ยนสารท พร้อมเวลาและทิศที่ดีที่สุด",
+ "ar": "• ربط مخطط الميلاد: اتجاهك الميمون على البوصلة، وأفضل الغرف والمقاعد لك في مخطط المنزل، وتوقيت مرجّح بمخطط ميلادك، وتنبيهات قبل الفترات المهمة بثلاثة أيام مع أفضل ساعة واتجاه.",
+}
+for lang, b in NATAL2.items():
+    sec = L[lang]["full"].split("\n\n")
+    lines = sec[4].split("\n")
+    sec[4] = "\n".join(lines[:3] + [b] + lines[3:])
+    L[lang]["full"] = "\n\n".join(sec)
+
 L["es-ES"] = dict(L["es"], play="es-ES")
 L["es-US"] = dict(L["es"], play="es-US")
 pt = {"celular": "telemóvel", "na tela inicial": "no ecrã principal", "Widget na tela inicial": "Widget no ecrã principal",
@@ -551,7 +571,7 @@ for k, v in L.items():
     for w in ("占卜", "算命", "divination", "fortune-telling", "best ", "#1"):
         if w in v["title"] + v["short"] + v["full"]: bad.append(f"{k} 含 {w}")
 if bad: raise SystemExit("\n".join(bad))
-out = {"_note": "Play 商店資訊（14 語，ASO 版 2026-11-19，1.3.0＋擇時 18 情境、多國地址、本命報告與大運，由 tools/store/aso_listing.py 產生）。title ≤30、short ≤80、full ≤4000。play = Play Console 語言代碼。"}
+out = {"_note": "Play 商店資訊（14 語，ASO 版 2026-11-19，1.3.0＋擇時 18 情境、多國地址、本命報告與大運、本命串接，由 tools/store/aso_listing.py 產生）。title ≤30、short ≤80、full ≤4000。play = Play Console 語言代碼。"}
 out.update(L)
 p = pathlib.Path(__file__).resolve().parents[2] / "store/listing.json"
 p.write_text(json.dumps(out, ensure_ascii=False, indent=1) + "\n")
