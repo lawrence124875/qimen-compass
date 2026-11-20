@@ -31,6 +31,7 @@ full="""奇門羅盤是把奇門遁甲排盤疊在真實方位上的風水羅盤
 
 【本命盤與問事】
 • 本命盤：依生日起局，看年命宮、流年流月與個人吉時吉方。
+• 本命報告與大運：依本命盤寫成個人報告，並推算十年一運的大運落宮，看人生各階段的起伏；免費看摘要，訂閱看全文。
 • 雙人合盤：看伴侶、合夥人的契合度。
 • 奇門問事：事業、感情、財運、考試、失物、尋人、尋寵物等，依用神與格局解讀。
 
@@ -74,6 +75,7 @@ full="""奇门罗盘是把奇门遁甲排盘叠在真实方位上的风水罗盘
 
 【本命盘与问事】
 • 本命盘：依生日起局，看年命宫、流年流月与个人吉时吉方。
+• 本命报告与大运：依本命盘写成个人报告，并推算十年一运的大运落宫，看人生各阶段的起伏；免费看摘要，订阅看全文。
 • 双人合盘：看伴侣、合伙人的契合度。
 • 奇门问事：事业、感情、财运、考试、失物、寻人、寻宠物等，依用神与格局解读。
 
@@ -106,17 +108,18 @@ AUSPICIOUS DATES & ALMANAC
 • Daily Qimen almanac: today's lucky hours and directions, shareable as an image card.
 • Today’s lucky colors: daily outfit colors from the day’s five elements; subscribers get personal colors from their birth year.
 • Best time to send: résumés, emails, texts, confessions, payment reminders and proposals — see which of the next few hours flows best.
-• Meditation and business hours: pick a good time and direction to meditate; shops get a weekly timetable for opening, promotions and live streams.
+• Meditation and business hours: a good time and direction to meditate; a weekly timetable for shops.
 • Lucky-hour notifications and a daily morning reminder.
 
 FENG SHUI FOR HOME, OFFICE & SHOP
 • House chart (Nine Palaces): measure from the center, photograph or draw your floor plan, and map the nine palaces and Eight Gates onto every room, with a reading for each.
 • Bed and desk facing: find good directions from this year's chart.
-• Lucky items and remedies: what to place in each direction and which colors, from each palace’s element and gate — with remedies when a spot isn’t ideal. Negotiation seat shows where to sit and face in a meeting.
+• Lucky items and remedies: what to place in each direction and which colors, from each palace’s element and gate — with remedies when a spot isn’t ideal. Includes a negotiation seat.
 • Moving and travel direction: compare a destination for this year, next year and every month.
 
 PERSONAL CHARTS & QUESTIONS
 • Natal Qimen chart from your birthday: life palace, yearly and monthly fortune, your own lucky hours and directions.
+• Natal report and 10-year luck cycles: a personal reading of your chart and where each decade’s luck falls.
 • Compatibility chart for partners and business partners.
 • Ask Qimen: career, love, wealth, exams, lost items, missing people and pets, read from the useful god and chart patterns.
 
@@ -160,6 +163,7 @@ full="""奇門羅盤は、奇門遁甲の盤を身の回りの実際の方位に
 
 【本命盤と問事】
 • 本命盤：生年月日から年命宮、年運・月運、自分の吉時・吉方位。
+• 本命レポートと大運：本命盤を個人レポートにまとめ、10 年ごとの大運の落宮から人生の流れを読む。無料は要約、購読で全文。
 • 相性盤：パートナーやビジネスパートナーとの相性。
 • 奇門問事：仕事、恋愛、金運、試験、失せ物、尋ね人、ペット探しなどを用神と格局から読み解きます。
 
@@ -203,6 +207,7 @@ full="""기문나침반은 기문둔갑 국을 내 주변의 실제 방위에 �
 
 【본명반과 문사】
 • 본명반: 생년월일로 연명궁, 연운·월운, 나의 길시·길방.
+• 본명 리포트와 대운: 본명반을 개인 리포트로 정리하고, 10년 단위 대운이 드는 궁으로 인생의 흐름을 봄. 무료는 요약, 구독 시 전문.
 • 궁합반: 연인, 동업자와의 궁합.
 • 기문 문사: 직업, 연애, 재물, 시험, 분실물, 사람 찾기, 반려동물 찾기를 용신과 격국으로 풀이.
 
@@ -246,6 +251,7 @@ PHONG THỦY NHÀ Ở, VĂN PHÒNG, CỬA HÀNG
 
 LÁ SỐ CÁ NHÂN VÀ HỎI VIỆC
 • Lá số bản mệnh theo ngày sinh: cung bản mệnh, vận năm, vận tháng, giờ tốt và hướng tốt của riêng bạn.
+• Báo cáo bản mệnh và đại vận: bài đọc cá nhân từ bàn bản mệnh và đại vận mỗi 10 năm rơi vào cung nào.
 • Hợp lá số hai người: người yêu, đối tác.
 • Hỏi việc Kỳ Môn: sự nghiệp, tình cảm, tài lộc, thi cử, đồ thất lạc, tìm người, tìm thú cưng, luận theo dụng thần và cách cục.
 
@@ -278,17 +284,18 @@ FECHAS PROPICIAS Y ALMANAQUE
 • Almanaque Qimen diario: horas y direcciones favorables del día, para compartir como tarjeta.
 • Colores de la suerte del día: colores para vestir según los cinco elementos del día; los suscriptores ven sus colores personales por año de nacimiento.
 • Momento para enviar: currículums, correos, declaraciones, propuestas; mira qué franja de las próximas horas fluye mejor.
-• Meditación y horario comercial: elige hora y dirección para meditar; los negocios tienen una tabla semanal para abrir, promociones y directos.
+• Meditación y horario comercial: hora y dirección para meditar; tabla semanal para negocios.
 • Avisos de horas favorables y recordatorio cada mañana.
 
 FENG SHUI PARA CASA, OFICINA Y TIENDA
 • Carta de la casa (Nueve Palacios): mide desde el centro, fotografía o dibuja el plano y asigna los nueve palacios y las Ocho Puertas a cada habitación, con su lectura.
 • Orientación de cama y escritorio: buenas direcciones según la carta de este año.
-• Objetos de la suerte y remedios: qué poner en cada dirección y en qué colores, según el elemento y la puerta de cada palacio, con remedios cuando el lugar no es ideal. El asiento de negociación indica dónde sentarte y hacia dónde mirar.
+• Objetos de la suerte y remedios: qué poner en cada dirección y en qué colores, según el elemento y la puerta de cada palacio, con remedios cuando el lugar no es ideal. Incluye asiento de negociación.
 • Dirección de mudanza y viaje: compara un destino este año, el próximo y cada mes.
 
 CARTAS PERSONALES Y PREGUNTAS
 • Carta natal Qimen según tu cumpleaños: palacio de vida, suerte anual y mensual, tus horas y direcciones favorables.
+• Informe natal y ciclos de 10 años: tu lectura personal y la suerte de cada década.
 • Carta de compatibilidad para pareja y socios.
 • Pregunta a Qimen: trabajo, amor, dinero, exámenes, objetos perdidos, personas y mascotas perdidas, leídos según el dios útil y los patrones.
 
@@ -321,17 +328,18 @@ DATAS FAVORÁVEIS E ALMANAQUE
 • Almanaque Qimen diário: horários e direções favoráveis do dia, para compartilhar como cartão.
 • Cores da sorte do dia: cores para vestir pelos cinco elementos do dia; assinantes veem cores pessoais pelo ano de nascimento.
 • Hora de enviar: currículos, e-mails, declarações, propostas; veja qual faixa das próximas horas flui melhor.
-• Meditação e horário comercial: escolha hora e direção para meditar; lojas têm uma tabela semanal para abrir, promoções e lives.
+• Meditação e horário comercial: hora e direção para meditar; tabela semanal para lojas.
 • Avisos de horários favoráveis e lembrete toda manhã.
 
 FENG SHUI PARA CASA, ESCRITÓRIO E LOJA
 • Mapa da casa (Nove Palácios): meça a partir do centro, fotografe ou desenhe a planta e associe os nove palácios e os Oito Portões a cada cômodo, com a leitura de cada um.
 • Direção da cama e da mesa: boas direções pelo mapa deste ano.
-• Objetos da sorte e soluções: o que colocar em cada direção e em que cores, pelo elemento e portão de cada palácio, com soluções quando o lugar não é ideal. O assento de negociação mostra onde sentar e para onde olhar.
+• Objetos da sorte e soluções: o que colocar em cada direção e em que cores, pelo elemento e portão de cada palácio, com soluções quando o lugar não é ideal. Inclui assento de negociação.
 • Direção de mudança e viagem: compare um destino neste ano, no próximo e em cada mês.
 
 MAPAS PESSOAIS E PERGUNTAS
 • Mapa natal Qimen pelo seu aniversário: palácio de vida, sorte anual e mensal, seus horários e direções favoráveis.
+• Relatório natal e ciclos de 10 anos: sua leitura pessoal e a sorte de cada década.
 • Mapa de compatibilidade para casal e sócios.
 • Pergunte ao Qimen: carreira, amor, dinheiro, provas, objetos perdidos, pessoas e animais desaparecidos, lidos pelo deus útil e pelos padrões.
 
@@ -364,17 +372,18 @@ HARI BAIK DAN ALMANAK
 • Almanak Qimen harian: jam dan arah baik hari ini, bisa dibagikan sebagai kartu gambar.
 • Warna hoki hari ini: warna pakaian dari lima unsur hari itu; pelanggan mendapat warna pribadi sesuai tahun lahir.
 • Waktu kirim pesan: lamaran, email, pernyataan cinta, proposal — lihat jam terbaik dalam beberapa jam ke depan.
-• Meditasi dan jam usaha: pilih waktu dan arah baik untuk meditasi; toko mendapat jadwal mingguan untuk buka, promo, dan siaran langsung.
+• Meditasi dan jam usaha: waktu dan arah baik untuk meditasi; jadwal mingguan untuk toko.
 • Notifikasi jam baik dan pengingat setiap pagi.
 
 FENG SHUI RUMAH, KANTOR DAN TOKO
 • Bagan rumah (Sembilan Istana): ukur dari titik tengah, foto atau gambar denah, lalu petakan sembilan istana dan Delapan Gerbang ke setiap ruangan, lengkap dengan bacaannya.
 • Arah tempat tidur dan meja: cari arah baik dari bagan tahun ini.
-• Benda keberuntungan & penyeimbang: saran benda dan warna untuk tiap arah dari unsur dan gerbang tiap istana, plus penyeimbang saat posisi kurang baik. Kursi negosiasi menunjukkan tempat duduk dan arah saat rapat.
+• Benda keberuntungan & penyeimbang: saran benda dan warna untuk tiap arah dari unsur dan gerbang tiap istana, plus penyeimbang saat posisi kurang baik. Termasuk kursi negosiasi.
 • Arah pindahan dan perjalanan: bandingkan tujuan untuk tahun ini, tahun depan dan setiap bulan.
 
 BAGAN PRIBADI DAN PERTANYAAN
 • Bagan kelahiran Qimen dari tanggal lahir: istana kehidupan, peruntungan tahunan dan bulanan, jam serta arah baik pribadi.
+• Laporan natal dan siklus 10 tahun: bacaan pribadi bagan Anda dan nasib tiap dekade.
 • Bagan kecocokan untuk pasangan dan mitra usaha.
 • Tanya Qimen: karier, cinta, keuangan, ujian, barang hilang, orang hilang dan hewan peliharaan, dibaca dari dewa berguna dan pola bagan.
 
@@ -418,6 +427,7 @@ full="""เข็มทิศฉีเหมินคือเข็มทิศ
 
 ผังดวงส่วนตัวและการถามเรื่อง
 • ผังดวงกำเนิดจากวันเกิด: วังชะตา ดวงรายปีและรายเดือน ยามและทิศมงคลเฉพาะตัว
+• รายงานดวงกำเนิดและวัฏจักรสิบปี: สรุปผังดวงเป็นรายงานส่วนตัว และดูว่าโชคแต่ละทศวรรษตกวังใด
 • ผังความเข้ากันสำหรับคู่รักและหุ้นส่วน
 • ถามฉีเหมิน: การงาน ความรัก การเงิน การสอบ ของหาย ตามหาคน และสัตว์เลี้ยง อ่านจากหย่งเสินและรูปแบบผัง
 
@@ -461,6 +471,7 @@ full="""بوصلة تشيمن هي بوصلة فنغ شوي تضع مخطط تش
 
 المخططات الشخصية والأسئلة
 • مخطط الميلاد من تاريخ ميلادك: قصر العمر، وحظ السنة والشهر، وأوقاتك واتجاهاتك المناسبة.
+• تقرير الميلاد ودورات الحظ العشرية: قراءة شخصية لمخططك وأين يقع حظ كل عقد.
 • مخطط التوافق للشريك وشركاء العمل.
 • اسأل تشيمن: العمل والحب والمال والامتحانات والأشياء المفقودة والأشخاص والحيوانات الأليفة المفقودة، وفق الإله المفيد وأنماط المخطط.
 
@@ -540,7 +551,7 @@ for k, v in L.items():
     for w in ("占卜", "算命", "divination", "fortune-telling", "best ", "#1"):
         if w in v["title"] + v["short"] + v["full"]: bad.append(f"{k} 含 {w}")
 if bad: raise SystemExit("\n".join(bad))
-out = {"_note": "Play 商店資訊（14 語，ASO 版 2026-11-19，1.3.0＋擇時 18 情境、多國地址，由 tools/store/aso_listing.py 產生）。title ≤30、short ≤80、full ≤4000。play = Play Console 語言代碼。"}
+out = {"_note": "Play 商店資訊（14 語，ASO 版 2026-11-19，1.3.0＋擇時 18 情境、多國地址、本命報告與大運，由 tools/store/aso_listing.py 產生）。title ≤30、short ≤80、full ≤4000。play = Play Console 語言代碼。"}
 out.update(L)
 p = pathlib.Path(__file__).resolve().parents[2] / "store/listing.json"
 p.write_text(json.dumps(out, ensure_ascii=False, indent=1) + "\n")
