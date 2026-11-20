@@ -18,10 +18,14 @@ class CompassEvent {
   // or less than the value here.
   final double? accuracy;
 
+  // 奇門羅盤修改：iOS 已校正磁場強度（μT）；Android 或未校正時為 null。
+  final double? magneticField;
+
   CompassEvent.fromList(List<double>? data)
       : heading = data?[0] ?? null,
         headingForCameraMode = data?[1] ?? null,
-        accuracy = (data == null) || (data[2] == -1) ? null : data[2];
+        accuracy = (data == null) || (data[2] == -1) ? null : data[2],
+        magneticField = (data == null) || data.length < 4 || data[3] < 0 ? null : data[3];
 
   @override
   String toString() {

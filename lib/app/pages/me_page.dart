@@ -6,6 +6,7 @@ import '../../features/course/course_page.dart';
 import '../../features/house/facing_page.dart';
 import '../../features/house/house_page.dart';
 import '../../features/map/move_page.dart';
+import '../../features/personal/profile.dart';
 import '../../features/records/record_list_page.dart';
 import '../../features/widget/widget_settings_page.dart';
 import '../../l10n/l10n.dart';
@@ -14,7 +15,7 @@ import '../services.dart';
 import '../theme/app_theme.dart';
 import 'settings_page.dart';
 
-/// 「我的」分頁：宅盤、朝向、搬家、紀錄、課程、設定。本命盤、合盤在「盤面」分頁。
+/// 「我的」分頁：生日、宅盤、朝向、搬家、紀錄、課程、設定。本命盤、合盤在「盤面」分頁。
 class MePage extends StatelessWidget {
   const MePage({super.key});
 
@@ -53,6 +54,7 @@ class MePage extends StatelessWidget {
       appBar: AppBar(title: Text(l.tabMe)),
       body: SafeArea(
         child: ListView(padding: const EdgeInsets.fromLTRB(12, 4, 12, 16), children: [
+          const _BirthTile(), // 生日（本命、個人運共用）：免費也能隨時修改
           if (s.featureEnabled('move'))
             tile(Icons.local_shipping_outlined, l.moveTitle, l.moveSub, () => openPeek(context, 'move', (locked) => MovePage(locked: locked))),
           if (s.featureEnabled('house'))
@@ -69,6 +71,46 @@ class MePage extends StatelessWidget {
                 () => open(context, (_) => const WidgetSettingsPage())),
           tile(Icons.settings_outlined, l.settingsTitle, l.meSettingsSub, () => open(context, (_) => const SettingsPage())),
         ]),
+      ),
+    );
+  }
+}
+
+/// 「我的」最上方的生日卡：顯示目前生日，點了直接修改。
+class _BirthTile extends StatefulWidget {
+  const _BirthTile();
+
+  @override
+  State<_BirthTile> createState() => _BirthTileState();
+}
+
+class _BirthTileState extends State<_BirthTile> {
+  Profile? _p;
+
+  @override
+  void initState() {
+    super.initState();
+    Profile.load().then((p) {
+      if (mounted) setState(() => _p = p);
+    });
+  }
+
+  static String _d(DateTime d) => '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final p = _p;
+    return Card(
+      child: ListTile(
+        leading: Icon(Icons.cake_outlined, color: context.qm.primary),
+        title: Text(p == null ? l.profileTitle : l.zeshiBirthSet(_d(p.birthDate))),
+        subtitle: p == null ? Text(l.profileNeedBirth.replaceAll('\n', ' ')) : null,
+        trailing: const Icon(Icons.edit_calendar_outlined),
+        onTap: () async {
+          final np = await editProfile(context, p);
+          if (np != null && mounted) setState(() => _p = np);
+        },
       ),
     );
   }

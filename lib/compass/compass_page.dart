@@ -93,12 +93,14 @@ class _CompassPageState extends State<CompassPage> {
         setState(() {
           _noSensor = false;
           _magHeading = smoothHeading(_magHeading, h);
+          final m = e.magneticField; // iOS：已校正磁場
+          if (m != null) _field.addStrength(m);
           _accuracyDeg = e.accuracy;
         });
       }, onError: (_) => setState(() => _noSensor = true)));
     }
-    // iOS 的磁力計是未校正原始值（含機身與 MagSafe 磁鐵偏差，常達數百 μT），不能拿來判斷干擾；
-    // iOS 只靠系統羅盤的精度（headingAccuracy）提示校正。
+    // iOS 的 sensors_plus 磁力計是未校正原始值（含機身與 MagSafe 偏差，常達數百 μT），不能拿來判斷干擾；
+    // iOS 改用羅盤事件附帶的已校正磁場（CompassEvent.magneticField）。
     if (defaultTargetPlatform != TargetPlatform.iOS) {
       _subs.add(magnetometerEventStream(samplingPeriod: SensorInterval.uiInterval)
           .listen((e) => _field.add(e.x, e.y, e.z), onError: (_) {}));

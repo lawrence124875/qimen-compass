@@ -76,8 +76,11 @@ class MagneticMonitor {
   /// 最近一筆磁場強度（μT）。
   double? get strength => _samples.isEmpty ? null : _samples.last;
 
-  void add(double x, double y, double z) {
-    _samples.add(math.sqrt(x * x + y * y + z * z));
+  void add(double x, double y, double z) => addStrength(math.sqrt(x * x + y * y + z * z));
+
+  /// 直接加入磁場強度（μT），iOS 用系統已校正的數值。
+  void addStrength(double s) {
+    _samples.add(s);
     if (_samples.length > window) _samples.removeAt(0);
   }
 

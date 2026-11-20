@@ -85,7 +85,12 @@ public class SwiftFlutterCompassPlugin: NSObject, FlutterPlugin, FlutterStreamHa
                 default:
                     headingForUI = trueHeading
             }
-            eventSink?([headingForUI, headingForCameraMode, newHeading.headingAccuracy]);
+            // 奇門羅盤修改：附上已校正磁場強度（μT，CMDeviceMotion 已扣除機身與 MagSafe 等固定偏差），未校正時給 -1
+            var fieldStrength = -1.0;
+            if let m = self.motion.deviceMotion?.magneticField, m.accuracy != .uncalibrated {
+                fieldStrength = sqrt(m.field.x * m.field.x + m.field.y * m.field.y + m.field.z * m.field.z);
+            }
+            eventSink?([headingForUI, headingForCameraMode, newHeading.headingAccuracy, fieldStrength]);
         }
     }
 }
