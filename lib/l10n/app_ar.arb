@@ -878,5 +878,20 @@
   "reportBasis": "خريطة الميلاد بالطبق الدوار الساعي (الطريقة حسب الإعدادات، الافتراضي Chai Bu)؛ الدورات وفق قواعد BaZi وعمر البدء من الميلاد إلى الفصل الشمسي.",
   "profileGender": "الجنس",
   "genderMale": "ذكر",
-  "genderFemale": "أنثى"
+  "genderFemale": "أنثى",
+  "compassNatal": "اتجاهاتك الميلادية",
+  "compassNatalHint": "اتجاهات خريطة ميلادك التي تدعمك، مرتبة حسب خريطة هذا العام",
+  "houseNatalBest": "أفضل الغرف / المقاعد لك",
+  "houseNatalBestHint": "وفق اتجاهاتك الميلادية وخريطة البيت الحالية",
+  "houseNatalFit": "يناسبك",
+  "houseNatalNoRoom": "لا توجد غرفة في هذا القصر بعد",
+  "zeshiFlagNatalFit": "اتجاه الإله النافع من اتجاهاتك الميلادية",
+  "natalAlertChannel": "فترات شخصية مهمة",
+  "natalAlertTitleGood": "فترة مواتية من {term}",
+  "natalAlertTitleBad": "انتبه من {term}",
+  "natalAlertGood": "قصر سنتك {level} هذا الشهر: تقدّم",
+  "natalAlertBad": "قصر سنتك {level} هذا الشهر: تريّث واستعد",
+  "natalAlertBest": "توقيت أفضل: {when} نحو {dir}",
+  "natalAlertNoHour": "لا ساعات مميزة في الأسبوع الأول؛ أجّل الخطوات الكبيرة",
+  "natalAlertYear": "عام {year}: {level}"
 }

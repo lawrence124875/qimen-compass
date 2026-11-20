@@ -94,6 +94,7 @@ enum ZeShiFlag {
   feiNiao, // 飛鳥跌穴（天盤丙加地盤戊）
   goodStar, // 天輔、天禽、天心同宮
   sanDun, // 天遁、地遁、人遁
+  natalFit, // 用神宮是本命吉方（[BirthInfo.natalPalaces]）
   mingJi, // 年命宮逢吉門
   // 扣分
   qiuSi, // 用神門受宮剋（囚死）
@@ -112,7 +113,7 @@ enum ZeShiFlag {
 
 /// 使用者生辰（選填）：年命（出生年干支）與日干。
 class BirthInfo {
-  const BirthInfo({required this.year, required this.day});
+  const BirthInfo({required this.year, required this.day, this.natalPalaces = const {}});
 
   /// 由出生時刻推出年柱（依立春）與日柱。
   factory BirthInfo.fromInstant(DateTime birth, {TimeSettings settings = const TimeSettings()}) {
@@ -122,6 +123,11 @@ class BirthInfo {
 
   final GanZhi year;
   final GanZhi day;
+
+  /// 本命吉方的宮（`natalFavoredPalaces`）；擇時用神宮落在這裡加分。空＝不計。
+  final Set<int> natalPalaces;
+
+  BirthInfo withNatal(Iterable<int> palaces) => BirthInfo(year: year, day: day, natalPalaces: palaces.toSet());
 
   /// 年命在盤上取的天干：年干，甲年取所在旬遁藏的六儀。
   int get yearStem => year.stem == 0 ? xunHiddenStem[year.xunBranch]! : year.stem;
@@ -336,6 +342,7 @@ class ZeShiPlanner {
           if (!plus.contains(ZeShiFlag.mingJi)) plus.add(ZeShiFlag.mingJi);
         }
       }
+      if (birth.natalPalaces.contains(palace)) plus.add(ZeShiFlag.natalFit);
     }
     return (4 + plus.length - minus.length, [...plus, ...minus]);
   }

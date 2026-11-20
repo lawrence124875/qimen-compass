@@ -878,5 +878,20 @@
   "reportBasis": "本命盘以时家转盘起局（定局法依设置，预设拆补法）；大运借子平八字大运，起运岁依出生到节气的时间计算。",
   "profileGender": "性别",
   "genderMale": "男",
-  "genderFemale": "女"
+  "genderFemale": "女",
+  "compassNatal": "本命吉方",
+  "compassNatalHint": "本命盘里生扶你的方位，依今年年盘排序",
+  "houseNatalBest": "最适合你的房间／座位",
+  "houseNatalBestHint": "依你的本命吉方，配合目前宅盘吉凶",
+  "houseNatalFit": "与你相合",
+  "houseNatalNoRoom": "这一宫还没标房间",
+  "zeshiFlagNatalFit": "用神方位是你的本命吉方",
+  "natalAlertChannel": "本命关键期",
+  "natalAlertTitleGood": "{term}起进入吉期",
+  "natalAlertTitleBad": "{term}起留意运势",
+  "natalAlertGood": "这个月你的年命宫{level}，宜主动推进",
+  "natalAlertBad": "这个月你的年命宫{level}，宜守不宜攻、多做准备",
+  "natalAlertBest": "较佳时机：{when}，往{dir}",
+  "natalAlertNoHour": "第一周没有特别有利的时辰，重要事可延后",
+  "natalAlertYear": "{year} 流年：{level}"
 }

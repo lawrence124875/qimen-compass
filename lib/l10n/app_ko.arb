@@ -878,5 +878,20 @@
   "reportBasis": "본명반은 시가 전반(정국법은 설정, 기본 탁보법), 대운은 사주 규칙, 기운 나이는 출생부터 절기까지의 시간으로 계산.",
   "profileGender": "성별",
   "genderMale": "남성",
-  "genderFemale": "여성"
+  "genderFemale": "여성",
+  "compassNatal": "본명 길방",
+  "compassNatalHint": "본명반에서 당신을 생하는 방위(올해 연반 순)",
+  "houseNatalBest": "당신에게 가장 좋은 방·자리",
+  "houseNatalBestHint": "본명 길방과 현재 택반 길흉 기준",
+  "houseNatalFit": "당신과 상합",
+  "houseNatalNoRoom": "이 궁에는 아직 방이 없어요",
+  "zeshiFlagNatalFit": "용신 방위가 본명 길방",
+  "natalAlertChannel": "본명 중요 시기",
+  "natalAlertTitleGood": "{term}부터 길한 시기",
+  "natalAlertTitleBad": "{term}부터 운세 주의",
+  "natalAlertGood": "이번 달 연명궁 {level}, 적극적으로 추진",
+  "natalAlertBad": "이번 달 연명궁 {level}, 지키며 준비",
+  "natalAlertBest": "좋은 때: {when}, {dir} 방향",
+  "natalAlertNoHour": "첫 주에 특별히 좋은 시간이 없어요. 큰일은 미루세요",
+  "natalAlertYear": "{year}년 운: {level}"
 }

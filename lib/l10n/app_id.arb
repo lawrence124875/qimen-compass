@@ -878,5 +878,20 @@
   "reportBasis": "Bagan kelahiran memakai pelat putar per jam (metode sesuai pengaturan, default Chai Bu); siklus mengikuti aturan BaZi, usia mulai dihitung dari lahir ke istilah surya.",
   "profileGender": "Gender",
   "genderMale": "Pria",
-  "genderFemale": "Wanita"
+  "genderFemale": "Wanita",
+  "compassNatal": "Arah Natal Anda",
+  "compassNatalHint": "Arah di bagan kelahiran yang mendukung Anda, diurutkan menurut bagan tahun ini",
+  "houseNatalBest": "Ruangan / kursi terbaik untuk Anda",
+  "houseNatalBestHint": "Dari arah natal Anda dan bagan rumah saat ini",
+  "houseNatalFit": "Cocok untuk Anda",
+  "houseNatalNoRoom": "Belum ada ruangan di istana ini",
+  "zeshiFlagNatalFit": "Arah dewa guna adalah arah natal Anda",
+  "natalAlertChannel": "Periode penting pribadi",
+  "natalAlertTitleGood": "Periode baik mulai {term}",
+  "natalAlertTitleBad": "Waspadai mulai {term}",
+  "natalAlertGood": "Istana tahun lahir Anda {level} bulan ini: majulah",
+  "natalAlertBad": "Istana tahun lahir Anda {level} bulan ini: bertahan dan bersiap",
+  "natalAlertBest": "Waktu lebih baik: {when}, ke arah {dir}",
+  "natalAlertNoHour": "Tak ada jam istimewa di minggu pertama; tunda langkah besar",
+  "natalAlertYear": "Prospek {year}: {level}"
 }

@@ -15,6 +15,7 @@ import '../../l10n/l10n.dart';
 import 'heading_tracker.dart';
 import 'house_geometry.dart';
 import '../lucky/placement_page.dart';
+import '../personal/profile.dart';
 import '../travel/travel_text.dart';
 import 'house_model.dart';
 import 'house_widgets.dart';
@@ -41,9 +42,18 @@ class _HousePageState extends State<HousePage> {
   HouseOverlay _overlay = HouseOverlay.now;
   DateTime _picked = DateTime.now();
 
+  /// 本命盤（有生日時）；宅盤標出與你相合的宮、推薦房間座位。
+  NatalReading? _natal;
+
   @override
   void initState() {
     super.initState();
+    Profile.load().then((p) {
+      if (p == null || !mounted) return;
+      final s = AppSettings.instance;
+      final at = p.birthInstant;
+      setState(() => _natal = const PersonalEngine().natal(at, settings: s.timeSettingsAt(at), method: s.juMethod));
+    });
     // 宅盤內共用方位：在門口鎖定後，走到中心點標記仍維持鎖定。
     HeadingTracker.instance.acquire();
     _load();
@@ -449,9 +459,28 @@ class _HousePageState extends State<HousePage> {
     );
 
     final rooms = h.roomsByPalace();
+    final natal = _natal;
+    final fit = natal == null ? const <int>{} : natalFavoredPalaces(natal, limit: 3).toSet();
     final list = Column(children: [
-      for (final p in [...palaceRing, 5]) _PalaceTile(chart: chart, palace: p, rooms: rooms[p] ?? const [], kind: h.kind),
+      for (final p in [...palaceRing, 5])
+        _PalaceTile(chart: chart, palace: p, rooms: rooms[p] ?? const [], kind: h.kind, natalFit: fit.contains(p)),
     ]);
+    // 最適合你的房間／座位：本命吉方依目前宅盤吉凶排序。
+    final best = natal == null || chart == null ? const <DirectionVerdict>[] : natalLuckyIn(natal, chart);
+    final bestCard = best.isEmpty
+        ? const SizedBox.shrink()
+        : Card(
+            margin: const EdgeInsets.only(bottom: 8),
+            child: ListTile(
+              leading: Icon(Icons.person_pin_circle_outlined, color: qm.primary),
+              title: Text(l.houseNatalBest),
+              subtitle: Text([
+                for (final v in best)
+                  '${palaceLabel(context, v.palace)}：${(rooms[v.palace] ?? const []).isEmpty ? l.houseNatalNoRoom : rooms[v.palace]!.join(l.separator)}（${TravelText.level(l, v.level)}）',
+                l.houseNatalBestHint,
+              ].join('\n')),
+            ),
+          );
 
     return ListView(padding: const EdgeInsets.fromLTRB(12, 8, 12, 24), children: [
       overlay,
@@ -481,6 +510,7 @@ class _HousePageState extends State<HousePage> {
         ),
       ),
       const SizedBox(height: 12),
+      bestCard,
       list,
       const SizedBox(height: 12),
       Text(l.homeDisclaimer, textAlign: TextAlign.center, style: theme.textTheme.bodySmall?.copyWith(color: qm.textMuted)),
@@ -598,7 +628,10 @@ class _HousePageState extends State<HousePage> {
 
 /// 一宮：方位、八門（吉平凶）、九星、八神、標記、房間。
 class _PalaceTile extends StatelessWidget {
-  const _PalaceTile({required this.chart, required this.palace, required this.rooms, required this.kind});
+  const _PalaceTile({required this.chart, required this.palace, required this.rooms, required this.kind, this.natalFit = false});
+
+  /// 本命吉方（與你相合）。
+  final bool natalFit;
 
   final QimenChart? chart;
   final int palace;
@@ -656,6 +689,12 @@ class _PalaceTile extends StatelessWidget {
                   ]), style: serif(theme.textTheme.bodyMedium)),
                 if (marks.isNotEmpty)
                   Text(marks.map((m) => QimenTerms.markShort(m)).join(' '), style: theme.textTheme.bodySmall?.copyWith(color: qm.bad)),
+                if (natalFit)
+                  Row(children: [
+                    Icon(Icons.person_pin_circle_outlined, size: 14, color: qm.primary),
+                    const SizedBox(width: 4),
+                    Text(l.houseNatalFit, style: theme.textTheme.bodySmall?.copyWith(color: qm.primary)),
+                  ]),
                 Text(rooms.isEmpty ? l.houseNoRoomHere : rooms.join(l.separator),
                     style: theme.textTheme.bodySmall?.copyWith(color: rooms.isEmpty ? qm.textMuted : qm.text)),
                 if (chart != null && palace != 5)

@@ -15,6 +15,7 @@ import 'core/telemetry/usage_sharing.dart';
 import 'features/course/course.dart';
 import 'features/family/family_store.dart';
 import 'features/reminders/day_alert_reminder.dart';
+import 'features/reminders/natal_alert_reminder.dart';
 import 'features/reminders/daily_reminder.dart';
 import 'features/wear/wear_sync.dart';
 import 'l10n/l10n.dart';
@@ -57,12 +58,17 @@ Future<void> main() async {
       DayAlertReminder.clashEnabled = clash;
       unawaited(DayAlertReminder.reschedule().catchError((_) {}));
     }
+    if (NatalAlertReminder.premium != premium.isPremium.value) {
+      NatalAlertReminder.premium = premium.isPremium.value;
+      unawaited(NatalAlertReminder.reschedule().catchError((_) {}));
+    }
     unawaited(_syncWear());
   }
 
   TravelReminders.maxPerDay = premium.isPremium.value ? 6 : limits.notifyPerDay;
   CourseAccess.premium.value = premium.isPremium.value;
   DayAlertReminder.clashEnabled = premium.isPremium.value || limits.alertClashFree;
+  NatalAlertReminder.premium = premium.isPremium.value;
   _wearLocked = () => limits.wearPremium && !premium.isPremium.value;
   premium.isPremium.addListener(syncPremium);
   // 家人改了：重排重要日提醒（沖生年那一行）
@@ -86,6 +92,7 @@ Future<void> main() async {
   TravelReminders.reschedule().catchError((_) {});
   DailyReminder.reschedule().catchError((_) {});
   DayAlertReminder.reschedule().catchError((_) {});
+  NatalAlertReminder.reschedule().catchError((_) {});
   // 手錶資料要算 36 個時辰，等首頁畫好再做
   unawaited(Future<void>.delayed(const Duration(seconds: 5), _syncWear));
 }

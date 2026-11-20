@@ -878,5 +878,20 @@
   "reportBasis": "La carta natal usa el plato giratorio horario (método según ajustes, por defecto Chai Bu); los ciclos siguen reglas BaZi y la edad de inicio se calcula desde el nacimiento al término solar.",
   "profileGender": "Género",
   "genderMale": "Hombre",
-  "genderFemale": "Mujer"
+  "genderFemale": "Mujer",
+  "compassNatal": "Tus direcciones natales",
+  "compassNatalHint": "Direcciones de tu carta natal que te apoyan, ordenadas por la carta de este año",
+  "houseNatalBest": "Mejores habitaciones / asientos para ti",
+  "houseNatalBestHint": "Según tus direcciones natales y la carta de la casa actual",
+  "houseNatalFit": "Afín a ti",
+  "houseNatalNoRoom": "Aún no hay habitación en este palacio",
+  "zeshiFlagNatalFit": "La dirección del dios útil es una de tus direcciones natales",
+  "natalAlertChannel": "Periodos personales clave",
+  "natalAlertTitleGood": "Periodo favorable desde {term}",
+  "natalAlertTitleBad": "Cuidado desde {term}",
+  "natalAlertGood": "Tu palacio del año está {level} este mes: avanza",
+  "natalAlertBad": "Tu palacio del año está {level} este mes: espera y prepárate",
+  "natalAlertBest": "Mejor momento: {when}, hacia {dir}",
+  "natalAlertNoHour": "Sin horas especialmente buenas la primera semana; pospón lo importante",
+  "natalAlertYear": "Año {year}: {level}"
 }
