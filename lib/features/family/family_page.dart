@@ -10,6 +10,7 @@ import '../../shared/widgets/result_card.dart';
 import '../personal/profile.dart';
 import '../travel/travel_text.dart';
 import 'family_store.dart';
+import '../../shared/widgets/ymd_date_picker.dart';
 
 /// 一位成員當天的結果（自己 [member] 為 null）。
 class FamilyRow {
@@ -269,13 +270,12 @@ class _MemberDialogState extends State<_MemberDialog> {
           title: Text(l.profileBirthDate),
           trailing: Text(_date == null ? '—' : _d(_date!)),
           onTap: () async {
-            final d = await showDatePicker(
+            final d = await showYmdDatePicker(
               context: context,
               helpText: l.profileBirthDate,
               initialDate: _date ?? DateTime(1990, 1, 1),
               firstDate: DateTime(1900),
               lastDate: DateTime.now(),
-              initialEntryMode: DatePickerEntryMode.input,
             );
             if (d != null) setState(() => _date = d);
           },

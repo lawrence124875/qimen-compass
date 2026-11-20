@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../l10n/l10n.dart';
+import '../../shared/widgets/ymd_date_picker.dart';
 
 /// 個人資料（HANDOFF §12 P4）：出生日期（與擇時共用 `qm_birth_date`）＋出生時間（選填，`qm_birth_time` 分鐘數）。
 class Profile {
@@ -53,13 +54,12 @@ class Profile {
 /// 設定出生日期與時間；存檔後回傳新的 [Profile]。
 Future<Profile?> editProfile(BuildContext context, Profile? current) async {
   final l = context.l10n;
-  final d = await showDatePicker(
+  final d = await showYmdDatePicker(
     context: context,
     helpText: l.profileBirthDate,
     initialDate: current?.birthDate ?? DateTime(1990, 1, 1),
     firstDate: DateTime(1920),
     lastDate: DateTime.now(),
-    initialEntryMode: DatePickerEntryMode.input,
   );
   if (d == null || !context.mounted) return null;
   final m0 = current?.birthMinutes;

@@ -10,13 +10,14 @@ import '../meaning/meaning_content.dart';
 import '../travel/travel_text.dart';
 
 /// 化解建議文字：依門與宮的五行取化解五行，再加平／凶通則與凶星提醒。不需化解時回傳空清單。
-List<String> cureLines(MeaningContent? m, Door door, int palace, Tone tone, List<Star> stars) {
+List<String> cureLines(AppLocalizations l, MeaningContent? m, Door door, int palace, Tone tone, List<Star> stars) {
   if (m == null) return const [];
   final e = cureElement(door, palace);
   final out = <String?>[
     if (tone == Tone.neutral) m.lookup('curetone', '平'),
     if (tone == Tone.bad) m.lookup('curetone', '凶'),
-    if (e != null && tone != Tone.good) m.lookup('cure', e.zh),
+    if (e != null && tone != Tone.good)
+      if (m.lookup('cure', e.zh) case final items?) l.placeCureItems(items),
     for (final s in stars)
       if (cureStars.contains(s)) m.lookup('curestar', s.zh),
   ].whereType<String>().toList();
@@ -109,9 +110,9 @@ class _PlacementPageState extends State<PlacementPage> {
     final mv = DirectionPlanner.judge(_month, p);
     final mTone = toneOfLevel(mv.level);
     final mDoor = _month[p].door!;
-    final cures = cureLines(_m, door, p, tone, pc.stars);
+    final cures = cureLines(l, _m, door, p, tone, pc.stars);
     // 本月轉弱：年盤吉、月盤阻凶時，補上月盤的化解
-    final monthCures = tone == Tone.good && mTone == Tone.bad ? cureLines(_m, mDoor, p, mTone, const []) : const <String>[];
+    final monthCures = tone == Tone.good && mTone == Tone.bad ? cureLines(l, _m, mDoor, p, mTone, const []) : const <String>[];
     final rooms = widget.rooms[p] ?? const [];
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
