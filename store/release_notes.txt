@@ -1,78 +1,91 @@
 <zh-TW>
-奇門羅盤 1.5.0：
-• 桌面小工具可自選內容：小、中、大三種尺寸，可選此刻吉門、下個吉時倒數、今日吉色、黃曆吉時、發訊息時機、節氣與重要日；訂閱加本命吉方、個人吉色、迷你九宮盤
-• 小工具加「出行訣」按鈕，一點直接開始；長按小工具可個別修改
-• 羅盤對準目標時改成吉色色塊，更好辨認
+奇門羅盤 1.6.0：
+• 此刻頁新增「今日個人運」：結合本命、大運與今日日盤，看你的個人吉時與方位；桌面小工具也能放
+• 本命報告新增流月（未來 12 個月），訂閱戶每月交節前收到宅盤換月提醒
+• 問事、擇時詳解與今日個人運，免費版每天可看廣告解鎖 1 次
+• 訂閱戶的每日提醒多一行個人吉時
 </zh-TW>
 <zh-CN>
-奇门罗盘 1.5.0：
-• 桌面小组件可自选内容：小、中、大三种尺寸，可选此刻吉门、下个吉时倒计时、今日吉色、黄历吉时、发消息时机、节气与重要日；订阅加本命吉方、个人吉色、迷你九宫盘
-• 小组件加「出行诀」按钮，一点直接开始；长按小组件可单独修改
-• 罗盘对准目标时改成吉色色块，更好辨认
+奇门罗盘 1.6.0：
+• 此刻页新增「今日个人运」：结合本命、大运与今日日盘，看你的个人吉时与方位；桌面小组件也能放
+• 本命报告新增流月（未来 12 个月），订阅用户每月交节前收到宅盘换月提醒
+• 问事、择时详解与今日个人运，免费版每天可看广告解锁 1 次
+• 订阅用户的每日提醒多一行个人吉时
 </zh-CN>
 <en-US>
-Qimen Compass 1.5.0:
-• Customizable home screen widgets in small, medium and large: lucky gate now, next lucky hour countdown, lucky color, almanac hours, message timing, solar terms & key days; Premium adds natal direction, personal color and a mini nine-palace chart
-• Travel method button on the widget; long-press a widget to change it individually
-• Compass turns to a lucky-color block when you face the target
+Qimen Compass 1.6.0:
+• New "Your day" card: your natal chart, luck cycle and today's chart combined into personal good hours and directions; also available as a widget
+• Natal report adds a 12-month outlook; Premium gets a monthly home-chart reminder before each solar term
+• Free users can watch an ad once a day to unlock question details, timing details or Your day
+• Premium daily reminders now include your personal good hour
 </en-US>
 <ja-JP>
-奇門羅盤 1.5.0：
-• ホーム画面ウィジェットの内容を選べるように：小・中・大の 3 サイズ。今の吉門、次の吉時カウントダウン、今日の吉色、暦の吉時、メッセージのタイミング、節気と重要日。プレミアムは本命吉方・個人の吉色・ミニ九宮盤も
-• ウィジェットに「出行訣」ボタン。長押しで個別に変更可能
-• 羅盤が目標に合うと吉色のブロックで表示
+奇門羅盤 1.6.0：
+• 「今日の個人運」を追加：本命・大運・今日の日盤から個人の吉時と方角を表示。ウィジェットにも対応
+• 本命レポートに流月（今後12か月）を追加。購読者には節入り前に宅盤の月替わり通知
+• 無料版でも1日1回、広告を見て問事・択時の詳細や今日の個人運を解除できます
+• 購読者の毎日の通知に個人の吉時を追加
 </ja-JP>
 <ko-KR>
-기문 나침반 1.5.0:
-• 홈 화면 위젯 내용 선택: 소·중·대 세 가지 크기. 지금의 길문, 다음 길시 카운트다운, 오늘의 길색, 책력 길시, 메시지 타이밍, 절기와 중요한 날. 프리미엄은 본명 길방·개인 길색·미니 구궁반 추가
-• 위젯에 '출행결' 버튼, 길게 눌러 위젯별로 변경
-• 나침반이 목표를 향하면 길색 블록으로 표시
+기문나침반 1.6.0:
+• '오늘의 개인운' 추가: 본명, 대운, 오늘 일반을 합쳐 나만의 길시와 방위를 보여줘요. 위젯에도 넣을 수 있어요
+• 본명 리포트에 유월(앞으로 12개월) 추가, 구독자는 절기 전 택반 월별 알림을 받아요
+• 무료 버전도 하루 1회 광고를 보고 문사·택시 상세나 오늘의 개인운을 열 수 있어요
+• 구독자 매일 알림에 개인 길시 추가
 </ko-KR>
 <vi>
-Qimen Compass 1.5.0:
-• Tiện ích màn hình chính tự chọn nội dung, 3 cỡ nhỏ/vừa/lớn: cửa tốt lúc này, đếm ngược giờ tốt kế tiếp, màu may mắn, giờ tốt theo lịch, thời điểm nhắn tin, tiết khí & ngày quan trọng; Premium thêm hướng bản mệnh, màu cá nhân và bàn cửu cung mini
-• Nút phép xuất hành trên tiện ích; nhấn giữ để đổi riêng từng tiện ích
-• La bàn hiện khối màu may mắn khi bạn hướng đúng mục tiêu
+La bàn Kỳ Môn 1.6.0:
+• Thêm thẻ "Vận hôm nay của bạn": kết hợp bản mệnh, đại vận và bàn ngày để cho giờ tốt và hướng riêng; có cả tiện ích màn hình chính
+• Báo cáo bản mệnh thêm lưu nguyệt 12 tháng; người đăng ký nhận nhắc nhà theo tháng trước mỗi tiết khí
+• Bản miễn phí có thể xem quảng cáo mỗi ngày 1 lần để mở chi tiết hỏi việc, chọn giờ hoặc vận hôm nay
+• Nhắc nhở hằng ngày của người đăng ký thêm giờ tốt riêng
 </vi>
 <es-ES>
-Qimen Compass 1.5.0:
-• Widgets de inicio personalizables en tamaño pequeño, mediano y grande: puerta propicia ahora, cuenta atrás a la próxima hora propicia, color de la suerte, horas del almanaque, momento para mensajes, términos solares y días clave; Premium añade dirección natal, color personal y mini carta de nueve palacios
-• Botón del método de viaje en el widget; mantén pulsado para cambiar cada uno
-• La brújula muestra un bloque de color propicio al apuntar al objetivo
+Qimen Compass 1.6.0:
+• Nueva tarjeta "Tu día": tu carta natal, ciclo de suerte y la carta de hoy combinados en horas y direcciones personales; también como widget
+• El informe natal añade los próximos 12 meses; Premium recibe un aviso mensual de la casa antes de cada término solar
+• La versión gratuita puede ver un anuncio al día para desbloquear detalles de preguntas, de horarios o Tu día
+• Los recordatorios diarios de Premium incluyen tu hora favorable
 </es-ES>
 <es-US>
-Qimen Compass 1.5.0:
-• Widgets de inicio personalizables en tamaño pequeño, mediano y grande: puerta propicia ahora, cuenta atrás a la próxima hora propicia, color de la suerte, horas del almanaque, momento para mensajes, términos solares y días clave; Premium añade dirección natal, color personal y mini carta de nueve palacios
-• Botón del método de viaje en el widget; mantén pulsado para cambiar cada uno
-• La brújula muestra un bloque de color propicio al apuntar al objetivo
+Qimen Compass 1.6.0:
+• Nueva tarjeta "Tu día": tu carta natal, ciclo de suerte y la carta de hoy combinados en horas y direcciones personales; también como widget
+• El informe natal añade los próximos 12 meses; Premium recibe un aviso mensual de la casa antes de cada término solar
+• La versión gratuita puede ver un anuncio al día para desbloquear detalles de preguntas, de horarios o Tu día
+• Los recordatorios diarios de Premium incluyen tu hora favorable
 </es-US>
 <pt-BR>
-Qimen Compass 1.5.0:
-• Widgets da tela inicial personalizáveis em tamanho pequeno, médio e grande: portão favorável agora, contagem para a próxima hora favorável, cor da sorte, horas do almanaque, momento para mensagens, termos solares e dias-chave; Premium inclui direção natal, cor pessoal e mini mapa de nove palácios
-• Botão do método de viagem no widget; toque e segure para mudar cada widget
-• A bússola mostra um bloco de cor favorável ao apontar para o alvo
+Qimen Compass 1.6.0:
+• Novo cartão "Seu dia": seu mapa natal, ciclo de sorte e o mapa de hoje combinados em horários e direções pessoais; também como widget
+• O relatório natal ganha os próximos 12 meses; assinantes recebem um lembrete mensal da casa antes de cada termo solar
+• Na versão grátis, assista a um anúncio por dia para desbloquear detalhes de perguntas, de horários ou Seu dia
+• Os lembretes diários dos assinantes incluem seu horário favorável
 </pt-BR>
 <pt-PT>
-Qimen Compass 1.5.0:
-• Widgets da tela inicial personalizáveis em tamanho pequeno, médio e grande: portão favorável agora, contagem para a próxima hora favorável, cor da sorte, horas do almanaque, momento para mensagens, termos solares e dias-chave; Premium inclui direção natal, cor pessoal e mini mapa de nove palácios
-• Botão do método de viagem no widget; toque e segure para mudar cada widget
-• A bússola mostra um bloco de cor favorável ao apontar para o alvo
+Qimen Compass 1.6.0:
+• Novo cartão "Seu dia": seu mapa natal, ciclo de sorte e o mapa de hoje combinados em horários e direções pessoais; também como widget
+• O relatório natal ganha os próximos 12 meses; assinantes recebem um lembrete mensal da casa antes de cada termo solar
+• Na versão grátis, assista a um anúncio por dia para desbloquear detalhes de perguntas, de horários ou Seu dia
+• Os lembretes diários dos assinantes incluem seu horário favorável
 </pt-PT>
 <id>
-Qimen Compass 1.5.0:
-• Widget layar utama bisa dipilih isinya, ukuran kecil/sedang/besar: gerbang baik sekarang, hitung mundur jam baik berikutnya, warna keberuntungan, jam baik almanak, waktu kirim pesan, musim matahari & hari penting; Premium menambah arah natal, warna pribadi dan bagan sembilan istana mini
-• Tombol metode perjalanan di widget; tekan lama untuk mengubah tiap widget
-• Kompas menampilkan blok warna baik saat menghadap target
+Qimen Compass 1.6.0:
+• Kartu baru "Harimu": bagan lahir, siklus keberuntungan, dan bagan hari ini digabung jadi jam dan arah baik pribadi; tersedia juga sebagai widget
+• Laporan lahir menambah 12 bulan ke depan; pelanggan mendapat pengingat bulanan rumah sebelum tiap term surya
+• Versi gratis bisa menonton iklan sekali sehari untuk membuka detail pertanyaan, pemilihan waktu, atau Harimu
+• Pengingat harian pelanggan kini menyertakan jam baik pribadi
 </id>
 <th>
-Qimen Compass 1.5.0:
-• เลือกเนื้อหาวิดเจ็ตหน้าจอหลักได้ 3 ขนาด เล็ก กลาง ใหญ่: ประตูมงคลตอนนี้ นับถอยหลังยามมงคลถัดไป สีมงคล ยามมงคลตามปฏิทิน จังหวะส่งข้อความ สารทและวันสำคัญ พรีเมียมเพิ่มทิศมงคลประจำตัว สีประจำตัว และผังเก้าวังขนาดย่อ
-• ปุ่มวิธีออกเดินทางบนวิดเจ็ต กดค้างเพื่อเปลี่ยนแต่ละวิดเจ็ต
-• เข็มทิศแสดงบล็อกสีมงคลเมื่อหันตรงเป้าหมาย
+เข็มทิศฉีเหมิน 1.6.0:
+• การ์ดใหม่ "ดวงวันนี้ของคุณ": รวมผังเกิด วัฏจักรโชค และผังวันนี้ เป็นเวลามงคลและทิศเฉพาะคุณ ใส่เป็นวิดเจ็ตได้
+• รายงานดวงเกิดเพิ่ม 12 เดือนข้างหน้า สมาชิกได้รับแจ้งเตือนบ้านรายเดือนก่อนแต่ละสารทฤดู
+• เวอร์ชันฟรีดูโฆษณาวันละครั้งเพื่อปลดล็อกรายละเอียดการถาม การเลือกเวลา หรือดวงวันนี้
+• แจ้งเตือนรายวันของสมาชิกเพิ่มเวลามงคลเฉพาะคุณ
 </th>
 <ar>
-Qimen Compass 1.5.0:
-• أدوات شاشة رئيسية قابلة للتخصيص بأحجام صغيرة ومتوسطة وكبيرة: البوابة الميمونة الآن، العد التنازلي للساعة الميمونة التالية، لون الحظ، ساعات التقويم، توقيت الرسائل، الفصول الشمسية والأيام المهمة؛ المميز يضيف الاتجاه الطالعي واللون الشخصي ومخطط القصور التسعة المصغر
-• زر طريقة السفر على الأداة؛ اضغط مطولًا لتغيير كل أداة
-• البوصلة تعرض كتلة بلون ميمون عند مواجهة الهدف
+بوصلة تشيمن 1.6.0:
+• بطاقة جديدة «يومك»: تجمع مخطط ميلادك ودورة حظك ومخطط اليوم في ساعات واتجاهات شخصية؛ متاحة أيضًا كأداة
+• تقرير الميلاد يضيف الأشهر الـ 12 القادمة؛ ويتلقى المشتركون تذكيرًا شهريًا للمنزل قبل كل فصل شمسي
+• يمكن للنسخة المجانية مشاهدة إعلان مرة يوميًا لفتح تفاصيل السؤال أو التوقيت أو يومك
+• تذكيرات المشتركين اليومية تتضمن ساعتك الجيدة
 </ar>

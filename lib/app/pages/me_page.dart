@@ -25,6 +25,13 @@ class MePage extends StatelessWidget {
     await Navigator.of(context).push(MaterialPageRoute<void>(builder: builder));
   }
 
+  /// 「先給等級、詳解要訂閱」的功能（搬家、宅盤、合盤；HANDOFF §10）：免費版第一次完整體驗，之後 locked＝true。
+  static Future<void> openPeek(BuildContext context, String feature, Widget Function(bool locked) builder) async {
+    final access = await peekPremium(context, feature: feature);
+    if (!context.mounted) return;
+    await Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => builder(access == PremiumAccess.titleOnly)));
+  }
+
   static Future<void> open(BuildContext context, WidgetBuilder builder) =>
       Navigator.of(context).push(MaterialPageRoute<void>(builder: builder));
 
@@ -47,10 +54,10 @@ class MePage extends StatelessWidget {
       body: SafeArea(
         child: ListView(padding: const EdgeInsets.fromLTRB(12, 4, 12, 16), children: [
           if (s.featureEnabled('move'))
-            tile(Icons.local_shipping_outlined, l.moveTitle, l.moveSub, () => openPremium(context, 'move', (_) => const MovePage())),
+            tile(Icons.local_shipping_outlined, l.moveTitle, l.moveSub, () => openPeek(context, 'move', (locked) => MovePage(locked: locked))),
           if (s.featureEnabled('house'))
             tile(Icons.home_work_outlined, l.homeHouse, l.meHouseSub,
-                () => openPremium(context, 'house', (_) => const HousePage())),
+                () => openPeek(context, 'house', (locked) => HousePage(locked: locked))),
           if (s.featureEnabled('facing'))
             tile(Icons.bed_outlined, l.facingTitle, l.facingSub, () => openPremium(context, 'facing', (_) => const FacingPage())),
           if (s.featureEnabled('records'))

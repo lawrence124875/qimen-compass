@@ -14,6 +14,7 @@ class FreeLimits {
     this.familyMax = 1,
     this.alertClashFree = false,
     this.wearPremium = false,
+    this.adUnlockPerDay = 1,
   });
 
   /// 出行訣（走路、跑步、喝水計時）每天免費開始幾次。
@@ -46,6 +47,9 @@ class FreeLimits {
   /// 手錶羅盤是否需訂閱（預設免費）。
   final bool wearPremium;
 
+  /// 問事／擇時詳解、今日個人運：每項每天可看廣告解鎖幾次（0＝不開放）。
+  final int adUnlockPerDay;
+
   /// Remote Config 參數名稱與預設值（firebase_telemetry 設定預設值用）。
   static const remoteDefaults = <String, int>{
     'qm_free_travel_per_day': 1,
@@ -59,6 +63,7 @@ class FreeLimits {
     'qm_free_family_max': 1,
     'qm_free_alert_clash': 0,
     'qm_wear_premium': 0,
+    'qm_free_ad_unlock_per_day': 1,
   };
 
   /// 由遠端數值建立；讀不到或數值不合理就用預設。
@@ -81,6 +86,7 @@ class FreeLimits {
       familyMax: v('qm_free_family_max', max: 100),
       alertClashFree: v('qm_free_alert_clash', max: 1) == 1,
       wearPremium: v('qm_wear_premium', max: 1) == 1,
+      adUnlockPerDay: v('qm_free_ad_unlock_per_day', max: 10),
     );
   }
 }

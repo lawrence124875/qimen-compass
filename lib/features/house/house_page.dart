@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import '../../shared/premium/usage_gate.dart';
 import '../../shared/widgets/result_card.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -29,7 +30,10 @@ enum HouseOverlay { now, pick, year, month, house }
 
 /// 宅盤九宮（HANDOFF §6）：三種輸入（站中心點標記、拍平面圖、手繪）＋坐向＋疊盤。
 class HousePage extends StatefulWidget {
-  const HousePage({super.key});
+  const HousePage({super.key, this.locked = false});
+
+  /// 免費版體驗過後：各宮吉凶照給，房間建議、開運擺件化解、最適合你的房間要訂閱（HANDOFF §10）。
+  final bool locked;
 
   @override
   State<HousePage> createState() => _HousePageState();
@@ -41,6 +45,7 @@ class _HousePageState extends State<HousePage> {
   House? _house;
   HouseOverlay _overlay = HouseOverlay.now;
   DateTime _picked = DateTime.now();
+  late bool _locked = widget.locked;
 
   /// 本命盤（有生日時）；宅盤標出與你相合的宮、推薦房間座位。
   NatalReading? _natal;
@@ -463,11 +468,11 @@ class _HousePageState extends State<HousePage> {
     final fit = natal == null ? const <int>{} : natalFavoredPalaces(natal, limit: 3).toSet();
     final list = Column(children: [
       for (final p in [...palaceRing, 5])
-        _PalaceTile(chart: chart, palace: p, rooms: rooms[p] ?? const [], kind: h.kind, natalFit: fit.contains(p)),
+        _PalaceTile(chart: chart, palace: p, rooms: rooms[p] ?? const [], kind: h.kind, natalFit: !_locked && fit.contains(p), locked: _locked),
     ]);
     // 最適合你的房間／座位：本命吉方依目前宅盤吉凶排序。
     final best = natal == null || chart == null ? const <DirectionVerdict>[] : natalLuckyIn(natal, chart);
-    final bestCard = best.isEmpty
+    final bestCard = best.isEmpty || _locked
         ? const SizedBox.shrink()
         : Card(
             margin: const EdgeInsets.only(bottom: 8),
@@ -500,6 +505,10 @@ class _HousePageState extends State<HousePage> {
       const SizedBox(height: 8),
       facingCard,
       const SizedBox(height: 8),
+      if (_locked)
+        PremiumLockCard(
+            feature: 'house', text: l.houseLocked, margin: EdgeInsets.zero, onUnlocked: () => setState(() => _locked = false))
+      else
       Card(
         margin: EdgeInsets.zero,
         child: ListTile(
@@ -628,7 +637,11 @@ class _HousePageState extends State<HousePage> {
 
 /// 一宮：方位、八門（吉平凶）、九星、八神、標記、房間。
 class _PalaceTile extends StatelessWidget {
-  const _PalaceTile({required this.chart, required this.palace, required this.rooms, required this.kind, this.natalFit = false});
+  const _PalaceTile(
+      {required this.chart, required this.palace, required this.rooms, required this.kind, this.natalFit = false, this.locked = false});
+
+  /// 免費版體驗過後：只顯示等級，不給房間建議。
+  final bool locked;
 
   /// 本命吉方（與你相合）。
   final bool natalFit;
@@ -700,7 +713,7 @@ class _PalaceTile extends StatelessWidget {
                 if (chart != null && palace != 5)
                   Builder(builder: (context) {
                     final v = DirectionPlanner.judge(chart!, palace);
-                    return Text('${TravelText.level(l, v.level)}${l.separator}${advice(l, kind, v.level)}',
+                    return Text(locked ? TravelText.level(l, v.level) : '${TravelText.level(l, v.level)}${l.separator}${advice(l, kind, v.level)}',
                         style: theme.textTheme.bodySmall?.copyWith(color: qm.textMuted));
                   }),
               ]),

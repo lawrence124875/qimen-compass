@@ -8,11 +8,15 @@ import '../../l10n/l10n.dart';
 import '../almanac/almanac_page.dart' show levelColor;
 import '../travel/travel_text.dart';
 import 'profile.dart';
+import '../../shared/premium/usage_gate.dart';
 import '../../shared/widgets/ymd_date_picker.dart';
 
 /// 雙人合盤（HANDOFF §12 P5）：我（個人資料生日）＋對方生日 → 合夥／婚配兩種看法。
 class SynastryPage extends StatefulWidget {
-  const SynastryPage({super.key});
+  const SynastryPage({super.key, this.locked = false});
+
+  /// 免費版體驗過後：只給等級，加減分原因與盤面要訂閱。
+  final bool locked;
 
   @override
   State<SynastryPage> createState() => _SynastryPageState();
@@ -22,6 +26,7 @@ class _SynastryPageState extends State<SynastryPage> {
   Profile? _me;
   DateTime? _other;
   SynMode _mode = SynMode.partner;
+  late bool _locked = widget.locked;
 
   @override
   void initState() {
@@ -125,6 +130,9 @@ class _SynastryPageState extends State<SynastryPage> {
                 style: serif(text.displaySmall).copyWith(color: levelColor(context, r.level), fontWeight: FontWeight.w700)),
             Text(l.synYearNote('${now.year}'), textAlign: TextAlign.center, style: text.bodySmall?.copyWith(color: qm.textMuted)),
             const SizedBox(height: 8),
+            if (_locked)
+              PremiumLockCard(feature: 'synastry', text: l.synLocked, onUnlocked: () => setState(() => _locked = false))
+            else ...[
             for (final f in r.factors)
               ListTile(
                 dense: true,
@@ -143,6 +151,7 @@ class _SynastryPageState extends State<SynastryPage> {
                 ),
               ),
             ),
+            ],
             const SizedBox(height: 8),
             Text(l.homeDisclaimer, textAlign: TextAlign.center, style: text.bodySmall?.copyWith(color: qm.textMuted)),
           ],

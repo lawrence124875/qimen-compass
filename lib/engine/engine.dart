@@ -18,3 +18,4 @@ export 'fengshui.dart';
 export 'day_alerts.dart';
 export 'family_day.dart';
 export 'natal_report.dart';
+export 'personal_day.dart';

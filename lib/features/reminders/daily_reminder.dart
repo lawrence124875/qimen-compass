@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
 import '../../services/notifications.dart';
+import '../../app/settings/app_settings.dart';
+import '../personal/profile.dart';
 import '../travel/travel_reminders.dart';
 import '../travel/travel_text.dart';
 
@@ -14,6 +16,9 @@ class DailyReminder {
 
   static const idFrom = 1050, idTo = 1056;
   static const channelId = 'qm_daily';
+
+  /// 訂閱戶（main 依訂閱狀態設定）：有生日時多附一行個人吉時（年命宮達吉的時辰）。
+  static bool premium = false;
 
   static Future<SharedPreferences> get _p => SharedPreferences.getInstance();
 
@@ -45,6 +50,11 @@ class DailyReminder {
         .dailyBest(now.toUtc(), event, settings: TravelReminders.timeSettings, days: 8);
     final l = L10n.current;
     final lang = L10n.language;
+    final profile = premium ? await Profile.load() : null;
+    final app = AppSettings.instance;
+    final birth = profile == null
+        ? null
+        : BirthInfo.fromInstant(profile.birthInstant, settings: app.timeSettingsAt(profile.birthInstant));
     for (var i = 0; i < 7; i++) {
       final day = DateTime(now.year, now.month, now.day + i);
       final fire = DateTime(day.year, day.month, day.day, at.hour, at.minute);
@@ -57,16 +67,31 @@ class DailyReminder {
       final body = slot == null
           ? l.dailyBodyNone
           : l.dailyBody(TravelText.timeRange(slot), TravelText.direction(l, slot.palace), QimenTerms.door(slot.door, lang));
+      var full = body;
+      if (birth != null) {
+        final mine = const PersonalEngine()
+            .luckyHours(birth, day, settings: app.timeSettingsAt(day), method: app.juMethod, days: 1, limit: 1);
+        full += '\n${mine.isEmpty ? l.pdayNoHour : l.dailyBodyPersonal(_range(mine.first), TravelText.direction(l, mine.first.palace))}';
+      }
       await Notifications.schedule(
         id: idFrom + i,
         title: l.dailyTitle(TravelText.event(l, event)),
-        body: body,
+        body: full,
         atUtc: fire.toUtc(),
         channelId: channelId,
         channelName: l.dailyChannelName,
       );
     }
   }
+}
+
+String _range(DirectionVerdict v) {
+  String hm(DateTime t) {
+    final x = t.toLocal();
+    return '${x.hour.toString().padLeft(2, '0')}:${x.minute.toString().padLeft(2, '0')}';
+  }
+
+  return '${hm(v.startUtc!)}–${hm(v.endUtc!)}';
 }
 
 /// 設定頁的每日提醒對話框：開關＋時間。開啟時若還沒允許通知就請求一次。

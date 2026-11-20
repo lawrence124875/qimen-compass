@@ -19,7 +19,8 @@ enum WidgetItem {
   msg,
   term,
   pdir(premium: true),
-  pcolor(premium: true);
+  pcolor(premium: true),
+  pday(premium: true);
 
   const WidgetItem({this.premium = false});
 
@@ -51,6 +52,7 @@ String widgetItemName(AppLocalizations l, WidgetItem i) => switch (i) {
       WidgetItem.term => l.widgetItemTerm,
       WidgetItem.pdir => l.compassNatal,
       WidgetItem.pcolor => l.luckyPersonal,
+      WidgetItem.pday => l.pdayTitle,
     };
 
 /// 桌面小工具：App 開啟時預算 7 天的各項內容（每筆帶起訖時間）交給原生端，
@@ -226,9 +228,11 @@ class QimenHomeWidget {
     if (!premium) {
       items[WidgetItem.pdir.name] = [locked(l.compassNatal)];
       items[WidgetItem.pcolor.name] = [locked(l.luckyPersonal)];
+      items[WidgetItem.pday.name] = [locked(l.pdayTitle)];
     } else if (profile == null) {
       items[WidgetItem.pdir.name] = [needBirth(l.compassNatal)];
       items[WidgetItem.pcolor.name] = [needBirth(l.luckyPersonal)];
+      items[WidgetItem.pday.name] = [needBirth(l.pdayTitle)];
     } else {
       final at = profile.birthInstant;
       final natal = const PersonalEngine().natal(at, settings: s.timeSettingsAt(at), method: method);
@@ -239,6 +243,22 @@ class QimenHomeWidget {
             vs.isEmpty ? l.widgetNoneGood : vs.map((v) => TravelText.direction(l, v.palace)).join('、')),
       ];
       items[WidgetItem.pcolor.name] = pcolors;
+      // 今日個人運：每天一筆（今天從現在起算，之後各天從 0 點起）
+      items[WidgetItem.pday.name] = [
+        for (var d = 0; d <= _days; d++)
+          () {
+            final date = DateTime(now.year, now.month, now.day + d);
+            final end = DateTime(now.year, now.month, now.day + d + 1);
+            final t = d == 0 ? now : date;
+            final pd = PersonalDay.of(at,
+                male: profile.male, now: t, birthSettings: s.timeSettingsAt(at), settings: s.timeSettingsAt(t), method: method);
+            final f = pd.fortune;
+            final h = pd.hours.firstOrNull;
+            return entry(date, end, l.pdayTitle,
+                f == null ? l.widgetNoneGood : '${TravelText.level(l, f.level)}${l.separator}${TravelText.direction(l, f.palace)}',
+                sub: h == null ? l.pdayNoHour : l.labelValue(l.pdayHours, '${hm(h.startUtc!)} ${TravelText.direction(l, h.palace)}'));
+          }(),
+      ];
     }
 
     // 迷你九宮時盤（大尺寸，訂閱）

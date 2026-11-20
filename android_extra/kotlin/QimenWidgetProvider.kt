@@ -53,8 +53,8 @@ object QimenWidgetRender {
     const val MEDIUM = 1
     const val LARGE = 2
 
-    val ITEMS = listOf("door", "next", "color", "almanac", "msg", "term", "pdir", "pcolor")
-    val PREMIUM = setOf("pdir", "pcolor")
+    val ITEMS = listOf("door", "next", "color", "almanac", "msg", "term", "pdir", "pcolor", "pday")
+    val PREMIUM = setOf("pdir", "pcolor", "pday")
     private val MAX = intArrayOf(1, 3, 2)
     private val DEFAULTS = arrayOf("door", "door,next,color", "door,next")
     private val CLASSES = arrayOf(

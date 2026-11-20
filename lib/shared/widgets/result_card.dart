@@ -6,6 +6,7 @@ import '../../app/theme/app_theme.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
 import '../premium/paywall_page.dart';
+import '../premium/usage_gate.dart' show AdUnlock;
 
 /// 吉／平／凶三種調性。顏色之外一律加圖示（色弱也分得出來）：吉 ✓、平 –、凶 ✕。
 enum Tone { good, neutral, bad }
@@ -241,6 +242,19 @@ class LockedPreview extends StatelessWidget {
                     },
                     label: Text(l.premiumUnlockFull),
                   ),
+                  if (AdUnlock.features.contains(feature))
+                    FutureBuilder<bool>(
+                      future: AdUnlock.available(context, feature),
+                      builder: (context, snap) => snap.data != true
+                          ? const SizedBox.shrink()
+                          : TextButton.icon(
+                              icon: const Icon(Icons.play_circle_outline),
+                              label: Text(l.adUnlockOnce),
+                              onPressed: () async {
+                                if (await AdUnlock.watch(context, feature)) onUnlocked?.call();
+                              },
+                            ),
+                    ),
                 ]),
               ),
             ),

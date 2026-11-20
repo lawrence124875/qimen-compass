@@ -87,12 +87,17 @@
 
 ## 10. 商業模式（2026-11-19 定案）
 - 免費（無限）：時盤、羅盤找吉門、盤面點擊解說、今日黃曆、桌面小工具、地圖八門（以目前位置）；出行訣每天 1 次＋看廣告 1 次；入門課前 2 課（content `free`）；吉時推播每天 1 則；紀錄 30 則、近 30 天；還原備份
-- 訂閱功能「完整體驗 1 次」（`requirePremium`，之後開訂閱頁）：宅盤、朝向、本命盤／流年、合盤、搬家方位、目的地吉凶、月盤年盤（`pan_month_year`）、備份
+- 訂閱功能「完整體驗 1 次」（`requirePremium`，之後開訂閱頁）：朝向、本命盤／流年、月盤年盤（`pan_month_year`）、備份
+- 1.6.0 訂閱平衡（2026-11-20 定案）：原則＝每天用的基本功能免費（羅盤、時盤、黃曆、基本小工具、出行訣），一次性需求只給等級，付費版要有每天／每月更新的個人化內容。
+  - 搬家、合盤、目的地、宅盤改 `peekPremium`（`MePage.openPeek`）：第一次完整體驗，之後 搬家＝今明年等級＋吉月數、合盤＝等級、目的地＝現在吉凶、宅盤＝各宮等級；詳解 `PremiumLockCard`。
+  - 今日個人運（`engine/personal_day.dart`、`features/personal/personal_day_card.dart`，此刻頁、功能 id `personal_day`）：今天各時盤年命宮中位數＋個人吉時（最多 3）＋目前大運天干落日盤宮。免費只給等級；小工具項目 `pday`（訂閱）。
+  - 看廣告解鎖（`AdUnlock`）：問事、擇時詳解（本次進入有效）、今日個人運（當天有效），每項每天 `qm_free_ad_unlock_per_day`（預設 1，0＝關）。一次性功能不給看廣告。
+  - 續訂點：本命報告流月（未來 12 個節）；宅盤流月提醒 `HouseMonthReminder`（訂閱、節前一晚、id 1310–1312、有存宅盤才排）；訂閱戶每日提醒多一行個人吉時（`DailyReminder.premium`）。
 - 「先給等級、詳解需訂閱」（`peekPremium` ＋ `PremiumLockCard`）：問事（決斷與等級可看，方位、應期、宜忌、盤面上鎖；免費重看紀錄也上鎖）、擇時（時間與等級可看，方位、理由、盤面、行事曆、存紀錄上鎖）
 - 1.2.0 新功能：免費＝今日吉色（日干五行）、發訊息時機、神煞與十二長生圖鑑；訂閱＝個人吉色（`requirePremium('lucky_personal')`）、擇時靜坐冥想／營業時段（沿用擇時 peek）、開運擺件與化解（宅盤內）、談判座位與朝向化解（朝向內）
 - 1.3.0 新功能：家人盤免費，免費版可存 `qm_free_family_max`（預設 1）位家人、訂閱無限；節氣與重要日提醒免費，「日沖家人生年」那一行訂閱才有（`qm_free_alert_clash`=1 改免費）；手錶羅盤預設免費（`qm_wear_premium`=1 改訂閱，手錶顯示「訂閱後可用」）
 - 其他：應驗統計上鎖；課程 `CourseAccess.paywallEnabled = true`（main.dart 同步訂閱狀態）；推播則數上限 `TravelReminders.maxPerDay`；安裝後第 3、7 天各提示一次年訂 7 天試用（`trial_prompt.dart`）
-- Remote Config：`qm_free_travel_per_day`、`qm_free_rewarded_per_day`、`qm_free_record_max`、`qm_free_record_days`、`qm_premium_preview_once`、`qm_free_notify_per_day`、`qm_trial_prompt_day1/2`（0＝不提示）、`qm_free_family_max`、`qm_free_alert_clash`、`qm_wear_premium`；功能開關另有 `qm_feature_family／alerts／wear`
+- Remote Config：`qm_free_travel_per_day`、`qm_free_rewarded_per_day`、`qm_free_record_max`、`qm_free_record_days`、`qm_premium_preview_once`、`qm_free_notify_per_day`、`qm_trial_prompt_day1/2`（0＝不提示）、`qm_free_family_max`、`qm_free_alert_clash`、`qm_wear_premium`、`qm_free_ad_unlock_per_day`；功能開關另有 `qm_feature_family／alerts／wear`
 - 訂閱：去除廣告與以上全部。Play 商品 `qm_premium_monthly`（基本方案 monthly，USD 3.99／TWD 99）、`qm_premium_yearly`（yearly，USD 24.99／TWD 590，優惠 `trial-7d-yearly` 7 天試用），與謙卦同價。RevenueCat 專案 `qimen`：權限 `premium`、Offering `default`（$rc_monthly、$rc_annual）
 
 ## 11. 待決事項

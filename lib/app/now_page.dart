@@ -8,6 +8,7 @@ import '../features/almanac/almanac_page.dart';
 import '../features/divination/divination_page.dart';
 import '../features/family/now_cards.dart';
 import '../features/lucky/lucky_cards.dart';
+import '../features/personal/personal_day_card.dart';
 import '../features/travel/travel_page.dart';
 import '../features/travel/travel_reminders.dart';
 import '../features/travel/travel_text.dart';
@@ -206,6 +207,7 @@ class _NowPageState extends State<NowPage> {
               child: ListView(padding: const EdgeInsets.fromLTRB(12, 4, 12, 16), children: [
                 hero(),
                 nextCard(),
+                if (s.featureEnabled('personal_day')) PersonalDayCard(now: _now),
                 if (s.featureEnabled('alerts')) const DayAlertCard(),
                 if (s.featureEnabled('family')) const FamilyTodayCard(),
                 MessageTimingCard(now: _now),

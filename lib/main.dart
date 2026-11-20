@@ -16,6 +16,7 @@ import 'features/course/course.dart';
 import 'features/family/family_store.dart';
 import 'features/reminders/day_alert_reminder.dart';
 import 'features/reminders/natal_alert_reminder.dart';
+import 'features/reminders/house_month_reminder.dart';
 import 'features/reminders/daily_reminder.dart';
 import 'features/wear/wear_sync.dart';
 import 'l10n/l10n.dart';
@@ -23,7 +24,7 @@ import 'features/travel/travel_reminders.dart';
 import 'services/notifications.dart';
 
 /// 功能 id（Remote Config `qm_feature_<id>`，預設開）。
-const featureIds = ['compass', 'travel', 'divination', 'zeshi', 'house', 'records', 'course', 'map', 'destination', 'almanac', 'personal', 'synastry', 'move', 'facing', 'widget', 'family', 'alerts', 'wear', 'natal_report'];
+const featureIds = ['compass', 'travel', 'divination', 'zeshi', 'house', 'records', 'course', 'map', 'destination', 'almanac', 'personal', 'synastry', 'move', 'facing', 'widget', 'family', 'alerts', 'wear', 'natal_report', 'personal_day'];
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -63,7 +64,11 @@ Future<void> main() async {
     }
     if (NatalAlertReminder.premium != premium.isPremium.value) {
       NatalAlertReminder.premium = premium.isPremium.value;
+      HouseMonthReminder.premium = premium.isPremium.value;
+      DailyReminder.premium = premium.isPremium.value;
       unawaited(NatalAlertReminder.reschedule().catchError((_) {}));
+      unawaited(HouseMonthReminder.reschedule().catchError((_) {}));
+      unawaited(DailyReminder.reschedule().catchError((_) {}));
     }
     unawaited(_syncWear());
   }
@@ -72,6 +77,8 @@ Future<void> main() async {
   CourseAccess.premium.value = premium.isPremium.value;
   DayAlertReminder.clashEnabled = premium.isPremium.value || limits.alertClashFree;
   NatalAlertReminder.premium = premium.isPremium.value;
+  HouseMonthReminder.premium = premium.isPremium.value;
+  DailyReminder.premium = premium.isPremium.value;
   _wearLocked = () => limits.wearPremium && !premium.isPremium.value;
   premium.isPremium.addListener(syncPremium);
   // 家人改了：重排重要日提醒（沖生年那一行）
@@ -96,6 +103,7 @@ Future<void> main() async {
   DailyReminder.reschedule().catchError((_) {});
   DayAlertReminder.reschedule().catchError((_) {});
   NatalAlertReminder.reschedule().catchError((_) {});
+  HouseMonthReminder.reschedule().catchError((_) {});
   // 手錶資料要算 36 個時辰，等首頁畫好再做
   unawaited(Future<void>.delayed(const Duration(seconds: 5), _syncWear));
 }
