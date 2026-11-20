@@ -145,6 +145,8 @@ class _CompassPageState extends State<CompassPage> {
       await CompassPrefs.markIntroSeen();
       if (mounted) await showCompassIntro(context);
     }
+    // 預設真北：還沒算過磁偏角就在看完引導後取位置；被拒或失敗會退回磁北並提示
+    if (mounted && p.trueNorth && p.declination == null) await _setTrueNorth(true);
   }
 
   void _refreshCharts() {

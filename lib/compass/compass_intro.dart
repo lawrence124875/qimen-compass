@@ -23,7 +23,7 @@ class CompassPrefs {
   static Future<({bool trueNorth, double? declination, double? fieldUt, bool introSeen})> load() async {
     final p = await _p();
     return (
-      trueNorth: p?.getBool(_kTrueNorth) ?? false,
+      trueNorth: p?.getBool(_kTrueNorth) ?? true, // 預設真北（奇門方位以地理方向論）
       declination: p?.getDouble(_kDeclination),
       fieldUt: p?.getDouble(_kField),
       introSeen: p?.getBool(_kIntroSeen) ?? false,
