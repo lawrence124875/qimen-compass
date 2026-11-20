@@ -1,7 +1,7 @@
 name: qimen_compass
 description: "奇門羅盤 Qimen Compass（LC Lab）"
 publish_to: 'none'
-version: 1.3.0+1
+version: 1.4.0+1
 
 environment:
   sdk: '>=3.4.0 <4.0.0'

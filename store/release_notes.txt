@@ -1,104 +1,91 @@
 <zh-TW>
-奇門羅盤 1.3.0：
-• 家人盤：存多位家人生日，一鍵看今天、明天誰適合出門、簽約
-• 節氣與重要日提醒：前一晚提醒明天換局、月破、歲破、四離四絕，附具體建議
-• Wear OS 手錶羅盤：轉向吉門會震動
-• 也含 1.2.0：今日吉色、發訊息時機、神煞長生圖鑑、開運擺件與化解、談判座位
-• 地址搜尋支援各國，找不到可在地圖上點選；日期改 yyyy/mm/dd
+奇門羅盤 1.4.0：
+• 本命報告與大運：依本命盤寫成個人報告，看十年一運的大運落宮與關鍵年份（免費看摘要）
+• 羅盤標出你的本命吉方；宅盤看每宮與你是否相合、最適合你的房間與座位
+• 擇時依本命加分；交節前 3 天推播流年流月關鍵期，附最佳時辰與方位
+• 也含 1.3.0：家人盤、節氣與重要日提醒、Wear OS 手錶羅盤
 </zh-TW>
 <zh-CN>
-奇门罗盘 1.3.0：
-• 家人盘：存多位家人生日，一键看今天、明天谁适合出门、签约
-• 节气与重要日提醒：前一晚提醒明天换局、月破、岁破、四离四绝，附具体建议
-• Wear OS 手表罗盘：转向吉门会震动
-• 也含 1.2.0：今日吉色、发消息时机、神煞长生图鉴、开运摆件与化解、谈判座位
-• 地址搜索支持各国，找不到可在地图上点选；日期改 yyyy/mm/dd
+奇门罗盘 1.4.0：
+• 本命报告与大运：依本命盘写成个人报告，看十年一运的大运落宫与关键年份（免费看摘要）
+• 罗盘标出你的本命吉方；宅盘看每宫与你是否相合、最适合你的房间与座位
+• 择时依本命加分；交节前 3 天推送流年流月关键期，附最佳时辰与方位
+• 也含 1.3.0：家人盘、节气与重要日提醒、Wear OS 手表罗盘
 </zh-CN>
 <en-US>
-Qimen Compass 1.3.0:
-• Family chart: save family birthdays and see who should go out or sign today or tomorrow
-• Key day alerts: the evening before a chart change, Month/Year-Breaker, Four Separations or Four Endings day, with practical tips
-• Wear OS watch compass: vibrates when you face a lucky gate
-• Also includes 1.2.0: lucky colors, best time to send, glossary, lucky items and remedies, negotiation seat
-• Worldwide address search plus map picking; dates as yyyy/mm/dd
+Qimen Compass 1.4.0:
+• Natal report and 10-year luck cycles: a personal reading, where each decade’s luck falls and key years (summary free)
+• Your natal lucky direction on the compass; house chart shows which palaces suit you and your best room and seat
+• Natal-weighted date selection; alerts 3 days before key yearly and monthly periods, with the best hour and direction
+• Also includes 1.3.0: family chart, key day alerts, Wear OS watch compass
 </en-US>
 <ja-JP>
-奇門羅盤 1.3.0：
-• 家族盤：家族の誕生日を登録し、今日・明日に外出・契約に向く人を確認
-• 節気・重要日の通知：前夜に局替わり・月破・歳破・四離・四絶日を具体的なアドバイス付きで
-• Wear OS ウォッチ羅盤：吉門を向くと振動
-• 1.2.0 の内容も含む：今日の吉色、送信のタイミング、図鑑、開運アイテムと化解、交渉の席
-• 住所検索が各国対応、地図で選択も可。日付は yyyy/mm/dd
+奇門羅盤 1.4.0：
+• 本命レポートと大運：個人レポートと 10 年ごとの大運の落宮・重要な年（要約は無料）
+• 羅盤に本命の吉方位を表示。宅盤で各宮との相性と、あなたに合う部屋・席
+• 択時は本命で加点。節入り 3 日前に年運・月運の重要期を最良の時刻・方位付きで通知
+• 1.3.0 の内容も含む：家族盤、節気・重要日の通知、Wear OS ウォッチ羅盤
 </ja-JP>
 <ko-KR>
-기문 나침반 1.3.0:
-• 가족반: 가족 생일을 저장하고 오늘·내일 외출·계약에 좋은 사람 확인
-• 절기·중요일 알림: 전날 밤 국 변경, 월파·세파·사리·사절일을 구체적인 조언과 함께
-• Wear OS 워치 나침반: 길문을 향하면 진동
-• 1.2.0 포함: 오늘의 길색, 보내기 좋은 시간, 도감, 개운 소품과 화해, 협상 자리
-• 주소 검색 전 세계 지원, 지도 선택 가능. 날짜는 yyyy/mm/dd
+기문 나침반 1.4.0:
+• 본명 리포트와 대운: 개인 리포트와 10년 대운의 낙궁·중요한 해(요약 무료)
+• 나침반에 본명 길방 표시, 택반에서 궁별 궁합과 나에게 맞는 방·자리
+• 택시는 본명으로 가점, 절입 3일 전 연운·월운 중요 시기를 최적의 시간·방위와 함께 알림
+• 1.3.0 포함: 가족반, 절기·중요일 알림, Wear OS 워치 나침반
 </ko-KR>
 <vi>
-Qimen Compass 1.3.0:
-• Bàn gia đình: lưu ngày sinh người thân, xem hôm nay, ngày mai ai nên ra ngoài, ký kết
-• Nhắc ngày quan trọng: tối hôm trước báo đổi cục, nguyệt phá, tuế phá, tứ ly, tứ tuyệt kèm lời khuyên
-• La bàn đồng hồ Wear OS: rung khi quay về cửa tốt
-• Gồm cả 1.2.0: màu may mắn, thời điểm gửi tin, từ điển, vật phẩm và hóa giải, chỗ ngồi đàm phán
-• Tìm địa chỉ mọi quốc gia, chọn trên bản đồ; ngày nhập yyyy/mm/dd
+Qimen Compass 1.4.0:
+• Báo cáo bản mệnh và đại vận: luận giải cá nhân, đại vận 10 năm rơi vào cung nào và các năm then chốt (tóm tắt miễn phí)
+• La bàn đánh dấu hướng tốt bản mệnh; bàn nhà chỉ cung hợp với bạn, phòng và chỗ ngồi tốt nhất
+• Chọn giờ theo bản mệnh; nhắc giai đoạn quan trọng của năm, tháng trước 3 ngày kèm giờ và hướng tốt nhất
+• Gồm cả 1.3.0: bàn gia đình, nhắc ngày quan trọng, la bàn đồng hồ Wear OS
 </vi>
 <es-ES>
-Qimen Compass 1.3.0:
-• Carta familiar: guarda cumpleaños y mira quién debe salir o firmar hoy o mañana
-• Avisos de días clave: la noche anterior a un cambio de carta o un día Rompe-Mes/Año, Cuatro Separaciones o Cuatro Finales, con consejos
-• Brújula en el reloj Wear OS: vibra al mirar una puerta favorable
-• Incluye 1.2.0: colores de la suerte, momento para enviar, glosario, objetos y remedios, asiento de negociación
-• Direcciones de todo el mundo y elección en mapa; fechas yyyy/mm/dd
+Qimen Compass 1.4.0:
+• Informe natal y ciclos de 10 años: lectura personal, dónde cae la suerte de cada década y años clave (resumen gratis)
+• Tu dirección natal favorable en la brújula; la carta de la casa muestra qué palacios te favorecen y tu mejor cuarto y asiento
+• Selección de fechas según tu carta natal; avisos 3 días antes de periodos clave del año y del mes, con la mejor hora y dirección
+• Incluye 1.3.0: carta familiar, avisos de días clave, brújula en el reloj Wear OS
 </es-ES>
 <es-US>
-Qimen Compass 1.3.0:
-• Carta familiar: guarda cumpleaños y mira quién debe salir o firmar hoy o mañana
-• Avisos de días clave: la noche anterior a un cambio de carta o un día Rompe-Mes/Año, Cuatro Separaciones o Cuatro Finales, con consejos
-• Brújula en el reloj Wear OS: vibra al mirar una puerta favorable
-• Incluye 1.2.0: colores de la suerte, momento para enviar, glosario, objetos y remedios, asiento de negociación
-• Direcciones de todo el mundo y elección en mapa; fechas yyyy/mm/dd
+Qimen Compass 1.4.0:
+• Informe natal y ciclos de 10 años: lectura personal, dónde cae la suerte de cada década y años clave (resumen gratis)
+• Tu dirección natal favorable en la brújula; la carta de la casa muestra qué palacios te favorecen y tu mejor cuarto y asiento
+• Selección de fechas según tu carta natal; avisos 3 días antes de periodos clave del año y del mes, con la mejor hora y dirección
+• Incluye 1.3.0: carta familiar, avisos de días clave, brújula en el reloj Wear OS
 </es-US>
 <pt-BR>
-Qimen Compass 1.3.0:
-• Mapa da família: salve aniversários e veja quem deve sair ou assinar hoje ou amanhã
-• Avisos de dias-chave: na noite anterior a uma mudança de mapa ou dia Quebra-Mês/Ano, Quatro Separações ou Quatro Finais, com dicas
-• Bússola no relógio Wear OS: vibra ao encarar uma porta favorável
-• Inclui 1.2.0: cores da sorte, hora de enviar, glossário, objetos e remédios, assento de negociação
-• Endereços do mundo todo e escolha no mapa; datas yyyy/mm/dd
+Qimen Compass 1.4.0:
+• Relatório natal e ciclos de 10 anos: leitura pessoal, onde cai a sorte de cada década e anos-chave (resumo grátis)
+• Sua direção natal favorável na bússola; o mapa da casa mostra quais palácios combinam com você e o melhor cômodo e assento
+• Escolha de datas pelo mapa natal; avisos 3 dias antes de períodos-chave do ano e do mês, com a melhor hora e direção
+• Inclui 1.3.0: mapa da família, avisos de dias-chave, bússola no relógio Wear OS
 </pt-BR>
 <pt-PT>
-Qimen Compass 1.3.0:
-• Mapa da família: guarde aniversários e veja quem deve sair ou assinar hoje ou amanhã
-• Avisos de dias-chave: na noite anterior a uma mudança de mapa ou dia Quebra-Mês/Ano, Quatro Separações ou Quatro Finais, com dicas
-• Bússola no relógio Wear OS: vibra ao encarar uma porta favorável
-• Inclui 1.2.0: cores da sorte, hora de enviar, glossário, objetos e remédios, assento de negociação
-• Endereços de todo o mundo e escolha no mapa; datas yyyy/mm/dd
+Qimen Compass 1.4.0:
+• Relatório natal e ciclos de 10 anos: leitura pessoal, onde cai a sorte de cada década e anos-chave (resumo grátis)
+• Sua direção natal favorável na bússola; o mapa da casa mostra quais palácios combinam com você e o melhor divisão e assento
+• Escolha de datas pelo mapa natal; avisos 3 dias antes de períodos-chave do ano e do mês, com a melhor hora e direção
+• Inclui 1.3.0: mapa da família, avisos de dias-chave, bússola no relógio Wear OS
 </pt-PT>
 <id>
-Qimen Compass 1.3.0:
-• Bagan keluarga: simpan tanggal lahir dan lihat siapa yang cocok keluar atau tanda tangan hari ini atau besok
-• Pengingat hari penting: malam sebelum pergantian bagan, hari Pemecah Bulan/Tahun, Empat Pemisahan atau Empat Akhir, dengan saran
-• Kompas jam Wear OS: bergetar saat menghadap gerbang baik
-• Termasuk 1.2.0: warna keberuntungan, waktu kirim, glosarium, benda keberuntungan dan penawar, kursi negosiasi
-• Cari alamat seluruh dunia, pilih di peta; tanggal yyyy/mm/dd
+Qimen Compass 1.4.0:
+• Laporan natal dan siklus 10 tahun: bacaan pribadi, letak keberuntungan tiap dekade dan tahun penting (ringkasan gratis)
+• Arah baik natal di kompas; bagan rumah menunjukkan istana yang cocok serta ruang dan kursi terbaik untukmu
+• Pemilihan waktu sesuai bagan natal; pengingat 3 hari sebelum periode penting tahunan dan bulanan, dengan jam dan arah terbaik
+• Termasuk 1.3.0: bagan keluarga, pengingat hari penting, kompas jam Wear OS
 </id>
 <th>
-Qimen Compass 1.3.0:
-• ผังครอบครัว: บันทึกวันเกิด ดูว่าวันนี้หรือพรุ่งนี้ใครควรออกเดินทาง เซ็นสัญญา
-• แจ้งเตือนวันสำคัญ: คืนก่อนเปลี่ยนผัง วันเดือนแตก ปีแตก สี่แยก สี่สิ้น พร้อมคำแนะนำ
-• เข็มทิศนาฬิกา Wear OS: สั่นเมื่อหันไปทางประตูมงคล
-• รวม 1.2.0: สีมงคล เวลาส่งข้อความ อภิธานศัพท์ ของมงคลและวิธีแก้ ที่นั่งเจรจา
-• ค้นหาที่อยู่ได้ทุกประเทศ เลือกบนแผนที่ได้ วันที่ใช้ yyyy/mm/dd
+Qimen Compass 1.4.0:
+• รายงานดวงกำเนิดและวัฏจักร 10 ปี: คำอ่านส่วนตัว ดวงแต่ละทศวรรษตกที่ใดและปีสำคัญ (ดูสรุปฟรี)
+• เข็มทิศแสดงทิศมงคลประจำตัว ผังบ้านบอกวังที่เข้ากับคุณ ห้องและที่นั่งที่ดีที่สุด
+• เลือกเวลาตามดวงกำเนิด แจ้งเตือนช่วงสำคัญรายปีและรายเดือนล่วงหน้า 3 วัน พร้อมเวลาและทิศที่ดีที่สุด
+• รวม 1.3.0: ผังครอบครัว แจ้งเตือนวันสำคัญ เข็มทิศนาฬิกา Wear OS
 </th>
 <ar>
-Qimen Compass 1.3.0:
-• مخطط العائلة: احفظ تواريخ الميلاد واعرف من يناسبه الخروج أو التوقيع اليوم أو غدًا
-• تنبيهات الأيام المهمة: في الليلة السابقة لتغيّر المخطط وأيام كاسر الشهر والسنة والافتراقات والنهايات الأربع، مع نصائح
-• بوصلة ساعة Wear OS: تهتز عند مواجهة بوابة ميمونة
-• يشمل 1.2.0: ألوان الحظ ووقت الإرسال والمعجم وأغراض الحظ والعلاجات ومقعد التفاوض
-• بحث عن العناوين في كل الدول والاختيار على الخريطة؛ التاريخ yyyy/mm/dd
+Qimen Compass 1.4.0:
+• تقرير الميلاد ودورات الحظ العشرية: قراءة شخصية وأين يقع حظ كل عقد والسنوات المهمة (الملخص مجاني)
+• اتجاهك الميمون على البوصلة؛ ومخطط المنزل يبين القصور الملائمة لك وأفضل غرفة ومقعد
+• اختيار التوقيت وفق مخطط ميلادك؛ وتنبيهات قبل الفترات المهمة السنوية والشهرية بثلاثة أيام مع أفضل ساعة واتجاه
+• يشمل 1.3.0: مخطط العائلة وتنبيهات الأيام المهمة وبوصلة ساعة Wear OS
 </ar>
