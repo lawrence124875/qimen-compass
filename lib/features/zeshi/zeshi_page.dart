@@ -309,9 +309,12 @@ class _ZeShiPageState extends State<ZeShiPage> {
     final s = AppServices.of(context);
     return ValueListenableBuilder<bool>(
       valueListenable: s.premium.isPremium,
-      builder: (context, premium, _) => _build(context, widget.locked && !premium),
+      builder: (context, premium, _) => _build(context, widget.locked && !premium && !_adUnlocked),
     );
   }
+
+  /// 看廣告解鎖：這次進入擇時頁內有效。
+  bool _adUnlocked = false;
 
   Widget _build(BuildContext context, bool locked) {
     final l = context.l10n;
@@ -434,7 +437,8 @@ class _ZeShiPageState extends State<ZeShiPage> {
                       if (!locked) l.travelDirDoor(TravelText.direction(l, result.first.palace), QimenTerms.door(result.first.door, L10n.language)),
                     ],
                   ),
-                  if (locked) PremiumLockCard(feature: 'zeshi', text: l.zeshiLockedDetail),
+                  if (locked)
+                    PremiumLockCard(feature: 'zeshi', text: l.zeshiLockedDetail, onUnlocked: () => setState(() => _adUnlocked = true)),
                   for (var i = 0; i < result.length; i++)
                     _SlotCard(
                       rank: i + 1,

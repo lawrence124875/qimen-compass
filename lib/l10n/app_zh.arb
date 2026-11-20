@@ -1984,5 +1984,61 @@
         "type": "String"
       }
     }
+  },
+  "adUnlockOnce": "看廣告解鎖這一次（每天 1 次）",
+  "adUnlockedHint": "已解鎖這一次。訂閱可無限次使用、免廣告。",
+  "moveLocked": "今年、明年的等級先給你看。哪幾個月適合搬、每月的門與格局要訂閱。",
+  "moveGoodCount": "未來 12 個月有 {n} 個月適合",
+  "@moveGoodCount": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "destLocked": "現在往這個方向的吉凶先給你看。較好的出發時段與接下來 12 個時辰要訂閱。",
+  "destLockedLater": "現在不宜，今天另有較好的出發時段",
+  "synLocked": "合盤等級先給你看。加減分原因與盤面要訂閱。",
+  "houseLocked": "各宮吉凶先給你看。房間建議、開運擺件與化解、最適合你的房間要訂閱。",
+  "pdayTitle": "今日個人運",
+  "pdayLocked": "今天的等級先給你看。結合本命與大運的個人吉時、方位、大運宮吉凶要訂閱。",
+  "pdayFate": "年命宮",
+  "pdayHours": "個人吉時",
+  "pdayNoHour": "今天沒有特別適合你的時辰",
+  "pdayDaYun": "大運",
+  "pdayNeedGender": "在個人資料設定性別，可加看大運",
+  "pdayBasis": "依本命年干在今日日盤的宮位，與目前大運天干落宮判斷。",
+  "reportMonths": "流月（未來 12 個月）",
+  "reportMonthsHint": "每月交節起的月盤上，你的年命宮吉凶。",
+  "houseMonthChannel": "宅盤流月提醒",
+  "houseMonthTitle": "{term}：宅盤換月",
+  "@houseMonthTitle": {
+    "placeholders": {
+      "term": {
+        "type": "String"
+      }
+    }
+  },
+  "houseMonthBody": "本月轉吉：{good}；轉凶：{bad}。打開宅盤看擺件調整。",
+  "@houseMonthBody": {
+    "placeholders": {
+      "good": {
+        "type": "String"
+      },
+      "bad": {
+        "type": "String"
+      }
+    }
+  },
+  "dailyBodyPersonal": "你的個人吉時 {time}，往{dir}",
+  "@dailyBodyPersonal": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "dir": {
+        "type": "String"
+      }
+    }
   }
 }

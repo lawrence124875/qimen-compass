@@ -109,10 +109,11 @@ class _MapPageState extends State<MapPage> {
   Future<void> _openDestination() async {
     final me = _me, pin = _pin;
     if (me == null || pin == null) return;
-    // 目的地吉凶屬訂閱功能：免費版完整體驗一次
-    final access = await requirePremium(context, feature: 'destination');
-    if (access == PremiumAccess.titleOnly || !mounted) return;
-    await Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => DestinationPage(from: me, to: pin, name: _pinName)));
+    // 目的地吉凶：免費版第一次完整體驗，之後只給現在的吉凶，較好時段要訂閱
+    final access = await peekPremium(context, feature: 'destination');
+    if (!mounted) return;
+    await Navigator.of(context).push(MaterialPageRoute<void>(
+        builder: (_) => DestinationPage(from: me, to: pin, name: _pinName, locked: access == PremiumAccess.titleOnly)));
   }
 
   Set<Polygon> _sectors(BuildContext context) {

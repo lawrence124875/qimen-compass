@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app/services.dart';
 import '../../app/theme/app_theme.dart';
@@ -104,20 +105,58 @@ Future<PremiumAccess> peekPremium(BuildContext context, {required String feature
   return PremiumAccess.titleOnly;
 }
 
+/// 看獎勵廣告解鎖（HANDOFF §10 訂閱平衡）：只給每天會用的功能（問事、擇時詳解、今日個人運），
+/// 每項每天 `qm_free_ad_unlock_per_day` 次（預設 1，0＝關閉）；一次性功能（宅盤、搬家、合盤、目的地、本命報告）不給。
+class AdUnlock {
+  AdUnlock._();
+
+  static const features = {'divination', 'zeshi', 'personal_day'};
+
+  static String _key(String feature) {
+    final d = DateTime.now();
+    return 'qm_adu_${feature}_${d.year}${d.month.toString().padLeft(2, '0')}${d.day.toString().padLeft(2, '0')}';
+  }
+
+  /// 今天已用廣告解鎖幾次。
+  static Future<int> usedToday(String feature) async => (await SharedPreferences.getInstance()).getInt(_key(feature)) ?? 0;
+
+  static Future<bool> available(BuildContext context, String feature) async {
+    final s = AppServices.of(context);
+    if (s.isPremium || !features.contains(feature)) return false;
+    return await usedToday(feature) < s.limits.adUnlockPerDay;
+  }
+
+  /// 播獎勵廣告；看完（或廣告載入失敗）記一次並回傳 true，中途關掉回傳 false。
+  static Future<bool> watch(BuildContext context, String feature) async {
+    final s = AppServices.of(context);
+    final l = context.l10n;
+    final messenger = ScaffoldMessenger.maybeOf(context);
+    final outcome = await s.ads.showRewarded();
+    s.analytics.log('qm_ad_unlock', {'feature': feature, 'outcome': outcome.name});
+    if (outcome == RewardedOutcome.dismissed) return false;
+    final p = await SharedPreferences.getInstance();
+    await p.setInt(_key(feature), (p.getInt(_key(feature)) ?? 0) + 1);
+    messenger?.showSnackBar(SnackBar(content: Text(l.adUnlockedHint)));
+    return true;
+  }
+}
+
 /// 詳解上鎖卡：說明＋「訂閱看完整內容」按鈕。訂閱成功回呼 [onUnlocked]。
+/// [feature] 在 [AdUnlock.features] 內時另有「看廣告解鎖這一次」（今天還有次數才顯示）。
 class PremiumLockCard extends StatelessWidget {
-  const PremiumLockCard({super.key, required this.feature, required this.text, this.onUnlocked});
+  const PremiumLockCard({super.key, required this.feature, required this.text, this.onUnlocked, this.margin});
 
   final String feature;
   final String text;
   final VoidCallback? onUnlocked;
+  final EdgeInsetsGeometry? margin;
 
   @override
   Widget build(BuildContext context) {
     final qm = context.qm;
     final l = context.l10n;
     return Card(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: margin ?? const EdgeInsets.only(bottom: 12),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: BorderSide(color: qm.primary)),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -135,6 +174,22 @@ class PremiumLockCard extends StatelessWidget {
             },
             child: Text(l.premiumUnlockFull),
           ),
+          if (AdUnlock.features.contains(feature))
+            FutureBuilder<bool>(
+              future: AdUnlock.available(context, feature),
+              builder: (context, snap) => snap.data != true
+                  ? const SizedBox.shrink()
+                  : Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: OutlinedButton.icon(
+                        icon: const Icon(Icons.play_circle_outline),
+                        label: Text(l.adUnlockOnce),
+                        onPressed: () async {
+                          if (await AdUnlock.watch(context, feature)) onUnlocked?.call();
+                        },
+                      ),
+                    ),
+            ),
         ]),
       ),
     );

@@ -210,7 +210,7 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: FilledButton.tonalIcon(
                   icon: const Icon(Icons.people_outline),
-                  onPressed: () => MePage.openPremium(context, 'synastry', (_) => const SynastryPage()),
+                  onPressed: () => MePage.openPeek(context, 'synastry', (locked) => SynastryPage(locked: locked)),
                   label: Text(l.synTitle, maxLines: 1, overflow: TextOverflow.ellipsis),
                 ),
               ),

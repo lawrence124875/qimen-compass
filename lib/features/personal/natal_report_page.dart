@@ -31,6 +31,7 @@ class NatalReportPage extends StatefulWidget {
 }
 
 class _NatalReportPageState extends State<NatalReportPage> {
+  static const _engine = ShiJiaEngine();
   Profile? _profile;
   bool _loading = true;
   late bool _locked = widget.locked;
@@ -272,6 +273,28 @@ class _NatalReportPageState extends State<NatalReportPage> {
                 ? null
                 : ToneBadge(tone: toneOfLevel(k.verdict!.level), label: TravelText.level(l, k.verdict!.level)),
           ),
+      ]),
+      // 流月（HANDOFF §10 C）：接下來 12 個「節」起的月盤上年命宮吉凶，每月更新。
+      section(l.reportMonths, hint: l.reportMonthsHint, [
+        for (final t in _engine.calendar
+            .termsBetween(now.toUtc(), now.toUtc().add(const Duration(days: 370)))
+            .where((t) => t.index.isOdd)
+            .take(12))
+          () {
+            final at = t.startUtc.add(const Duration(days: 1));
+            final v = const PersonalEngine()
+                .fortune(r.natal.birth, at, PanUnit.month, settings: s.timeSettingsAt(at.toLocal()), method: s.juMethod)
+                .verdict;
+            final local = t.startUtc.toLocal();
+            return ListTile(
+              contentPadding: EdgeInsets.zero,
+              dense: true,
+              title: Text('${local.year}/${local.month.toString().padLeft(2, '0')}/${local.day.toString().padLeft(2, '0')}'
+                  '${l.separator}${QimenTerms.solarTerm(t.index, lang)}'),
+              subtitle: v == null ? null : Text(palaceLine(v)),
+              trailing: v == null ? null : ToneBadge(tone: toneOfLevel(v.level), label: TravelText.level(l, v.level)),
+            );
+          }(),
       ]),
     ];
 

@@ -9,6 +9,7 @@ import '../../compass/geo_math.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../core/records/record_store.dart';
 import '../../l10n/l10n.dart';
+import '../../shared/premium/usage_gate.dart';
 import '../../shared/widgets/result_card.dart';
 import '../records/record_actions.dart';
 import '../travel/travel_text.dart';
@@ -17,7 +18,10 @@ import 'map_location.dart';
 /// 目的地吉凶（HANDOFF §12 P2）：起點→目的地的真北方位角落在哪一宮，
 /// 列出現在與接下來 12 個時辰往該方位的吉凶，挑出較好的出發時段。
 class DestinationPage extends StatefulWidget {
-  const DestinationPage({super.key, required this.from, required this.to, this.name});
+  const DestinationPage({super.key, required this.from, required this.to, this.name, this.locked = false});
+
+  /// 免費版體驗過後：只給現在往該方位的吉凶，較好時段與接下來 12 個時辰要訂閱。
+  final bool locked;
 
   final (double, double) from, to;
   final String? name;
@@ -28,6 +32,7 @@ class DestinationPage extends StatefulWidget {
 
 class _DestinationPageState extends State<DestinationPage> {
   final _shareKey = GlobalKey();
+  late bool _locked = widget.locked;
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +102,9 @@ class _DestinationPageState extends State<DestinationPage> {
                   kicker: l.destNow,
                   headline: cur.recommended
                       ? l.resultGoNow(TravelText.direction(l, palace))
-                      : best.isNotEmpty
+                      : _locked
+                          ? (best.isNotEmpty ? l.destLockedLater : l.destNoneGood)
+                          : best.isNotEmpty
                           ? l.resultGoAt(range(best.first).split('–').first, TravelText.direction(l, palace))
                           : l.destNoneGood,
                   meta: [
@@ -105,13 +112,16 @@ class _DestinationPageState extends State<DestinationPage> {
                       if (cur.door != null) '${QimenTerms.door(cur.door!, lang)} ${l.luck(cur.door!.luck)}',
                       ...cur.flags.map((f) => TravelText.flag(l, f)),
                     ].join(l.separator),
-                    if (best.isNotEmpty) l.labelValue(l.destBest, best.map(range).join(l.separator)),
+                    if (best.isNotEmpty && !_locked) l.labelValue(l.destBest, best.map(range).join(l.separator)),
                   ],
                 ),
               ]),
           ),
           const SizedBox(height: 12),
-          DetailsFold(children: [
+          if (_locked)
+            PremiumLockCard(feature: 'destination', text: l.destLocked, onUnlocked: () => setState(() => _locked = false))
+          else
+            DetailsFold(children: [
             Text(l.destBest, style: text.titleSmall?.copyWith(color: qm.primary)),
             if (best.isEmpty)
               Padding(padding: const EdgeInsets.symmetric(vertical: 8), child: Text(l.destNoneGood))

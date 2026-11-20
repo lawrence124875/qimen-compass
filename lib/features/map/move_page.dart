@@ -7,6 +7,7 @@ import '../../compass/compass_math.dart';
 import '../../compass/geo_math.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
+import '../../shared/premium/usage_gate.dart';
 import '../../shared/widgets/result_card.dart';
 import '../travel/travel_text.dart';
 import 'address_search.dart';
@@ -16,7 +17,10 @@ import 'map_location.dart';
 /// 遠行、搬家方位（HANDOFF §12 P5）：以住家為中心，新家或旅遊地的真北方位落在哪一宮，
 /// 對照今年、明年的年盤與接下來 12 個月的月盤，看該方位的吉凶，挑出較好的月份。
 class MovePage extends StatefulWidget {
-  const MovePage({super.key});
+  const MovePage({super.key, this.locked = false});
+
+  /// 免費版體驗過後：只給今年、明年等級與吉月數，哪幾個月與每月詳情要訂閱。
+  final bool locked;
 
   @override
   State<MovePage> createState() => _MovePageState();
@@ -28,6 +32,7 @@ class _MovePageState extends State<MovePage> {
   (double, double)? _home, _dest;
   String? _destName, _homeName;
   bool _busy = false;
+  late bool _locked = widget.locked;
 
   @override
   void initState() {
@@ -183,10 +188,11 @@ class _MovePageState extends State<MovePage> {
       final now = DateTime.now();
       DirectionVerdict judge(DateTime t, PanUnit u) => DirectionPlanner.judge(
           const ShiJiaEngine().compute(t, settings: s.timeSettingsAt(t), method: s.juMethod, unit: u), palace);
+      final locked = _locked;
       Widget row(String label, DirectionVerdict v) => ListTile(
             dense: true,
             title: Text(label),
-            subtitle: Text([if (v.door != null) QimenTerms.door(v.door!, lang), ...v.flags.map((f) => TravelText.flag(l, f))].join(l.separator)),
+            subtitle: locked ? null : Text([if (v.door != null) QimenTerms.door(v.door!, lang), ...v.flags.map((f) => TravelText.flag(l, f))].join(l.separator)),
             trailing: ToneBadge(tone: toneOfLevel(v.level), label: TravelText.level(l, v.level)),
           );
       final months = [
@@ -209,11 +215,19 @@ class _MovePageState extends State<MovePage> {
         row(l.fortuneYear('${now.year + 1}'), judge(DateTime(now.year + 1, 7, 1), PanUnit.year)),
         const Divider(),
         Text(l.moveMonths, style: text.titleSmall?.copyWith(color: qm.primary)),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4),
-          child: Text(good.isEmpty ? l.moveNoGoodMonth : l.labelValue(l.moveGoodMonths, good.join(l.separator))),
-        ),
-        for (final m in months) row(l.fortuneMonth('${m.$1.year}-${m.$1.month.toString().padLeft(2, '0')}'), m.$2),
+        if (locked) ...[
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: Text(good.isEmpty ? l.moveNoGoodMonth : l.moveGoodCount(good.length)),
+          ),
+          PremiumLockCard(feature: 'move', text: l.moveLocked, onUnlocked: () => setState(() => _locked = false)),
+        ] else ...[
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: Text(good.isEmpty ? l.moveNoGoodMonth : l.labelValue(l.moveGoodMonths, good.join(l.separator))),
+          ),
+          for (final m in months) row(l.fortuneMonth('${m.$1.year}-${m.$1.month.toString().padLeft(2, '0')}'), m.$2),
+        ],
         const SizedBox(height: 8),
         Text(l.mapTrueNorthNote, style: text.bodySmall?.copyWith(color: qm.textMuted)),
         Text(l.homeDisclaimer, style: text.bodySmall?.copyWith(color: qm.textMuted)),
