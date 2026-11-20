@@ -128,7 +128,19 @@ class _CompassPageState extends State<CompassPage> {
     setState(() {
       _declination = p.declination;
       _trueNorth = p.trueNorth && p.declination != null;
+      if (p.fieldUt != null) _field.setExpected(p.fieldUt!);
     });
+    // 已開真北：背景重新取位置更新磁偏角與當地磁場（出國時自動換成當地數值）
+    if (_trueNorth) {
+      Declination.locate().then((r) {
+        if (!mounted || r.degrees == null) return;
+        setState(() {
+          _declination = r.degrees;
+          if (r.fieldUt != null) _field.setExpected(r.fieldUt!);
+        });
+        CompassPrefs.saveNorth(true, r.degrees, r.fieldUt);
+      });
+    }
     if (!p.introSeen) {
       await CompassPrefs.markIntroSeen();
       if (mounted) await showCompassIntro(context);
@@ -173,8 +185,9 @@ class _CompassPageState extends State<CompassPage> {
       _locating = false;
       _declination = r.degrees;
       _trueNorth = r.degrees != null;
+      if (r.fieldUt != null) _field.setExpected(r.fieldUt!);
     });
-    CompassPrefs.saveNorth(_trueNorth, r.degrees);
+    CompassPrefs.saveNorth(_trueNorth, r.degrees, r.fieldUt);
     if (r.error != null) {
       final l = context.l10n;
       final msg = switch (r.error!) {

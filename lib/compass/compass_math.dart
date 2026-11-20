@@ -65,12 +65,22 @@ bool needsCalibration(CompassAccuracy effective, FieldStatus field) =>
 /// 磁場狀態。
 enum FieldStatus { ok, outOfRange, unstable, unknown }
 
-/// 磁力計監測：地磁正常範圍 25–65 μT；最近一段樣本的標準差過大視為抖動（附近有金屬或家電）。
+/// 磁力計監測：地磁正常範圍預設 25–65 μT（全球地磁約 22–65）；知道所在地時改為當地 WMM 總強度 ±[tolerance]。
+/// 最近一段樣本的標準差過大視為抖動（附近有金屬或家電）。
 class MagneticMonitor {
   MagneticMonitor({this.window = 25, this.min = 25, this.max = 65, this.maxStdDev = 4});
 
   final int window;
-  final double min, max, maxStdDev;
+  final double maxStdDev;
+  double min, max;
+
+  static const tolerance = 15.0;
+
+  /// 依所在地的地磁總強度（μT）設定正常範圍。
+  void setExpected(double ut) {
+    min = ut - tolerance;
+    max = ut + tolerance;
+  }
   final List<double> _samples = [];
 
   /// 最近一筆磁場強度（μT）。

@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_compass/flutter_compass.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
+import '../../compass/compass_intro.dart';
 import '../../compass/compass_math.dart';
 
 /// 宅盤用的方位來源：沿用羅盤的磁場監測與室內鎖定（[MagneticMonitor]、[GyroLock]）。
@@ -35,6 +36,9 @@ class HeadingTracker extends ChangeNotifier {
 
   void acquire() {
     if (_users++ > 0) return;
+    CompassPrefs.load().then((p) {
+      if (p.fieldUt != null) field.setExpected(p.fieldUt!); // 當地地磁強度（羅盤開真北時存的）
+    });
     final compass = FlutterCompass.events;
     if (compass == null) {
       noSensor = true;

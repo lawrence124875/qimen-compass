@@ -10,6 +10,7 @@ class CompassPrefs {
   static const _kTrueNorth = 'qm_compass_true_north';
   static const _kDeclination = 'qm_compass_declination';
   static const _kIntroSeen = 'qm_compass_intro_seen';
+  static const _kField = 'qm_compass_field_ut';
 
   static Future<SharedPreferences?> _p() async {
     try {
@@ -19,19 +20,21 @@ class CompassPrefs {
     }
   }
 
-  static Future<({bool trueNorth, double? declination, bool introSeen})> load() async {
+  static Future<({bool trueNorth, double? declination, double? fieldUt, bool introSeen})> load() async {
     final p = await _p();
     return (
       trueNorth: p?.getBool(_kTrueNorth) ?? false,
       declination: p?.getDouble(_kDeclination),
+      fieldUt: p?.getDouble(_kField),
       introSeen: p?.getBool(_kIntroSeen) ?? false,
     );
   }
 
-  static Future<void> saveNorth(bool trueNorth, double? declination) async {
+  static Future<void> saveNorth(bool trueNorth, double? declination, [double? fieldUt]) async {
     final p = await _p();
     await p?.setBool(_kTrueNorth, trueNorth);
     if (declination != null) await p?.setDouble(_kDeclination, declination);
+    if (fieldUt != null) await p?.setDouble(_kField, fieldUt);
   }
 
   static Future<void> markIntroSeen() async => (await _p())?.setBool(_kIntroSeen, true);

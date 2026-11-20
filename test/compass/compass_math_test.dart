@@ -116,4 +116,20 @@ void main() {
     g.update(5, t0.add(const Duration(seconds: 5))); // 中斷超過 0.5 秒不累計
     expect(g.heading, closeTo(100, 1e-6));
   });
+
+  test('當地地磁強度與正常範圍', () {
+    // WMM：台北約 45 μT、巴西聖保羅約 23 μT（南大西洋異常區）
+    expect(Declination.fieldAt(25.03, 121.56, DateTime(2026, 1, 1)), inInclusiveRange(40, 50));
+    final sp = Declination.fieldAt(-23.55, -46.63, DateTime(2026, 1, 1));
+    expect(sp, inInclusiveRange(20, 26));
+    final m = MagneticMonitor()..setExpected(sp);
+    for (var i = 0; i < 6; i++) {
+      m.add(sp, 0, 0);
+    }
+    expect(m.status, FieldStatus.ok);
+    for (var i = 0; i < 25; i++) {
+      m.add(60, 0, 0);
+    }
+    expect(m.status, FieldStatus.outOfRange);
+  });
 }
