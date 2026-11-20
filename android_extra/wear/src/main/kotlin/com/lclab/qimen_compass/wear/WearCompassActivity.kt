@@ -106,7 +106,7 @@ class WearCompassActivity : Activity(), SensorEventListener, DataClient.OnDataCh
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-        view.lowAccuracy = accuracy <= SensorManager.SENSOR_STATUS_ACCURACY_LOW
+        view.lowAccuracy = accuracy == SensorManager.SENSOR_STATUS_UNRELIABLE
     }
 
     @Suppress("DEPRECATION")
