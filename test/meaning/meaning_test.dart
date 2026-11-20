@@ -23,6 +23,10 @@ void main() {
       for (final d in Door.values) 'place:${d.zh}',
       'curetone:平', 'curetone:凶',
       for (final s in cureStars) 'curestar:${s.zh}',
+      // 本命報告性格（日干宮的星門神）
+      for (final s in Star.values) 'np:${s.zh}',
+      for (final d in Door.values) 'np:${d.zh}',
+      for (final g in God.values) 'np:${g.zh}',
     ];
     for (final lang in AppLanguages.all) {
       final f = File('${dir.path}/${lang.contentFolder}.json');
