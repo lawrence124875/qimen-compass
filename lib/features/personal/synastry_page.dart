@@ -8,6 +8,7 @@ import '../../l10n/l10n.dart';
 import '../almanac/almanac_page.dart' show levelColor;
 import '../travel/travel_text.dart';
 import 'profile.dart';
+import '../../shared/widgets/ymd_date_picker.dart';
 
 /// 雙人合盤（HANDOFF §12 P5）：我（個人資料生日）＋對方生日 → 合夥／婚配兩種看法。
 class SynastryPage extends StatefulWidget {
@@ -36,13 +37,12 @@ class _SynastryPageState extends State<SynastryPage> {
   }
 
   Future<void> _pickOther() async {
-    final d = await showDatePicker(
+    final d = await showYmdDatePicker(
       context: context,
       helpText: context.l10n.synOtherBirth,
       initialDate: _other ?? DateTime(1990, 1, 1),
       firstDate: DateTime(1920),
       lastDate: DateTime.now(),
-      initialEntryMode: DatePickerEntryMode.input,
     );
     if (d != null && mounted) setState(() => _other = d);
   }

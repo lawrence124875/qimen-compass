@@ -196,7 +196,7 @@ class _FacingPageState extends State<FacingPage> {
                     Text(label, style: serif(text.headlineSmall).copyWith(color: color, fontWeight: FontWeight.w700)),
                     if (!_target.preferred.contains(door))
                       CureBlock(
-                          lines: cureLines(_meaning, door, p, door.luck == Luck.bad ? Tone.bad : Tone.neutral, _chart[p].stars)),
+                          lines: cureLines(context.l10n, _meaning, door, p, door.luck == Luck.bad ? Tone.bad : Tone.neutral, _chart[p].stars)),
                     if (_tracker.disturbed) Text(l.compassUnstable, style: text.bodySmall?.copyWith(color: qm.bad), textAlign: TextAlign.center),
                   ]),
                 ),

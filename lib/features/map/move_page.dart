@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart' as geo;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app/settings/app_settings.dart';
@@ -10,6 +9,8 @@ import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
 import '../../shared/widgets/result_card.dart';
 import '../travel/travel_text.dart';
+import 'address_search.dart';
+import 'map_page.dart' show mapsEnabled;
 import 'map_location.dart';
 
 /// 遠行、搬家方位（HANDOFF §12 P5）：以住家為中心，新家或旅遊地的真北方位落在哪一宮，
@@ -98,17 +99,18 @@ class _MovePageState extends State<MovePage> {
     final addr = q?.trim() ?? '';
     if (addr.isEmpty || !mounted) return;
     setState(() => _busy = true);
-    List<geo.Location> r = const [];
-    try {
-      r = await geo.locationFromAddress(addr);
-    } catch (_) {}
+    final p = await findPlace(context, addr, near: _home, refineOnMap: true);
     if (!mounted) return;
     setState(() => _busy = false);
-    if (r.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l.mapNotFound)));
-      return;
-    }
-    await _saveHome((r.first.latitude, r.first.longitude), addr);
+    if (p != null) await _saveHome((p.lat, p.lon), addr);
+  }
+
+  /// 住家直接在地圖上點選。
+  Future<void> _setHomeOnMap() async {
+    final center = _home ?? await currentLatLon();
+    if (!mounted) return;
+    final p = await pickOnMap(context, center: center, zoom: 17);
+    if (p != null && mounted) await _saveHome((p.lat, p.lon), null);
   }
 
   Future<void> _find() async {
@@ -116,19 +118,15 @@ class _MovePageState extends State<MovePage> {
     if (q.isEmpty) return;
     FocusScope.of(context).unfocus();
     setState(() => _busy = true);
-    List<geo.Location> r = const [];
-    try {
-      r = await geo.locationFromAddress(q);
-    } catch (_) {}
+    final p = await findPlace(context, q, near: _home);
     if (!mounted) return;
     setState(() {
       _busy = false;
-      if (r.isNotEmpty) {
-        _dest = (r.first.latitude, r.first.longitude);
+      if (p != null) {
+        _dest = (p.lat, p.lon);
         _destName = q;
       }
     });
-    if (r.isEmpty) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.l10n.mapNotFound)));
   }
 
   @override
@@ -156,6 +154,8 @@ class _MovePageState extends State<MovePage> {
               OutlinedButton.icon(
                   onPressed: _busy ? null : _setHomeByAddress, icon: const Icon(Icons.edit_location_alt_outlined), label: Text(l.moveHomeAddr)),
               OutlinedButton.icon(onPressed: _busy ? null : _setHomeHere, icon: const Icon(Icons.my_location), label: Text(l.moveUseHere)),
+              if (mapsEnabled)
+                OutlinedButton.icon(onPressed: _busy ? null : _setHomeOnMap, icon: const Icon(Icons.map_outlined), label: Text(l.addrPickOnMap)),
             ]),
           ),
         ]),

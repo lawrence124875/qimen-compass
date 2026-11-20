@@ -1773,5 +1773,45 @@
   "wearLocked": "訂閱後可在手錶使用",
   "wearCalib": "不準時手腕畫 8 字校準",
   "wearSynced": "已同步到手錶",
-  "wearNoWatch": "找不到已連線的 Wear OS 手錶；請先在手錶安裝奇門羅盤"
+  "wearNoWatch": "找不到已連線的 Wear OS 手錶；請先在手錶安裝奇門羅盤",
+  "zeshiCoverContract": "合約、合作、加盟、租約、借貸",
+  "zeshiCoverOpening": "開店、開業、新品上市、公司成立",
+  "zeshiCoverInterview": "求職面試、升遷面談、甄選、比賽",
+  "zeshiCoverDating": "初次約會、聯誼、見面認識",
+  "zeshiCoverEngagement": "提親、訂婚、文定、見家長",
+  "zeshiCoverJourney": "出差、旅遊、出國、長途出發",
+  "zeshiCoverWedding": "迎娶、婚宴、結婚登記、拍婚紗",
+  "zeshiCoverMoveIn": "搬入新居或新辦公室、安床",
+  "zeshiCoverGroundbreaking": "動工、裝潢、拆牆、安灶",
+  "zeshiCoverPurchase": "買房買車、大額購物、下訂、交屋交車",
+  "zeshiCoverWealth": "投資進場、收款、談生意、業務拜訪",
+  "zeshiCoverExam": "升學考試、證照、檢定、簡報",
+  "zeshiCoverMedical": "看診、開刀、開始療程（只供挑時段參考，醫療決定請依醫師）",
+  "zeshiCoverNegotiation": "談條件、調解、開庭、申訴",
+  "zeshiCoverCustom": "清單沒有的事，自己選用神門與八神",
+  "zeshiUseGod": "用神：{doors}；{bonus}加分",
+  "placeCureItems": "化解物：{items}",
+  "@zeshiUseGod": {
+    "placeholders": {
+      "doors": {
+        "type": "String"
+      },
+      "bonus": {
+        "type": "String"
+      }
+    }
+  },
+  "@placeCureItems": {
+    "placeholders": {
+      "items": {
+        "type": "String"
+      }
+    }
+  },
+  "addrPickOnMap": "在地圖上點選",
+  "addrPickHint": "拖動地圖讓紅色圖釘對準位置，也可以直接點地圖",
+  "addrConfirm": "確定這個位置",
+  "addrChoose": "選擇地點",
+  "addrNotFoundPick": "找不到這個地址，請在地圖上點選",
+  "addrPinned": "地圖選點"
 }

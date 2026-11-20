@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart' as geo;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../app/settings/app_settings.dart';
@@ -13,6 +12,7 @@ import '../../l10n/l10n.dart';
 import '../../shared/premium/usage_gate.dart';
 import '../../shared/widgets/result_card.dart';
 import '../travel/travel_text.dart';
+import 'address_search.dart';
 import 'destination_page.dart';
 import 'map_location.dart';
 
@@ -92,17 +92,11 @@ class _MapPageState extends State<MapPage> {
     if (q.isEmpty) return;
     FocusScope.of(context).unfocus();
     setState(() => _searching = true);
-    List<geo.Location> r = const [];
-    try {
-      r = await geo.locationFromAddress(q);
-    } catch (_) {}
+    final f = await findPlace(context, q, near: _me);
     if (!mounted) return;
     setState(() => _searching = false);
-    if (r.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.l10n.mapNotFound)));
-      return;
-    }
-    final p = LatLng(r.first.latitude, r.first.longitude);
+    if (f == null) return;
+    final p = LatLng(f.lat, f.lon);
     _setPin(p, q);
     final me = _me;
     if (me != null && _map != null) {
