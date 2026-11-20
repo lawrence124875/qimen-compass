@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 小（2×1）：1 項，內容由 QimenWidgetRender 以 qimen_widget_row_big 加進 qm_w_rows -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/qm_widget_root"
     android:layout_width="match_parent"
@@ -6,33 +7,12 @@
     android:background="@drawable/qimen_widget_bg"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="12dp">
+    android:padding="10dp">
 
-    <TextView
-        android:id="@+id/qm_widget_title"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/qm_w_rows"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#C9A45C"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/qm_widget_line1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
         android:gravity="center"
-        android:maxLines="2"
-        android:textColor="#E8D9B0"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/qm_widget_line2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:gravity="center"
-        android:maxLines="1"
-        android:textColor="#B8AC8C"
-        android:textSize="12sp" />
+        android:orientation="vertical" />
 </LinearLayout>

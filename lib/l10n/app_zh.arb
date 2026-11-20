@@ -1472,6 +1472,43 @@
     }
   },
   "widgetOpenApp": "打開 App 更新",
+  "widgetItemAlmanac": "今日吉時",
+  "widgetItemTerm": "節氣與重要日",
+  "widgetNoneGood": "接下來沒有吉時",
+  "widgetNoGoodToday": "今天沒有吉時",
+  "widgetNoAlert": "近期沒有重要日",
+  "widgetToday": "今天",
+  "widgetTomorrow": "明天",
+  "widgetInDays": "{n} 天後",
+  "@widgetInDays": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "widgetLocked": "訂閱後顯示",
+  "widgetLockedShort": "訂閱",
+  "widgetSettingsTitle": "桌面小工具",
+  "widgetSettingsSub": "自選小工具要顯示的內容",
+  "widgetSettingsHint": "在手機桌面長按空白處 → 小工具 → 奇門羅盤，有小、中、大三種尺寸。這裡設定各尺寸的預設內容；Android 12 以上長按已放的小工具，可個別修改。",
+  "widgetPickHint": "依勾選順序顯示，最多 {n} 項",
+  "@widgetPickHint": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "widgetTapTravel": "點一下開出行訣",
+  "widgetLeft": "還有 %s",
+  "widgetSizeSmall": "小（2×1）",
+  "widgetSizeMedium": "中（4×2）",
+  "widgetSizeLarge": "大（4×4）",
+  "widgetPin": "加到桌面",
+  "widgetBoard": "迷你九宮時盤（訂閱，固定在上方）",
+  "widgetApplyAll": "全部小工具改用這裡的設定",
+  "widgetApplied": "已套用到所有小工具",
   "premiumUnlockFull": "訂閱看完整內容",
   "divLockedDetail": "決斷和等級先給你看。方位、理由、應期、宜忌與盤面要訂閱才會顯示。",
   "zeshiLockedDetail": "時段和等級先給你看。方位、加減分理由、盤面、加入行事曆與存紀錄要訂閱。",
