@@ -28,14 +28,17 @@ const featureIds = ['compass', 'travel', 'divination', 'zeshi', 'house', 'record
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Firebase 放最前面才接得到啟動中的當機；失敗不影響 App（統計不送、遠端開關全照預設）。
+  // 啟動加速：彼此無關的初始化同時跑；訂閱狀態先用本機快取、不等網路。
   final sharingStore = FileUsageSharingStore();
+  final premiumFuture = RevenueCatPremium.init();
+  final settingsFuture = AppSettings.instance.load();
   final sharing = await sharingStore.load();
   final telemetry = await FirebaseTelemetry.init(featureIds: featureIds, sharing: sharing);
   final usage = UsageSharing(initial: sharing, store: sharingStore, apply: telemetry.setSharing);
-  await AppSettings.instance.load();
+  await settingsFuture;
   // 訂閱與廣告：訂閱戶不載入任何廣告；廣告同意表單在 runApp 之後才跑，不拖慢啟動。
   final limits = FreeLimits.from(telemetry.flags.intValue);
-  final premium = await RevenueCatPremium.init();
+  final premium = await premiumFuture;
   final ads = AdMobAds.create();
   var appStarted = false;
   void syncAds() {

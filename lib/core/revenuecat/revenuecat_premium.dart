@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../monetization/premium_service.dart';
 
@@ -23,18 +26,24 @@ class RevenueCatPremium implements PremiumService {
   final ValueNotifier<bool> isPremium = ValueNotifier(_forcePremium);
 
   /// 金鑰沒設定或初始化失敗時回傳 [FreePremium]（App 照常可用，只是不能訂閱）。
+  static const _kCached = 'rc_premium_cached';
+  SharedPreferences? _prefs;
+
+  /// 金鑰沒設定或初始化失敗時回傳 [FreePremium]（App 照常可用，只是不能訂閱）。
+  /// 不等網路：先用上次存下的訂閱狀態，再在背景向 RevenueCat 查詢（快取過期時要連網，曾拖慢啟動數秒）。
   static Future<PremiumService> init() async {
     if (_forcePremium) return FreePremium(premium: true);
     if (_apiKey.isEmpty) return FreePremium();
     try {
+      final p = RevenueCatPremium._();
+      try {
+        final prefs = p._prefs = await SharedPreferences.getInstance();
+        p.isPremium.value = prefs.getBool(_kCached) ?? false;
+      } catch (_) {}
       await Purchases.setLogLevel(kReleaseMode ? LogLevel.warn : LogLevel.info);
       await Purchases.configure(PurchasesConfiguration(_apiKey));
-      final p = RevenueCatPremium._();
       Purchases.addCustomerInfoUpdateListener(p._apply);
-      // 啟動時查一次（有快取，離線也很快）；查不到就先當免費版，之後 listener 會更新
-      try {
-        p._apply(await Purchases.getCustomerInfo().timeout(const Duration(seconds: 8)));
-      } catch (_) {}
+      unawaited(Purchases.getCustomerInfo().then(p._apply).catchError((Object _) {}));
       return p;
     } catch (e) {
       debugPrint('RevenueCat 初始化失敗：$e');
@@ -42,7 +51,11 @@ class RevenueCatPremium implements PremiumService {
     }
   }
 
-  void _apply(CustomerInfo info) => isPremium.value = info.entitlements.active.containsKey(entitlementId);
+  void _apply(CustomerInfo info) {
+    final v = info.entitlements.active.containsKey(entitlementId);
+    isPremium.value = v;
+    unawaited(_prefs?.setBool(_kCached, v).catchError((Object _) => false));
+  }
 
   @override
   bool get canPurchase => true;
