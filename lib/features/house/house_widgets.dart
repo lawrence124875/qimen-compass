@@ -1,11 +1,14 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show HapticFeedback;
 
 import 'house_model.dart';
 
 import '../../app/theme/app_theme.dart';
+import '../../compass/building_facing.dart';
 import '../../compass/compass_math.dart';
+import '../../compass/north_mode_sheet.dart' show addBuilding;
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
 import 'heading_tracker.dart';
@@ -279,12 +282,17 @@ class HeadingPanel extends StatelessWidget {
           if (!t.locked && t.field.status == FieldStatus.unstable) l.compassUnstable,
           if (t.tilt > 25) l.compassKeepFlat,
         ];
+        final basis = t.showsMagnetic ? l.compassMagneticNorth : l.compassTrueNorth;
+        final bldg = t.mode == NorthMode.building;
         return Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
           Text(
             h == null ? l.compassWaiting : l.houseFacingNow('${h.round() % 360}', palaceLabel(context, palaceAtBearing(h))),
             textAlign: TextAlign.center,
             style: serif(compact ? theme.textTheme.titleMedium : theme.textTheme.titleLarge).copyWith(color: qm.primary),
           ),
+          // 北方基準與羅盤共用，標明目前用哪一種
+          Text(bldg ? '${l.compassBuilding} · $basis' : basis,
+              textAlign: TextAlign.center, style: theme.textTheme.bodySmall?.copyWith(color: qm.textMuted)),
           for (final n in notes)
             Card(
               color: theme.colorScheme.errorContainer,
@@ -293,15 +301,115 @@ class HeadingPanel extends StatelessWidget {
                 child: Text(n, textAlign: TextAlign.center, style: TextStyle(color: theme.colorScheme.onErrorContainer)),
               ),
             ),
-          SwitchListTile(
-            contentPadding: EdgeInsets.zero,
-            title: Text(l.compassLock),
-            subtitle: Text(t.locked ? l.compassLockOn : l.compassLockHint),
-            value: t.locked,
-            onChanged: h == null && !t.locked ? null : (on) => on ? t.lock() : t.unlock(),
-          ),
+          if (bldg)
+            _WallPanel(tracker: t)
+          else
+            SwitchListTile(
+              contentPadding: EdgeInsets.zero,
+              title: Text(l.compassLock),
+              subtitle: Text(t.locked ? l.compassLockOn : l.compassLockHint),
+              value: t.locked,
+              onChanged: h == null && !t.locked ? null : (on) => on ? t.lock() : t.unlock(),
+            ),
         ]);
       },
+    );
+  }
+}
+
+/// 建築座向（宅盤）：這間房子綁定的地點、對牆、±90° 修正；沒綁定時請使用者選或新增。
+class _WallPanel extends StatelessWidget {
+  const _WallPanel({required this.tracker});
+
+  final HeadingTracker tracker;
+
+  Future<void> _pick(BuildContext context) async {
+    final l = context.l10n;
+    final list = await BuildingStore.load();
+    if (!context.mounted) return;
+    final chosen = await showModalBottomSheet<BuildingFacing>(
+      context: context,
+      showDragHandle: true,
+      builder: (ctx) => SafeArea(
+        child: ListView(shrinkWrap: true, children: [
+          for (final b in list)
+            ListTile(
+              leading: Icon(b.id == tracker.building?.id ? Icons.radio_button_checked : Icons.radio_button_unchecked),
+              title: Text(b.name),
+              subtitle: Text(l.buildingWall(b.wall.round())),
+              onTap: () => Navigator.pop(ctx, b),
+            ),
+          ListTile(
+            leading: const Icon(Icons.add_location_alt_outlined),
+            title: Text(l.buildingAdd),
+            onTap: () async {
+              final b = await addBuilding(ctx);
+              if (b != null && ctx.mounted) Navigator.pop(ctx, b);
+            },
+          ),
+        ]),
+      ),
+    );
+    if (chosen != null) await tracker.bindBuilding(chosen);
+  }
+
+  void _align(BuildContext context) {
+    final l = context.l10n;
+    void tell(String m) => ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text(m)));
+    switch (tracker.alignWall()) {
+      case WallAlign.notFlat:
+        tell(l.compassAlignNotFlat);
+      case WallAlign.notStill:
+        tell(l.compassAlignNotStill);
+      case WallAlign.noBuilding:
+        _pick(context);
+      case WallAlign.ok:
+        HapticFeedback.mediumImpact();
+        final off = tracker.alignOffset;
+        if (off != null && off > 20) tell(l.compassAlignCheck(off.round()));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final theme = Theme.of(context);
+    final b = tracker.building;
+    final at = tracker.wallAt;
+    final drift = at != null && DateTime.now().difference(at) >= wallDriftAfter;
+    final status = at == null
+        ? l.compassAlignWallHint
+        : (drift ? l.compassAlignDrift : l.compassAlignedAgo(DateTime.now().difference(at).inMinutes));
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Row(children: [
+          const Icon(Icons.apartment, size: 20),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(b == null ? l.compassBuildingNone : '${b.name} · ${l.buildingWall(b.wall.round())}',
+                style: theme.textTheme.titleSmall),
+          ),
+          TextButton(onPressed: () => _pick(context), child: Text(b == null ? l.buildingAdd : l.buildingChange)),
+        ]),
+        if (b != null) ...[
+          Text(status, style: theme.textTheme.bodySmall?.copyWith(color: drift ? theme.colorScheme.error : null)),
+          const SizedBox(height: 6),
+          FilledButton.icon(
+            icon: const Icon(Icons.border_left),
+            label: Text(l.compassAlignWall),
+            onPressed: () => _align(context),
+          ),
+          if (tracker.locked)
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Flexible(child: Text(l.compassOff90, style: theme.textTheme.bodySmall)),
+              TextButton.icon(onPressed: () => tracker.rotate90(-1), icon: const Icon(Icons.rotate_left), label: const Text('90°')),
+              TextButton.icon(onPressed: () => tracker.rotate90(1), icon: const Icon(Icons.rotate_right), label: const Text('90°')),
+            ]),
+        ],
+      ]),
     );
   }
 }
