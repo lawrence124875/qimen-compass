@@ -87,8 +87,10 @@ public class SwiftFlutterCompassPlugin: NSObject, FlutterPlugin, FlutterStreamHa
             }
             // 奇門羅盤修改：附上已校正磁場強度（μT，CMDeviceMotion 已扣除機身與 MagSafe 等固定偏差），未校正時給 -1
             var fieldStrength = -1.0;
-            if let m = self.motion.deviceMotion?.magneticField, m.accuracy != .uncalibrated {
-                fieldStrength = sqrt(m.field.x * m.field.x + m.field.y * m.field.y + m.field.z * m.field.z);
+            // 不檢查 accuracy：多數 iPhone 平常一直回報 uncalibrated，但數值已扣除機身偏差可用；全 0（尚未有資料）才略過
+            if let m = self.motion.deviceMotion?.magneticField {
+                let s = sqrt(m.field.x * m.field.x + m.field.y * m.field.y + m.field.z * m.field.z);
+                if s > 1 { fieldStrength = s; }
             }
             eventSink?([headingForUI, headingForCameraMode, newHeading.headingAccuracy, fieldStrength]);
         }
