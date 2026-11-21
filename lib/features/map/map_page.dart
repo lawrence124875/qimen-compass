@@ -5,12 +5,15 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../app/settings/app_settings.dart';
 import '../../app/theme/app_theme.dart';
+import '../../compass/building_facing.dart';
 import '../../compass/compass_math.dart';
 import '../../compass/geo_math.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
 import '../../shared/premium/usage_gate.dart';
 import '../../shared/widgets/result_card.dart';
+import '../house/heading_tracker.dart';
+import '../house/house_widgets.dart' show HeadingPanel;
 import '../travel/travel_text.dart';
 import 'address_search.dart';
 import 'destination_page.dart';
@@ -46,6 +49,23 @@ class _MapPageState extends State<MapPage> {
   Timer? _timer;
   bool _searching = false;
 
+  /// 手機朝向（指針）；方位依地圖頁自己的北方基準，畫在地圖上一律換算成真北。
+  final _heading = HeadingTracker.of(NorthFeature.map);
+  double? _drawn;
+  (NorthMode, bool)? _drawnBasis;
+
+  void _onHeading() {
+    final h = _heading.trueHeading;
+    final basis = (_heading.mode, _heading.showsMagnetic);
+    // 地圖指針每轉 2° 以上才重畫，避免一直更新地圖
+    if (basis != _drawnBasis || (h == null) != (_drawn == null) || (h != null && turnDelta(_drawn!, h).abs() >= 2)) {
+      setState(() {
+        _drawn = h;
+        _drawnBasis = basis;
+      });
+    }
+  }
+
   QimenChart _compute() {
     final now = DateTime.now();
     return const ShiJiaEngine().compute(now, settings: _settings.timeSettingsAt(now), method: _settings.juMethod);
@@ -54,6 +74,8 @@ class _MapPageState extends State<MapPage> {
   @override
   void initState() {
     super.initState();
+    _heading.acquire();
+    _heading.addListener(_onHeading);
     _locate();
     // 換時辰就重算扇區顏色
     _timer = Timer.periodic(const Duration(minutes: 1), (_) {
@@ -65,6 +87,8 @@ class _MapPageState extends State<MapPage> {
   @override
   void dispose() {
     _timer?.cancel();
+    _heading.removeListener(_onHeading);
+    _heading.release();
     _search.dispose();
     super.dispose();
   }
@@ -77,6 +101,7 @@ class _MapPageState extends State<MapPage> {
       _me = p;
       _locating = false;
     });
+    if (p != null) _heading.setLocation(p.$1, p.$2);
     if (p != null) _map?.animateCamera(CameraUpdate.newLatLngZoom(LatLng(p.$1, p.$2), _zoom));
   }
 
@@ -114,6 +139,33 @@ class _MapPageState extends State<MapPage> {
     if (!mounted) return;
     await Navigator.of(context).push(MaterialPageRoute<void>(
         builder: (_) => DestinationPage(from: me, to: pin, name: _pinName, locked: access == PremiumAccess.titleOnly)));
+  }
+
+  static LatLng _ll((double, double) p) => LatLng(p.$1, p.$2);
+
+  /// 地圖上方的方向讀數：面向哪一宮、幾度、哪一種北。
+  Widget _headingChip(BuildContext context) {
+    final l = context.l10n;
+    final t = _heading;
+    final h = t.heading;
+    final palace = h == null ? null : palaceAtBearing(t.trueHeading!);
+    final basis = t.mode == NorthMode.building
+        ? '${l.compassBuilding} · ${t.showsMagnetic ? l.compassMagneticNorth : l.compassTrueNorth}'
+        : (t.showsMagnetic ? l.compassMagneticNorth : l.compassTrueNorth);
+    final text = h == null || palace == null
+        ? (t.noSensor ? l.compassNoSensor : l.compassWaiting)
+        : '${TravelText.direction(l, palace)} ${QimenTerms.doorName(_chart[palace].door!, L10n.language)} · ${h.round() % 360}° · $basis';
+    return Card(
+      margin: const EdgeInsets.all(8),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        child: Row(mainAxisSize: MainAxisSize.min, children: [
+          Icon(Icons.navigation, size: 16, color: Theme.of(context).colorScheme.primary),
+          const SizedBox(width: 4),
+          Text(text, style: Theme.of(context).textTheme.bodySmall),
+        ]),
+      ),
+    );
   }
 
   Set<Polygon> _sectors(BuildContext context) {
@@ -237,6 +289,16 @@ class _MapPageState extends State<MapPage> {
         myLocationButtonEnabled: true,
         polygons: _sectors(context),
         markers: {if (_pin != null) Marker(markerId: const MarkerId('pin'), position: LatLng(_pin!.$1, _pin!.$2))},
+        polylines: {
+          if (_drawn != null)
+            Polyline(
+              polylineId: const PolylineId('heading'),
+              points: [LatLng(me.$1, me.$2), _ll(destinationPoint(me.$1, me.$2, _drawn!, _radius * 1.1))],
+              color: Theme.of(context).colorScheme.primary,
+              width: 5,
+              endCap: Cap.roundCap,
+            ),
+        },
         onTap: _setPin,
         onLongPress: _setPin,
       );
@@ -246,11 +308,21 @@ class _MapPageState extends State<MapPage> {
       body: SafeArea(
         child: Column(children: [
           Padding(padding: const EdgeInsets.fromLTRB(12, 8, 12, 8), child: searchBar),
-          Expanded(child: mapArea),
+          Expanded(
+            child: me == null || !mapsEnabled
+                ? mapArea
+                : Stack(children: [
+                    mapArea,
+                    Positioned(top: 0, left: 0, right: 56, child: Align(alignment: Alignment.topLeft, child: _headingChip(context))),
+                  ]),
+          ),
           Padding(
             padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
             child: Column(mainAxisSize: MainAxisSize.min, children: [
-              if (mapsEnabled) ...[radius, const SizedBox(height: 8), _legend(context), const SizedBox(height: 8)],
+              if (mapsEnabled) ...[
+                const HeadingPanel(compact: true, feature: NorthFeature.map, showHeading: false, showLock: false),
+                const SizedBox(height: 4),
+                radius, const SizedBox(height: 8), _legend(context), const SizedBox(height: 8)],
               _pinCard(context),
             ]),
           ),

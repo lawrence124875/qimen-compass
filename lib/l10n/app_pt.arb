@@ -979,5 +979,9 @@
   "buildingEnterAngle": "Digitar ângulo",
   "buildingUseMap": "Usar mapa",
   "compassNearbyCities": "Cidades próximas (pela região e fuso do celular)",
-  "compassCityFailed": "Cidade não encontrada. Verifique a conexão e tente de novo"
+  "compassCityFailed": "Cidade não encontrada. Verifique a conexão e tente de novo",
+  "northRecCompass": "Recomendado: norte verdadeiro. É o mais preciso ao ar livre; se a agulha oscilar em ambientes internos, use Edifício.",
+  "northRecMap": "Recomendado: norte verdadeiro. O mapa usa o norte verdadeiro, então o ponteiro e os setores coincidem.",
+  "northRecTravel": "Recomendado: norte verdadeiro. Você caminha ao ar livre, onde ele é o mais preciso e simples.",
+  "northRecHouse": "Recomendado: Edifício. Aço e aparelhos internos perturbam a bússola; alinhar com uma parede externa é o mais estável."
 }

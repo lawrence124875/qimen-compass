@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:qimen_compass/compass/building_facing.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   test('牆向正規化到 [0, 180)', () {
@@ -23,5 +24,15 @@ void main() {
   test('地圖兩點算牆向（正東西向的牆＝90°）', () {
     expect(wallBearingOf(25, 121, 25, 121.001), closeTo(90, 0.01));
     expect(wallBearingOf(25, 121.001, 25, 121), closeTo(90, 0.01));
+  });
+
+  test('各功能北方基準：預設為建議值，各自保存', () async {
+    SharedPreferences.setMockInitialValues({});
+    expect(await BuildingStore.modeFor(NorthFeature.house), NorthMode.building);
+    expect(await BuildingStore.modeFor(NorthFeature.map), NorthMode.trueNorth);
+    expect(await BuildingStore.modeFor(NorthFeature.compass, legacyTrueNorth: false), NorthMode.magnetic);
+    await BuildingStore.saveModeFor(NorthFeature.map, NorthMode.magnetic);
+    expect(await BuildingStore.modeFor(NorthFeature.map), NorthMode.magnetic);
+    expect(await BuildingStore.modeFor(NorthFeature.travel), NorthMode.trueNorth);
   });
 }
