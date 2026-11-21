@@ -50,7 +50,7 @@
 - 干擾偵測：磁場強度超出 25–65 μT 或抖動過大時，提醒使用者遠離金屬和家電；顯示精度等級；提示畫 8 字校準、手機要平放
 - 「找吉門」：選一個門 → 箭頭引導使用者轉向
 - 北方基準三選項（2026-11-21）：真北（預設）／磁北／建築座向（`building_facing.dart`、`building_page.dart`、`north_mode_sheet.dart`）。建築座向：衛星地圖點最長外牆兩端（≥10 m，可改手動輸入角度），依地點存 `qm_buildings`；「對牆」需平放靜止，取最近 90° 牆向後改陀螺儀，3 分鐘提示重對；可選真北或磁北輸出（依地點座標 WMM 扣磁偏角）；無定位可手選城市。
-- 宅盤（`HeadingTracker`）與羅盤共用北方基準（2026-11-21 使用者決定）；建築座向用每間房子綁定的地點（`qm_house_building`：房子 id→地點 id），`HeadingPanel` 顯示基準、對牆與 ±90°。舊版宅盤量的方位是磁北。
+- 各功能各自記住北方基準（2026-11-21 使用者要求，取代「宅盤沿用羅盤」）：`NorthFeature`（compass／map／travel／house）＋`BuildingStore.modeFor/saveModeFor`（羅盤沿用舊鍵 `qm_compass_north_mode`，其他 `qm_north_mode_<feature>`）；預設＝建議：羅盤、地圖、出行訣真北，宅盤建築座向。共用元件 `north_mode_selector.dart`（三按鈕、★建議、目前模式說明、? 開完整說明）。羅盤以外用 `HeadingTracker.of(feature)`（宅盤 `instance`）；`HeadingPanel(feature:, showHeading:, showLock:)` 放在宅盤、出行訣計時頁、羅盤地圖。建築座向：宅盤用每間房子綁定的地點（`qm_house_building`），其他功能用 `qm_building_selected`。地圖頁畫手機朝向指針（polyline，一律換算真北，每 2° 重畫）並在左上顯示面向宮位／度數／基準。舊版宅盤量的方位是磁北。
 - **⚠ 每次出版前確認 WMM 有效期**：磁偏角用 `geomag` 內建 WMM2025 係數，有效到 2029-12-31，不會自動更新。NOAA 約 2029-12 發布 WMM2030，屆時更新 `geomag`（或換係數）並出新版。`wmm_expiry.yml` 每月檢查，2029-09 起自動開 issue 通知；`check.yml` 同期也會出警告。
 - 顯示下一個時辰的門位預覽，並倒數到換局
 

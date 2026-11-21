@@ -12,6 +12,19 @@ import 'geo_math.dart';
 /// 羅盤的北方基準。
 enum NorthMode { trueNorth, magnetic, building }
 
+/// 用到方位的功能；各自記住自己的北方基準，預設值依使用情境（戶外真北、室內建築座向）。
+enum NorthFeature {
+  compass(NorthMode.trueNorth),
+  map(NorthMode.trueNorth),
+  travel(NorthMode.trueNorth),
+  house(NorthMode.building);
+
+  const NorthFeature(this.recommended);
+
+  /// 建議（預設）的北方基準。
+  final NorthMode recommended;
+}
+
 /// 一個地點（家、公司…）的牆向。
 class BuildingFacing {
   const BuildingFacing({required this.id, required this.name, required this.wall, this.lat, this.lon});
@@ -121,6 +134,16 @@ class BuildingStore {
   }
 
   static Future<void> saveMode(NorthMode m) async => (await _p())?.setString(_kMode, m.name);
+
+  /// 各功能自己的北方基準；羅盤沿用舊鍵（[mode]），其他功能沒選過就用建議值。
+  static Future<NorthMode> modeFor(NorthFeature f, {bool legacyTrueNorth = true}) async {
+    if (f == NorthFeature.compass) return mode(legacyTrueNorth);
+    final s = (await _p())?.getString('qm_north_mode_${f.name}');
+    return NorthMode.values.where((m) => m.name == s).firstOrNull ?? f.recommended;
+  }
+
+  static Future<void> saveModeFor(NorthFeature f, NorthMode m) async =>
+      f == NorthFeature.compass ? saveMode(m) : (await _p())?.setString('qm_north_mode_${f.name}', m.name);
 
   static const _kMagBasis = 'qm_building_magnetic_basis';
 

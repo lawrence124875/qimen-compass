@@ -979,5 +979,9 @@
   "buildingEnterAngle": "각도 입력",
   "buildingUseMap": "지도 사용",
   "compassNearbyCities": "주변 도시(휴대폰 지역·시간대 기준)",
-  "compassCityFailed": "이 도시의 위치를 찾을 수 없습니다. 네트워크를 확인하고 다시 시도하세요"
+  "compassCityFailed": "이 도시의 위치를 찾을 수 없습니다. 네트워크를 확인하고 다시 시도하세요",
+  "northRecCompass": "추천: 진북. 야외에서 가장 정확하며, 건물 안에서 바늘이 흔들리면 건물 방향으로 바꾸세요.",
+  "northRecMap": "추천: 진북. 지도 자체가 진북 기준이라 바늘과 구역이 정확히 맞습니다.",
+  "northRecTravel": "추천: 진북. 야외를 걷기 때문에 진북이 가장 정확하고 간편합니다.",
+  "northRecHouse": "추천: 건물 방향. 실내 철근과 가전이 나침반을 방해하므로 외벽에 맞추는 것이 가장 안정적입니다."
 }
