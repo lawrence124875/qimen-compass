@@ -977,5 +977,7 @@
   "compassPickCity": "手选城市",
   "compassCityHint": "输入所在城市",
   "buildingEnterAngle": "输入角度",
-  "buildingUseMap": "用地图"
+  "buildingUseMap": "用地图",
+  "compassNearbyCities": "附近城市（依手机的地区与时区）",
+  "compassCityFailed": "查不到这个城市的位置，请确认网络后再试"
 }

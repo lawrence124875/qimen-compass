@@ -977,5 +977,7 @@
   "compassPickCity": "เลือกเมือง",
   "compassCityHint": "พิมพ์ชื่อเมืองที่อยู่",
   "buildingEnterAngle": "ใส่มุม",
-  "buildingUseMap": "ใช้แผนที่"
+  "buildingUseMap": "ใช้แผนที่",
+  "compassNearbyCities": "เมืองใกล้เคียง (ตามภูมิภาคและเขตเวลาของโทรศัพท์)",
+  "compassCityFailed": "ไม่พบตำแหน่งเมืองนี้ โปรดตรวจสอบการเชื่อมต่อแล้วลองอีกครั้ง"
 }

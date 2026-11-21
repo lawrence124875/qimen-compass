@@ -2100,5 +2100,7 @@
   "compassPickCity": "手選城市",
   "compassCityHint": "輸入所在城市",
   "buildingEnterAngle": "輸入角度",
-  "buildingUseMap": "用地圖"
+  "buildingUseMap": "用地圖",
+  "compassNearbyCities": "附近城市（依手機的地區與時區）",
+  "compassCityFailed": "查不到這個城市的位置，請確認網路後再試"
 }
