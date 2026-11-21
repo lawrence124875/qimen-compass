@@ -950,13 +950,13 @@
   "compassNorthBuildingMore": "現代のビルの鉄筋、分電盤、スマホや大型家電は、磁針を大きく狂わせることがよくあり、真北も磁北も一緒にずれます。建物の向きは建物そのものの方向を使います。多くの部屋の壁は外壁と平行か垂直なので、スマホを平らに置いて長い辺をどれかの壁に当て「壁に合わせる」を押すと、約1秒で正しい方向になります。壁から離れた後はジャイロが数分間保ち、ずれたらもう一度合わせます。自宅・会社など場所ごとに保存できます。",
   "compassInterferenceSuggest": "室内の磁場が異常です。建物の向きをおすすめします",
   "compassAlignWall": "壁に合わせる",
-  "compassAlignWallHint": "スマホを平らに置き、長い辺を壁に当てて「壁に合わせる」を押してください",
+  "compassAlignWallHint": "スマホを平らに置いて長い辺を壁に当て「壁に合わせる」を押したら、すぐ測りたい場所へ移動して読み取ってください。部屋を変えたときや数分たったら、もう一度合わせます。",
   "compassAlignedAgo": "{minutes} 分前に合わせました。壁から離れてもジャイロが方向を保ちます",
   "compassAlignDrift": "方向がずれた可能性があります。もう一度壁に合わせてください",
   "compassOff90": "90°ずれている？",
   "compassBuildingNone": "場所が未設定です",
   "buildingTitle": "建物の向きを設定",
-  "buildingGuide": "建物を見つけ、外壁の両端を1回ずつタップしてください（ドラッグで調整）。",
+  "buildingGuide": "建物を見つけ、いちばん長い外壁の両端を1回ずつタップしてください（ドラッグで調整）。衛星画像は傾いていることが多いので、屋上の縁か地面との境目に合わせてください。",
   "buildingNeedLine": "地図で壁の両端をタップ",
   "buildingWall": "壁の向き {deg}°",
   "buildingRedraw": "引き直す",
@@ -968,5 +968,6 @@
   "buildingAdd": "場所を追加",
   "buildingEdit": "編集",
   "buildingDelete": "削除",
-  "buildingChange": "変更"
+  "buildingChange": "変更",
+  "compassBasis": "基準"
 }

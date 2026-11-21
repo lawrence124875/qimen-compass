@@ -121,4 +121,11 @@ class BuildingStore {
   }
 
   static Future<void> saveMode(NorthMode m) async => (await _p())?.setString(_kMode, m.name);
+
+  static const _kMagBasis = 'qm_building_magnetic_basis';
+
+  /// 建築座向的輸出基準：false＝真北（預設），true＝磁北（依位置以 WMM 自動扣磁偏角）。
+  static Future<bool> magneticBasis() async => (await _p())?.getBool(_kMagBasis) ?? false;
+
+  static Future<void> saveMagneticBasis(bool on) async => (await _p())?.setBool(_kMagBasis, on);
 }

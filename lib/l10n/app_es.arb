@@ -950,13 +950,13 @@
   "compassNorthBuildingMore": "En los edificios modernos, las varillas de acero, los cuadros eléctricos, los teléfonos y los electrodomésticos grandes suelen desviar mucho la aguja, así que el norte verdadero y el magnético se desvían juntos. La orientación del edificio usa el propio edificio: casi todas las paredes son paralelas o perpendiculares a la pared exterior. Deja el teléfono plano con el lado largo contra cualquier pared y toca «Alinear con la pared»; la brújula se ajusta en un segundo. El giroscopio mantiene la dirección unos minutos al alejarte; si se desvía, vuelve a alinear. Guarda lugares como Casa y Trabajo.",
   "compassInterferenceSuggest": "Campo magnético interior anormal. Prueba la orientación del edificio",
   "compassAlignWall": "Alinear con la pared",
-  "compassAlignWallHint": "Deja el teléfono plano, con el lado largo contra una pared, y toca «Alinear con la pared»",
+  "compassAlignWallHint": "Deja el teléfono plano, con el lado largo contra una pared, toca «Alinear con la pared» y ve enseguida al punto que quieres medir. Vuelve a alinear al cambiar de habitación o tras unos minutos.",
   "compassAlignedAgo": "Alineado hace {minutes} min; el giroscopio mantiene la dirección lejos de la pared",
   "compassAlignDrift": "La dirección puede haberse desviado. Apóyalo en una pared y alinea de nuevo",
   "compassOff90": "¿Desfase de 90°?",
   "compassBuildingNone": "Aún no hay lugares",
   "buildingTitle": "Configurar orientación del edificio",
-  "buildingGuide": "Busca tu edificio y toca los dos extremos de una pared exterior (arrastra para ajustar).",
+  "buildingGuide": "Busca tu edificio y toca los dos extremos de su pared exterior más larga (arrastra para ajustar). Las imágenes satelitales suelen estar inclinadas: sigue el borde del techo o la línea donde la pared toca el suelo.",
   "buildingNeedLine": "Toca los dos extremos de una pared en el mapa",
   "buildingWall": "Pared {deg}°",
   "buildingRedraw": "Volver a trazar",
@@ -968,5 +968,6 @@
   "buildingAdd": "Añadir lugar",
   "buildingEdit": "Editar",
   "buildingDelete": "Eliminar",
-  "buildingChange": "Cambiar"
+  "buildingChange": "Cambiar",
+  "compassBasis": "Referencia"
 }

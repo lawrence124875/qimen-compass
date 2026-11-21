@@ -2052,7 +2052,7 @@
   "compassNorthBuildingMore": "現代大樓的鋼筋、電箱、手機或大型電器，常常讓磁針嚴重偏轉，真北、磁北會一起偏。建築座向改用大樓本身的方向：大部分房間的牆都跟外牆平行或垂直，手機平放、長邊貼任何一面牆按「對牆」，羅盤約 1 秒就轉到正確方向。離開牆後由陀螺儀維持幾分鐘，偏掉時再貼牆按一次。可以分別存家、公司等地點。",
   "compassInterferenceSuggest": "室內磁場異常，建議改用建築座向",
   "compassAlignWall": "對牆",
-  "compassAlignWallHint": "手機平放，長邊貼任何一面牆，再按「對牆」",
+  "compassAlignWallHint": "手機平放，長邊貼任何一面牆，按「對牆」後馬上走到要測的位置讀數；換房間或過了幾分鐘，就再貼牆對一次。",
   "compassAlignedAgo": "已對牆（{minutes} 分鐘前），離開牆後由陀螺儀維持方向",
   "@compassAlignedAgo": {
     "placeholders": {
@@ -2065,7 +2065,7 @@
   "compassOff90": "方向差 90°？",
   "compassBuildingNone": "還沒設定地點",
   "buildingTitle": "設定建築座向",
-  "buildingGuide": "找到你的大樓，沿著一面外牆，在牆的兩端各點一下（可拖曳調整）。",
+  "buildingGuide": "找到你的大樓，沿著整棟最長的一面外牆，在牆的兩端各點一下（可拖曳調整）。衛星圖常有傾斜，請對齊屋頂邊緣線或與地面的交界線。",
   "buildingNeedLine": "在地圖上點牆的兩端",
   "buildingWall": "牆向 {deg}°",
   "@buildingWall": {
@@ -2084,5 +2084,6 @@
   "buildingAdd": "新增地點",
   "buildingEdit": "編輯",
   "buildingDelete": "刪除",
-  "buildingChange": "更換"
+  "buildingChange": "更換",
+  "compassBasis": "基準"
 }

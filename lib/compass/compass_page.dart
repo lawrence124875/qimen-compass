@@ -53,6 +53,7 @@ class _CompassPageState extends State<CompassPage> {
   NorthMode _mode = NorthMode.trueNorth;
   BuildingFacing? _building;
   DateTime? _wallAt; // 最近一次「對牆」的時間
+  bool _bldMagnetic = false; // 建築座向輸出磁北（地圖牆向為真北，扣磁偏角）
   double? _declination;
   bool _locating = false;
 
@@ -131,11 +132,13 @@ class _CompassPageState extends State<CompassPage> {
   Future<void> _loadPrefs() async {
     final p = await CompassPrefs.load();
     final mode = await BuildingStore.mode(p.trueNorth);
+    final bldMag = await BuildingStore.magneticBasis();
     if (!mounted) return;
     if (mode == NorthMode.building) await _loadBuilding();
     if (!mounted) return;
     setState(() {
       _mode = mode;
+      _bldMagnetic = bldMag;
       _declination = p.declination;
       _trueNorth = mode != NorthMode.magnetic && p.declination != null;
       if (p.fieldUt != null) _field.setExpected(p.fieldUt!);
@@ -175,7 +178,26 @@ class _CompassPageState extends State<CompassPage> {
     super.dispose();
   }
 
+  /// 建築座向模式的真北方向：對牆後用陀螺儀；對牆前用磁力計＋磁偏角估計。
+  double? get _buildingTrue {
+    if (_gyro.locked) return _gyro.heading;
+    final h = _magHeading;
+    return h == null ? null : normalizeDeg(h + (_declination ?? 0));
+  }
+
+  /// 目前顯示用的基準是否為磁北。
+  bool get _showsMagnetic => switch (_mode) {
+        NorthMode.magnetic => true,
+        NorthMode.trueNorth => !_trueNorth,
+        NorthMode.building => _bldMagnetic && _declination != null,
+      };
+
   double? get _heading {
+    if (_mode == NorthMode.building) {
+      final t = _buildingTrue;
+      if (t == null) return null;
+      return _showsMagnetic ? normalizeDeg(t - _declination!) : t;
+    }
     if (_gyro.locked) return _gyro.heading; // 鎖定時已含北方基準
     final h = _magHeading;
     if (h == null) return null;
@@ -253,7 +275,7 @@ class _CompassPageState extends State<CompassPage> {
   void _alignWall() {
     final b = _building;
     if (b == null) return;
-    final est = _heading ?? b.wall;
+    final est = _buildingTrue ?? b.wall;
     setState(() {
       _gyro.lock(snapToWall(est, b.wall));
       _wallAt = DateTime.now();
@@ -339,7 +361,8 @@ class _CompassPageState extends State<CompassPage> {
           style: theme.textTheme.titleLarge,
         ),
       ));
-      widgets.add(Text('${_dirLabel(l, palaceAtBearing(heading))} ${heading.round()}°',
+      widgets.add(Text(
+          '${_dirLabel(l, palaceAtBearing(heading))} ${heading.round()}° · ${_showsMagnetic ? l.compassMagneticNorth : l.compassTrueNorth}',
           textAlign: TextAlign.center, style: theme.textTheme.bodyMedium));
     } else {
       widgets.add(Text(_noSensor ? l.compassNoSensor : l.compassWaiting, textAlign: TextAlign.center));
@@ -549,6 +572,25 @@ class _CompassPageState extends State<CompassPage> {
             label: Text(l.compassAlignWall),
             onPressed: b == null ? null : _alignWall,
           ),
+          const SizedBox(height: 8),
+          Row(children: [
+            Text(l.compassBasis, style: theme.textTheme.bodyMedium),
+            const SizedBox(width: 8),
+            Expanded(
+              child: SegmentedButton<bool>(
+                showSelectedIcon: false,
+                segments: [
+                  ButtonSegment(value: false, label: Text(l.compassTrueNorth)),
+                  ButtonSegment(value: true, label: Text(l.compassMagneticNorth)),
+                ],
+                selected: {_bldMagnetic},
+                onSelectionChanged: (s) {
+                  setState(() => _bldMagnetic = s.first);
+                  BuildingStore.saveMagneticBasis(s.first);
+                },
+              ),
+            ),
+          ]),
           if (_gyro.locked)
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Flexible(child: Text(l.compassOff90, style: theme.textTheme.bodySmall)),

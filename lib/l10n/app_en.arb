@@ -950,13 +950,13 @@
   "compassNorthBuildingMore": "In modern buildings, steel rebar, electrical boxes, phones and large appliances often deflect the compass needle badly, so true and magnetic north are both off. Building direction uses the building itself: most room walls are parallel or perpendicular to the outer wall. Lay the phone flat with its long edge against any wall and tap “Align to wall”; the compass snaps to the right direction in about a second. The gyroscope holds it for a few minutes after you move away; when it drifts, align again. Save separate places such as Home and Work.",
   "compassInterferenceSuggest": "Indoor magnetic field is abnormal. Try building direction",
   "compassAlignWall": "Align to wall",
-  "compassAlignWallHint": "Lay the phone flat, long edge against any wall, then tap “Align to wall”",
+  "compassAlignWallHint": "Lay the phone flat, long edge against any wall, tap “Align to wall”, then go straight to where you want to read. Align again when you change rooms or after a few minutes.",
   "compassAlignedAgo": "Aligned {minutes} min ago; the gyroscope holds the direction away from the wall",
   "compassAlignDrift": "Direction may have drifted. Touch a wall and align again",
   "compassOff90": "Off by 90°?",
   "compassBuildingNone": "No place set yet",
   "buildingTitle": "Set building direction",
-  "buildingGuide": "Find your building and tap both ends of one outer wall (drag to adjust).",
+  "buildingGuide": "Find your building and tap both ends of its longest outer wall (drag to adjust). Satellite images are often tilted, so follow the roof edge or where the wall meets the ground.",
   "buildingNeedLine": "Tap both ends of a wall on the map",
   "buildingWall": "Wall {deg}°",
   "buildingRedraw": "Redraw",
@@ -968,5 +968,6 @@
   "buildingAdd": "Add place",
   "buildingEdit": "Edit",
   "buildingDelete": "Delete",
-  "buildingChange": "Change"
+  "buildingChange": "Change",
+  "compassBasis": "Reference"
 }

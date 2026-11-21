@@ -950,13 +950,13 @@
   "compassNorthBuildingMore": "Trong các tòa nhà hiện đại, cốt thép, tủ điện, điện thoại hay đồ điện lớn thường làm kim la bàn lệch nghiêm trọng, nên bắc thật và bắc từ lệch theo. Hướng tòa nhà dùng chính hướng của tòa nhà: phần lớn tường phòng song song hoặc vuông góc với tường ngoài. Đặt điện thoại nằm phẳng, cạnh dài áp vào bất kỳ bức tường nào rồi chạm «Căn theo tường»; la bàn xoay đúng hướng trong khoảng 1 giây. Rời tường, con quay hồi chuyển giữ hướng trong vài phút; khi lệch, căn lại. Có thể lưu riêng Nhà, Công ty…",
   "compassInterferenceSuggest": "Từ trường trong nhà bất thường. Nên dùng hướng tòa nhà",
   "compassAlignWall": "Căn theo tường",
-  "compassAlignWallHint": "Đặt điện thoại nằm phẳng, cạnh dài áp vào tường rồi chạm «Căn theo tường»",
+  "compassAlignWallHint": "Đặt điện thoại nằm phẳng, cạnh dài áp vào tường, chạm «Căn theo tường» rồi đi ngay đến chỗ cần đo. Đổi phòng hoặc sau vài phút thì căn lại.",
   "compassAlignedAgo": "Đã căn {minutes} phút trước; con quay hồi chuyển giữ hướng khi rời tường",
   "compassAlignDrift": "Hướng có thể đã lệch. Hãy áp vào tường và căn lại",
   "compassOff90": "Lệch 90°?",
   "compassBuildingNone": "Chưa có địa điểm",
   "buildingTitle": "Đặt hướng tòa nhà",
-  "buildingGuide": "Tìm tòa nhà của bạn và chạm vào hai đầu của một bức tường ngoài (kéo để chỉnh).",
+  "buildingGuide": "Tìm tòa nhà của bạn và chạm vào hai đầu bức tường ngoài dài nhất (kéo để chỉnh). Ảnh vệ tinh thường bị nghiêng, hãy bám theo mép mái hoặc đường tường giáp mặt đất.",
   "buildingNeedLine": "Chạm hai đầu bức tường trên bản đồ",
   "buildingWall": "Tường {deg}°",
   "buildingRedraw": "Vẽ lại",
@@ -968,5 +968,6 @@
   "buildingAdd": "Thêm địa điểm",
   "buildingEdit": "Sửa",
   "buildingDelete": "Xóa",
-  "buildingChange": "Đổi"
+  "buildingChange": "Đổi",
+  "compassBasis": "Mốc"
 }

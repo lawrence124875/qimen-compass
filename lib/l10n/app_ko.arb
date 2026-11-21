@@ -950,13 +950,13 @@
   "compassNorthBuildingMore": "현대 건물의 철근, 전기함, 휴대폰이나 대형 가전은 나침반 바늘을 크게 틀어지게 하는 경우가 많아 진북과 자북이 함께 틀어집니다. 건물 방향은 건물 자체의 방향을 씁니다. 대부분의 방 벽은 외벽과 평행하거나 수직이므로, 휴대폰을 평평하게 두고 긴 쪽을 아무 벽에나 대고 '벽에 맞추기'를 누르면 약 1초 만에 올바른 방향이 됩니다. 벽에서 떨어진 뒤에는 자이로가 몇 분간 유지하며, 틀어지면 다시 맞추세요. 집·회사 등 장소별로 저장할 수 있습니다.",
   "compassInterferenceSuggest": "실내 자기장이 비정상입니다. 건물 방향을 사용해 보세요",
   "compassAlignWall": "벽에 맞추기",
-  "compassAlignWallHint": "휴대폰을 평평하게 두고 긴 쪽을 벽에 댄 뒤 '벽에 맞추기'를 누르세요",
+  "compassAlignWallHint": "휴대폰을 평평하게 두고 긴 쪽을 벽에 댄 뒤 '벽에 맞추기'를 누르고, 바로 측정할 위치로 가서 읽으세요. 방을 옮기거나 몇 분이 지나면 다시 맞추세요.",
   "compassAlignedAgo": "{minutes}분 전에 맞춤. 벽에서 떨어져도 자이로가 방향을 유지합니다",
   "compassAlignDrift": "방향이 틀어졌을 수 있습니다. 다시 벽에 맞춰 주세요",
   "compassOff90": "90° 차이 나나요?",
   "compassBuildingNone": "아직 장소가 없습니다",
   "buildingTitle": "건물 방향 설정",
-  "buildingGuide": "건물을 찾아 외벽 한 면의 양 끝을 각각 탭하세요(드래그로 조정).",
+  "buildingGuide": "건물을 찾아 가장 긴 외벽의 양 끝을 각각 탭하세요(드래그로 조정). 위성 사진은 기울어진 경우가 많으니 옥상 가장자리나 지면과 만나는 선에 맞추세요.",
   "buildingNeedLine": "지도에서 벽의 양 끝을 탭하세요",
   "buildingWall": "벽 방향 {deg}°",
   "buildingRedraw": "다시 그리기",
@@ -968,5 +968,6 @@
   "buildingAdd": "장소 추가",
   "buildingEdit": "편집",
   "buildingDelete": "삭제",
-  "buildingChange": "변경"
+  "buildingChange": "변경",
+  "compassBasis": "기준"
 }

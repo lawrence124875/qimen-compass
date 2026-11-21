@@ -950,13 +950,13 @@
   "compassNorthBuildingMore": "Di gedung modern, besi beton, kotak listrik, ponsel, atau peralatan listrik besar sering membuat jarum kompas melenceng jauh, sehingga utara sejati dan magnetik ikut melenceng. Arah bangunan memakai arah gedung itu sendiri: kebanyakan dinding ruangan sejajar atau tegak lurus dengan dinding luar. Letakkan ponsel datar dengan sisi panjang menempel ke dinding mana saja, lalu ketuk “Sejajarkan dengan dinding”; kompas langsung tepat dalam sekitar 1 detik. Giroskop menjaga arah beberapa menit setelah Anda menjauh; jika melenceng, sejajarkan lagi. Simpan tempat seperti Rumah dan Kantor.",
   "compassInterferenceSuggest": "Medan magnet dalam ruangan tidak normal. Coba arah bangunan",
   "compassAlignWall": "Sejajarkan dengan dinding",
-  "compassAlignWallHint": "Letakkan ponsel datar, sisi panjang menempel ke dinding, lalu ketuk “Sejajarkan dengan dinding”",
+  "compassAlignWallHint": "Letakkan ponsel datar, sisi panjang menempel ke dinding, ketuk “Sejajarkan dengan dinding”, lalu segera ke titik yang ingin diukur. Sejajarkan lagi saat pindah ruangan atau setelah beberapa menit.",
   "compassAlignedAgo": "Disejajarkan {minutes} menit lalu; giroskop menjaga arah saat jauh dari dinding",
   "compassAlignDrift": "Arah mungkin sudah melenceng. Tempelkan ke dinding dan sejajarkan lagi",
   "compassOff90": "Meleset 90°?",
   "compassBuildingNone": "Belum ada tempat",
   "buildingTitle": "Atur arah bangunan",
-  "buildingGuide": "Cari gedung Anda dan ketuk kedua ujung satu dinding luar (seret untuk menyesuaikan).",
+  "buildingGuide": "Cari gedung Anda dan ketuk kedua ujung dinding luar yang paling panjang (seret untuk menyesuaikan). Citra satelit sering miring, jadi ikuti tepi atap atau garis pertemuan dinding dengan tanah.",
   "buildingNeedLine": "Ketuk kedua ujung dinding di peta",
   "buildingWall": "Dinding {deg}°",
   "buildingRedraw": "Gambar ulang",
@@ -968,5 +968,6 @@
   "buildingAdd": "Tambah tempat",
   "buildingEdit": "Edit",
   "buildingDelete": "Hapus",
-  "buildingChange": "Ganti"
+  "buildingChange": "Ganti",
+  "compassBasis": "Acuan"
 }

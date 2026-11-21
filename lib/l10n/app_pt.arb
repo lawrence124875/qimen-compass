@@ -950,13 +950,13 @@
   "compassNorthBuildingMore": "Em prédios modernos, vergalhões de aço, quadros elétricos, celulares e eletrodomésticos grandes costumam desviar muito a agulha, então o norte verdadeiro e o magnético se desviam juntos. A orientação do prédio usa o próprio prédio: quase todas as paredes são paralelas ou perpendiculares à parede externa. Deixe o celular deitado com o lado longo encostado em qualquer parede e toque em “Alinhar à parede”; a bússola se ajusta em cerca de um segundo. O giroscópio mantém a direção por alguns minutos depois que você se afasta; se desviar, alinhe de novo. Salve locais como Casa e Trabalho.",
   "compassInterferenceSuggest": "Campo magnético interno anormal. Experimente a orientação do prédio",
   "compassAlignWall": "Alinhar à parede",
-  "compassAlignWallHint": "Deixe o celular deitado, lado longo encostado numa parede, e toque em “Alinhar à parede”",
+  "compassAlignWallHint": "Deixe o celular deitado, lado longo encostado numa parede, toque em “Alinhar à parede” e vá logo ao ponto que quer medir. Alinhe de novo ao trocar de cômodo ou após alguns minutos.",
   "compassAlignedAgo": "Alinhado há {minutes} min; o giroscópio mantém a direção longe da parede",
   "compassAlignDrift": "A direção pode ter desviado. Encoste numa parede e alinhe de novo",
   "compassOff90": "Diferença de 90°?",
   "compassBuildingNone": "Nenhum local ainda",
   "buildingTitle": "Configurar orientação do prédio",
-  "buildingGuide": "Encontre seu prédio e toque nas duas pontas de uma parede externa (arraste para ajustar).",
+  "buildingGuide": "Encontre seu prédio e toque nas duas pontas da parede externa mais longa (arraste para ajustar). Imagens de satélite costumam ser inclinadas: siga a borda do telhado ou a linha onde a parede encontra o chão.",
   "buildingNeedLine": "Toque nas duas pontas de uma parede no mapa",
   "buildingWall": "Parede {deg}°",
   "buildingRedraw": "Redesenhar",
@@ -968,5 +968,6 @@
   "buildingAdd": "Adicionar local",
   "buildingEdit": "Editar",
   "buildingDelete": "Excluir",
-  "buildingChange": "Trocar"
+  "buildingChange": "Trocar",
+  "compassBasis": "Referência"
 }
