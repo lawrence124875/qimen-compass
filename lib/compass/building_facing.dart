@@ -128,4 +128,33 @@ class BuildingStore {
   static Future<bool> magneticBasis() async => (await _p())?.getBool(_kMagBasis) ?? false;
 
   static Future<void> saveMagneticBasis(bool on) async => (await _p())?.setBool(_kMagBasis, on);
+
+  static const _kHouseBinding = 'qm_house_building';
+
+  /// 宅盤每間房子綁定的建築座向地點（房子 id → 地點 id）。
+  static Future<String?> buildingOfHouse(String houseId) async {
+    final raw = (await _p())?.getString(_kHouseBinding);
+    if (raw == null) return null;
+    try {
+      final m = jsonDecode(raw);
+      return m is Map ? m[houseId] as String? : null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  static Future<void> bindHouse(String houseId, String? buildingId) async {
+    final p = await _p();
+    Map<String, dynamic> m = {};
+    try {
+      final raw = p?.getString(_kHouseBinding);
+      if (raw != null) m = Map<String, dynamic>.from(jsonDecode(raw) as Map);
+    } catch (_) {}
+    if (buildingId == null) {
+      m.remove(houseId);
+    } else {
+      m[houseId] = buildingId;
+    }
+    await p?.setString(_kHouseBinding, jsonEncode(m));
+  }
 }

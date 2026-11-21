@@ -11,6 +11,7 @@ import '../lucky/placement_page.dart';
 import '../meaning/meaning_content.dart';
 import '../travel/travel_text.dart';
 import 'heading_tracker.dart';
+import 'house_widgets.dart' show HeadingPanel;
 
 /// 床位、書桌、座位朝向（HANDOFF §12 P6）：手機平放、頂端指向床頭（或人面向）的方向，
 /// 看今年年盤上該方位的門。家具擺放屬長期，所以用年盤判斷。
@@ -203,6 +204,8 @@ class _FacingPageState extends State<FacingPage> {
               );
             },
           ),
+          const SizedBox(height: 8),
+          const HeadingPanel(compact: true),
           const SizedBox(height: 12),
           Text(l.facingSuggest, style: text.titleSmall?.copyWith(color: qm.primary)),
           const SizedBox(height: 4),
