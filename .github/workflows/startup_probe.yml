@@ -1,0 +1,41 @@
+# 啟動耗時量測：在模擬器裝指定 run 的免費版 APK，冷啟動 5 次，摘要寫成 annotation（Claude 用 check-runs API 讀）。
+name: Startup probe
+on:
+  workflow_dispatch:
+    inputs:
+      run:
+        description: 'Build Android 的 run 編號'
+        required: true
+  push:
+    branches: ['claude/**']
+    paths: ['.github/workflows/startup_probe.yml', 'scripts/startup_probe.sh']
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v5
+      - name: 下載 APK
+        env:
+          GH_TOKEN: ${{ secrets.BUILDS_REPO_TOKEN }}
+        run: |
+          n="${{ github.event.inputs.run }}"
+          [ -n "$n" ] || n=$(cat scripts/startup_probe_run.txt)
+          gh release download "qimen-android-run$n" -R lawrence124875/qimen-content -p '*_free.apk' -O app.apk
+          ls -la app.apk
+      - name: 啟用 KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules && sudo udevadm trigger --name-match=kvm
+      - name: 模擬器量測
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          arch: x86_64
+          target: google_apis
+          cores: 2
+          ram-size: 3072M
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          script: bash scripts/startup_probe.sh app.apk
