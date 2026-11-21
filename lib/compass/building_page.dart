@@ -5,6 +5,7 @@ import '../features/map/map_location.dart';
 import '../features/map/map_page.dart' show mapsEnabled;
 import '../l10n/l10n.dart';
 import 'building_facing.dart';
+import 'geo_math.dart';
 
 /// 設定一個地點的建築座向：在衛星地圖上沿一面外牆，在牆的兩端各點一下（可拖曳）。
 /// 沒有地圖金鑰時改成直接輸入牆向角度。回傳儲存後的 [BuildingFacing]，取消回傳 null。
@@ -91,7 +92,10 @@ class _BuildingFacingPageState extends State<BuildingFacingPage> {
     final l = context.l10n;
     final theme = Theme.of(context);
     final wall = _wall;
-    final canSave = wall != null && _name.text.trim().isNotEmpty;
+    final a0 = _a, b0 = _b;
+    // 防呆：牆線太短時角度誤差大（點偏 1 公尺，10 公尺長的線約差 6°）
+    final tooShort = a0 != null && b0 != null && distanceMeters(a0.latitude, a0.longitude, b0.latitude, b0.longitude) < 10;
+    final canSave = wall != null && !tooShort && _name.text.trim().isNotEmpty;
 
     Widget map;
     if (!mapsEnabled) {
@@ -155,8 +159,11 @@ class _BuildingFacingPageState extends State<BuildingFacingPage> {
             child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
               Row(children: [
                 Expanded(
-                  child: Text(wall == null ? l.buildingNeedLine : l.buildingWall(wall.round()),
-                      style: theme.textTheme.titleMedium),
+                  child: Text(
+                      tooShort ? l.buildingTooShort : (wall == null ? l.buildingNeedLine : l.buildingWall(wall.round())),
+                      style: tooShort
+                          ? theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.error)
+                          : theme.textTheme.titleMedium),
                 ),
                 if (mapsEnabled && _a != null)
                   TextButton(onPressed: () => setState(() => _a = _b = null), child: Text(l.buildingRedraw)),

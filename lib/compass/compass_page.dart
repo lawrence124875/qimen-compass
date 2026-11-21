@@ -53,6 +53,7 @@ class _CompassPageState extends State<CompassPage> {
   NorthMode _mode = NorthMode.trueNorth;
   BuildingFacing? _building;
   DateTime? _wallAt; // 最近一次「對牆」的時間
+  double _gyroRate = 0; // 陀螺儀角速度（rad/s，平滑）：判斷對牆時是否靜止
   bool _bldMagnetic = false; // 建築座向輸出磁北（地圖牆向為真北，扣磁偏角）
   double? _declination;
   bool _locating = false;
@@ -113,7 +114,10 @@ class _CompassPageState extends State<CompassPage> {
           .listen((e) => _field.add(e.x, e.y, e.z), onError: (_) {}));
     }
     _subs.add(gyroscopeEventStream(samplingPeriod: SensorInterval.gameInterval)
-        .listen((e) => _gyro.update(e.z, DateTime.now()), onError: (_) {}));
+        .listen((e) {
+      _gyro.update(e.z, DateTime.now());
+      _gyroRate = _gyroRate * 0.8 + math.sqrt(e.x * e.x + e.y * e.y + e.z * e.z) * 0.2;
+    }, onError: (_) {}));
     _subs.add(accelerometerEventStream(samplingPeriod: SensorInterval.uiInterval)
         .listen((e) => _tilt = tiltDegrees(e.x, e.y, e.z), onError: (_) {}));
   }
@@ -275,12 +279,25 @@ class _CompassPageState extends State<CompassPage> {
   void _alignWall() {
     final b = _building;
     if (b == null) return;
+    final l = context.l10n;
+    void tell(String m) =>
+        ScaffoldMessenger.of(context)..hideCurrentSnackBar()..showSnackBar(SnackBar(content: Text(m)));
+    // 防呆：要平放、靜止才準
+    if (_tilt > 12) return tell(l.compassAlignNotFlat);
+    if (_gyroRate > 0.15) return tell(l.compassAlignNotStill);
     final est = _buildingTrue ?? b.wall;
+    final snapped = snapToWall(est, b.wall);
     setState(() {
-      _gyro.lock(snapToWall(est, b.wall));
+      _gyro.lock(snapped);
       _wallAt = DateTime.now();
     });
     HapticFeedback.mediumImpact();
+    // 磁場正常時，對牆結果應和指南針接近；差太多可能是沒貼好、選錯地點或對到 90° 外的牆
+    final mag = _magHeading;
+    if (_field.status == FieldStatus.ok && mag != null) {
+      final off = turnDelta(normalizeDeg(mag + (_declination ?? 0)), snapped).abs();
+      if (off > 20) tell(l.compassAlignCheck(off.round()));
+    }
   }
 
   void _rotate90(int dir) {

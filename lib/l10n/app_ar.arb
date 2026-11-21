@@ -969,5 +969,9 @@
   "buildingEdit": "تعديل",
   "buildingDelete": "حذف",
   "buildingChange": "تغيير",
-  "compassBasis": "المرجع"
+  "compassBasis": "المرجع",
+  "compassAlignNotFlat": "ضع الهاتف مسطحًا (الشاشة للأعلى) قبل المحاذاة",
+  "compassAlignNotStill": "أبقِ الهاتف ثابتًا على الجدار ثم اضغط",
+  "compassAlignCheck": "تمت المحاذاة لكن الفرق عن البوصلة {deg}°: تأكد أن الحافة الطويلة على الجدار وأن المكان صحيح؛ استخدم 90° للتصحيح",
+  "buildingTooShort": "خط الجدار قصير جدًا. اضغط على طرفي الجدار الخارجي كاملًا (10 م على الأقل)"
 }

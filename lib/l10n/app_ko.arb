@@ -969,5 +969,9 @@
   "buildingEdit": "편집",
   "buildingDelete": "삭제",
   "buildingChange": "변경",
-  "compassBasis": "기준"
+  "compassBasis": "기준",
+  "compassAlignNotFlat": "휴대폰을 평평하게(화면 위로) 두고 맞추세요",
+  "compassAlignNotStill": "벽에 댄 채 잠시 움직이지 말고 누르세요",
+  "compassAlignCheck": "맞췄지만 나침반과 {deg}° 차이가 납니다. 긴 쪽이 벽에 닿았는지, 장소가 맞는지 확인하고 필요하면 90°로 수정하세요",
+  "buildingTooShort": "벽 선이 너무 짧습니다. 외벽 전체의 양 끝을 탭하세요(10m 이상)"
 }

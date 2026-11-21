@@ -969,5 +969,9 @@
   "buildingEdit": "编辑",
   "buildingDelete": "删除",
   "buildingChange": "更换",
-  "compassBasis": "基准"
+  "compassBasis": "基准",
+  "compassAlignNotFlat": "请把手机平放（屏幕朝上）再对墙",
+  "compassAlignNotStill": "请让手机贴墙静止一下再按",
+  "compassAlignCheck": "已对墙，但和指南针差 {deg}°：请确认手机长边贴墙、地点选对；方向反了就按 90° 修正",
+  "buildingTooShort": "墙线太短，请点在整面外墙的两端（至少 10 米）"
 }

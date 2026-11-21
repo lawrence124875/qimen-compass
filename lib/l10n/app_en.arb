@@ -969,5 +969,9 @@
   "buildingEdit": "Edit",
   "buildingDelete": "Delete",
   "buildingChange": "Change",
-  "compassBasis": "Reference"
+  "compassBasis": "Reference",
+  "compassAlignNotFlat": "Lay the phone flat (screen up) before aligning",
+  "compassAlignNotStill": "Hold the phone still against the wall, then tap",
+  "compassAlignCheck": "Aligned, but {deg}° off the compass: check the long edge is on the wall and the right place is selected; use 90° to correct",
+  "buildingTooShort": "Wall line too short. Tap both ends of the whole outer wall (at least 10 m)"
 }

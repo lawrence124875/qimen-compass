@@ -2085,5 +2085,16 @@
   "buildingEdit": "編輯",
   "buildingDelete": "刪除",
   "buildingChange": "更換",
-  "compassBasis": "基準"
+  "compassBasis": "基準",
+  "compassAlignNotFlat": "請把手機平放（螢幕朝上）再對牆",
+  "compassAlignNotStill": "請讓手機貼牆靜止一下再按",
+  "compassAlignCheck": "已對牆，但和指南針差 {deg}°：請確認手機長邊貼牆、地點選對；方向反了就按 90° 修正",
+  "@compassAlignCheck": {
+    "placeholders": {
+      "deg": {
+        "type": "int"
+      }
+    }
+  },
+  "buildingTooShort": "牆線太短，請點在整面外牆的兩端（至少 10 公尺）"
 }
