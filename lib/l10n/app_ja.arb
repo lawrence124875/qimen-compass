@@ -973,5 +973,9 @@
   "compassAlignNotFlat": "スマホを平らに（画面を上に）置いてから合わせてください",
   "compassAlignNotStill": "壁に当てたまま少し静止してから押してください",
   "compassAlignCheck": "合わせましたが方位磁針と {deg}° ずれています。長い辺が壁に当たっているか、場所が正しいか確認し、必要なら 90° で修正してください",
-  "buildingTooShort": "壁の線が短すぎます。外壁全体の両端をタップしてください（10 m 以上）"
+  "buildingTooShort": "壁の線が短すぎます。外壁全体の両端をタップしてください（10 m 以上）",
+  "compassPickCity": "都市を選ぶ",
+  "compassCityHint": "いる都市を入力",
+  "buildingEnterAngle": "角度を入力",
+  "buildingUseMap": "地図を使う"
 }

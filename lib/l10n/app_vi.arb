@@ -973,5 +973,9 @@
   "compassAlignNotFlat": "Đặt điện thoại nằm phẳng (màn hình hướng lên) rồi mới căn",
   "compassAlignNotStill": "Giữ điện thoại yên áp vào tường rồi chạm",
   "compassAlignCheck": "Đã căn nhưng lệch la bàn {deg}°: kiểm tra cạnh dài áp tường và chọn đúng địa điểm; dùng 90° để sửa",
-  "buildingTooShort": "Đường tường quá ngắn. Chạm hai đầu của cả bức tường ngoài (ít nhất 10 m)"
+  "buildingTooShort": "Đường tường quá ngắn. Chạm hai đầu của cả bức tường ngoài (ít nhất 10 m)",
+  "compassPickCity": "Chọn thành phố",
+  "compassCityHint": "Nhập thành phố của bạn",
+  "buildingEnterAngle": "Nhập góc",
+  "buildingUseMap": "Dùng bản đồ"
 }

@@ -25,6 +25,9 @@ class _BuildingFacingPageState extends State<BuildingFacingPage> {
   LatLng? _center;
   bool _locating = true;
 
+  /// 手動輸入角度（沒有地圖金鑰，或所在地區無法使用 Google 地圖時）。
+  bool _manualMode = !mapsEnabled;
+
   @override
   void initState() {
     super.initState();
@@ -32,7 +35,8 @@ class _BuildingFacingPageState extends State<BuildingFacingPage> {
     if (e?.lat != null && e?.lon != null) {
       _center = LatLng(e!.lat!, e.lon!);
       _locating = false;
-    } else if (mapsEnabled) {
+    } else {
+      // 手動輸入時也取位置：存下地點座標，羅盤才能算當地磁偏角
       currentLatLon().then((p) {
         if (!mounted) return;
         setState(() {
@@ -40,8 +44,6 @@ class _BuildingFacingPageState extends State<BuildingFacingPage> {
           if (p != null) _center = LatLng(p.$1, p.$2);
         });
       });
-    } else {
-      _locating = false;
     }
   }
 
@@ -58,7 +60,7 @@ class _BuildingFacingPageState extends State<BuildingFacingPage> {
       if (a == b) return null;
       return wallBearingOf(a.latitude, a.longitude, b.latitude, b.longitude);
     }
-    if (!mapsEnabled) {
+    if (_manualMode) {
       final v = double.tryParse(_manual.text.trim());
       return v == null ? null : wallAxis(v);
     }
@@ -78,7 +80,7 @@ class _BuildingFacingPageState extends State<BuildingFacingPage> {
     final wall = _wall;
     final name = _name.text.trim();
     if (wall == null || name.isEmpty) return;
-    final a = _a, b = _b;
+    final a = _manualMode ? null : _a, b = _manualMode ? null : _b;
     final lat = a != null && b != null ? (a.latitude + b.latitude) / 2 : widget.existing?.lat ?? _center?.latitude;
     final lon = a != null && b != null ? (a.longitude + b.longitude) / 2 : widget.existing?.lon ?? _center?.longitude;
     final e = widget.existing;
@@ -94,11 +96,11 @@ class _BuildingFacingPageState extends State<BuildingFacingPage> {
     final wall = _wall;
     final a0 = _a, b0 = _b;
     // 防呆：牆線太短時角度誤差大（點偏 1 公尺，10 公尺長的線約差 6°）
-    final tooShort = a0 != null && b0 != null && distanceMeters(a0.latitude, a0.longitude, b0.latitude, b0.longitude) < 10;
+    final tooShort = !_manualMode && a0 != null && b0 != null && distanceMeters(a0.latitude, a0.longitude, b0.latitude, b0.longitude) < 10;
     final canSave = wall != null && !tooShort && _name.text.trim().isNotEmpty;
 
     Widget map;
-    if (!mapsEnabled) {
+    if (_manualMode) {
       map = ListView(padding: const EdgeInsets.all(16), children: [
         Text(l.buildingManual),
         const SizedBox(height: 8),
@@ -145,10 +147,16 @@ class _BuildingFacingPageState extends State<BuildingFacingPage> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(l.buildingTitle)),
+      appBar: AppBar(title: Text(l.buildingTitle), actions: [
+        if (mapsEnabled)
+          TextButton(
+            onPressed: () => setState(() => _manualMode = !_manualMode),
+            child: Text(_manualMode ? l.buildingUseMap : l.buildingEnterAngle),
+          ),
+      ]),
       body: SafeArea(
         child: Column(children: [
-          if (mapsEnabled)
+          if (!_manualMode)
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
               child: Text(l.buildingGuide, style: theme.textTheme.bodyMedium),
@@ -165,7 +173,7 @@ class _BuildingFacingPageState extends State<BuildingFacingPage> {
                           ? theme.textTheme.bodyMedium?.copyWith(color: theme.colorScheme.error)
                           : theme.textTheme.titleMedium),
                 ),
-                if (mapsEnabled && _a != null)
+                if (!_manualMode && _a != null)
                   TextButton(onPressed: () => setState(() => _a = _b = null), child: Text(l.buildingRedraw)),
               ]),
               const SizedBox(height: 8),

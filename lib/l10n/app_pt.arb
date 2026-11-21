@@ -973,5 +973,9 @@
   "compassAlignNotFlat": "Deixe o celular deitado (tela para cima) antes de alinhar",
   "compassAlignNotStill": "Mantenha o celular parado encostado na parede e toque",
   "compassAlignCheck": "Alinhado, mas {deg}° diferente da bússola: confira se o lado longo está na parede e o local certo; use 90° para corrigir",
-  "buildingTooShort": "Linha curta demais. Toque nas pontas da parede externa inteira (mín. 10 m)"
+  "buildingTooShort": "Linha curta demais. Toque nas pontas da parede externa inteira (mín. 10 m)",
+  "compassPickCity": "Escolher cidade",
+  "compassCityHint": "Digite sua cidade",
+  "buildingEnterAngle": "Digitar ângulo",
+  "buildingUseMap": "Usar mapa"
 }

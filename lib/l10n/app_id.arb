@@ -973,5 +973,9 @@
   "compassAlignNotFlat": "Letakkan ponsel datar (layar di atas) sebelum menyejajarkan",
   "compassAlignNotStill": "Tahan ponsel diam menempel dinding, lalu ketuk",
   "compassAlignCheck": "Sudah sejajar, tapi beda {deg}° dari kompas: pastikan sisi panjang menempel dinding dan tempatnya benar; pakai 90° untuk mengoreksi",
-  "buildingTooShort": "Garis dinding terlalu pendek. Ketuk kedua ujung seluruh dinding luar (min. 10 m)"
+  "buildingTooShort": "Garis dinding terlalu pendek. Ketuk kedua ujung seluruh dinding luar (min. 10 m)",
+  "compassPickCity": "Pilih kota",
+  "compassCityHint": "Masukkan kota Anda",
+  "buildingEnterAngle": "Masukkan sudut",
+  "buildingUseMap": "Pakai peta"
 }

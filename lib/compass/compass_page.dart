@@ -17,6 +17,7 @@ import 'compass_math.dart';
 import 'declination.dart';
 import 'north_mode_sheet.dart';
 import '../app/services.dart';
+import '../features/map/address_search.dart' show findPlace;
 import '../features/map/map_page.dart';
 import '../features/personal/profile.dart';
 import '../shared/widgets/result_card.dart';
@@ -221,7 +222,49 @@ class _CompassPageState extends State<CompassPage> {
         _wallAt = null;
       }
       _building = b;
+      // 建築座向：以該地點的座標算磁偏角與當地磁場（沒有定位、在室內也準，全球通用）
+      if (_mode == NorthMode.building && b?.lat != null && b?.lon != null) {
+        _declination = Declination.at(b!.lat!, b.lon!);
+        _field.setExpected(Declination.fieldAt(b.lat!, b.lon!));
+        _trueNorth = true;
+      }
     });
+  }
+
+  /// 沒有定位時手選城市：以城市座標算磁偏角（磁偏角跨百公里才差約 1°，城市已夠準）。
+  Future<void> _pickCity() async {
+    final l = context.l10n;
+    final ctl = TextEditingController();
+    final q = await showDialog<String>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l.compassPickCity),
+        content: TextField(
+          controller: ctl,
+          autofocus: true,
+          decoration: InputDecoration(hintText: l.compassCityHint),
+          onSubmitted: (v) => Navigator.of(ctx).pop(v),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l.cancel)),
+          FilledButton(onPressed: () => Navigator.of(ctx).pop(ctl.text), child: Text(l.buildingSave)),
+        ],
+      ),
+    );
+    ctl.dispose();
+    if (q == null || q.trim().isEmpty || !mounted) return;
+    final place = await findPlace(context, q.trim());
+    if (place == null || !mounted) return;
+    final dec = Declination.at(place.lat, place.lon);
+    final ut = Declination.fieldAt(place.lat, place.lon);
+    setState(() {
+      _declination = dec;
+      _field.setExpected(ut);
+      if (_mode == NorthMode.magnetic) _mode = NorthMode.trueNorth;
+      _trueNorth = true;
+    });
+    BuildingStore.saveMode(_mode);
+    CompassPrefs.saveNorth(_mode == NorthMode.trueNorth, dec, ut);
   }
 
   Future<void> _openNorthSheet() async {
@@ -270,7 +313,11 @@ class _CompassPageState extends State<CompassPage> {
         DeclinationError.denied => l.compassLocationDenied,
         DeclinationError.unavailable => l.compassLocationFailed,
       };
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(msg),
+        duration: const Duration(seconds: 8),
+        action: SnackBarAction(label: l.compassPickCity, onPressed: _pickCity),
+      ));
     }
   }
 
@@ -459,6 +506,15 @@ class _CompassPageState extends State<CompassPage> {
           : const Icon(Icons.chevron_right),
       onTap: _locating ? null : _openNorthSheet,
     ));
+    if (_mode != NorthMode.magnetic) {
+      widgets.add(Center(
+        child: TextButton.icon(
+          icon: const Icon(Icons.location_city_outlined, size: 18),
+          label: Text(l.compassPickCity),
+          onPressed: _locating ? null : _pickCity,
+        ),
+      ));
+    }
     if (_trueNorth && _declination != null) {
       widgets.add(Text(l.compassDeclination(_declination!.toStringAsFixed(1)),
           textAlign: TextAlign.center, style: theme.textTheme.bodySmall));

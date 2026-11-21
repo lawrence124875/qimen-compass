@@ -973,5 +973,9 @@
   "compassAlignNotFlat": "Deja el teléfono plano (pantalla arriba) antes de alinear",
   "compassAlignNotStill": "Mantén el teléfono quieto contra la pared y luego toca",
   "compassAlignCheck": "Alineado, pero a {deg}° de la brújula: revisa que el lado largo toque la pared y el lugar sea el correcto; usa 90° para corregir",
-  "buildingTooShort": "Línea demasiado corta. Toca los extremos de toda la pared exterior (mín. 10 m)"
+  "buildingTooShort": "Línea demasiado corta. Toca los extremos de toda la pared exterior (mín. 10 m)",
+  "compassPickCity": "Elegir ciudad",
+  "compassCityHint": "Escribe tu ciudad",
+  "buildingEnterAngle": "Escribir ángulo",
+  "buildingUseMap": "Usar mapa"
 }

@@ -942,7 +942,7 @@
   "compassNorthBase": "北方基准",
   "compassTrueNorthRecommended": "真北（建议）",
   "compassNorthTrueDesc": "地图上的正北方，风水和奇门方位都用这个。不需要网络或 GPS，在室内也能用。",
-  "compassNorthTrueMore": "真北＝磁北加上当地磁偏角（台湾约 4–5°）。磁偏角跨 100 公里以上才变 1° 左右，所以只要 Wi‑Fi、基站定位或上次保存的位置就够准，室内没有卫星信号也没关系。",
+  "compassNorthTrueMore": "真北＝磁北加上当地磁偏角（依所在地自动计算，通常几度，高纬度地区可能更大）。磁偏角跨 100 公里以上才变 1° 左右，所以只要 Wi‑Fi、基站定位或上次保存的位置就够准，室内没有卫星信号也没关系。",
   "compassNorthMagDesc": "指南针原本指的方向，跟真北差几度。用来和传统罗盘对照。",
   "compassNorthMagMore": "直接用手机磁力计的读数，不需要定位。传统罗盘（罗经）指的就是磁北，要和罗经的读数对照时选这个。",
   "compassBuilding": "建筑座向",
@@ -973,5 +973,9 @@
   "compassAlignNotFlat": "请把手机平放（屏幕朝上）再对墙",
   "compassAlignNotStill": "请让手机贴墙静止一下再按",
   "compassAlignCheck": "已对墙，但和指南针差 {deg}°：请确认手机长边贴墙、地点选对；方向反了就按 90° 修正",
-  "buildingTooShort": "墙线太短，请点在整面外墙的两端（至少 10 米）"
+  "buildingTooShort": "墙线太短，请点在整面外墙的两端（至少 10 米）",
+  "compassPickCity": "手选城市",
+  "compassCityHint": "输入所在城市",
+  "buildingEnterAngle": "输入角度",
+  "buildingUseMap": "用地图"
 }
