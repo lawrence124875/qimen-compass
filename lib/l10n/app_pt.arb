@@ -977,5 +977,7 @@
   "compassPickCity": "Escolher cidade",
   "compassCityHint": "Digite sua cidade",
   "buildingEnterAngle": "Digitar ângulo",
-  "buildingUseMap": "Usar mapa"
+  "buildingUseMap": "Usar mapa",
+  "compassNearbyCities": "Cidades próximas (pela região e fuso do celular)",
+  "compassCityFailed": "Cidade não encontrada. Verifique a conexão e tente de novo"
 }

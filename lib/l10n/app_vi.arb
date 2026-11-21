@@ -977,5 +977,7 @@
   "compassPickCity": "Chọn thành phố",
   "compassCityHint": "Nhập thành phố của bạn",
   "buildingEnterAngle": "Nhập góc",
-  "buildingUseMap": "Dùng bản đồ"
+  "buildingUseMap": "Dùng bản đồ",
+  "compassNearbyCities": "Thành phố gần đây (theo vùng và múi giờ của điện thoại)",
+  "compassCityFailed": "Không tìm thấy thành phố. Kiểm tra kết nối rồi thử lại"
 }

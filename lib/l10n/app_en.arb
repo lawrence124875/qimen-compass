@@ -977,5 +977,7 @@
   "compassPickCity": "Choose city",
   "compassCityHint": "Enter your city",
   "buildingEnterAngle": "Enter angle",
-  "buildingUseMap": "Use map"
+  "buildingUseMap": "Use map",
+  "compassNearbyCities": "Nearby cities (from your phone's region and time zone)",
+  "compassCityFailed": "Couldn't find this city. Check your connection and try again"
 }

@@ -977,5 +977,7 @@
   "compassPickCity": "اختر المدينة",
   "compassCityHint": "أدخل مدينتك",
   "buildingEnterAngle": "أدخل الزاوية",
-  "buildingUseMap": "استخدم الخريطة"
+  "buildingUseMap": "استخدم الخريطة",
+  "compassNearbyCities": "مدن قريبة (حسب منطقة الهاتف ومنطقته الزمنية)",
+  "compassCityFailed": "تعذر العثور على المدينة. تحقق من الاتصال وحاول مجددًا"
 }

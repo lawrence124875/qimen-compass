@@ -977,5 +977,7 @@
   "compassPickCity": "Pilih kota",
   "compassCityHint": "Masukkan kota Anda",
   "buildingEnterAngle": "Masukkan sudut",
-  "buildingUseMap": "Pakai peta"
+  "buildingUseMap": "Pakai peta",
+  "compassNearbyCities": "Kota terdekat (dari wilayah dan zona waktu ponsel)",
+  "compassCityFailed": "Kota tidak ditemukan. Periksa koneksi lalu coba lagi"
 }

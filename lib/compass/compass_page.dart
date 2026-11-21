@@ -12,12 +12,12 @@ import '../app/theme/app_theme.dart';
 import '../engine/engine.dart' hide Element;
 import '../l10n/l10n.dart';
 import 'building_facing.dart';
+import 'city_sheet.dart';
 import 'compass_intro.dart';
 import 'compass_math.dart';
 import 'declination.dart';
 import 'north_mode_sheet.dart';
 import '../app/services.dart';
-import '../features/map/address_search.dart' show findPlace;
 import '../features/map/map_page.dart';
 import '../features/personal/profile.dart';
 import '../shared/widgets/result_card.dart';
@@ -233,27 +233,7 @@ class _CompassPageState extends State<CompassPage> {
 
   /// 沒有定位時手選城市：以城市座標算磁偏角（磁偏角跨百公里才差約 1°，城市已夠準）。
   Future<void> _pickCity() async {
-    final l = context.l10n;
-    final ctl = TextEditingController();
-    final q = await showDialog<String>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l.compassPickCity),
-        content: TextField(
-          controller: ctl,
-          autofocus: true,
-          decoration: InputDecoration(hintText: l.compassCityHint),
-          onSubmitted: (v) => Navigator.of(ctx).pop(v),
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l.cancel)),
-          FilledButton(onPressed: () => Navigator.of(ctx).pop(ctl.text), child: Text(l.buildingSave)),
-        ],
-      ),
-    );
-    ctl.dispose();
-    if (q == null || q.trim().isEmpty || !mounted) return;
-    final place = await findPlace(context, q.trim());
+    final place = await pickCity(context);
     if (place == null || !mounted) return;
     final dec = Declination.at(place.lat, place.lon);
     final ut = Declination.fieldAt(place.lat, place.lon);
