@@ -983,5 +983,6 @@
   "northRecCompass": "Recomendado: norte verdadero. Es el más preciso al aire libre; si la aguja salta en interiores, usa Edificio.",
   "northRecMap": "Recomendado: norte verdadero. El mapa usa el norte verdadero, así el puntero y los sectores coinciden.",
   "northRecTravel": "Recomendado: norte verdadero. Caminas al aire libre, donde es el más preciso y sencillo.",
-  "northRecHouse": "Recomendado: Edificio. El acero y los aparatos interiores alteran la brújula; alinear con un muro exterior es lo más estable."
+  "northRecHouse": "Recomendado: Edificio. El acero y los aparatos interiores alteran la brújula; alinear con un muro exterior es lo más estable.",
+  "mapCompassOverlay": "Superponer brújula"
 }

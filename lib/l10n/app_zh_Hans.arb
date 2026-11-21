@@ -983,5 +983,6 @@
   "northRecCompass": "建议真北：一般户外找方位最准；在大楼里指针乱跳再改用建筑座向。",
   "northRecMap": "建议真北：地图本身就是真北，指针和扇区才对得上。",
   "northRecTravel": "建议真北：出门在户外走，真北最准也最省事。",
-  "northRecHouse": "建议建筑座向：屋内钢筋、电器会干扰指南针，用外墙对齐最稳。"
+  "northRecHouse": "建议建筑座向：屋内钢筋、电器会干扰指南针，用外墙对齐最稳。",
+  "mapCompassOverlay": "罗盘叠图"
 }

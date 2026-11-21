@@ -983,5 +983,6 @@
   "northRecCompass": "Disarankan: utara sejati. Paling akurat di luar ruangan; jika jarum melompat di dalam gedung, pakai Bangunan.",
   "northRecMap": "Disarankan: utara sejati. Peta memakai utara sejati, jadi penunjuk dan sektor selaras.",
   "northRecTravel": "Disarankan: utara sejati. Anda berjalan di luar ruangan, tempat utara sejati paling akurat dan praktis.",
-  "northRecHouse": "Disarankan: Bangunan. Baja dan peralatan di dalam rumah mengganggu kompas; menyelaraskan dengan dinding luar paling stabil."
+  "northRecHouse": "Disarankan: Bangunan. Baja dan peralatan di dalam rumah mengganggu kompas; menyelaraskan dengan dinding luar paling stabil.",
+  "mapCompassOverlay": "Tumpuk kompas"
 }

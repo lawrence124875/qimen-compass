@@ -7,6 +7,7 @@ import '../../app/settings/app_settings.dart';
 import '../../app/theme/app_theme.dart';
 import '../../compass/building_facing.dart';
 import '../../compass/compass_math.dart';
+import '../../compass/compass_page.dart' show CompassDial;
 import '../../compass/geo_math.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
@@ -54,15 +55,40 @@ class _MapPageState extends State<MapPage> {
   double? _drawn;
   (NorthMode, bool)? _drawnBasis;
 
+  /// 羅盤疊圖：盤面疊在地圖中央，地圖跟著手機方向轉（朝前方向朝上），鏡頭鎖定目前位置。
+  bool _overlay = true;
+  double _zoomNow = 17;
+
   void _onHeading() {
     final h = _heading.trueHeading;
     final basis = (_heading.mode, _heading.showsMagnetic);
-    // 地圖指針每轉 2° 以上才重畫，避免一直更新地圖
-    if (basis != _drawnBasis || (h == null) != (_drawn == null) || (h != null && turnDelta(_drawn!, h).abs() >= 2)) {
+    // 疊圖時每 1° 更新，否則指針每 2° 才重畫，避免一直更新地圖
+    final step = _overlay ? 1.0 : 2.0;
+    if (basis != _drawnBasis || (h == null) != (_drawn == null) || (h != null && turnDelta(_drawn!, h).abs() >= step)) {
       setState(() {
         _drawn = h;
         _drawnBasis = basis;
       });
+      if (_overlay) _follow();
+    }
+  }
+
+  /// 疊圖模式：鏡頭以目前位置為中心，方位跟手機一樣（地圖上方＝手機前方）。
+  void _follow() {
+    final me = _me, h = _drawn;
+    if (me == null || _map == null) return;
+    _map!.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(me.$1, me.$2), zoom: _zoomNow, bearing: h ?? 0)));
+  }
+
+  void _toggleOverlay() {
+    setState(() => _overlay = !_overlay);
+    if (_overlay) {
+      _follow();
+    } else {
+      final me = _me;
+      if (me != null) {
+        _map?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(me.$1, me.$2), zoom: _zoom, bearing: 0)));
+      }
     }
   }
 
@@ -123,6 +149,7 @@ class _MapPageState extends State<MapPage> {
     if (f == null) return;
     final p = LatLng(f.lat, f.lon);
     _setPin(p, q);
+    if (_overlay) setState(() => _overlay = false); // 要看搜尋結果，先離開疊圖（鏡頭不再鎖定目前位置）
     final me = _me;
     if (me != null && _map != null) {
       final sw = LatLng(me.$1 < p.latitude ? me.$1 : p.latitude, me.$2 < p.longitude ? me.$2 : p.longitude);
@@ -144,7 +171,22 @@ class _MapPageState extends State<MapPage> {
   static LatLng _ll((double, double) p) => LatLng(p.$1, p.$2);
 
   /// 地圖上方的方向讀數：面向哪一宮、幾度、哪一種北。
-  Widget _headingChip(BuildContext context) {
+  Widget _headingChip(BuildContext context) => Row(mainAxisSize: MainAxisSize.min, children: [
+        Flexible(child: _headingText(context)),
+        Card(
+          margin: const EdgeInsets.symmetric(vertical: 8),
+          child: IconButton(
+            visualDensity: VisualDensity.compact,
+            isSelected: _overlay,
+            icon: const Icon(Icons.explore_outlined),
+            selectedIcon: const Icon(Icons.explore),
+            tooltip: context.l10n.mapCompassOverlay,
+            onPressed: _toggleOverlay,
+          ),
+        ),
+      ]);
+
+  Widget _headingText(BuildContext context) {
     final l = context.l10n;
     final t = _heading;
     final h = t.heading;
@@ -162,7 +204,7 @@ class _MapPageState extends State<MapPage> {
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           Icon(Icons.navigation, size: 16, color: Theme.of(context).colorScheme.primary),
           const SizedBox(width: 4),
-          Text(text, style: Theme.of(context).textTheme.bodySmall),
+          Flexible(child: Text(text, style: Theme.of(context).textTheme.bodySmall)),
         ]),
       ),
     );
@@ -283,14 +325,19 @@ class _MapPageState extends State<MapPage> {
       );
     } else {
       mapArea = GoogleMap(
-        initialCameraPosition: CameraPosition(target: LatLng(me.$1, me.$2), zoom: _zoom),
-        onMapCreated: (c) => _map = c,
+        initialCameraPosition: CameraPosition(target: LatLng(me.$1, me.$2), zoom: _overlay ? _zoomNow : _zoom),
+        onMapCreated: (c) {
+          _map = c;
+          if (_overlay) _follow();
+        },
+        onCameraMove: (p) => _zoomNow = p.zoom,
+        rotateGesturesEnabled: !_overlay,
         myLocationEnabled: true,
         myLocationButtonEnabled: true,
-        polygons: _sectors(context),
+        polygons: _overlay ? const {} : _sectors(context),
         markers: {if (_pin != null) Marker(markerId: const MarkerId('pin'), position: LatLng(_pin!.$1, _pin!.$2))},
         polylines: {
-          if (_drawn != null)
+          if (_drawn != null && !_overlay)
             Polyline(
               polylineId: const PolylineId('heading'),
               points: [LatLng(me.$1, me.$2), _ll(destinationPoint(me.$1, me.$2, _drawn!, _radius * 1.1))],
@@ -313,6 +360,23 @@ class _MapPageState extends State<MapPage> {
                 ? mapArea
                 : Stack(children: [
                     mapArea,
+                    if (_overlay)
+                      // 盤面疊在地圖中央；地圖已轉成手機方向，盤面也轉同樣角度，扇形就對準真實方位
+                      Positioned.fill(
+                        child: IgnorePointer(
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(24, 48, 24, 24),
+                            child: Center(
+                              child: CompassDial(
+                                chart: _chart,
+                                heading: _drawn ?? 0,
+                                live: _drawn != null,
+                                backdrop: Theme.of(context).colorScheme.surface.withValues(alpha: 0.55),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     Positioned(top: 0, left: 0, right: 56, child: Align(alignment: Alignment.topLeft, child: _headingChip(context))),
                   ]),
           ),

@@ -357,7 +357,7 @@ class _CompassPageState extends State<CompassPage> {
       body: SafeArea(
         child: LayoutBuilder(builder: (context, box) {
           final wide = box.maxWidth > box.maxHeight && box.maxWidth > 600;
-          final dial = _Dial(chart: chart, heading: heading ?? 0, target: _target, targetPalace: _palaceTarget, live: heading != null);
+          final dial = CompassDial(chart: chart, heading: heading ?? 0, target: _target, targetPalace: _palaceTarget, live: heading != null);
           final panel = _panel(context, heading, chart);
           if (wide) {
             return Row(children: [
@@ -675,8 +675,13 @@ String _dirLabel(AppLocalizations l, int palace) => switch (palace) {
     };
 
 /// 羅盤盤面：八宮扇形依 [heading] 反向旋轉；上方固定指針。
-class _Dial extends StatelessWidget {
-  const _Dial({required this.chart, required this.heading, required this.target, this.targetPalace, required this.live});
+/// 羅盤盤面（八門扇形隨方向轉、指針固定朝上）；地圖頁也疊同一個盤面。
+class CompassDial extends StatelessWidget {
+  const CompassDial(
+      {super.key, required this.chart, required this.heading, this.target, this.targetPalace, required this.live, this.backdrop});
+
+  /// 盤面底色（疊在地圖上時用半透明底色讓字看得清楚）。
+  final Color? backdrop;
 
   final QimenChart chart;
   final double heading;
@@ -704,6 +709,7 @@ class _Dial extends StatelessWidget {
           accent: theme.colorScheme.primary,
           dirs: {for (final p in palaceBearing.keys) p: _dirLabel(l, p)},
           live: live,
+          backdrop: backdrop,
         ),
       ),
     );
@@ -722,8 +728,10 @@ class _DialPainter extends CustomPainter {
     required this.accent,
     required this.dirs,
     required this.live,
+    this.backdrop,
   });
 
+  final Color? backdrop;
   final QimenChart chart;
   final double heading;
   final Door? target;
@@ -744,6 +752,7 @@ class _DialPainter extends CustomPainter {
     final tp = target != null ? chart.palaceOfDoor(target!) : targetPalace;
     final aligned = live && tp != null && turnDelta(heading, palaceBearing[tp]!).abs() <= 10;
 
+    if (backdrop != null) canvas.drawCircle(c, r + 12, Paint()..color = backdrop!);
     canvas.save();
     canvas.translate(c.dx, c.dy);
     canvas.rotate(_rad(-heading));
@@ -817,5 +826,5 @@ class _DialPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_DialPainter old) =>
-      old.heading != heading || old.chart != chart || old.target != target || old.targetPalace != targetPalace || old.qm != qm || old.live != live;
+      old.heading != heading || old.chart != chart || old.target != target || old.targetPalace != targetPalace || old.qm != qm || old.live != live || old.backdrop != backdrop;
 }

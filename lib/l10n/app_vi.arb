@@ -983,5 +983,6 @@
   "northRecCompass": "Khuyên dùng: bắc thật. Chính xác nhất ngoài trời; nếu kim nhảy trong tòa nhà, hãy đổi sang hướng tòa nhà.",
   "northRecMap": "Khuyên dùng: bắc thật. Bản đồ dùng bắc thật nên kim chỉ và các khu vực khớp nhau.",
   "northRecTravel": "Khuyên dùng: bắc thật. Bạn đi ngoài trời, nơi bắc thật chính xác và đơn giản nhất.",
-  "northRecHouse": "Khuyên dùng: hướng tòa nhà. Cốt thép và thiết bị điện trong nhà làm nhiễu la bàn; căn theo tường ngoài là ổn định nhất."
+  "northRecHouse": "Khuyên dùng: hướng tòa nhà. Cốt thép và thiết bị điện trong nhà làm nhiễu la bàn; căn theo tường ngoài là ổn định nhất.",
+  "mapCompassOverlay": "Phủ la bàn"
 }
