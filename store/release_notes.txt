@@ -14,9 +14,9 @@
 </zh-CN>
 <en-US>
 Qimen Compass 1.7.0:
-• New "Building direction" for the compass: when steel or electrical boxes disturb the needle, draw one line along an outer wall on the satellite map, then touch the phone to a wall and tap "Align to wall"
+• New "Building direction": when steel or wiring disturbs the needle, draw one line along an outer wall on the satellite map, then touch the phone to a wall and tap "Align to wall"
 • North reference now offers true north, magnetic north or building direction, with explanations
-• Choose a city when location is unavailable; declination is calculated for your location
+• No location? Pick a nearby city; declination is calculated for your area
 • Home chart now uses the compass's north reference; each home can have its own building direction
 </en-US>
 <ja-JP>
@@ -42,30 +42,30 @@ La bàn Kỳ Môn 1.7.0:
 </vi>
 <es-ES>
 Brújula Qimen 1.7.0:
-• Nueva «Orientación del edificio»: si el acero o los cuadros eléctricos desvían la aguja, traza una línea sobre una pared exterior en el mapa satelital y luego apoya el teléfono en una pared y toca «Alinear con la pared»
+• Nueva «Orientación del edificio»: si el acero desvía la aguja, traza una línea en una pared exterior del mapa satelital y luego apoya el teléfono en una pared y toca «Alinear con la pared»
 • Referencia del norte: norte verdadero, magnético u orientación del edificio, con explicaciones
-• Sin ubicación, elige una ciudad; la declinación se calcula para tu zona
+• Sin ubicación, elige una ciudad
 • El plano de la casa usa la misma referencia del norte que la brújula; cada casa puede tener su orientación
 </es-ES>
 <es-US>
 Brújula Qimen 1.7.0:
-• Nueva «Orientación del edificio»: si el acero o los cuadros eléctricos desvían la aguja, traza una línea sobre una pared exterior en el mapa satelital y luego apoya el teléfono en una pared y toca «Alinear con la pared»
+• Nueva «Orientación del edificio»: si el acero desvía la aguja, traza una línea en una pared exterior del mapa satelital y luego apoya el teléfono en una pared y toca «Alinear con la pared»
 • Referencia del norte: norte verdadero, magnético u orientación del edificio, con explicaciones
-• Sin ubicación, elige una ciudad; la declinación se calcula para tu zona
+• Sin ubicación, elige una ciudad
 • El plano de la casa usa la misma referencia del norte que la brújula; cada casa puede tener su orientación
 </es-US>
 <pt-BR>
 Bússola Qimen 1.7.0:
 • Nova «Orientação do prédio»: quando aço ou quadros elétricos desviam a agulha, desenhe uma linha numa parede externa no mapa de satélite e depois encoste o celular numa parede e toque em «Alinhar à parede»
 • Referência de norte: verdadeiro, magnético ou orientação do prédio, com explicações
-• Sem localização, escolha uma cidade; a declinação é calculada para o seu local
+• Sem localização, escolha uma cidade
 • O mapa da casa usa a mesma referência de norte da bússola; cada casa pode ter sua orientação
 </pt-BR>
 <pt-PT>
 Bússola Qimen 1.7.0:
 • Nova «Orientação do prédio»: quando aço ou quadros elétricos desviam a agulha, desenhe uma linha numa parede externa no mapa de satélite e depois encoste o telemóvel numa parede e toque em «Alinhar à parede»
 • Referência de norte: verdadeiro, magnético ou orientação do prédio, com explicações
-• Sem localização, escolha uma cidade; a declinação é calculada para o seu local
+• Sem localização, escolha uma cidade
 • O mapa da casa usa a mesma referência de norte da bússola; cada casa pode ter a sua orientação
 </pt-PT>
 <id>
