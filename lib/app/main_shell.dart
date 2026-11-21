@@ -57,7 +57,8 @@ class _MainShellState extends State<MainShell> {
       final s = AppServices.of(context);
       if (s.featureEnabled('widget')) {
         _premium = s.premium.isPremium..addListener(_syncWidget);
-        _syncWidget();
+        // 小工具要算 7 天資料：首頁畫好後再做，不拖慢啟動
+        Future<void>.delayed(const Duration(seconds: 3), _syncWidget);
         HomeWidget.initiallyLaunchedFromHomeWidget().then(_onWidgetUri, onError: (_) {});
         _widgetSub = HomeWidget.widgetClicked.listen(_onWidgetUri, onError: (_) {});
       }

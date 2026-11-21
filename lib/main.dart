@@ -11,6 +11,7 @@ import 'core/firebase/firebase_feedback.dart';
 import 'core/firebase/firebase_telemetry.dart';
 import 'core/monetization/free_limits.dart';
 import 'core/revenuecat/revenuecat_premium.dart';
+import 'core/telemetry/cached_remote_flags.dart';
 import 'core/telemetry/usage_sharing.dart';
 import 'features/course/course.dart';
 import 'features/family/family_store.dart';
@@ -27,18 +28,32 @@ import 'services/notifications.dart';
 const featureIds = ['compass', 'travel', 'divination', 'zeshi', 'house', 'records', 'course', 'map', 'destination', 'almanac', 'personal', 'synastry', 'move', 'facing', 'widget', 'family', 'alerts', 'wear', 'natal_report', 'personal_day'];
 
 Future<void> main() async {
+  final startup = Stopwatch()..start();
   WidgetsFlutterBinding.ensureInitialized();
-  // Firebase 放最前面才接得到啟動中的當機；失敗不影響 App（統計不送、遠端開關全照預設）。
-  // 啟動加速：彼此無關的初始化同時跑；訂閱狀態先用本機快取、不等網路。
+  // 啟動加速（各級 Android 機通用）：首頁不等 Firebase、不等網路。
+  // - 遠端開關讀本機快取（上次 Remote Config 的值），Firebase 在背景初始化，統計事件先收著、好了再送。
+  // - 訂閱狀態先用本機快取。只等本機設定檔，其餘都在首幀之後。
   final sharingStore = FileUsageSharingStore();
   final premiumFuture = RevenueCatPremium.init();
   final settingsFuture = AppSettings.instance.load();
+  final flagsFuture = CachedRemoteFlags.load();
   final sharing = await sharingStore.load();
-  final telemetry = await FirebaseTelemetry.init(featureIds: featureIds, sharing: sharing);
-  final usage = UsageSharing(initial: sharing, store: sharingStore, apply: telemetry.setSharing);
+  final analytics = LateAnalytics();
+  FirebaseTelemetry? telemetry;
+  final telemetryFuture = FirebaseTelemetry.init(featureIds: featureIds, sharing: sharing).then((t) {
+    telemetry = t;
+    analytics.inner = t.analytics;
+    return t;
+  });
+  final usage = UsageSharing(
+    initial: sharing,
+    store: sharingStore,
+    apply: (v) async => (telemetry ?? await telemetryFuture).setSharing(v),
+  );
+  final flags = await flagsFuture;
   await settingsFuture;
   // 訂閱與廣告：訂閱戶不載入任何廣告；廣告同意表單在 runApp 之後才跑，不拖慢啟動。
-  final limits = FreeLimits.from(telemetry.flags.intValue);
+  final limits = FreeLimits.from(flags.intValue);
   final premium = await premiumFuture;
   final ads = AdMobAds.create();
   var appStarted = false;
@@ -84,28 +99,45 @@ Future<void> main() async {
   // 家人改了：重排重要日提醒（沖生年那一行）
   FamilyStore.changed.addListener(() => DayAlertReminder.reschedule().catchError((_) {}));
   final services = Services.standard(
-    analytics: telemetry.analytics,
-    flags: telemetry.flags,
+    analytics: analytics,
+    flags: flags,
     premium: premium,
     ads: ads,
     limits: limits,
     usage: usage,
-    feedback: telemetry.available ? const FirestoreFeedbackSender() : null,
+    feedback: const FirestoreFeedbackSender(),
   );
   Notifications.routes[TravelReminders.payload] = () => MaterialPageRoute(builder: (_) => const TravelPage());
   runApp(AppServices(services: services, child: const QimenApp()));
+  final runAppMs = startup.elapsedMilliseconds;
   WidgetsBinding.instance.addPostFrameCallback((_) => Notifications.handleLaunch().catchError((_) {}));
-  appStarted = true;
-  syncAds();
-  // 吉時推播、每日提醒：每次啟動重排未來 7 天（通知權限未允許時不排，啟動時也不請求）。
-  AppSettings.instance.refreshGps().catchError((_) {});
-  TravelReminders.reschedule().catchError((_) {});
-  DailyReminder.reschedule().catchError((_) {});
-  DayAlertReminder.reschedule().catchError((_) {});
-  NatalAlertReminder.reschedule().catchError((_) {});
-  HouseMonthReminder.reschedule().catchError((_) {});
-  // 手錶資料要算 36 個時辰，等首頁畫好再做
-  unawaited(Future<void>.delayed(const Duration(seconds: 5), _syncWear));
+  // 啟動加速：首頁畫出來之前什麼都不做；廣告 SDK（會載入 WebView）、推播重排、手錶同步
+  // 都在首幀後再等一下、依序做，不跟首頁搶主執行緒。
+  unawaited(() async {
+    await WidgetsBinding.instance.endOfFrame;
+    unawaited(analytics.log('qm_startup', {
+      'run_app_ms': runAppMs,
+      'first_frame_ms': startup.elapsedMilliseconds,
+    }));
+    await Future<void>.delayed(const Duration(seconds: 2));
+    appStarted = true;
+    syncAds();
+    AppSettings.instance.refreshGps().catchError((_) {});
+    // 吉時推播、每日提醒：每次啟動重排未來 7 天（通知權限未允許時不排，啟動時也不請求）。
+    for (final job in <Future<void> Function()>[
+      TravelReminders.reschedule,
+      DailyReminder.reschedule,
+      DayAlertReminder.reschedule,
+      NatalAlertReminder.reschedule,
+      HouseMonthReminder.reschedule,
+      _syncWear,
+    ]) {
+      try {
+        await job();
+      } catch (_) {}
+      await Future<void>.delayed(const Duration(milliseconds: 300));
+    }
+  }());
 }
 
 bool Function() _wearLocked = () => false;

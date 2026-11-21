@@ -42,6 +42,10 @@ grep -q "qm/wear" "$KT_DIR/MainActivity.kt" || { echo "::error::MainActivity 未
 printf '\ndependencies {\n    implementation("com.google.android.gms:play-services-wearable:19.0.0")\n}\n' >> "$GRADLE"
 echo "手錶同步：play-services-wearable 已加入"
 
+# 啟動畫面：App 底色＋圖示（亮／暗），取代 flutter create 的白畫面
+cp -r android_extra/splash/. android/app/src/main/res/
+grep -q "ic_launcher_foreground" android/app/src/main/res/drawable-v21/launch_background.xml && echo "啟動畫面已套用" || { echo "::error::啟動畫面設定失敗"; exit 1; }
+
 # 不鎖方向、不限制調整大小（Play Console 對大螢幕的要求）
 sed -i -E 's/[[:space:]]*android:(screenOrientation|resizeableActivity)="[^"]*"//g' "$MANIFEST"
 
