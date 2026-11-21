@@ -11,10 +11,13 @@ import '../app/settings/app_settings.dart';
 import '../app/theme/app_theme.dart';
 import '../engine/engine.dart' hide Element;
 import '../l10n/l10n.dart';
+import 'building_facing.dart';
 import 'compass_intro.dart';
 import 'compass_math.dart';
 import 'declination.dart';
+import 'north_mode_sheet.dart';
 import '../app/services.dart';
+import '../features/map/address_search.dart' show findPlace;
 import '../features/map/map_page.dart';
 import '../features/personal/profile.dart';
 import '../shared/widgets/result_card.dart';
@@ -46,7 +49,13 @@ class _CompassPageState extends State<CompassPage> {
   bool _noSensor = false;
   double _tilt = 0;
 
+  /// 是否加上磁偏角（真北與建築座向模式，且已取得磁偏角）。
   bool _trueNorth = false;
+  NorthMode _mode = NorthMode.trueNorth;
+  BuildingFacing? _building;
+  DateTime? _wallAt; // 最近一次「對牆」的時間
+  double _gyroRate = 0; // 陀螺儀角速度（rad/s，平滑）：判斷對牆時是否靜止
+  bool _bldMagnetic = false; // 建築座向輸出磁北（地圖牆向為真北，扣磁偏角）
   double? _declination;
   bool _locating = false;
 
@@ -106,7 +115,10 @@ class _CompassPageState extends State<CompassPage> {
           .listen((e) => _field.add(e.x, e.y, e.z), onError: (_) {}));
     }
     _subs.add(gyroscopeEventStream(samplingPeriod: SensorInterval.gameInterval)
-        .listen((e) => _gyro.update(e.z, DateTime.now()), onError: (_) {}));
+        .listen((e) {
+      _gyro.update(e.z, DateTime.now());
+      _gyroRate = _gyroRate * 0.8 + math.sqrt(e.x * e.x + e.y * e.y + e.z * e.z) * 0.2;
+    }, onError: (_) {}));
     _subs.add(accelerometerEventStream(samplingPeriod: SensorInterval.uiInterval)
         .listen((e) => _tilt = tiltDegrees(e.x, e.y, e.z), onError: (_) {}));
   }
@@ -124,10 +136,16 @@ class _CompassPageState extends State<CompassPage> {
 
   Future<void> _loadPrefs() async {
     final p = await CompassPrefs.load();
+    final mode = await BuildingStore.mode(p.trueNorth);
+    final bldMag = await BuildingStore.magneticBasis();
+    if (!mounted) return;
+    if (mode == NorthMode.building) await _loadBuilding();
     if (!mounted) return;
     setState(() {
+      _mode = mode;
+      _bldMagnetic = bldMag;
       _declination = p.declination;
-      _trueNorth = p.trueNorth && p.declination != null;
+      _trueNorth = mode != NorthMode.magnetic && p.declination != null;
       if (p.fieldUt != null) _field.setExpected(p.fieldUt!);
     });
     // 已開真北：背景重新取位置更新磁偏角與當地磁場（出國時自動換成當地數值）
@@ -138,7 +156,7 @@ class _CompassPageState extends State<CompassPage> {
           _declination = r.degrees;
           if (r.fieldUt != null) _field.setExpected(r.fieldUt!);
         });
-        CompassPrefs.saveNorth(true, r.degrees, r.fieldUt);
+        CompassPrefs.saveNorth(_mode == NorthMode.trueNorth, r.degrees, r.fieldUt);
       });
     }
     if (!p.introSeen) {
@@ -146,7 +164,7 @@ class _CompassPageState extends State<CompassPage> {
       if (mounted) await showCompassIntro(context);
     }
     // 預設真北：還沒算過磁偏角就在看完引導後取位置；被拒或失敗會退回磁北並提示
-    if (mounted && p.trueNorth && p.declination == null) await _setTrueNorth(true);
+    if (mounted && mode != NorthMode.magnetic && p.declination == null) await _setMode(mode);
   }
 
   void _refreshCharts() {
@@ -165,7 +183,26 @@ class _CompassPageState extends State<CompassPage> {
     super.dispose();
   }
 
+  /// 建築座向模式的真北方向：對牆後用陀螺儀；對牆前用磁力計＋磁偏角估計。
+  double? get _buildingTrue {
+    if (_gyro.locked) return _gyro.heading;
+    final h = _magHeading;
+    return h == null ? null : normalizeDeg(h + (_declination ?? 0));
+  }
+
+  /// 目前顯示用的基準是否為磁北。
+  bool get _showsMagnetic => switch (_mode) {
+        NorthMode.magnetic => true,
+        NorthMode.trueNorth => !_trueNorth,
+        NorthMode.building => _bldMagnetic && _declination != null,
+      };
+
   double? get _heading {
+    if (_mode == NorthMode.building) {
+      final t = _buildingTrue;
+      if (t == null) return null;
+      return _showsMagnetic ? normalizeDeg(t - _declination!) : t;
+    }
     if (_gyro.locked) return _gyro.heading; // 鎖定時已含北方基準
     final h = _magHeading;
     if (h == null) return null;
@@ -174,10 +211,87 @@ class _CompassPageState extends State<CompassPage> {
 
   QimenChart get _shown => _showNext && _nextChart != null ? _nextChart! : _chart;
 
-  Future<void> _setTrueNorth(bool on) async {
-    if (!on || _declination != null) {
-      setState(() => _trueNorth = on);
-      CompassPrefs.saveNorth(on, null);
+  Future<void> _loadBuilding() async {
+    final list = await BuildingStore.load();
+    final sel = await BuildingStore.selected();
+    final b = list.where((x) => x.id == sel).firstOrNull ?? list.firstOrNull;
+    if (!mounted) return;
+    setState(() {
+      if (b?.id != _building?.id || b?.wall != _building?.wall) {
+        if (_mode == NorthMode.building) _gyro.unlock();
+        _wallAt = null;
+      }
+      _building = b;
+      // 建築座向：以該地點的座標算磁偏角與當地磁場（沒有定位、在室內也準，全球通用）
+      if (_mode == NorthMode.building && b?.lat != null && b?.lon != null) {
+        _declination = Declination.at(b!.lat!, b.lon!);
+        _field.setExpected(Declination.fieldAt(b.lat!, b.lon!));
+        _trueNorth = true;
+      }
+    });
+  }
+
+  /// 沒有定位時手選城市：以城市座標算磁偏角（磁偏角跨百公里才差約 1°，城市已夠準）。
+  Future<void> _pickCity() async {
+    final l = context.l10n;
+    final ctl = TextEditingController();
+    final q = await showDialog<String>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l.compassPickCity),
+        content: TextField(
+          controller: ctl,
+          autofocus: true,
+          decoration: InputDecoration(hintText: l.compassCityHint),
+          onSubmitted: (v) => Navigator.of(ctx).pop(v),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l.cancel)),
+          FilledButton(onPressed: () => Navigator.of(ctx).pop(ctl.text), child: Text(l.buildingSave)),
+        ],
+      ),
+    );
+    ctl.dispose();
+    if (q == null || q.trim().isEmpty || !mounted) return;
+    final place = await findPlace(context, q.trim());
+    if (place == null || !mounted) return;
+    final dec = Declination.at(place.lat, place.lon);
+    final ut = Declination.fieldAt(place.lat, place.lon);
+    setState(() {
+      _declination = dec;
+      _field.setExpected(ut);
+      if (_mode == NorthMode.magnetic) _mode = NorthMode.trueNorth;
+      _trueNorth = true;
+    });
+    BuildingStore.saveMode(_mode);
+    CompassPrefs.saveNorth(_mode == NorthMode.trueNorth, dec, ut);
+  }
+
+  Future<void> _openNorthSheet() async {
+    final m = await showNorthModeSheet(context, _mode);
+    if (!mounted) return;
+    if (m != null && m != _mode) {
+      await _setMode(m);
+    } else {
+      await _loadBuilding(); // 地點可能被選換、編輯或刪除
+    }
+  }
+
+  /// 切換北方基準。真北、建築座向需要磁偏角：還沒算過就取一次位置；
+  /// 選真北但定位失敗時退回磁北並提示（建築座向只是對牆前的估計少修幾度，照常使用）。
+  Future<void> _setMode(NorthMode m) async {
+    setState(() {
+      _mode = m;
+      _gyro.unlock();
+      _wallAt = null;
+    });
+    BuildingStore.saveMode(m);
+    if (m == NorthMode.building) await _loadBuilding();
+    if (!mounted) return;
+    final wantDecl = m != NorthMode.magnetic;
+    if (!wantDecl || _declination != null) {
+      setState(() => _trueNorth = wantDecl && _declination != null);
+      CompassPrefs.saveNorth(m == NorthMode.trueNorth, null);
       return;
     }
     setState(() => _locating = true);
@@ -188,18 +302,62 @@ class _CompassPageState extends State<CompassPage> {
       _declination = r.degrees;
       _trueNorth = r.degrees != null;
       if (r.fieldUt != null) _field.setExpected(r.fieldUt!);
+      if (!_trueNorth && m == NorthMode.trueNorth) _mode = NorthMode.magnetic;
     });
-    CompassPrefs.saveNorth(_trueNorth, r.degrees, r.fieldUt);
-    if (r.error != null) {
+    BuildingStore.saveMode(_mode);
+    CompassPrefs.saveNorth(_mode == NorthMode.trueNorth, r.degrees, r.fieldUt);
+    if (r.error != null && m == NorthMode.trueNorth) {
       final l = context.l10n;
       final msg = switch (r.error!) {
         DeclinationError.serviceOff => l.compassLocationOff,
         DeclinationError.denied => l.compassLocationDenied,
         DeclinationError.unavailable => l.compassLocationFailed,
       };
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(msg),
+        duration: const Duration(seconds: 8),
+        action: SnackBarAction(label: l.compassPickCity, onPressed: _pickCity),
+      ));
     }
   }
+
+  /// 對牆：手機平放、長邊貼牆，取最接近目前大約方向的牆向（每 90° 一個），改用陀螺儀維持。
+  /// 已對過牆時以陀螺儀方向估計（不受室內磁場影響），順便修正漂移。
+  void _alignWall() {
+    final b = _building;
+    if (b == null) return;
+    final l = context.l10n;
+    void tell(String m) =>
+        ScaffoldMessenger.of(context)..hideCurrentSnackBar()..showSnackBar(SnackBar(content: Text(m)));
+    // 防呆：要平放、靜止才準
+    if (_tilt > 12) return tell(l.compassAlignNotFlat);
+    if (_gyroRate > 0.15) return tell(l.compassAlignNotStill);
+    final est = _buildingTrue ?? b.wall;
+    final snapped = snapToWall(est, b.wall);
+    setState(() {
+      _gyro.lock(snapped);
+      _wallAt = DateTime.now();
+    });
+    HapticFeedback.mediumImpact();
+    // 磁場正常時，對牆結果應和指南針接近；差太多可能是沒貼好、選錯地點或對到 90° 外的牆
+    final mag = _magHeading;
+    if (_field.status == FieldStatus.ok && mag != null) {
+      final off = turnDelta(normalizeDeg(mag + (_declination ?? 0)), snapped).abs();
+      if (off > 20) tell(l.compassAlignCheck(off.round()));
+    }
+  }
+
+  void _rotate90(int dir) {
+    final h = _gyro.heading;
+    if (h == null) return;
+    setState(() => _gyro.lock(h + 90.0 * dir));
+  }
+
+  String _modeLabel(AppLocalizations l) => switch (_mode) {
+        NorthMode.trueNorth => l.compassTrueNorth,
+        NorthMode.magnetic => l.compassMagneticNorth,
+        NorthMode.building => l.compassBuilding,
+      };
 
   @override
   Widget build(BuildContext context) {
@@ -267,7 +425,8 @@ class _CompassPageState extends State<CompassPage> {
           style: theme.textTheme.titleLarge,
         ),
       ));
-      widgets.add(Text('${_dirLabel(l, palaceAtBearing(heading))} ${heading.round()}°',
+      widgets.add(Text(
+          '${_dirLabel(l, palaceAtBearing(heading))} ${heading.round()}° · ${_showsMagnetic ? l.compassMagneticNorth : l.compassTrueNorth}',
           textAlign: TextAlign.center, style: theme.textTheme.bodyMedium));
     } else {
       widgets.add(Text(_noSensor ? l.compassNoSensor : l.compassWaiting, textAlign: TextAlign.center));
@@ -296,6 +455,19 @@ class _CompassPageState extends State<CompassPage> {
         Chip(label: Text('${_field.strength!.round()} μT'), visualDensity: VisualDensity.compact),
     ]));
     if (_gyro.locked) notes.clear();
+    final disturbed = _field.status == FieldStatus.outOfRange || _field.status == FieldStatus.unstable;
+    if (disturbed && !_gyro.locked && _mode != NorthMode.building) {
+      widgets.add(Card(
+        color: theme.colorScheme.tertiaryContainer,
+        child: ListTile(
+          dense: true,
+          leading: Icon(Icons.apartment, color: theme.colorScheme.onTertiaryContainer),
+          title: Text(l.compassInterferenceSuggest, style: TextStyle(color: theme.colorScheme.onTertiaryContainer)),
+          trailing: Icon(Icons.chevron_right, color: theme.colorScheme.onTertiaryContainer),
+          onTap: _locating ? null : _openNorthSheet,
+        ),
+      ));
+    }
     for (final n in notes) {
       widgets.add(Card(
         color: theme.colorScheme.errorContainer,
@@ -308,6 +480,9 @@ class _CompassPageState extends State<CompassPage> {
 
     // 室內鎖定（房間內金屬、家電多：先在門口或陽台鎖定，再走到房間中心）
     widgets.add(const SizedBox(height: 8));
+    if (_mode == NorthMode.building) {
+      widgets.add(_buildingPanel(context));
+    } else {
     widgets.add(SwitchListTile(
       contentPadding: EdgeInsets.zero,
       title: Text(l.compassLock),
@@ -317,23 +492,29 @@ class _CompassPageState extends State<CompassPage> {
           ? null
           : (on) => setState(() => on ? _gyro.lock(heading!) : _gyro.unlock()),
     ));
+    }
 
     // 北方基準
     widgets.add(const SizedBox(height: 8));
-    widgets.add(Center(
-      child: SegmentedButton<bool>(
-        segments: [
-          ButtonSegment(value: false, label: Text(l.compassMagneticNorth)),
-          ButtonSegment(
-            value: true,
-            label: Text(l.compassTrueNorth),
-            icon: _locating ? const SizedBox.square(dimension: 16, child: CircularProgressIndicator(strokeWidth: 2)) : null,
-          ),
-        ],
-        selected: {_trueNorth},
-        onSelectionChanged: _locating || _gyro.locked ? null : (s) => _setTrueNorth(s.first),
-      ),
+    widgets.add(ListTile(
+      contentPadding: EdgeInsets.zero,
+      leading: const Icon(Icons.explore_outlined),
+      title: Text(l.compassNorthBase),
+      subtitle: Text(_modeLabel(l)),
+      trailing: _locating
+          ? const SizedBox.square(dimension: 20, child: CircularProgressIndicator(strokeWidth: 2))
+          : const Icon(Icons.chevron_right),
+      onTap: _locating ? null : _openNorthSheet,
     ));
+    if (_mode != NorthMode.magnetic) {
+      widgets.add(Center(
+        child: TextButton.icon(
+          icon: const Icon(Icons.location_city_outlined, size: 18),
+          label: Text(l.compassPickCity),
+          onPressed: _locating ? null : _pickCity,
+        ),
+      ));
+    }
     if (_trueNorth && _declination != null) {
       widgets.add(Text(l.compassDeclination(_declination!.toStringAsFixed(1)),
           textAlign: TextAlign.center, style: theme.textTheme.bodySmall));
@@ -431,6 +612,67 @@ class _CompassPageState extends State<CompassPage> {
     widgets.add(const SizedBox(height: 16));
     widgets.add(Text(l.homeDisclaimer, style: theme.textTheme.bodySmall, textAlign: TextAlign.center));
     return widgets;
+  }
+
+  Widget _buildingPanel(BuildContext context) {
+    final l = context.l10n;
+    final theme = Theme.of(context);
+    final b = _building;
+    final at = _wallAt;
+    final drift = at != null && DateTime.now().difference(at) >= wallDriftAfter;
+    final status = at == null
+        ? l.compassAlignWallHint
+        : (drift ? l.compassAlignDrift : l.compassAlignedAgo(DateTime.now().difference(at).inMinutes));
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          Row(children: [
+            const Icon(Icons.apartment),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(b == null ? l.compassBuildingNone : '${b.name} · ${l.buildingWall(b.wall.round())}',
+                  style: theme.textTheme.titleSmall),
+            ),
+            TextButton(onPressed: _locating ? null : _openNorthSheet, child: Text(l.buildingChange)),
+          ]),
+          const SizedBox(height: 4),
+          Text(status,
+              style: theme.textTheme.bodyMedium?.copyWith(color: drift ? theme.colorScheme.error : null)),
+          const SizedBox(height: 8),
+          FilledButton.icon(
+            icon: const Icon(Icons.border_left),
+            label: Text(l.compassAlignWall),
+            onPressed: b == null ? null : _alignWall,
+          ),
+          const SizedBox(height: 8),
+          Row(children: [
+            Text(l.compassBasis, style: theme.textTheme.bodyMedium),
+            const SizedBox(width: 8),
+            Expanded(
+              child: SegmentedButton<bool>(
+                showSelectedIcon: false,
+                segments: [
+                  ButtonSegment(value: false, label: Text(l.compassTrueNorth)),
+                  ButtonSegment(value: true, label: Text(l.compassMagneticNorth)),
+                ],
+                selected: {_bldMagnetic},
+                onSelectionChanged: (s) {
+                  setState(() => _bldMagnetic = s.first);
+                  BuildingStore.saveMagneticBasis(s.first);
+                },
+              ),
+            ),
+          ]),
+          if (_gyro.locked)
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Flexible(child: Text(l.compassOff90, style: theme.textTheme.bodySmall)),
+              TextButton.icon(onPressed: () => _rotate90(-1), icon: const Icon(Icons.rotate_left), label: const Text('90°')),
+              TextButton.icon(onPressed: () => _rotate90(1), icon: const Icon(Icons.rotate_right), label: const Text('90°')),
+            ]),
+        ]),
+      ),
+    );
   }
 }
 

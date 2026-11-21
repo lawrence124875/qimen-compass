@@ -1,91 +1,78 @@
 <zh-TW>
-奇門羅盤 1.6.0：
-• 此刻頁新增「今日個人運」：結合本命、大運與今日日盤，看你的個人吉時與方位；桌面小工具也能放
-• 本命報告新增流月（未來 12 個月），訂閱戶每月交節前收到宅盤換月提醒
-• 問事、擇時詳解與今日個人運，免費版每天可看廣告解鎖 1 次
-• 訂閱戶的每日提醒多一行個人吉時
+奇門羅盤 1.7.0：
+• 羅盤新增「建築座向」：大樓裡鋼筋、電箱干擾磁針時，在衛星地圖沿外牆畫一次線，之後手機貼牆按「對牆」就能準確找方位
+• 北方基準改為真北／磁北／建築座向三選項，附說明；建築座向也能輸出磁北
+• 沒有定位時可手選城市，磁偏角依所在地自動計算
 </zh-TW>
 <zh-CN>
-奇门罗盘 1.6.0：
-• 此刻页新增「今日个人运」：结合本命、大运与今日日盘，看你的个人吉时与方位；桌面小组件也能放
-• 本命报告新增流月（未来 12 个月），订阅用户每月交节前收到宅盘换月提醒
-• 问事、择时详解与今日个人运，免费版每天可看广告解锁 1 次
-• 订阅用户的每日提醒多一行个人吉时
+奇门罗盘 1.7.0：
+• 罗盘新增「建筑座向」：大楼里钢筋、电箱干扰磁针时，在卫星地图沿外墙画一次线，之后手机贴墙按「对墙」就能准确找方位
+• 北方基准改为真北／磁北／建筑座向三选项，附说明；建筑座向也能输出磁北
+• 没有定位时可手选城市，磁偏角依所在地自动计算
 </zh-CN>
 <en-US>
-Qimen Compass 1.6.0:
-• New "Your day" card: your natal chart, luck cycle and today's chart combined into personal good hours and directions; also available as a widget
-• Natal report adds a 12-month outlook; Premium gets a monthly home-chart reminder before each solar term
-• Free users can watch an ad once a day to unlock question details, timing details or Your day
-• Premium daily reminders now include your personal good hour
+Qimen Compass 1.7.0:
+• New "Building direction" for the compass: when steel or electrical boxes disturb the needle, draw one line along an outer wall on the satellite map, then touch the phone to a wall and tap "Align to wall"
+• North reference now offers true north, magnetic north or building direction, with explanations
+• Choose a city when location is unavailable; declination is calculated for your location
 </en-US>
 <ja-JP>
-奇門羅盤 1.6.0：
-• 「今日の個人運」を追加：本命・大運・今日の日盤から個人の吉時と方角を表示。ウィジェットにも対応
-• 本命レポートに流月（今後12か月）を追加。購読者には節入り前に宅盤の月替わり通知
-• 無料版でも1日1回、広告を見て問事・択時の詳細や今日の個人運を解除できます
-• 購読者の毎日の通知に個人の吉時を追加
+奇門羅盤 1.7.0：
+• 羅盤に「建物の向き」を追加：鉄筋や分電盤で磁針が狂うとき、衛星地図で外壁に沿って一度線を引けば、あとは壁に当てて「壁に合わせる」で正確に方位がわかります
+• 北の基準を真北／磁北／建物の向きの3択に（説明付き）
+• 位置情報がないときは都市を選択可能。偏角は現在地で自動計算
 </ja-JP>
 <ko-KR>
-기문나침반 1.6.0:
-• '오늘의 개인운' 추가: 본명, 대운, 오늘 일반을 합쳐 나만의 길시와 방위를 보여줘요. 위젯에도 넣을 수 있어요
-• 본명 리포트에 유월(앞으로 12개월) 추가, 구독자는 절기 전 택반 월별 알림을 받아요
-• 무료 버전도 하루 1회 광고를 보고 문사·택시 상세나 오늘의 개인운을 열 수 있어요
-• 구독자 매일 알림에 개인 길시 추가
+기문 나침반 1.7.0:
+• 나침반에 '건물 방향' 추가: 철근이나 전기함 때문에 바늘이 틀어질 때, 위성 지도에서 외벽을 따라 선을 한 번 그으면 이후 벽에 대고 '벽에 맞추기'로 정확한 방위를 찾을 수 있습니다
+• 북쪽 기준을 진북/자북/건물 방향 중에서 선택(설명 포함)
+• 위치를 못 잡을 때 도시 선택 가능, 자편각은 현지 기준 자동 계산
 </ko-KR>
 <vi>
-La bàn Kỳ Môn 1.6.0:
-• Thêm thẻ "Vận hôm nay của bạn": kết hợp bản mệnh, đại vận và bàn ngày để cho giờ tốt và hướng riêng; có cả tiện ích màn hình chính
-• Báo cáo bản mệnh thêm lưu nguyệt 12 tháng; người đăng ký nhận nhắc nhà theo tháng trước mỗi tiết khí
-• Bản miễn phí có thể xem quảng cáo mỗi ngày 1 lần để mở chi tiết hỏi việc, chọn giờ hoặc vận hôm nay
-• Nhắc nhở hằng ngày của người đăng ký thêm giờ tốt riêng
+La bàn Kỳ Môn 1.7.0:
+• La bàn thêm «Hướng tòa nhà»: khi cốt thép, tủ điện làm lệch kim, vẽ một đường dọc tường ngoài trên bản đồ vệ tinh, sau đó áp điện thoại vào tường và chạm «Căn theo tường» để tìm hướng chính xác
+• Mốc hướng bắc có ba lựa chọn: bắc thật, bắc từ, hướng tòa nhà (kèm giải thích)
+• Không có vị trí thì chọn thành phố; độ lệch từ tự tính theo nơi bạn ở
 </vi>
 <es-ES>
-Qimen Compass 1.6.0:
-• Nueva tarjeta "Tu día": tu carta natal, ciclo de suerte y la carta de hoy combinados en horas y direcciones personales; también como widget
-• El informe natal añade los próximos 12 meses; Premium recibe un aviso mensual de la casa antes de cada término solar
-• La versión gratuita puede ver un anuncio al día para desbloquear detalles de preguntas, de horarios o Tu día
-• Los recordatorios diarios de Premium incluyen tu hora favorable
+Brújula Qimen 1.7.0:
+• Nueva «Orientación del edificio»: si el acero o los cuadros eléctricos desvían la aguja, traza una línea sobre una pared exterior en el mapa satelital y luego apoya el teléfono en una pared y toca «Alinear con la pared»
+• Referencia del norte: norte verdadero, magnético u orientación del edificio, con explicaciones
+• Sin ubicación, elige una ciudad; la declinación se calcula para tu zona
 </es-ES>
 <es-US>
-Qimen Compass 1.6.0:
-• Nueva tarjeta "Tu día": tu carta natal, ciclo de suerte y la carta de hoy combinados en horas y direcciones personales; también como widget
-• El informe natal añade los próximos 12 meses; Premium recibe un aviso mensual de la casa antes de cada término solar
-• La versión gratuita puede ver un anuncio al día para desbloquear detalles de preguntas, de horarios o Tu día
-• Los recordatorios diarios de Premium incluyen tu hora favorable
+Brújula Qimen 1.7.0:
+• Nueva «Orientación del edificio»: si el acero o los cuadros eléctricos desvían la aguja, traza una línea sobre una pared exterior en el mapa satelital y luego apoya el teléfono en una pared y toca «Alinear con la pared»
+• Referencia del norte: norte verdadero, magnético u orientación del edificio, con explicaciones
+• Sin ubicación, elige una ciudad; la declinación se calcula para tu zona
 </es-US>
 <pt-BR>
-Qimen Compass 1.6.0:
-• Novo cartão "Seu dia": seu mapa natal, ciclo de sorte e o mapa de hoje combinados em horários e direções pessoais; também como widget
-• O relatório natal ganha os próximos 12 meses; assinantes recebem um lembrete mensal da casa antes de cada termo solar
-• Na versão grátis, assista a um anúncio por dia para desbloquear detalhes de perguntas, de horários ou Seu dia
-• Os lembretes diários dos assinantes incluem seu horário favorável
+Bússola Qimen 1.7.0:
+• Nova «Orientação do prédio»: quando aço ou quadros elétricos desviam a agulha, desenhe uma linha numa parede externa no mapa de satélite e depois encoste o celular numa parede e toque em «Alinhar à parede»
+• Referência de norte: verdadeiro, magnético ou orientação do prédio, com explicações
+• Sem localização, escolha uma cidade; a declinação é calculada para o seu local
 </pt-BR>
 <pt-PT>
-Qimen Compass 1.6.0:
-• Novo cartão "Seu dia": seu mapa natal, ciclo de sorte e o mapa de hoje combinados em horários e direções pessoais; também como widget
-• O relatório natal ganha os próximos 12 meses; assinantes recebem um lembrete mensal da casa antes de cada termo solar
-• Na versão grátis, assista a um anúncio por dia para desbloquear detalhes de perguntas, de horários ou Seu dia
-• Os lembretes diários dos assinantes incluem seu horário favorável
+Bússola Qimen 1.7.0:
+• Nova «Orientação do prédio»: quando aço ou quadros elétricos desviam a agulha, desenhe uma linha numa parede externa no mapa de satélite e depois encoste o telemóvel numa parede e toque em «Alinhar à parede»
+• Referência de norte: verdadeiro, magnético ou orientação do prédio, com explicações
+• Sem localização, escolha uma cidade; a declinação é calculada para o seu local
 </pt-PT>
 <id>
-Qimen Compass 1.6.0:
-• Kartu baru "Harimu": bagan lahir, siklus keberuntungan, dan bagan hari ini digabung jadi jam dan arah baik pribadi; tersedia juga sebagai widget
-• Laporan lahir menambah 12 bulan ke depan; pelanggan mendapat pengingat bulanan rumah sebelum tiap term surya
-• Versi gratis bisa menonton iklan sekali sehari untuk membuka detail pertanyaan, pemilihan waktu, atau Harimu
-• Pengingat harian pelanggan kini menyertakan jam baik pribadi
+Kompas Qimen 1.7.0:
+• Baru "Arah bangunan": saat besi beton atau kotak listrik mengganggu jarum, gambar satu garis di dinding luar pada peta satelit, lalu tempelkan ponsel ke dinding dan ketuk "Sejajarkan dengan dinding"
+• Acuan utara: utara sejati, magnetik, atau arah bangunan, dengan penjelasan
+• Tanpa lokasi, pilih kota; deklinasi dihitung untuk lokasi Anda
 </id>
 <th>
-เข็มทิศฉีเหมิน 1.6.0:
-• การ์ดใหม่ "ดวงวันนี้ของคุณ": รวมผังเกิด วัฏจักรโชค และผังวันนี้ เป็นเวลามงคลและทิศเฉพาะคุณ ใส่เป็นวิดเจ็ตได้
-• รายงานดวงเกิดเพิ่ม 12 เดือนข้างหน้า สมาชิกได้รับแจ้งเตือนบ้านรายเดือนก่อนแต่ละสารทฤดู
-• เวอร์ชันฟรีดูโฆษณาวันละครั้งเพื่อปลดล็อกรายละเอียดการถาม การเลือกเวลา หรือดวงวันนี้
-• แจ้งเตือนรายวันของสมาชิกเพิ่มเวลามงคลเฉพาะคุณ
+เข็มทิศฉีเหมิน 1.7.0:
+• เพิ่ม "ทิศของอาคาร": เมื่อเหล็กเสริมหรือตู้ไฟฟ้ารบกวนเข็มทิศ วาดเส้นตามผนังด้านนอกบนแผนที่ดาวเทียมครั้งเดียว แล้วแนบโทรศัพท์กับผนังแตะ "ตั้งตามผนัง" ก็หาทิศได้แม่นยำ
+• อ้างอิงทิศเหนือเลือกได้ 3 แบบ: เหนือจริง เหนือแม่เหล็ก ทิศของอาคาร พร้อมคำอธิบาย
+• ไม่มีตำแหน่งก็เลือกเมืองได้ ค่าเบี่ยงเบนคำนวณตามพื้นที่อัตโนมัติ
 </th>
 <ar>
-بوصلة تشيمن 1.6.0:
-• بطاقة جديدة «يومك»: تجمع مخطط ميلادك ودورة حظك ومخطط اليوم في ساعات واتجاهات شخصية؛ متاحة أيضًا كأداة
-• تقرير الميلاد يضيف الأشهر الـ 12 القادمة؛ ويتلقى المشتركون تذكيرًا شهريًا للمنزل قبل كل فصل شمسي
-• يمكن للنسخة المجانية مشاهدة إعلان مرة يوميًا لفتح تفاصيل السؤال أو التوقيت أو يومك
-• تذكيرات المشتركين اليومية تتضمن ساعتك الجيدة
+بوصلة تشيمن 1.7.0:
+• جديد «اتجاه المبنى»: عندما يحرف حديد التسليح أو صناديق الكهرباء الإبرة، ارسم خطًا على جدار خارجي في خريطة القمر الصناعي، ثم ضع الهاتف على جدار واضغط «محاذاة مع الجدار»
+• مرجع الشمال: حقيقي أو مغناطيسي أو اتجاه المبنى، مع شرح
+• دون موقع، اختر مدينتك؛ يُحسب الانحراف لموقعك تلقائيًا
 </ar>

@@ -2040,5 +2040,65 @@
         "type": "String"
       }
     }
-  }
+  },
+  "compassNorthBase": "北方基準",
+  "compassTrueNorthRecommended": "真北（建議）",
+  "compassNorthTrueDesc": "地圖上的正北方，風水和奇門方位都用這個。不需要網路或 GPS，在室內也能用。",
+  "compassNorthTrueMore": "真北＝磁北加上當地磁偏角（依所在地自動計算，通常幾度，高緯度地區可能更大）。磁偏角跨 100 公里以上才變 1° 左右，所以只要 Wi‑Fi、基地台定位或上次存的位置就夠準，室內沒有衛星訊號也沒關係。",
+  "compassNorthMagDesc": "指南針原本指的方向，跟真北差幾度。拿來和傳統羅盤對照時用。",
+  "compassNorthMagMore": "直接用手機磁力計的讀數，不需要定位。傳統羅盤（羅經）指的就是磁北，要和羅經的讀數對照時選這個。",
+  "compassBuilding": "建築座向",
+  "compassNorthBuildingDesc": "在大樓裡磁場受到干擾時用。只要在地圖上沿外牆畫一次線，以後手機貼牆按一下就能對準。",
+  "compassNorthBuildingMore": "現代大樓的鋼筋、電箱、手機或大型電器，常常讓磁針嚴重偏轉，真北、磁北會一起偏。建築座向改用大樓本身的方向：大部分房間的牆都跟外牆平行或垂直，手機平放、長邊貼任何一面牆按「對牆」，羅盤約 1 秒就轉到正確方向。離開牆後由陀螺儀維持幾分鐘，偏掉時再貼牆按一次。可以分別存家、公司等地點。",
+  "compassInterferenceSuggest": "室內磁場異常，建議改用建築座向",
+  "compassAlignWall": "對牆",
+  "compassAlignWallHint": "手機平放，長邊貼任何一面牆，按「對牆」後馬上走到要測的位置讀數；換房間或過了幾分鐘，就再貼牆對一次。",
+  "compassAlignedAgo": "已對牆（{minutes} 分鐘前），離開牆後由陀螺儀維持方向",
+  "@compassAlignedAgo": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "compassAlignDrift": "方向可能已偏移，請再貼牆按一次「對牆」",
+  "compassOff90": "方向差 90°？",
+  "compassBuildingNone": "還沒設定地點",
+  "buildingTitle": "設定建築座向",
+  "buildingGuide": "找到你的大樓，沿著整棟最長的一面外牆，在牆的兩端各點一下（可拖曳調整）。衛星圖常有傾斜，請對齊屋頂邊緣線或與地面的交界線。",
+  "buildingNeedLine": "在地圖上點牆的兩端",
+  "buildingWall": "牆向 {deg}°",
+  "@buildingWall": {
+    "placeholders": {
+      "deg": {
+        "type": "int"
+      }
+    }
+  },
+  "buildingRedraw": "重畫",
+  "buildingName": "地點名稱",
+  "buildingHome": "家",
+  "buildingOffice": "公司",
+  "buildingSave": "儲存",
+  "buildingManual": "沒有地圖時，直接輸入外牆與正北的夾角（0–179°）",
+  "buildingAdd": "新增地點",
+  "buildingEdit": "編輯",
+  "buildingDelete": "刪除",
+  "buildingChange": "更換",
+  "compassBasis": "基準",
+  "compassAlignNotFlat": "請把手機平放（螢幕朝上）再對牆",
+  "compassAlignNotStill": "請讓手機貼牆靜止一下再按",
+  "compassAlignCheck": "已對牆，但和指南針差 {deg}°：請確認手機長邊貼牆、地點選對；方向反了就按 90° 修正",
+  "@compassAlignCheck": {
+    "placeholders": {
+      "deg": {
+        "type": "int"
+      }
+    }
+  },
+  "buildingTooShort": "牆線太短，請點在整面外牆的兩端（至少 10 公尺）",
+  "compassPickCity": "手選城市",
+  "compassCityHint": "輸入所在城市",
+  "buildingEnterAngle": "輸入角度",
+  "buildingUseMap": "用地圖"
 }

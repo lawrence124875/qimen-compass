@@ -65,6 +65,11 @@ jobs:
         run: flutter pub get
 
 # 錯誤轉成 annotation，Claude 可用 check-runs API 讀取摘要（容器連不到日誌下載網址）。
+      - name: 磁偏角模型有效期
+        run: |
+          if [[ "$(date -u +%Y-%m-%d)" > "2029-08-31" ]]; then
+            echo "::warning::WMM2025 磁偏角模型 2029-12-31 到期，請更新 geomag 為 WMM2030（HANDOFF §4）"
+          fi
       - name: 靜態檢查
         run: |
           set +e

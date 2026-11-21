@@ -1,0 +1,23 @@
+# 磁偏角模型（geomag 內建 WMM2025）2029-12-31 到期；到期前 4 個月起每月開 issue 提醒（GitHub 會寄通知信）。
+name: WMM expiry reminder
+on:
+  schedule:
+    - cron: '0 1 1 * *'
+  workflow_dispatch:
+permissions:
+  issues: write
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Open reminder issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          today=$(date -u +%Y-%m-%d)
+          if [[ "$today" < "2029-09-01" ]]; then echo "WMM2025 有效，$today"; exit 0; fi
+          title="更新磁偏角模型 WMM2030（WMM2025 於 2029-12-31 到期）"
+          if gh issue list -R "$REPO" --state open --search "$title in:title" --json number -q '.[].number' | grep -q .; then
+            echo "已有提醒 issue"; exit 0; fi
+          gh issue create -R "$REPO" --title "$title" --assignee lawrence124875 --body "磁偏角用 geomag 套件內建 WMM2025 係數，2029-12-31 到期、不會自動更新。NOAA 發布 WMM2030 後，更新 geomag（或換係數）並出新版。見 docs/HANDOFF.md §4。"
