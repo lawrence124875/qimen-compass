@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 啟動畫面（Android 11 以下；12+ 由系統顯示圖示）：App 底色＋圖示，不再是一片白 -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item><color android:color="#FFF3ECDD" /></item>
+    <item><bitmap android:gravity="center" android:src="@mipmap/ic_launcher_foreground" /></item>
+</layer-list>
