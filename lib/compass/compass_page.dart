@@ -333,11 +333,15 @@ class _CompassPageState extends State<CompassPage> {
     setState(() => _gyro.lock(h + 90.0 * dir));
   }
 
-  String _modeLabel(AppLocalizations l) => switch (_mode) {
-        NorthMode.trueNorth => l.compassTrueNorth,
-        NorthMode.magnetic => l.compassMagneticNorth,
-        NorthMode.building => l.compassBuilding,
-      };
+  /// 按鈕直接切換；建築座向還沒存過地點時先開地圖畫線，畫完才切換。
+  Future<void> _chooseMode(NorthMode m) async {
+    if (m == NorthMode.building && (await BuildingStore.load()).isEmpty) {
+      if (!mounted) return;
+      final b = await addBuilding(context);
+      if (b == null || !mounted) return;
+    }
+    await _setMode(m);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -412,6 +416,42 @@ class _CompassPageState extends State<CompassPage> {
       widgets.add(Text(_noSensor ? l.compassNoSensor : l.compassWaiting, textAlign: TextAlign.center));
     }
 
+    // 北方基準：三個按鈕直接放在盤面下方，附一行說明；「?」開完整說明與地點管理
+    widgets.add(const SizedBox(height: 8));
+    widgets.add(SegmentedButton<NorthMode>(
+      showSelectedIcon: false,
+      segments: [
+        ButtonSegment(value: NorthMode.trueNorth, label: Text(l.compassTrueNorth)),
+        ButtonSegment(value: NorthMode.magnetic, label: Text(l.compassMagneticNorth)),
+        ButtonSegment(
+          value: NorthMode.building,
+          label: Text(l.compassBuilding),
+          icon: _locating ? const SizedBox.square(dimension: 14, child: CircularProgressIndicator(strokeWidth: 2)) : null,
+        ),
+      ],
+      selected: {_mode},
+      onSelectionChanged: _locating ? null : (v) => _chooseMode(v.first),
+    ));
+    widgets.add(Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Expanded(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Text(
+            switch (_mode) {
+              NorthMode.trueNorth => l.compassNorthTrueDesc,
+              NorthMode.magnetic => l.compassNorthMagDesc,
+              NorthMode.building => l.compassNorthBuildingDesc,
+            },
+            style: theme.textTheme.bodySmall?.copyWith(color: context.qm.textMuted),
+          ),
+        ),
+      ),
+      IconButton(
+        icon: const Icon(Icons.help_outline),
+        tooltip: l.compassNorthBase,
+        onPressed: _locating ? null : _openNorthSheet,
+      ),
+    ]));
     // 狀態提示
     final notes = <String>[];
     switch (_field.status) {
@@ -476,16 +516,6 @@ class _CompassPageState extends State<CompassPage> {
 
     // 北方基準
     widgets.add(const SizedBox(height: 8));
-    widgets.add(ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: const Icon(Icons.explore_outlined),
-      title: Text(l.compassNorthBase),
-      subtitle: Text(_modeLabel(l)),
-      trailing: _locating
-          ? const SizedBox.square(dimension: 20, child: CircularProgressIndicator(strokeWidth: 2))
-          : const Icon(Icons.chevron_right),
-      onTap: _locating ? null : _openNorthSheet,
-    ));
     if (_mode != NorthMode.magnetic) {
       widgets.add(Center(
         child: TextButton.icon(
