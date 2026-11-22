@@ -14,6 +14,7 @@ import '../../compass/compass_math.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
 import 'heading_tracker.dart';
+import 'house_guide_page.dart';
 import 'house_geometry.dart';
 import '../lucky/placement_page.dart';
 import '../personal/profile.dart';
@@ -26,7 +27,7 @@ import 'plan_editor_page.dart';
 import '../../shared/widgets/ymd_date_picker.dart';
 
 /// 疊加的盤（HANDOFF §6）：時盤（現在或指定時間）、年盤、月盤（看格局）、宅命盤。
-enum HouseOverlay { now, pick, year, month, house }
+enum HouseOverlay { now, pick, day, month, year, house }
 
 /// 宅盤九宮（HANDOFF §6）：三種輸入（站中心點標記、拍平面圖、手繪）＋坐向＋疊盤。
 class HousePage extends StatefulWidget {
@@ -107,6 +108,8 @@ class _HousePageState extends State<HousePage> {
         return (_try(now, PanUnit.hour), l.houseOverlayHourAt(fmt(now)));
       case HouseOverlay.pick:
         return (_try(_picked, PanUnit.hour), l.houseOverlayHourAt(fmt(_picked)));
+      case HouseOverlay.day:
+        return (_try(now, PanUnit.day), l.unitDay);
       case HouseOverlay.year:
         return (_try(now, PanUnit.year), l.houseOverlayYear);
       case HouseOverlay.month:
@@ -247,6 +250,11 @@ class _HousePageState extends State<HousePage> {
     return Scaffold(
       appBar: AppBar(title: h == null ? Text(l.houseTitle) : _titleSwitcher(context, h), actions: [
         IconButton(icon: const Icon(Icons.home_work_outlined), tooltip: l.houseManage, onPressed: _openManager),
+        IconButton(
+          icon: const Icon(Icons.menu_book_outlined),
+          tooltip: l.houseGuideTitle,
+          onPressed: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const HouseGuidePage())),
+        ),
         IconButton(icon: const Icon(Icons.info_outline), tooltip: l.houseIntroTitle, onPressed: () => showHouseIntro(context, force: true)),
       ]),
       body: SafeArea(
@@ -400,6 +408,7 @@ class _HousePageState extends State<HousePage> {
           label: Text(switch (o) {
             HouseOverlay.now => l.houseOverlayNow,
             HouseOverlay.pick => l.houseOverlayPick,
+            HouseOverlay.day => l.unitDay,
             HouseOverlay.year => l.houseOverlayYear,
             HouseOverlay.month => l.houseOverlayMonth,
             HouseOverlay.house => l.houseOverlayFate,

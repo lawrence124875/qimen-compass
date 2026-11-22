@@ -73,8 +73,11 @@ class _CompassPageState extends State<CompassPage> {
   bool _wasAligned = false;
 
   // 與首頁同一套排盤設定（定元法、子時、真太陽時）。
+  /// 盤面用哪一種盤（時／日／月／年）；時盤以外不做換盤倒數。
+  PanUnit _unit = PanUnit.hour;
+
   QimenChart _computeAt(DateTime t) => _engine.compute(t,
-      settings: AppSettings.instance.timeSettingsAt(t), method: AppSettings.instance.juMethod);
+      settings: AppSettings.instance.timeSettingsAt(t), method: AppSettings.instance.juMethod, unit: _unit);
 
   @override
   void initState() {
@@ -171,7 +174,7 @@ class _CompassPageState extends State<CompassPage> {
   void _refreshCharts() {
     final now = DateTime.now();
     _chart = _computeAt(now);
-    _nextAt = nextChartChange(now, _computeAt);
+    _nextAt = _unit == PanUnit.hour ? nextChartChange(now, _computeAt) : null;
     _nextChart = _nextAt == null ? null : _computeAt(_nextAt!.add(const Duration(seconds: 1)));
   }
 
@@ -406,6 +409,24 @@ class _CompassPageState extends State<CompassPage> {
     } else {
       widgets.add(Text(_noSensor ? l.compassNoSensor : l.compassWaiting, textAlign: TextAlign.center));
     }
+
+    // 盤：時／日／月／年
+    widgets.add(const SizedBox(height: 8));
+    widgets.add(SegmentedButton<PanUnit>(
+      showSelectedIcon: false,
+      segments: [
+        ButtonSegment(value: PanUnit.hour, label: Text(l.unitHour)),
+        ButtonSegment(value: PanUnit.day, label: Text(l.unitDay)),
+        ButtonSegment(value: PanUnit.month, label: Text(l.unitMonth)),
+        ButtonSegment(value: PanUnit.year, label: Text(l.unitYear)),
+      ],
+      selected: {_unit},
+      onSelectionChanged: (v) => setState(() {
+        _unit = v.first;
+        _showNext = false;
+        _refreshCharts();
+      }),
+    ));
 
     // 北方基準：三個按鈕直接放在盤面下方，附一行說明；「?」開完整說明與地點管理
     widgets.add(const SizedBox(height: 8));
@@ -707,7 +728,7 @@ class CompassDial extends StatelessWidget {
           line: theme.colorScheme.outline,
           text: theme.colorScheme.onSurface,
           accent: theme.colorScheme.primary,
-          dirs: {for (final p in palaceBearing.keys) p: _dirLabel(l, p)},
+          dirs: {for (final p in palaceBearing.keys) p: '${_dirLabel(l, p)}·${palaceElement[p]!.zh}'},
           live: live,
           backdrop: backdrop,
         ),

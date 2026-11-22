@@ -46,7 +46,7 @@ class ShiJiaEngine {
 
   final CalendarService calendar;
 
-  /// 起局。支援時盤、月盤、年盤（[PanUnit.day] 日家奇門排在 V3）。
+  /// 起局。支援時盤、日盤、月盤、年盤。
   /// 月盤、年盤一律陰遁，不受 [method] 影響。
   QimenChart compute(
     DateTime instant, {
@@ -64,7 +64,7 @@ class ShiJiaEngine {
       case PanUnit.year:
         ju = juYear(m);
       case PanUnit.day:
-        throw UnsupportedError('日家盤排在 V3');
+        ju = juDay(m, settings);
     }
     return buildChart(m, ju, method: method, unit: unit);
   }
@@ -84,6 +84,21 @@ class ShiJiaEngine {
   JuInfo juMonth(CalendarMoment m) {
     final yuan = Yuan.values[const [0, 2, 1, 0, 2, 1, 0, 2, 1, 0, 2, 1][m.year.branch]];
     return JuInfo(Dun.yin, const [7, 1, 4][yuan.index], yuan, m.term.index);
+  }
+
+  /// 日家奇門：一局管 60 日（甲子日起）。冬至後第一個甲子日起陽一局、雨水後陽七局、穀雨後陽四局；
+  /// 夏至後陰九局、處暑後陰三局、霜降後陰六局。以日柱代替時柱排盤。
+  JuInfo juDay(CalendarMoment m, TimeSettings settings) {
+    const starts = {0: (Dun.yang, 1), 4: (Dun.yang, 7), 8: (Dun.yang, 4), 12: (Dun.yin, 9), 16: (Dun.yin, 3), 20: (Dun.yin, 6)};
+    final blockStart = m.dayNumber - m.day.index; // 這 60 日的甲子日
+    final terms = calendar.termsBetween(m.instantUtc.subtract(const Duration(days: 200)), m.instantUtc.add(const Duration(days: 1)));
+    SolarTerm? last;
+    for (final t in terms) {
+      if (!starts.containsKey(t.index)) continue;
+      if (CalendarService.civilDayNumber(calendar.clockTime(t.startUtc, settings)) <= blockStart) last = t;
+    }
+    final (dun, ju) = starts[last?.index ?? 0]!;
+    return JuInfo(dun, ju, _yuanOf(m.dayNumber), m.term.index);
   }
 
   /// 以立春為界的西元年（例：2026-01-20 仍屬 2025 年）。
@@ -171,7 +186,7 @@ class ShiJiaEngine {
     palaces[2]!.earthStems.addAll(palaces[5]!.earthStems); // 中五寄坤二
 
     // 2. 旬首 → 值符、值使。
-    final hour = switch (unit) { PanUnit.year => m.year, PanUnit.month => m.month, _ => m.hour };
+    final hour = switch (unit) { PanUnit.year => m.year, PanUnit.month => m.month, PanUnit.day => m.day, _ => m.hour };
     final xun = GanZhi(hour.xunStart);
     final hidden = xunHiddenStem[xun.branch]!;
     final p0 = earthPalaceOf[hidden]!;

@@ -30,7 +30,7 @@ Map<int, SectorLabel> sectorLabels(BuildContext context, QimenChart? chart) {
   final qm = context.qm;
   return {
     for (final p in palaceRing)
-      p: SectorLabel('${palaceNames[p]}$p', chart?[p].door?.zh ?? '', chart?[p].door == null ? qm.textMuted : qm.luck(chart![p].door!.luck)),
+      p: SectorLabel('${palaceNames[p]}$p·${context.l10n.palaceDirection(p)}·${palaceElement[p]!.zh}', chart?[p].door?.zh ?? '', chart?[p].door == null ? qm.textMuted : qm.luck(chart![p].door!.luck)),
   };
 }
 
@@ -213,7 +213,10 @@ class SectorPainter extends CustomPainter {
 
 /// 無平面圖時的方位圖：北在上，羅盤標記的房間依方位排在圓周上。
 class BearingWheel extends StatelessWidget {
-  const BearingWheel({super.key, required this.labels, this.rooms = const [], this.pointer, this.highlight});
+  const BearingWheel({super.key, required this.labels, this.rooms = const [], this.pointer, this.highlight, this.upBearing = 0});
+
+  /// 畫面上方對應的方位角：0＝北在上（指針轉）；給手機方向＝盤面跟著轉、指針固定朝上。
+  final double upBearing;
 
   final Map<int, SectorLabel> labels;
 
@@ -237,7 +240,7 @@ class BearingWheel extends StatelessWidget {
       }
       final p = palaceAtBearing(b);
       final i = count[p] = (count[p] ?? -1) + 1;
-      shapes.add(PlanShape(name, pin: c + planDirection(b, 0) * (3.4 - 0.9 * (i % 3))));
+      shapes.add(PlanShape(name, pin: c + planDirection(b, upBearing) * (3.4 - 0.9 * (i % 3))));
     }
     return AspectRatio(
       aspectRatio: 1,
@@ -247,7 +250,7 @@ class BearingWheel extends StatelessWidget {
             bounds: const Rect.fromLTWH(0, 0, _size, _size),
             center: c,
             centerR: 1.5,
-            upBearing: 0,
+            upBearing: upBearing,
             scale: box.maxWidth / _size,
             labels: labels,
             colors: context.qm,

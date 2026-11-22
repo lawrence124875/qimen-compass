@@ -54,6 +54,7 @@ class _HomePageState extends State<HomePage> {
   DateTime _shift(int n) => switch (_unit) {
         PanUnit.month => _addMonths(_instant, n),
         PanUnit.year => _addMonths(_instant, 12 * n),
+        PanUnit.day => _instant.add(Duration(days: n)),
         _ => _instant.add(Duration(hours: 2 * n)),
       };
 
@@ -165,8 +166,8 @@ class _HomePageState extends State<HomePage> {
           final wide = box.maxWidth > box.maxHeight && box.maxWidth >= 560;
           final info = ChartInfo(chart: _chart, instant: _instant);
           final nav = _HourNav(
-            prevLabel: switch (_unit) { PanUnit.month => l.homePrevMonth, PanUnit.year => l.homePrevYear, _ => l.homePrevHour },
-            nextLabel: switch (_unit) { PanUnit.month => l.homeNextMonth, PanUnit.year => l.homeNextYear, _ => l.homeNextHour },
+            prevLabel: switch (_unit) { PanUnit.day => l.homePrevDay, PanUnit.month => l.homePrevMonth, PanUnit.year => l.homePrevYear, _ => l.homePrevHour },
+            nextLabel: switch (_unit) { PanUnit.day => l.homeNextDay, PanUnit.month => l.homeNextMonth, PanUnit.year => l.homeNextYear, _ => l.homeNextHour },
             onPrev: () => _set(_shift(-1)),
             onNow: () => _set(DateTime.now()),
             onNext: () => _set(_shift(1)),
@@ -175,6 +176,7 @@ class _HomePageState extends State<HomePage> {
             showSelectedIcon: false,
             segments: [
               ButtonSegment(value: PanUnit.hour, label: Text(l.unitHour)),
+              ButtonSegment(value: PanUnit.day, label: Text(l.unitDay)),
               ButtonSegment(value: PanUnit.month, label: Text(l.unitMonth)),
               ButtonSegment(value: PanUnit.year, label: Text(l.unitYear)),
             ],
@@ -226,7 +228,7 @@ class _HomePageState extends State<HomePage> {
             ],
           ]);
           final actions = Column(mainAxisSize: MainAxisSize.min, children: [actionsRow, report]);
-          final unitNote = _unit == PanUnit.hour
+          final unitNote = _unit == PanUnit.hour || _unit == PanUnit.day
               ? const SizedBox.shrink()
               : Padding(
                   padding: const EdgeInsets.only(top: 4),

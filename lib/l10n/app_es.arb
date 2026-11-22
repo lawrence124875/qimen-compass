@@ -984,5 +984,22 @@
   "northRecMap": "Recomendado: norte verdadero. El mapa usa el norte verdadero, así el puntero y los sectores coinciden.",
   "northRecTravel": "Recomendado: norte verdadero. Caminas al aire libre, donde es el más preciso y sencillo.",
   "northRecHouse": "Recomendado: Edificio. El acero y los aparatos interiores alteran la brújula; alinear con un muro exterior es lo más estable.",
-  "mapCompassOverlay": "Superponer brújula"
+  "mapCompassOverlay": "Superponer brújula",
+  "unitDay": "Día",
+  "houseRotateBoard": "Girar el tablero con el teléfono",
+  "houseRotateBoardOn": "El tablero gira con el teléfono y la aguja queda arriba: lo que ves es lo que tienes delante",
+  "houseRotateBoardOff": "El norte queda arriba y gira la aguja",
+  "houseGuideTitle": "Guía del plano de la casa",
+  "houseGuide1T": "Para qué sirve cada tablero",
+  "houseGuide1B": "• Tablero de la casa: de la fecha de mudanza; carácter innato y disposición a largo plazo.\n• Año: qué habitaciones están más fuertes este año; guía la disposición general.\n• Mes: ajuste fino del mes, dónde pasar más o menos tiempo.\n• Día: elegir el día para reformar, mudarse o colocar la cama.\n• Hora: elegir las dos horas para actuar o firmar, o leer un imprevisto en casa.",
+  "houseGuide2T": "Llevas años o no recuerdas la fecha de mudanza",
+  "houseGuide2B": "No hace falta recalcular la mudanza. Usa el año para el panorama y el mes para ajustar; el año cambia en Lichun y el mes en cada término solar. Si sabes la fecha (la hora es opcional), el tablero de la casa añade una referencia innata.",
+  "houseGuide3T": "Lo fijo y lo que se mueve",
+  "houseGuide3B": "Lo que no puedes mover (puerta, cocina, cama, baño) se guía por la casa y el año; mantén el rumbo y no te alarmes por los cambios mensuales. Las puertas que se mueven cada mes y día deciden cuándo y dónde hacer cada cosa: si la Puerta Abierta cae en el estudio, negocia allí; si la del Miedo cae en el salón, evita discusiones allí.",
+  "houseGuide4T": "Si una habitación queda en dirección desfavorable",
+  "houseGuide4B": "No hace falta reformar.\n• Muévete tú, no la casa: desplaza el escritorio o sofá, o gira la silla hacia una puerta favorable.\n• Mantén las direcciones favorables luminosas, ordenadas y ventiladas, con objetos de uso diario.\n• Mantén las desfavorables tranquilas y despejadas, sin martillar ni reformar, y usa objetos de los cinco elementos (ver Objetos y remedios).\n• Si la entrada tiene una puerta desfavorable, sal a lo importante en una hora favorable.",
+  "houseGuide5T": "El tablero horario en casa",
+  "houseGuide5B": "No hace falta a diario. Úsalo para:\n• Momentos clave: mudanza, primer fuego, primer golpe de obra, colocar la cama.\n• Tareas importantes: videollamadas, firmas, planes; siéntate hacia la puerta favorable de esa hora.\n• Imprevistos: fuga, avería, discusión; abre el tablero de esa hora y lee el palacio de la habitación.",
+  "homePrevDay": "Día anterior",
+  "homeNextDay": "Día siguiente"
 }
