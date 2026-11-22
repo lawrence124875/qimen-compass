@@ -92,7 +92,13 @@ void main() {
     expect(solarTermNames[z.termIndex], '大雪');
   });
 
-  test('日家盤尚未實作（V3）', () {
-    expect(() => engine.compute(DateTime.utc(2024), unit: PanUnit.day), throwsUnsupportedError);
+  test('日家盤：60 日一局，依冬至、雨水、穀雨、夏至、處暑、霜降後的甲子起局', () {
+    // 日盤：2024-01-01 是甲子日、在冬至（12-22）後，陽一局；前一天屬 2023-11-02 甲子起的霜降後陰六局
+    final d = engine.compute(DateTime.utc(2024, 1, 1, 4), unit: PanUnit.day);
+    expect(d.dun, Dun.yang);
+    expect(d.ju, 1);
+    final d0 = engine.compute(DateTime.utc(2023, 12, 31, 4), unit: PanUnit.day);
+    expect(d0.dun, Dun.yin);
+    expect(d0.ju, 6);
   });
 }

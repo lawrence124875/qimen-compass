@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app/theme/app_theme.dart';
 import '../../compass/compass_math.dart';
@@ -23,10 +24,23 @@ class _MarkRoomsPageState extends State<MarkRoomsPage> {
   final _t = HeadingTracker.instance;
   String? _name;
 
+  /// 盤面跟著手機轉（指針固定朝上）；關掉＝北在上、指針轉。
+  bool _rotate = true;
+  static const _kRotate = 'qm_house_rotate_board';
+
   @override
   void initState() {
     super.initState();
     _t.acquire();
+    SharedPreferences.getInstance().then((p) {
+      final v = p.getBool(_kRotate);
+      if (v != null && mounted) setState(() => _rotate = v);
+    }).catchError((_) {});
+  }
+
+  void _setRotate(bool v) {
+    setState(() => _rotate = v);
+    SharedPreferences.getInstance().then((p) => p.setBool(_kRotate, v)).catchError((_) => false);
   }
 
   @override
@@ -97,6 +111,7 @@ class _MarkRoomsPageState extends State<MarkRoomsPage> {
         rooms: [for (final r in rooms) (r.name, r.bearing)],
         pointer: _t.heading,
         highlight: _t.heading == null ? null : palaceAtBearing(_t.heading!),
+        upBearing: _rotate ? (_t.heading ?? 0) : 0,
       ),
     );
 
@@ -110,6 +125,13 @@ class _MarkRoomsPageState extends State<MarkRoomsPage> {
       ),
       const SizedBox(height: 8),
       const HeadingPanel(),
+      SwitchListTile(
+        contentPadding: EdgeInsets.zero,
+        title: Text(l.houseRotateBoard),
+        subtitle: Text(_rotate ? l.houseRotateBoardOn : l.houseRotateBoardOff),
+        value: _rotate,
+        onChanged: _setRotate,
+      ),
       const SizedBox(height: 4),
       OutlinedButton.icon(
         icon: const Icon(Icons.edit_outlined),

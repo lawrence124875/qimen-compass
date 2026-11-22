@@ -984,5 +984,22 @@
   "northRecMap": "Khuyên dùng: bắc thật. Bản đồ dùng bắc thật nên kim chỉ và các khu vực khớp nhau.",
   "northRecTravel": "Khuyên dùng: bắc thật. Bạn đi ngoài trời, nơi bắc thật chính xác và đơn giản nhất.",
   "northRecHouse": "Khuyên dùng: hướng tòa nhà. Cốt thép và thiết bị điện trong nhà làm nhiễu la bàn; căn theo tường ngoài là ổn định nhất.",
-  "mapCompassOverlay": "Phủ la bàn"
+  "mapCompassOverlay": "Phủ la bàn",
+  "unitDay": "Bàn ngày",
+  "houseRotateBoard": "Xoay bàn theo điện thoại",
+  "houseRotateBoardOn": "Bàn xoay theo điện thoại, kim luôn hướng lên: điều bạn thấy chính là hướng trước mặt",
+  "houseRotateBoardOff": "Bắc cố định ở trên, kim xoay",
+  "houseGuideTitle": "Hướng dẫn trạch bàn",
+  "houseGuide1T": "Công dụng của từng bàn",
+  "houseGuide1B": "• Trạch mệnh bàn: lập theo ngày nhập trạch; tính chất bẩm sinh và bố cục lâu dài.\n• Bàn năm: năm nay phòng nào vượng; định hướng bố trí chung.\n• Bàn tháng: tinh chỉnh tháng này, ở đâu nhiều hay ít.\n• Bàn ngày: chọn ngày sửa nhà, chuyển nhà, kê giường.\n• Bàn giờ: chọn hai giờ để làm hoặc ký kết, hoặc xem sự việc bất ngờ trong nhà.",
+  "houseGuide2T": "Ở lâu hoặc quên ngày nhập trạch",
+  "houseGuide2B": "Không cần tính lại ngày vào ở. Dùng bàn năm cho tổng thể và bàn tháng để tinh chỉnh; năm đổi vào Lập xuân, tháng đổi theo tiết khí. Nếu nhớ ngày (không cần giờ), xem thêm trạch mệnh bàn làm tham khảo bẩm sinh.",
+  "houseGuide3T": "Cố định xem tĩnh bàn, hoạt động xem động bàn",
+  "houseGuide3B": "Những thứ không dời được (cửa chính, bếp, giường, nhà vệ sinh) theo trạch mệnh bàn và bàn năm; giữ hướng chung ổn định, không cần lo khi bát môn đổi hằng tháng. Bát môn chuyển theo tháng, ngày quyết định khi nào làm gì ở đâu: Khai môn vào phòng làm việc thì bàn chuyện hợp tác ở đó; Kinh môn vào phòng khách thì tránh cãi vã ở đó.",
+  "houseGuide4T": "Phòng ở hướng xấu thì sao",
+  "houseGuide4B": "Không cần sửa nhà.\n• Người động thay nhà: dời bàn, ghế sofa hoặc xoay ghế quay về hướng cát môn.\n• Hướng cát môn giữ sáng, gọn, thoáng, đặt đồ hay dùng.\n• Hướng hung môn giữ yên tĩnh, gọn gàng, tránh đục đẽo sửa chữa, dùng vật ngũ hành để hóa giải (xem Vật phẩm và hóa giải).\n• Cửa chính gặp hung môn thì việc quan trọng chọn giờ tốt để ra ngoài.",
+  "houseGuide5T": "Dùng bàn giờ trong nhà",
+  "houseGuide5B": "Không cần xem mỗi ngày. Dùng khi:\n• Việc lớn: nhập trạch, nhóm lửa đầu tiên, nhát búa đầu tiên khi sửa, kê giường.\n• Việc quan trọng ở nhà: họp trực tuyến, ký kết, lập kế hoạch; ngồi quay về cát môn của giờ đó.\n• Sự cố bất ngờ: rò nước, hỏng đồ, cãi nhau; lập bàn giờ lúc đó và xem cung của phòng.",
+  "homePrevDay": "Ngày trước",
+  "homeNextDay": "Ngày sau"
 }

@@ -371,7 +371,7 @@ class _MapPageState extends State<MapPage> {
                                 chart: _chart,
                                 heading: _drawn ?? 0,
                                 live: _drawn != null,
-                                backdrop: Theme.of(context).colorScheme.surface.withValues(alpha: 0.55),
+                                backdrop: Theme.of(context).colorScheme.surface.withValues(alpha: 0.3),
                               ),
                             ),
                           ),
@@ -380,15 +380,21 @@ class _MapPageState extends State<MapPage> {
                     Positioned(top: 0, left: 0, right: 56, child: Align(alignment: Alignment.topLeft, child: _headingChip(context))),
                   ]),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
-            child: Column(mainAxisSize: MainAxisSize.min, children: [
-              if (mapsEnabled) ...[
-                const HeadingPanel(compact: true, feature: NorthFeature.map, showHeading: false, showLock: false),
-                const SizedBox(height: 4),
-                radius, const SizedBox(height: 8), _legend(context), const SizedBox(height: 8)],
-              _pinCard(context),
-            ]),
+          // 下方設定限制高度（可捲動），地圖保持佔大部分畫面
+          ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: MediaQuery.sizeOf(context).height * 0.3),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                _pinCard(context),
+                if (mapsEnabled) ...[
+                  const SizedBox(height: 6),
+                  // 疊圖時扇區不畫，範圍與圖例只在一般地圖顯示
+                  if (!_overlay) ...[radius, const SizedBox(height: 6), _legend(context), const SizedBox(height: 6)],
+                  const HeadingPanel(compact: true, feature: NorthFeature.map, showHeading: false, showLock: false),
+                ],
+              ]),
+            ),
           ),
         ]),
       ),

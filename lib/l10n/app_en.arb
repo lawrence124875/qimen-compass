@@ -984,5 +984,22 @@
   "northRecMap": "Recommended: True north. The map itself uses true north, so the pointer and sectors line up.",
   "northRecTravel": "Recommended: True north. You walk outdoors, where true north is the most accurate and simplest.",
   "northRecHouse": "Recommended: Building. Steel and appliances indoors disturb the compass; aligning to an outer wall is steadiest.",
-  "mapCompassOverlay": "Compass overlay"
+  "mapCompassOverlay": "Compass overlay",
+  "unitDay": "Day",
+  "houseRotateBoard": "Rotate chart with phone",
+  "houseRotateBoardOn": "The chart turns with the phone and the pointer stays up, so what you see matches what is in front of you",
+  "houseRotateBoardOff": "North stays at the top and the pointer turns",
+  "houseGuideTitle": "Home chart guide",
+  "houseGuide1T": "What each chart is for",
+  "houseGuide1B": "• House chart: cast at move-in; the home's innate nature and long-term layout.\n• Year chart: which rooms are strongest this year; guides overall layout and use.\n• Month chart: fine-tuning for this month, where to spend more or less time.\n• Day chart: choosing the day to renovate, move or set up a bed.\n• Hour chart: choosing the two hours to act or sign, or reading a sudden event at home.",
+  "houseGuide2T": "Lived here for years, or forgot the move-in date",
+  "houseGuide2B": "No need to recalculate the move-in day. Use the year chart for the big picture and the month chart to fine-tune; the year changes at Lichun and the month at each solar term. If you know the move-in date (time optional), the house chart adds an innate reference.",
+  "houseGuide3T": "Fixed layout, moving activities",
+  "houseGuide3B": "Things you cannot move (front door, kitchen, bed, bathroom) follow the house and year charts; keep the big picture steady and do not worry about monthly changes. The doors that move each month and day decide when and where you do things: if Open Door is in the study this month, hold talks there; if Fear Door is in the living room, avoid arguments there.",
+  "houseGuide4T": "What if a room sits in an unlucky direction",
+  "houseGuide4B": "No need to rebuild.\n• Move yourself, not the house: shift a desk or sofa, or turn your chair to face a lucky door.\n• Keep lucky directions bright, tidy and airy, with things you use often.\n• Keep unlucky directions quiet and uncluttered, avoid hammering or renovating there, and use element items as a buffer (see Placements and remedies).\n• If the front door has an unlucky door, leave for important outings at a lucky hour.",
+  "houseGuide5T": "Using the hour chart at home",
+  "houseGuide5B": "You do not need it every day. Use it for:\n• Key moments: moving in, first cooking, first strike of renovation, setting up a bed.\n• Important tasks at home: calls, signing, planning; sit in the lucky door's direction and face it.\n• Sudden events: a leak, a broken appliance, an argument; cast the current hour chart and read the room's palace for cause and outcome.",
+  "homePrevDay": "Previous day",
+  "homeNextDay": "Next day"
 }

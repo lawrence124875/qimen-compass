@@ -151,7 +151,7 @@ class PalaceCell extends StatelessWidget {
                 ),
               ),
               Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                fit(Text('${pc.name}${pc.palace}', style: st(0.1, qm.textMuted))),
+                fit(Text('${pc.name}${pc.palace}·${context.l10n.palaceDirection(pc.palace)}·${palaceElement[pc.palace]!.zh}', style: st(0.1, qm.textMuted))),
                 const Spacer(),
                 fit(Text(stemsText(pc.earthStems), style: st(0.13, qm.textMuted))),
               ]),

@@ -984,5 +984,22 @@
   "northRecMap": "Disarankan: utara sejati. Peta memakai utara sejati, jadi penunjuk dan sektor selaras.",
   "northRecTravel": "Disarankan: utara sejati. Anda berjalan di luar ruangan, tempat utara sejati paling akurat dan praktis.",
   "northRecHouse": "Disarankan: Bangunan. Baja dan peralatan di dalam rumah mengganggu kompas; menyelaraskan dengan dinding luar paling stabil.",
-  "mapCompassOverlay": "Tumpuk kompas"
+  "mapCompassOverlay": "Tumpuk kompas",
+  "unitDay": "Hari",
+  "houseRotateBoard": "Putar papan bersama ponsel",
+  "houseRotateBoardOn": "Papan berputar bersama ponsel dan jarum tetap ke atas, jadi yang terlihat sama dengan arah di depan Anda",
+  "houseRotateBoardOff": "Utara tetap di atas dan jarum yang berputar",
+  "houseGuideTitle": "Panduan peta rumah",
+  "houseGuide1T": "Kegunaan tiap papan",
+  "houseGuide1B": "• Papan rumah: saat pindah; sifat bawaan dan tata letak jangka panjang.\n• Tahun: ruangan mana yang paling kuat tahun ini; menentukan tata letak umum.\n• Bulan: penyesuaian bulan ini, di mana lebih lama atau dikurangi.\n• Hari: memilih hari renovasi, pindahan, atau memasang ranjang.\n• Jam: memilih dua jam untuk bertindak atau tanda tangan, atau membaca kejadian mendadak di rumah.",
+  "houseGuide2T": "Sudah lama tinggal atau lupa tanggal pindah",
+  "houseGuide2B": "Tidak perlu menghitung ulang hari pindah. Pakai papan tahun untuk gambaran besar dan papan bulan untuk penyesuaian; tahun berganti saat Lichun dan bulan di tiap musim. Jika ingat tanggalnya (jam boleh tidak), papan rumah memberi acuan bawaan.",
+  "houseGuide3T": "Yang tetap dan yang bergerak",
+  "houseGuide3B": "Yang tidak bisa dipindah (pintu depan, dapur, ranjang, kamar mandi) mengikuti papan rumah dan tahun; cukup jaga arah besar tanpa cemas tiap bulan. Pintu yang bergerak tiap bulan dan hari menentukan kapan dan di mana melakukan sesuatu: Pintu Buka di ruang kerja, berundinglah di sana; Pintu Kaget di ruang tamu, hindari bertengkar di sana.",
+  "houseGuide4T": "Jika ruangan di arah kurang baik",
+  "houseGuide4B": "Tidak perlu membongkar.\n• Anda yang bergerak, bukan rumah: geser meja atau sofa, atau putar kursi menghadap pintu baik.\n• Arah baik dibuat terang, rapi, berangin, dengan barang yang sering dipakai.\n• Arah buruk dibuat tenang dan rapi, hindari memalu atau renovasi, pakai benda lima unsur sebagai penyangga (lihat Penempatan dan penawar).\n• Jika pintu depan kena pintu buruk, pergi untuk urusan penting di jam baik.",
+  "houseGuide5T": "Papan jam di rumah",
+  "houseGuide5B": "Tidak perlu tiap hari. Gunakan untuk:\n• Momen penting: pindahan, menyalakan api pertama, pukulan pertama renovasi, memasang ranjang.\n• Urusan penting di rumah: rapat daring, tanda tangan, rencana; duduk menghadap pintu baik jam itu.\n• Kejadian mendadak: bocor, alat rusak, pertengkaran; buka papan jam itu dan baca istana ruangan tersebut.",
+  "homePrevDay": "Hari sebelumnya",
+  "homeNextDay": "Hari berikutnya"
 }

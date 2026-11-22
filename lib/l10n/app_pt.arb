@@ -984,5 +984,22 @@
   "northRecMap": "Recomendado: norte verdadeiro. O mapa usa o norte verdadeiro, então o ponteiro e os setores coincidem.",
   "northRecTravel": "Recomendado: norte verdadeiro. Você caminha ao ar livre, onde ele é o mais preciso e simples.",
   "northRecHouse": "Recomendado: Edifício. Aço e aparelhos internos perturbam a bússola; alinhar com uma parede externa é o mais estável.",
-  "mapCompassOverlay": "Sobrepor bússola"
+  "mapCompassOverlay": "Sobrepor bússola",
+  "unitDay": "Dia",
+  "houseRotateBoard": "Girar o mapa com o celular",
+  "houseRotateBoardOn": "O mapa gira com o celular e o ponteiro fica para cima: o que você vê é o que está à sua frente",
+  "houseRotateBoardOff": "O norte fica em cima e o ponteiro gira",
+  "houseGuideTitle": "Guia do mapa da casa",
+  "houseGuide1T": "Para que serve cada mapa",
+  "houseGuide1B": "• Mapa da casa: da data da mudança; natureza inata e disposição de longo prazo.\n• Ano: quais cômodos estão mais fortes neste ano; orienta a disposição geral.\n• Mês: ajuste fino do mês, onde ficar mais ou menos.\n• Dia: escolher o dia de reformar, mudar ou montar a cama.\n• Hora: escolher as duas horas para agir ou assinar, ou ler um imprevisto em casa.",
+  "houseGuide2T": "Mora há anos ou esqueceu a data da mudança",
+  "houseGuide2B": "Não precisa recalcular a mudança. Use o ano para o panorama e o mês para ajustar; o ano muda no Lichun e o mês a cada termo solar. Se souber a data (hora opcional), o mapa da casa dá uma referência inata.",
+  "houseGuide3T": "O fixo e o que se move",
+  "houseGuide3B": "O que não dá para mover (porta, cozinha, cama, banheiro) segue a casa e o ano; mantenha o rumo sem se assustar com mudanças mensais. As portas que se movem a cada mês e dia decidem quando e onde fazer cada coisa: se a Porta Aberta está no escritório, negocie lá; se a do Medo está na sala, evite discussões lá.",
+  "houseGuide4T": "E se um cômodo ficar numa direção desfavorável",
+  "houseGuide4B": "Não precisa reformar.\n• Mova-se você, não a casa: mude a mesa ou o sofá, ou vire a cadeira para uma porta favorável.\n• Deixe as direções favoráveis claras, arrumadas e arejadas, com objetos de uso diário.\n• Deixe as desfavoráveis calmas e sem bagunça, sem marteladas ou obras, e use objetos dos cinco elementos (veja Objetos e remédios).\n• Se a entrada tiver uma porta desfavorável, saia para o que importa numa hora favorável.",
+  "houseGuide5T": "O mapa horário em casa",
+  "houseGuide5B": "Não precisa todo dia. Use para:\n• Momentos-chave: mudança, primeiro fogo, primeira martelada da obra, montar a cama.\n• Tarefas importantes: chamadas, assinaturas, planos; sente-se voltado para a porta favorável da hora.\n• Imprevistos: vazamento, aparelho quebrado, briga; abra o mapa da hora e leia o palácio do cômodo.",
+  "homePrevDay": "Dia anterior",
+  "homeNextDay": "Próximo dia"
 }
