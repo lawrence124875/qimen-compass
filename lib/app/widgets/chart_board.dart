@@ -151,7 +151,15 @@ class PalaceCell extends StatelessWidget {
                 ),
               ),
               Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                fit(Text('${pc.name}${pc.palace}·${context.l10n.palaceDirection(pc.palace)}·${palaceElement[pc.palace]!.zh}', style: st(0.1, qm.textMuted))),
+                fit(Text('${pc.name}${pc.palace}', style: st(0.1, qm.textMuted))),
+                // 方位與宮五行（測試等沒有語系時只顯示五行）
+                fit(Text(
+                    <String?>[
+                      '',
+                      Localizations.of<AppLocalizations>(context, AppLocalizations)?.palaceDirection(pc.palace),
+                      palaceElement[pc.palace]!.zh,
+                    ].whereType<String>().join('·'),
+                    style: st(0.09, qm.textMuted))),
                 const Spacer(),
                 fit(Text(stemsText(pc.earthStems), style: st(0.13, qm.textMuted))),
               ]),
