@@ -2102,5 +2102,10 @@
   "buildingEnterAngle": "輸入角度",
   "buildingUseMap": "用地圖",
   "compassNearbyCities": "附近城市（依手機的地區與時區）",
-  "compassCityFailed": "查不到這個城市的位置，請確認網路後再試"
+  "compassCityFailed": "查不到這個城市的位置，請確認網路後再試",
+  "northRecCompass": "建議真北：一般戶外找方位最準；在大樓裡指針亂跳再改用建築座向。",
+  "northRecMap": "建議真北：地圖本身就是真北，指針和扇區才對得上。",
+  "northRecTravel": "建議真北：出門在戶外走，真北最準也最省事。",
+  "northRecHouse": "建議建築座向：屋內鋼筋、電器會干擾指南針，用外牆對齊最穩。",
+  "mapCompassOverlay": "羅盤疊圖"
 }

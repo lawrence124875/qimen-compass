@@ -16,6 +16,7 @@ import 'city_sheet.dart';
 import 'compass_intro.dart';
 import 'compass_math.dart';
 import 'declination.dart';
+import 'north_mode_selector.dart';
 import 'north_mode_sheet.dart';
 import '../app/services.dart';
 import '../features/map/map_page.dart';
@@ -333,16 +334,6 @@ class _CompassPageState extends State<CompassPage> {
     setState(() => _gyro.lock(h + 90.0 * dir));
   }
 
-  /// 按鈕直接切換；建築座向還沒存過地點時先開地圖畫線，畫完才切換。
-  Future<void> _chooseMode(NorthMode m) async {
-    if (m == NorthMode.building && (await BuildingStore.load()).isEmpty) {
-      if (!mounted) return;
-      final b = await addBuilding(context);
-      if (b == null || !mounted) return;
-    }
-    await _setMode(m);
-  }
-
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
@@ -366,7 +357,7 @@ class _CompassPageState extends State<CompassPage> {
       body: SafeArea(
         child: LayoutBuilder(builder: (context, box) {
           final wide = box.maxWidth > box.maxHeight && box.maxWidth > 600;
-          final dial = _Dial(chart: chart, heading: heading ?? 0, target: _target, targetPalace: _palaceTarget, live: heading != null);
+          final dial = CompassDial(chart: chart, heading: heading ?? 0, target: _target, targetPalace: _palaceTarget, live: heading != null);
           final panel = _panel(context, heading, chart);
           if (wide) {
             return Row(children: [
@@ -418,40 +409,12 @@ class _CompassPageState extends State<CompassPage> {
 
     // 北方基準：三個按鈕直接放在盤面下方，附一行說明；「?」開完整說明與地點管理
     widgets.add(const SizedBox(height: 8));
-    widgets.add(SegmentedButton<NorthMode>(
-      showSelectedIcon: false,
-      segments: [
-        ButtonSegment(value: NorthMode.trueNorth, label: Text(l.compassTrueNorth)),
-        ButtonSegment(value: NorthMode.magnetic, label: Text(l.compassMagneticNorth)),
-        ButtonSegment(
-          value: NorthMode.building,
-          label: Text(l.compassBuilding),
-          icon: _locating ? const SizedBox.square(dimension: 14, child: CircularProgressIndicator(strokeWidth: 2)) : null,
-        ),
-      ],
-      selected: {_mode},
-      onSelectionChanged: _locating ? null : (v) => _chooseMode(v.first),
+    widgets.add(NorthModeSelector(
+      feature: NorthFeature.compass,
+      mode: _mode,
+      busy: _locating,
+      onChanged: (m, _) => m == _mode ? _loadBuilding() : _setMode(m),
     ));
-    widgets.add(Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Expanded(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Text(
-            switch (_mode) {
-              NorthMode.trueNorth => l.compassNorthTrueDesc,
-              NorthMode.magnetic => l.compassNorthMagDesc,
-              NorthMode.building => l.compassNorthBuildingDesc,
-            },
-            style: theme.textTheme.bodySmall?.copyWith(color: context.qm.textMuted),
-          ),
-        ),
-      ),
-      IconButton(
-        icon: const Icon(Icons.help_outline),
-        tooltip: l.compassNorthBase,
-        onPressed: _locating ? null : _openNorthSheet,
-      ),
-    ]));
     // 狀態提示
     final notes = <String>[];
     switch (_field.status) {
@@ -712,8 +675,13 @@ String _dirLabel(AppLocalizations l, int palace) => switch (palace) {
     };
 
 /// 羅盤盤面：八宮扇形依 [heading] 反向旋轉；上方固定指針。
-class _Dial extends StatelessWidget {
-  const _Dial({required this.chart, required this.heading, required this.target, this.targetPalace, required this.live});
+/// 羅盤盤面（八門扇形隨方向轉、指針固定朝上）；地圖頁也疊同一個盤面。
+class CompassDial extends StatelessWidget {
+  const CompassDial(
+      {super.key, required this.chart, required this.heading, this.target, this.targetPalace, required this.live, this.backdrop});
+
+  /// 盤面底色（疊在地圖上時用半透明底色讓字看得清楚）。
+  final Color? backdrop;
 
   final QimenChart chart;
   final double heading;
@@ -741,6 +709,7 @@ class _Dial extends StatelessWidget {
           accent: theme.colorScheme.primary,
           dirs: {for (final p in palaceBearing.keys) p: _dirLabel(l, p)},
           live: live,
+          backdrop: backdrop,
         ),
       ),
     );
@@ -759,8 +728,10 @@ class _DialPainter extends CustomPainter {
     required this.accent,
     required this.dirs,
     required this.live,
+    this.backdrop,
   });
 
+  final Color? backdrop;
   final QimenChart chart;
   final double heading;
   final Door? target;
@@ -781,6 +752,7 @@ class _DialPainter extends CustomPainter {
     final tp = target != null ? chart.palaceOfDoor(target!) : targetPalace;
     final aligned = live && tp != null && turnDelta(heading, palaceBearing[tp]!).abs() <= 10;
 
+    if (backdrop != null) canvas.drawCircle(c, r + 12, Paint()..color = backdrop!);
     canvas.save();
     canvas.translate(c.dx, c.dy);
     canvas.rotate(_rad(-heading));
@@ -854,5 +826,5 @@ class _DialPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_DialPainter old) =>
-      old.heading != heading || old.chart != chart || old.target != target || old.targetPalace != targetPalace || old.qm != qm || old.live != live;
+      old.heading != heading || old.chart != chart || old.target != target || old.targetPalace != targetPalace || old.qm != qm || old.live != live || old.backdrop != backdrop;
 }

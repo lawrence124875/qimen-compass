@@ -979,5 +979,10 @@
   "buildingEnterAngle": "角度を入力",
   "buildingUseMap": "地図を使う",
   "compassNearbyCities": "近くの都市（端末の地域とタイムゾーンから）",
-  "compassCityFailed": "この都市の位置が見つかりません。通信を確認してもう一度お試しください"
+  "compassCityFailed": "この都市の位置が見つかりません。通信を確認してもう一度お試しください",
+  "northRecCompass": "おすすめ：真北。屋外では最も正確。ビル内で針が乱れたら建物の向きに切り替えます。",
+  "northRecMap": "おすすめ：真北。地図自体が真北なので、矢印と扇形が一致します。",
+  "northRecTravel": "おすすめ：真北。屋外を歩くので、真北が最も正確で手軽です。",
+  "northRecHouse": "おすすめ：建物の向き。室内の鉄筋や家電は方位磁針を乱すため、外壁に合わせるのが最も安定します。",
+  "mapCompassOverlay": "羅盤を重ねる"
 }

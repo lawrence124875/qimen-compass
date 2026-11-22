@@ -979,5 +979,10 @@
   "buildingEnterAngle": "Enter angle",
   "buildingUseMap": "Use map",
   "compassNearbyCities": "Nearby cities (from your phone's region and time zone)",
-  "compassCityFailed": "Couldn't find this city. Check your connection and try again"
+  "compassCityFailed": "Couldn't find this city. Check your connection and try again",
+  "northRecCompass": "Recommended: True north. Most accurate outdoors; switch to Building if the needle jumps indoors.",
+  "northRecMap": "Recommended: True north. The map itself uses true north, so the pointer and sectors line up.",
+  "northRecTravel": "Recommended: True north. You walk outdoors, where true north is the most accurate and simplest.",
+  "northRecHouse": "Recommended: Building. Steel and appliances indoors disturb the compass; aligning to an outer wall is steadiest.",
+  "mapCompassOverlay": "Compass overlay"
 }

@@ -3,11 +3,13 @@ import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_compass/flutter_compass.dart';
 import 'package:pedometer/pedometer.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../compass/building_facing.dart';
 import '../../engine/engine.dart';
+import '../house/heading_tracker.dart';
+import '../house/house_widgets.dart' show HeadingPanel;
 import '../../l10n/l10n.dart';
 import '../../services/notifications.dart';
 import 'travel_log.dart';
@@ -45,8 +47,17 @@ class _TravelSessionPageState extends State<TravelSessionPage> {
 
   bool get _running => _endsAt != null && !_done;
 
+  final _heading = HeadingTracker.of(NorthFeature.travel);
+
+  @override
+  void initState() {
+    super.initState();
+    _heading.acquire();
+  }
+
   @override
   void dispose() {
+    _heading.release();
     _ticker?.cancel();
     _stepSub?.cancel();
     super.dispose();
@@ -154,7 +165,9 @@ class _TravelSessionPageState extends State<TravelSessionPage> {
           Text('${QimenTerms.door(slot.door, L10n.language)}  ${TravelText.timeRange(slot)}',
               textAlign: TextAlign.center),
           const SizedBox(height: 16),
-          Center(child: _DirectionArrow(bearing: slot.bearing)),
+          Center(child: _DirectionArrow(bearing: slot.bearing, tracker: _heading)),
+          const SizedBox(height: 8),
+          const HeadingPanel(compact: true, feature: NorthFeature.travel, showHeading: false),
           const SizedBox(height: 16),
           Text(
             widget.mode == SessionMode.water ? l.travelWaterGuide(dir) : l.travelWalkGuide(dir),
@@ -188,21 +201,23 @@ class _TravelSessionPageState extends State<TravelSessionPage> {
   }
 }
 
-/// 指向吉方的箭頭（依指南針即時旋轉；沒有磁力計時只顯示方位角）。
+/// 指向吉方的箭頭（依所選北方基準即時旋轉；沒有磁力計時只顯示方位角）。
 class _DirectionArrow extends StatelessWidget {
-  const _DirectionArrow({required this.bearing});
+  const _DirectionArrow({required this.bearing, required this.tracker});
 
   final double bearing;
+  final HeadingTracker tracker;
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
-    final events = FlutterCompass.events;
-    return StreamBuilder<CompassEvent>(
-      stream: events,
-      builder: (context, snap) {
-        final heading = snap.data?.heading;
+    final l = context.l10n;
+    return ListenableBuilder(
+      listenable: tracker,
+      builder: (context, _) {
+        final heading = tracker.heading;
         final angle = heading == null ? 0.0 : (bearing - heading) * math.pi / 180;
+        final basis = tracker.showsMagnetic ? l.compassMagneticNorth : l.compassTrueNorth;
         return Column(
           children: [
             Container(
@@ -215,9 +230,7 @@ class _DirectionArrow extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            Text(heading == null
-                ? context.l10n.travelNoCompass(bearing.round())
-                : context.l10n.travelHeading(heading.round() % 360)),
+            Text(heading == null ? l.travelNoCompass(bearing.round()) : '${l.travelHeading(heading.round() % 360)} · $basis'),
           ],
         );
       },

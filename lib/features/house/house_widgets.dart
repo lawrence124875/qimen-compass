@@ -8,6 +8,7 @@ import 'house_model.dart';
 import '../../app/theme/app_theme.dart';
 import '../../compass/building_facing.dart';
 import '../../compass/compass_math.dart';
+import '../../compass/north_mode_selector.dart';
 import '../../compass/north_mode_sheet.dart' show addBuilding;
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
@@ -262,13 +263,20 @@ class BearingWheel extends StatelessWidget {
 
 /// 方位狀態與室內鎖定：顯示目前方位、宮位、磁場提醒，提供鎖定按鈕。
 class HeadingPanel extends StatelessWidget {
-  const HeadingPanel({super.key, this.compact = false});
+  const HeadingPanel({super.key, this.compact = false, this.feature = NorthFeature.house, this.showHeading = true, this.showLock = true});
 
   final bool compact;
+  final NorthFeature feature;
+
+  /// false：只顯示北方基準、提醒與對牆／鎖定（頁面自己畫方向，例如出行訣箭頭）。
+  final bool showHeading;
+
+  /// 非建築座向時是否顯示「室內鎖定」開關。
+  final bool showLock;
 
   @override
   Widget build(BuildContext context) {
-    final t = HeadingTracker.instance;
+    final t = HeadingTracker.of(feature);
     final l = context.l10n;
     final theme = Theme.of(context);
     final qm = context.qm;
@@ -285,14 +293,18 @@ class HeadingPanel extends StatelessWidget {
         final basis = t.showsMagnetic ? l.compassMagneticNorth : l.compassTrueNorth;
         final bldg = t.mode == NorthMode.building;
         return Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
-          Text(
-            h == null ? l.compassWaiting : l.houseFacingNow('${h.round() % 360}', palaceLabel(context, palaceAtBearing(h))),
-            textAlign: TextAlign.center,
-            style: serif(compact ? theme.textTheme.titleMedium : theme.textTheme.titleLarge).copyWith(color: qm.primary),
-          ),
-          // 北方基準與羅盤共用，標明目前用哪一種
-          Text(bldg ? '${l.compassBuilding} · $basis' : basis,
-              textAlign: TextAlign.center, style: theme.textTheme.bodySmall?.copyWith(color: qm.textMuted)),
+          if (showHeading) ...[
+            Text(
+              h == null ? l.compassWaiting : l.houseFacingNow('${h.round() % 360}', palaceLabel(context, palaceAtBearing(h))),
+              textAlign: TextAlign.center,
+              style: serif(compact ? theme.textTheme.titleMedium : theme.textTheme.titleLarge).copyWith(color: qm.primary),
+            ),
+            // 標明目前用哪一種北
+            Text(bldg ? '${l.compassBuilding} · $basis' : basis,
+                textAlign: TextAlign.center, style: theme.textTheme.bodySmall?.copyWith(color: qm.textMuted)),
+          ],
+          const SizedBox(height: 6),
+          NorthModeSelector(feature: feature, mode: t.mode, onChanged: (m, placeChosen) => t.setMode(m, placeChosen: placeChosen)),
           for (final n in notes)
             Card(
               color: theme.colorScheme.errorContainer,
@@ -303,7 +315,7 @@ class HeadingPanel extends StatelessWidget {
             ),
           if (bldg)
             _WallPanel(tracker: t)
-          else
+          else if (showLock)
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
               title: Text(l.compassLock),

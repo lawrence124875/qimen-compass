@@ -14,14 +14,27 @@ import 'house_model.dart';
 /// 對牆結果。
 enum WallAlign { ok, notFlat, notStill, noBuilding }
 
-/// 宅盤用的方位來源：沿用羅盤的磁場監測與室內鎖定（[MagneticMonitor]、[GyroLock]），
-/// 北方基準與羅盤共用（真北／磁北／建築座向，見 [BuildingStore]）；建築座向用目前這間房子綁定的地點。
-/// 宅盤功能內共用一份（[instance]），在門口鎖定後走進屋內各頁仍維持鎖定；
+/// 羅盤以外各功能（宅盤、地圖、出行訣）的方位來源：沿用羅盤的磁場監測與室內鎖定（[MagneticMonitor]、[GyroLock]），
+/// 每個功能各自記住北方基準（真北／磁北／建築座向，見 [BuildingStore.modeFor]）。
+/// 建築座向：宅盤用目前這間房子綁定的地點，其他功能用羅盤選定的地點。
+/// 每個功能共用一份（宅盤 [instance]，其他 [of]），在門口鎖定後走進屋內各頁仍維持鎖定；
 /// 用 [acquire]／[release] 計數，全部頁面離開後停止感測器並解除鎖定。
 class HeadingTracker extends ChangeNotifier {
-  HeadingTracker._();
+  HeadingTracker._(this.feature);
 
-  static final instance = HeadingTracker._();
+  final NorthFeature feature;
+
+  static final instance = HeadingTracker._(NorthFeature.house);
+  static final _all = <NorthFeature, HeadingTracker>{NorthFeature.house: instance};
+
+  static HeadingTracker of(NorthFeature f) => _all.putIfAbsent(f, () => HeadingTracker._(f));
+
+  /// 背景定位算出的磁偏角（沒存過時用；各功能共用）。
+  static ({double degrees, double? fieldUt})? _located;
+  static bool _locatingOnce = false;
+
+  /// 目前所在位置（地圖頁有定位時給），用來算當地磁偏角。
+  (double, double)? _here;
 
   final field = MagneticMonitor();
   final _gyro = GyroLock();
@@ -73,6 +86,13 @@ class HeadingTracker extends ChangeNotifier {
     return _gyro.locked ? _gyro.heading : _unlocked;
   }
 
+  /// 以真北為準的方向（地圖畫指針用）；沒有磁偏角時就是磁北。
+  double? get trueHeading {
+    final h = heading;
+    if (h == null) return null;
+    return showsMagnetic && _decl != null ? normalizeDeg(h + _decl!) : h;
+  }
+
   /// 未鎖定且磁場不正常時要提醒。
   bool get disturbed => !locked && (field.status == FieldStatus.outOfRange || field.status == FieldStatus.unstable);
 
@@ -111,26 +131,32 @@ class HeadingTracker extends ChangeNotifier {
     _tick = Timer.periodic(const Duration(milliseconds: 66), (_) => notifyListeners());
   }
 
-  /// 重新讀取北方基準、磁偏角與目前房子綁定的建築座向（羅盤改了設定、換房子後呼叫）。
+  /// 重新讀取北方基準、磁偏角與建築座向地點（改了設定、換房子後呼叫）。
   Future<void> reloadSettings() async {
     final p = await CompassPrefs.load();
-    final m = await BuildingStore.mode(p.trueNorth);
+    final m = await BuildingStore.modeFor(feature, legacyTrueNorth: p.trueNorth);
     final magBasis = await BuildingStore.magneticBasis();
-    final house = await HouseStore.load();
-    final bid = await BuildingStore.buildingOfHouse(house.id);
+    final house = feature == NorthFeature.house ? await HouseStore.load() : null;
+    final bid = house != null ? await BuildingStore.buildingOfHouse(house.id) : await BuildingStore.selected();
     final list = await BuildingStore.load();
-    final b = list.where((x) => x.id == bid).firstOrNull;
+    final b = list.where((x) => x.id == bid).firstOrNull ?? (house == null ? list.firstOrNull : null);
     if (p.fieldUt != null) field.setExpected(p.fieldUt!); // 當地地磁強度（羅盤開真北時存的）
-    var decl = p.declination;
-    if (b?.lat != null && b?.lon != null) {
-      decl = Declination.at(b!.lat!, b.lon!); // 建築座向：以房子座標算磁偏角
+    var decl = p.declination ?? _located?.degrees;
+    if (p.fieldUt == null && _located?.fieldUt != null) field.setExpected(_located!.fieldUt!);
+    final here = _here;
+    if (here != null) {
+      decl = Declination.at(here.$1, here.$2);
+      field.setExpected(Declination.fieldAt(here.$1, here.$2));
+    }
+    if (m == NorthMode.building && b?.lat != null && b?.lon != null) {
+      decl = Declination.at(b!.lat!, b.lon!); // 建築座向：以地點座標算磁偏角
       field.setExpected(Declination.fieldAt(b.lat!, b.lon!));
     }
-    final changed = m != mode || b?.id != building?.id || b?.wall != building?.wall || house.id != houseId;
+    final changed = m != mode || b?.id != building?.id || b?.wall != building?.wall || house?.id != houseId;
     mode = m;
     _magBasis = magBasis;
     _decl = decl;
-    houseId = house.id;
+    houseId = house?.id;
     building = b;
     if (changed) {
       _gyro.unlock();
@@ -138,6 +164,31 @@ class HeadingTracker extends ChangeNotifier {
       wallAt = null;
     }
     notifyListeners();
+    // 真北需要磁偏角：從沒算過就背景定位一次
+    if (decl == null && m != NorthMode.magnetic && !_locatingOnce) {
+      _locatingOnce = true;
+      final r = await Declination.locate();
+      if (r.degrees != null) {
+        _located = (degrees: r.degrees!, fieldUt: r.fieldUt);
+        await reloadSettings();
+      }
+    }
+  }
+
+  /// 地圖頁的目前位置：用當地磁偏角。
+  void setLocation(double lat, double lon) {
+    _here = (lat, lon);
+    reloadSettings();
+  }
+
+  /// 切換這個功能的北方基準；宅盤剛選了地點時一併綁到這間房子。
+  Future<void> setMode(NorthMode m, {bool placeChosen = false}) async {
+    await BuildingStore.saveModeFor(feature, m);
+    if (feature == NorthFeature.house && placeChosen) {
+      final sel = await BuildingStore.selected();
+      if (sel != null) await BuildingStore.bindHouse(houseId ?? (await HouseStore.load()).id, sel);
+    }
+    await reloadSettings();
   }
 
   /// 把目前這間房子綁定到某個建築座向地點。
