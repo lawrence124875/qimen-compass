@@ -58,6 +58,21 @@ enum ZeShiEvent {
   /// 發訊息（投履歷、寄信、傳訊、告白、催款、提案）：景門（文書訊息）、開門取佳，六合加分（溝通）。
   message([Door.jingScene, Door.kai], God.liuHe),
 
+  /// 道歉和解：休門（和緩、人際），六合加分（化解誤會）。
+  reconcile([Door.xiu], God.liuHe),
+
+  /// 拜見長輩主管：休門（求見尊長），值符加分（貴人、主事者）。
+  visitElder([Door.xiu], God.zhiFu),
+
+  /// 比賽競爭：傷門（競爭、爭勝），九天加分（氣勢、出頭）。
+  compete([Door.shang], God.jiuTian),
+
+  /// 討債催款：傷門（追討），值符加分（有人撐腰、對方肯付）。
+  debt([Door.shang], God.zhiFu),
+
+  /// 宣傳發布（上架、發表、廣告、直播）：景門（光明、名聲），九天加分（傳得遠）。
+  publicity([Door.jingScene], God.jiuTian),
+
   /// 自訂：門與神由使用者選（[ZeShiSpec]），這裡只是預設值。
   custom([Door.kai], God.zhiFu);
 

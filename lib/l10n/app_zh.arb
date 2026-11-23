@@ -2139,5 +2139,62 @@
         "type": "String"
       }
     }
+  },
+  "zeshiEventReconcile": "道歉和解",
+  "zeshiEventVisitElder": "拜見長輩",
+  "zeshiEventCompete": "比賽競爭",
+  "zeshiEventDebt": "討債催款",
+  "zeshiEventPublicity": "宣傳發布",
+  "zeshiCoverReconcile": "道歉、化解誤會、修復關係、調停家人爭執",
+  "zeshiCoverVisitElder": "拜訪長輩、見主管、求助師長、請託",
+  "zeshiCoverCompete": "比賽、競標、選拔、運動賽事",
+  "zeshiCoverDebt": "催款、追帳、要回借出的東西",
+  "zeshiCoverPublicity": "上架、發表、廣告投放、直播、開賣公告",
+  "palaceWuxingTitle": "五行與化解",
+  "labelWuxing": "五行",
+  "palaceWuxingLine": "宮 {palace}・門 {door}",
+  "@palaceWuxingLine": {
+    "placeholders": {
+      "palace": {
+        "type": "String"
+      },
+      "door": {
+        "type": "String"
+      }
+    }
+  },
+  "labelPlace": "擺放",
+  "labelUse": "用法",
+  "placeBoostItems": "催旺物：{items}",
+  "@placeBoostItems": {
+    "placeholders": {
+      "items": {
+        "type": "String"
+      }
+    }
+  },
+  "glossaryWxOpen": "八門宜忌與五行速查",
+  "glossaryBm": "八門宜忌",
+  "glossaryWx": "五行速查",
+  "glossaryWxNote": "宮、門、星、干的五行，用來判斷生剋與化解",
+  "doorHoursTitle": "大門吉時",
+  "doorHoursIntro": "大門方位遇到吉門的時辰。大門逢凶門時，重要外出挑這些時段出門。",
+  "doorHoursNoDoor": "標記一間叫「大門」的房間，或坐向選「自家門」，就能算大門吉時。",
+  "doorHoursNone": "接下來兩天大門方位沒有吉門時辰，重要外出可改看出行訣。",
+  "doorHoursRemind": "吉時前 15 分鐘提醒",
+  "doorHoursNotifyTitle": "大門吉時快到了",
+  "doorHoursNotifyBody": "{time} 大門（{dir}）逢{door}，重要外出可挑這時出門",
+  "@doorHoursNotifyBody": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "door": {
+        "type": "String"
+      },
+      "dir": {
+        "type": "String"
+      }
+    }
   }
 }

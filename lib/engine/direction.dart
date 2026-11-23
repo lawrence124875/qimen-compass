@@ -84,3 +84,26 @@ class DirectionPlanner {
     return out;
   }
 }
+
+/// 大門吉時（宅盤）：從 [fromUtc] 起 [slots] 個時辰內，[palace] 方位逢開、休、生門且方位吉以上的時辰。
+/// 每個時辰以中點起局，結果帶起訖時間。
+List<DirectionVerdict> doorLuckyHours(
+  int palace,
+  DateTime fromUtc, {
+  int slots = 24,
+  TimeSettings settings = const TimeSettings(),
+  JuMethod method = JuMethod.chaiBu,
+  ChuXingPlanner planner = const ChuXingPlanner(),
+}) {
+  final out = <DirectionVerdict>[];
+  var start = planner.slotStart(fromUtc, settings);
+  for (var i = 0; i < slots; i++) {
+    final end = start.add(const Duration(hours: 2));
+    final mid = start.add(const Duration(hours: 1));
+    final c = planner.engine.compute(mid, settings: settings, method: method);
+    final v = DirectionPlanner.judge(c, palace, startUtc: start, endUtc: end);
+    if (v.door?.luck == Luck.good && v.recommended) out.add(v);
+    start = end;
+  }
+  return out;
+}

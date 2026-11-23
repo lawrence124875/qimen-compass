@@ -14,6 +14,7 @@ import '../../compass/compass_math.dart';
 import '../../engine/engine.dart' hide Element;
 import '../../l10n/l10n.dart';
 import 'heading_tracker.dart';
+import 'door_hours.dart';
 import 'house_guide_page.dart';
 import 'house_geometry.dart';
 import '../lucky/placement_page.dart';
@@ -527,6 +528,7 @@ class _HousePageState extends State<HousePage> {
           onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => PlacementPage(rooms: rooms))),
         ),
       ),
+      if (!_locked && _house != null) ...[const SizedBox(height: 8), DoorHoursCard(house: _house!)],
       const SizedBox(height: 12),
       bestCard,
       list,
