@@ -497,18 +497,26 @@ class _HousePageState extends State<HousePage> {
             ),
           );
 
-    return ListView(padding: const EdgeInsets.fromLTRB(12, 8, 12, 24), children: [
-      overlay,
-      const SizedBox(height: 6),
-      Text(chartTitle, style: theme.textTheme.bodySmall?.copyWith(color: qm.textMuted)),
-      if (chart == null)
-        Padding(
-          padding: const EdgeInsets.only(top: 4),
-          child: Text(l.houseChartPending, style: theme.textTheme.bodySmall?.copyWith(color: qm.bad)),
-        ),
-      const SizedBox(height: 8),
-      Center(child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 520), child: diagram)),
-      const SizedBox(height: 12),
+    // 盤選擇與盤面固定在上方，其餘捲動
+    final maxDiagram = MediaQuery.sizeOf(context).height * 0.38;
+    return Column(children: [
+      Padding(
+        padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          overlay,
+          const SizedBox(height: 6),
+          Text(chartTitle, style: theme.textTheme.bodySmall?.copyWith(color: qm.textMuted)),
+          if (chart == null)
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Text(l.houseChartPending, style: theme.textTheme.bodySmall?.copyWith(color: qm.bad)),
+            ),
+          const SizedBox(height: 8),
+          Center(child: ConstrainedBox(constraints: BoxConstraints(maxWidth: 520, maxHeight: maxDiagram), child: diagram)),
+        ]),
+      ),
+      const Divider(height: 1),
+      Expanded(child: ListView(padding: const EdgeInsets.fromLTRB(12, 12, 12, 24), children: [
       actions,
       const SizedBox(height: 12),
       kindSelector,
@@ -534,6 +542,7 @@ class _HousePageState extends State<HousePage> {
       list,
       const SizedBox(height: 12),
       Text(l.homeDisclaimer, textAlign: TextAlign.center, style: theme.textTheme.bodySmall?.copyWith(color: qm.textMuted)),
+    ])),
     ]);
   }
 

@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -115,24 +117,8 @@ class _MarkRoomsPageState extends State<MarkRoomsPage> {
       ),
     );
 
-    final controls = Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Card(
-        margin: EdgeInsets.zero,
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Text(l.houseMarkSteps, style: theme.textTheme.bodyMedium?.copyWith(color: qm.textMuted)),
-        ),
-      ),
-      const SizedBox(height: 8),
-      const HeadingPanel(),
-      SwitchListTile(
-        contentPadding: EdgeInsets.zero,
-        title: Text(l.houseRotateBoard),
-        subtitle: Text(_rotate ? l.houseRotateBoardOn : l.houseRotateBoardOff),
-        value: _rotate,
-        onChanged: _setRotate,
-      ),
-      const SizedBox(height: 4),
+    // 常用操作固定在盤面正下方，不用捲到底
+    final actions = Column(crossAxisAlignment: CrossAxisAlignment.stretch, mainAxisSize: MainAxisSize.min, children: [
       OutlinedButton.icon(
         icon: const Icon(Icons.edit_outlined),
         onPressed: _pickName,
@@ -153,7 +139,26 @@ class _MarkRoomsPageState extends State<MarkRoomsPage> {
         const SizedBox(width: 8),
         Expanded(child: OutlinedButton(onPressed: () => _mark(center: true), child: Text(l.houseMarkCenter))),
       ]),
-      const SizedBox(height: 12),
+    ]);
+
+    final controls = Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      Card(
+        margin: EdgeInsets.zero,
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Text(l.houseMarkSteps, style: theme.textTheme.bodyMedium?.copyWith(color: qm.textMuted)),
+        ),
+      ),
+      const SizedBox(height: 8),
+      const HeadingPanel(),
+      SwitchListTile(
+        contentPadding: EdgeInsets.zero,
+        title: Text(l.houseRotateBoard),
+        subtitle: Text(_rotate ? l.houseRotateBoardOn : l.houseRotateBoardOff),
+        value: _rotate,
+        onChanged: _setRotate,
+      ),
+      const SizedBox(height: 4),
       if (rooms.isEmpty)
         Text(l.houseNoRooms, textAlign: TextAlign.center, style: TextStyle(color: qm.textMuted))
       else
@@ -190,14 +195,26 @@ class _MarkRoomsPageState extends State<MarkRoomsPage> {
               child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 SizedBox(width: box.maxHeight - 24, child: wheel),
                 const SizedBox(width: 12),
-                Expanded(child: ListView(children: [controls])),
+                Expanded(
+                  child: Column(children: [
+                    actions,
+                    const SizedBox(height: 8),
+                    Expanded(child: ListView(children: [controls])),
+                  ]),
+                ),
               ]),
             );
           }
-          return ListView(padding: const EdgeInsets.fromLTRB(12, 4, 12, 24), children: [
-            Center(child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 420), child: wheel)),
-            const SizedBox(height: 12),
-            controls,
+          // 盤面與操作固定在上方，只有說明與已標記清單捲動
+          final size = math.min(math.min(box.maxWidth - 24, 420.0), box.maxHeight * 0.42);
+          return Column(children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 4, 12, 0),
+              child: Center(child: SizedBox.square(dimension: size, child: wheel)),
+            ),
+            Padding(padding: const EdgeInsets.fromLTRB(12, 8, 12, 4), child: actions),
+            const Divider(height: 1),
+            Expanded(child: ListView(padding: const EdgeInsets.fromLTRB(12, 8, 12, 24), children: [controls])),
           ]);
         }),
       ),

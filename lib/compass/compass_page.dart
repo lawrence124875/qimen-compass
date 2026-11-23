@@ -368,13 +368,17 @@ class _CompassPageState extends State<CompassPage> {
               Expanded(child: ListView(padding: const EdgeInsets.all(16), children: panel)),
             ]);
           }
-          return ListView(padding: const EdgeInsets.fromLTRB(16, 8, 16, 24), children: [
-            ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: math.min(box.maxWidth, 420)),
-              child: Center(child: dial),
+          // 盤面固定在上方，下方設定與資訊獨立捲動
+          return Column(children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+              child: SizedBox(
+                height: math.min(math.min(box.maxWidth - 32, 420.0), box.maxHeight * 0.48),
+                child: Center(child: dial),
+              ),
             ),
-            const SizedBox(height: 12),
-            ...panel,
+            const Divider(height: 1),
+            Expanded(child: ListView(padding: const EdgeInsets.fromLTRB(16, 8, 16, 24), children: panel)),
           ]);
         }),
       ),
