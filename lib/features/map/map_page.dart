@@ -384,7 +384,7 @@ class _MapPageState extends State<MapPage> {
       ),
     );
     final searchRow = Row(children: [
-      Expanded(child: searchRow),
+      Expanded(child: searchBar),
       const SizedBox(width: 4),
       IconButton.filledTonal(icon: const Icon(Icons.travel_explore), tooltip: l.mapGoogleTitle, onPressed: _searching ? null : _googleSheet),
     ]);
@@ -440,7 +440,7 @@ class _MapPageState extends State<MapPage> {
       appBar: AppBar(title: widget.modeSwitch ?? Text(l.mapTitle)),
       body: SafeArea(
         child: Column(children: [
-          Padding(padding: const EdgeInsets.fromLTRB(12, 8, 12, 8), child: searchBar),
+          Padding(padding: const EdgeInsets.fromLTRB(12, 8, 12, 8), child: searchRow),
           Expanded(
             child: me == null || !mapsEnabled
                 ? mapArea
