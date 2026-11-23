@@ -57,6 +57,7 @@ class _MapPageState extends State<MapPage> {
 
   /// 羅盤疊圖：盤面疊在地圖中央，地圖跟著手機方向轉（朝前方向朝上），鏡頭鎖定目前位置。
   bool _overlay = true;
+  PanUnit _unit = PanUnit.hour;
   double _zoomNow = 17;
 
   void _onHeading() {
@@ -94,7 +95,7 @@ class _MapPageState extends State<MapPage> {
 
   QimenChart _compute() {
     final now = DateTime.now();
-    return const ShiJiaEngine().compute(now, settings: _settings.timeSettingsAt(now), method: _settings.juMethod);
+    return const ShiJiaEngine().compute(now, settings: _settings.timeSettingsAt(now), method: _settings.juMethod, unit: _unit);
   }
 
   @override
@@ -395,6 +396,22 @@ class _MapPageState extends State<MapPage> {
               padding: const EdgeInsets.fromLTRB(12, 6, 12, 8),
               child: Column(mainAxisSize: MainAxisSize.min, children: [
                 _pinCard(context),
+                const SizedBox(height: 6),
+                SegmentedButton<PanUnit>(
+                  showSelectedIcon: false,
+                  style: const ButtonStyle(visualDensity: VisualDensity.compact),
+                  segments: [
+                    ButtonSegment(value: PanUnit.hour, label: Text(l.unitHour)),
+                    ButtonSegment(value: PanUnit.day, label: Text(l.unitDay)),
+                    ButtonSegment(value: PanUnit.month, label: Text(l.unitMonth)),
+                    ButtonSegment(value: PanUnit.year, label: Text(l.unitYear)),
+                  ],
+                  selected: {_unit},
+                  onSelectionChanged: (v) => setState(() {
+                    _unit = v.first;
+                    _chart = _compute();
+                  }),
+                ),
                 if (mapsEnabled) ...[
                   const SizedBox(height: 6),
                   // 疊圖時扇區不畫，範圍與圖例只在一般地圖顯示
