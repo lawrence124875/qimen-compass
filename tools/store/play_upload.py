@@ -23,10 +23,17 @@ creds = service_account.Credentials.from_service_account_info(
 api = build('androidpublisher', 'v3', credentials=creds, cache_discovery=False)
 edits = api.edits()
 eid = edits.insert(packageName=PKG, body={}).execute()['id']
-b = edits.bundles().upload(packageName=PKG, editId=eid,
-                           media_body=MediaFileUpload(aab, mimetype='application/octet-stream', resumable=True)).execute()
-code = str(b['versionCode'])
-print('上傳完成 versionCode', code)
+# 已上傳過（例如先存草稿、確認後再送審）：不重傳，直接用 Play 上既有的同一 versionCode（＝Build Android 的 run 編號）
+existing = {str(x['versionCode']) for x in edits.bundles().list(packageName=PKG, editId=eid).execute().get('bundles', [])}
+run = os.environ.get('RUN', '').strip()
+if run and run in existing:
+    code = run
+    print('Play 已有 versionCode', code, '，不重新上傳')
+else:
+    b = edits.bundles().upload(packageName=PKG, editId=eid,
+                               media_body=MediaFileUpload(aab, mimetype='application/octet-stream', resumable=True)).execute()
+    code = str(b['versionCode'])
+    print('上傳完成 versionCode', code)
 for t in tracks:
     edits.tracks().update(packageName=PKG, editId=eid, track=t, body={
         'track': t,
