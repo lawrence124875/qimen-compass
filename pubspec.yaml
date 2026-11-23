@@ -1,7 +1,7 @@
 name: qimen_compass
 description: "奇門羅盤 Qimen Compass（LC Lab）"
 publish_to: 'none'
-version: 1.8.3+1
+version: 1.8.4+1
 
 environment:
   sdk: '>=3.4.0 <4.0.0'
@@ -14,6 +14,8 @@ dependencies:
     sdk: flutter
   intl: any # 版本由 flutter_localizations 決定
   lunar: ^1.7.8 # 節氣與干支（6tail，純 Dart；包在 lib/engine/calendar_service.dart）
+  qm_places: # iOS 地點搜尋（Apple 地圖 MKLocalSearch）；本地插件，見 packages/qm_places
+    path: packages/qm_places
   flutter_compass: # 羅盤方位角（lib/compass/）；本地修改版，見 packages/flutter_compass
     path: packages/flutter_compass
   sensors_plus: ^7.1.1 # 磁力計（干擾偵測）、加速度計（平放提示）

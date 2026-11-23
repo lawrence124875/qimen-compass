@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart' as geo;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -46,13 +47,37 @@ class AddressSearch {
   }
 
   static Future<List<Place>> _both(String q, (double, double)? near) async {
-    final res = await Future.wait([_platform(q), _nominatim(q, near)]);
-    final out = <Place>[...res[0]];
+    final res = await Future.wait([_platform(q), _nominatim(q, near), _apple(q, near)]);
+    // iOS：Apple 地圖地點搜尋（店名、地標都找得到）放最前面
+    final out = <Place>[...res[2]];
+    for (final p in res[0]) {
+      if (out.every((o) => (o.lat - p.lat).abs() > 0.003 || (o.lon - p.lon).abs() > 0.003)) out.add(p);
+    }
     for (final p in res[1]) {
       // 與手機 geocoder 結果相距 300 m 內視為同一處
       if (out.every((o) => (o.lat - p.lat).abs() > 0.003 || (o.lon - p.lon).abs() > 0.003)) out.add(p);
     }
     return out.take(8).toList();
+  }
+
+  static const _places = MethodChannel('qm/places');
+
+  /// iOS 才有（packages/qm_places，MKLocalSearch，免費免金鑰）。
+  static Future<List<Place>> _apple(String q, (double, double)? near) async {
+    if (!Platform.isIOS) return const [];
+    try {
+      final r = await _places.invokeListMethod<Map<dynamic, dynamic>>('search', {
+        'q': q,
+        if (near != null) 'lat': near.$1,
+        if (near != null) 'lon': near.$2,
+      }).timeout(const Duration(seconds: 8));
+      return [
+        for (final e in r ?? const <Map<dynamic, dynamic>>[])
+          if (e['lat'] is num && e['lon'] is num) Place((e['lat'] as num).toDouble(), (e['lon'] as num).toDouble(), '${e['name'] ?? q}'),
+      ];
+    } catch (_) {
+      return const [];
+    }
   }
 
   static Future<List<Place>> _platform(String q) async {
