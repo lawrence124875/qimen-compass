@@ -41,6 +41,7 @@ jobs:
           SA: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
           TRACKS: ${{ inputs.tracks }}
           STATUS: ${{ inputs.status }}
+          RUN: ${{ inputs.run }}
         run: |
           if [ -z "$SA" ]; then echo "::error::Secret PLAY_SERVICE_ACCOUNT_JSON 沒有設定"; exit 1; fi
           pip install -q google-api-python-client google-auth
