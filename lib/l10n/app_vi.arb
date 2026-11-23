@@ -1036,5 +1036,12 @@
   "doorHoursNone": "Hai ngày tới hướng cửa chính không có giờ cát môn. Việc quan trọng hãy xem Xuất hành quyết.",
   "doorHoursRemind": "Nhắc trước 15 phút",
   "doorHoursNotifyTitle": "Sắp đến giờ tốt cửa chính",
-  "doorHoursNotifyBody": "{time} cửa chính ({dir}) gặp {door}, nên ra ngoài lúc này cho việc quan trọng"
+  "doorHoursNotifyBody": "{time} cửa chính ({dir}) gặp {door}, nên ra ngoài lúc này cho việc quan trọng",
+  "mapLinkFailed": "Không thấy địa điểm Google Maps trong đoạn này. Hãy sao chép lại liên kết chia sẻ.",
+  "mapGoogleTitle": "Tìm bằng Google Maps",
+  "mapGoogleHelpAndroid": "1. Chạm «Mở Google Maps», tìm và chọn địa điểm.\n2. Chạm Chia sẻ, chọn La bàn Kỳ Môn: bạn quay lại với địa điểm đã ghim.\n3. Hoặc chọn Sao chép đường liên kết, quay lại chạm «Dán liên kết», hoặc dán vào ô tìm.",
+  "mapGoogleHelpIos": "1. Chạm «Mở Google Maps», tìm và chọn địa điểm.\n2. Chạm Chia sẻ → Sao chép đường liên kết.\n3. Quay lại chạm «Dán liên kết», hoặc dán vào ô tìm.",
+  "mapSearchHelp": "Ô tìm dùng tra cứu có sẵn trong máy (miễn phí): địa chỉ đầy đủ chính xác nhất; tên cửa hàng, địa danh có thể không tìm thấy. Kết quả xếp theo khoảng cách. Nếu không thấy, dùng Google Maps hoặc nhấn giữ bản đồ để chọn điểm.",
+  "mapOpenGoogle": "Mở Google Maps",
+  "mapPasteLink": "Dán liên kết"
 }

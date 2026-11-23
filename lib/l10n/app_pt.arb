@@ -1036,5 +1036,12 @@
   "doorHoursNone": "Nos próximos dois dias não há horários favoráveis para a porta de entrada. Para saídas importantes, veja Direções favoráveis.",
   "doorHoursRemind": "Avisar 15 minutos antes",
   "doorHoursNotifyTitle": "Horário favorável chegando",
-  "doorHoursNotifyBody": "{time}: a porta de entrada ({dir}) recebe {door}. Bom momento para sair para algo importante."
+  "doorHoursNotifyBody": "{time}: a porta de entrada ({dir}) recebe {door}. Bom momento para sair para algo importante.",
+  "mapLinkFailed": "Nenhum local do Google Maps neste texto. Copie o link de novo.",
+  "mapGoogleTitle": "Buscar no Google Maps",
+  "mapGoogleHelpAndroid": "1. Toque em «Abrir Google Maps», pesquise e escolha o local.\n2. Toque em Compartilhar e escolha Bússola Qimen: você volta com o local marcado.\n3. Ou escolha Copiar link, volte e toque em «Colar link», ou cole na busca.",
+  "mapGoogleHelpIos": "1. Toque em «Abrir Google Maps», pesquise e escolha o local.\n2. Toque em Compartilhar → Copiar link.\n3. Volte e toque em «Colar link», ou cole na busca.",
+  "mapSearchHelp": "A busca usa a pesquisa integrada do celular (grátis): endereços completos funcionam melhor; nomes de lojas e pontos podem não ser achados. Resultados por distância. Se não achar, use o Google Maps ou toque e segure o mapa para marcar.",
+  "mapOpenGoogle": "Abrir Google Maps",
+  "mapPasteLink": "Colar link"
 }

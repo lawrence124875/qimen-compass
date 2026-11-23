@@ -42,6 +42,23 @@ grep -q "qm/wear" "$KT_DIR/MainActivity.kt" || { echo "::error::MainActivity 未
 printf '\ndependencies {\n    implementation("com.google.android.gms:play-services-wearable:19.0.0")\n}\n' >> "$GRADLE"
 echo "手錶同步：play-services-wearable 已加入"
 
+# 從 Google 地圖「分享」地點到奇門羅盤（MainActivity 頻道 qm/share；Dart 端 lib/features/map/maps_link.dart）
+python3 - "$MANIFEST" << 'PYEOF'
+import sys
+p = sys.argv[1]
+m = open(p, encoding="utf-8").read()
+if "android.intent.action.SEND" not in m:
+    i = m.index("android.intent.action.MAIN")
+    j = m.index("</activity>", i)
+    m = m[:j] + ('    <intent-filter>\n'
+                 '                <action android:name="android.intent.action.SEND"/>\n'
+                 '                <category android:name="android.intent.category.DEFAULT"/>\n'
+                 '                <data android:mimeType="text/plain"/>\n'
+                 '            </intent-filter>\n        ') + m[j:]
+    open(p, "w", encoding="utf-8").write(m)
+PYEOF
+grep -q "android.intent.action.SEND" "$MANIFEST" && grep -q "qm/share" "$KT_DIR/MainActivity.kt" && echo "地圖分享入口已加入" || { echo "::error::地圖分享入口設定失敗"; exit 1; }
+
 # 啟動畫面：App 底色＋圖示（亮／暗），取代 flutter create 的白畫面
 cp -r android_extra/splash/. android/app/src/main/res/
 grep -q "ic_launcher_foreground" android/app/src/main/res/drawable-v21/launch_background.xml && echo "啟動畫面已套用" || { echo "::error::啟動畫面設定失敗"; exit 1; }
