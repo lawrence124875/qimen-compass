@@ -1036,5 +1036,12 @@
   "doorHoursNone": "En los próximos dos días no hay horas favorables para la puerta principal. Para salidas importantes, consulta Direcciones favorables.",
   "doorHoursRemind": "Avisarme 15 minutos antes",
   "doorHoursNotifyTitle": "Se acerca una hora favorable",
-  "doorHoursNotifyBody": "{time}: la puerta principal ({dir}) recibe {door}. Buen momento para salir a algo importante."
+  "doorHoursNotifyBody": "{time}: la puerta principal ({dir}) recibe {door}. Buen momento para salir a algo importante.",
+  "mapLinkFailed": "No se encontró un lugar de Google Maps en este texto. Vuelve a copiar el enlace.",
+  "mapGoogleTitle": "Buscar con Google Maps",
+  "mapGoogleHelpAndroid": "1. Toca «Abrir Google Maps», busca y elige el lugar.\n2. Toca Compartir y elige Brújula Qimen: vuelves con el lugar marcado.\n3. O elige Copiar enlace, vuelve y toca «Pegar enlace», o pégalo en el buscador.",
+  "mapGoogleHelpIos": "1. Toca «Abrir Google Maps», busca y elige el lugar.\n2. Toca Compartir → Copiar enlace.\n3. Vuelve y toca «Pegar enlace», o pégalo en el buscador.",
+  "mapSearchHelp": "El buscador usa la búsqueda integrada del teléfono (gratis): las direcciones completas funcionan mejor; nombres de tiendas o lugares pueden no encontrarse. Resultados ordenados por distancia. Si no aparece, usa Google Maps o mantén pulsado el mapa para marcar.",
+  "mapOpenGoogle": "Abrir Google Maps",
+  "mapPasteLink": "Pegar enlace"
 }

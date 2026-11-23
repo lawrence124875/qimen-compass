@@ -1036,5 +1036,12 @@
   "doorHoursNone": "この2日間、玄関の方位に吉門の時間帯はありません。大事な外出は出行訣を見てください。",
   "doorHoursRemind": "吉時の15分前に通知",
   "doorHoursNotifyTitle": "玄関の吉時がまもなく",
-  "doorHoursNotifyBody": "{time} 玄関（{dir}）に{door}。大事な外出はこの時間に"
+  "doorHoursNotifyBody": "{time} 玄関（{dir}）に{door}。大事な外出はこの時間に",
+  "mapLinkFailed": "Google マップの地点が見つかりません。共有リンクをもう一度コピーしてください",
+  "mapGoogleTitle": "Google マップで探す",
+  "mapGoogleHelpAndroid": "1.「Google マップを開く」で地点を検索して選びます。\n2.「共有」で「奇門羅盤」を選ぶと、羅盤地図に戻って地点が表示されます。\n3.「リンクをコピー」して戻り「リンクを貼り付け」、または検索欄に貼り付けても OK。",
+  "mapGoogleHelpIos": "1.「Google マップを開く」で地点を検索して選びます。\n2.「共有」→「リンクをコピー」。\n3. 戻って「リンクを貼り付け」、または検索欄に貼り付けます。",
+  "mapSearchHelp": "検索欄は端末内蔵の検索（無料）：完全な住所が最も正確で、店名やランドマークは見つからないことがあります。結果は近い順。見つからない時は Google マップか、地図を長押しして地点を選んでください。",
+  "mapOpenGoogle": "Google マップを開く",
+  "mapPasteLink": "リンクを貼り付け"
 }

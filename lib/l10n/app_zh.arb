@@ -2196,5 +2196,12 @@
         "type": "String"
       }
     }
-  }
+  },
+  "mapLinkFailed": "這段文字裡找不到 Google 地圖地點，請重新複製分享連結",
+  "mapGoogleTitle": "從 Google 地圖找",
+  "mapGoogleHelpAndroid": "1. 按「開啟 Google 地圖」，搜尋並點選地點。\n2. 按「分享」，選「奇門羅盤」，就會直接回到羅盤地圖標出這個地點。\n3. 也可以選「複製連結」，回來按「貼上連結」，或直接貼到搜尋框。",
+  "mapGoogleHelpIos": "1. 按「開啟 Google 地圖」，搜尋並點選地點。\n2. 按「分享」→「複製連結」。\n3. 回到這裡按「貼上連結」，或直接貼到搜尋框。",
+  "mapSearchHelp": "搜尋框用手機內建查詢（免費）：輸入完整地址最準，店名、地標可能查不到；結果依離你的距離排序。找不到時改用 Google 地圖，或長按地圖直接選點。",
+  "mapOpenGoogle": "開啟 Google 地圖",
+  "mapPasteLink": "貼上連結"
 }

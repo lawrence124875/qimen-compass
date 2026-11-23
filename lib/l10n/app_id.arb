@@ -1036,5 +1036,12 @@
   "doorHoursNone": "Dua hari ke depan tidak ada jam gerbang baik untuk pintu depan. Untuk perjalanan penting, lihat Arah Baik.",
   "doorHoursRemind": "Ingatkan 15 menit sebelumnya",
   "doorHoursNotifyTitle": "Jam baik pintu depan segera tiba",
-  "doorHoursNotifyBody": "{time} pintu depan ({dir}) bertemu {door}. Waktu yang baik untuk keluar demi urusan penting."
+  "doorHoursNotifyBody": "{time} pintu depan ({dir}) bertemu {door}. Waktu yang baik untuk keluar demi urusan penting.",
+  "mapLinkFailed": "Tidak ada tempat Google Maps di teks ini. Salin ulang tautan bagikan.",
+  "mapGoogleTitle": "Cari dengan Google Maps",
+  "mapGoogleHelpAndroid": "1. Ketuk «Buka Google Maps», cari dan pilih tempat.\n2. Ketuk Bagikan lalu pilih Kompas Qimen: Anda kembali dengan tempat ditandai.\n3. Atau pilih Salin link, kembali dan ketuk «Tempel tautan», atau tempel di kotak cari.",
+  "mapGoogleHelpIos": "1. Ketuk «Buka Google Maps», cari dan pilih tempat.\n2. Ketuk Bagikan → Salin link.\n3. Kembali dan ketuk «Tempel tautan», atau tempel di kotak cari.",
+  "mapSearchHelp": "Kotak cari memakai pencarian bawaan ponsel (gratis): alamat lengkap paling akurat; nama toko atau landmark mungkin tidak ketemu. Hasil diurutkan dari yang terdekat. Jika tidak ada, pakai Google Maps atau tekan lama peta untuk memilih titik.",
+  "mapOpenGoogle": "Buka Google Maps",
+  "mapPasteLink": "Tempel tautan"
 }

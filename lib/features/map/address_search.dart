@@ -7,6 +7,8 @@ import 'package:geocoding/geocoding.dart' as geo;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../l10n/l10n.dart';
+import '../../compass/geo_math.dart';
+import 'map_location.dart' show distanceText;
 import 'map_page.dart' show mapsEnabled;
 
 /// 一筆地址查詢結果。
@@ -28,25 +30,29 @@ class AddressSearch {
 
   static const osmCredit = '© OpenStreetMap contributors';
 
-  static Future<List<Place>> search(String query) async {
+  /// [near]＝目前位置：附近優先查詢，結果依距離由近到遠排序。
+  static Future<List<Place>> search(String query, {(double, double)? near}) async {
     final q = query.trim();
     if (q.isEmpty) return const [];
-    var r = await _both(q);
+    var r = await _both(q, near);
     if (r.isEmpty) {
       final short = _dropHouseNumber(q);
-      if (short != null && short != q) r = await _both(short);
+      if (short != null && short != q) r = await _both(short, near);
+    }
+    if (near != null) {
+      r = [...r]..sort((a, b) => distanceMeters(near.$1, near.$2, a.lat, a.lon).compareTo(distanceMeters(near.$1, near.$2, b.lat, b.lon)));
     }
     return r;
   }
 
-  static Future<List<Place>> _both(String q) async {
-    final res = await Future.wait([_platform(q), _nominatim(q)]);
+  static Future<List<Place>> _both(String q, (double, double)? near) async {
+    final res = await Future.wait([_platform(q), _nominatim(q, near)]);
     final out = <Place>[...res[0]];
     for (final p in res[1]) {
       // 與手機 geocoder 結果相距 300 m 內視為同一處
       if (out.every((o) => (o.lat - p.lat).abs() > 0.003 || (o.lon - p.lon).abs() > 0.003)) out.add(p);
     }
-    return out.take(6).toList();
+    return out.take(8).toList();
   }
 
   static Future<List<Place>> _platform(String q) async {
@@ -58,13 +64,15 @@ class AddressSearch {
     }
   }
 
-  static Future<List<Place>> _nominatim(String q) async {
+  static Future<List<Place>> _nominatim(String q, (double, double)? near) async {
     final client = HttpClient()..connectionTimeout = const Duration(seconds: 8);
     try {
       final uri = Uri.https('nominatim.openstreetmap.org', '/search', {
         'q': q,
         'format': 'jsonv2',
-        'limit': '5',
+        'limit': '6',
+        // 附近優先（約 ±50 km，不排除範圍外）
+        if (near != null) 'viewbox': '${near.$2 - 0.5},${near.$1 + 0.5},${near.$2 + 0.5},${near.$1 - 0.5}',
         'accept-language': L10n.language.locale.languageCode,
       });
       final req = await client.getUrl(uri);
@@ -103,7 +111,7 @@ class AddressSearch {
 Future<Place?> findPlace(BuildContext context, String query, {(double, double)? near, bool refineOnMap = false}) async {
   final l = context.l10n;
   final messenger = ScaffoldMessenger.of(context);
-  final r = await AddressSearch.search(query);
+  final r = await AddressSearch.search(query, near: near);
   if (!context.mounted) return null;
   if (r.isEmpty) {
     if (!mapsEnabled) {
@@ -113,13 +121,13 @@ Future<Place?> findPlace(BuildContext context, String query, {(double, double)? 
     messenger.showSnackBar(SnackBar(content: Text(l.addrNotFoundPick)));
     return pickOnMap(context, center: near, name: query);
   }
-  Place? p = r.length == 1 ? r.first : await _choose(context, r);
+  Place? p = r.length == 1 ? r.first : await _choose(context, r, near);
   if (p == null || !context.mounted) return null;
   if (refineOnMap && mapsEnabled) p = await pickOnMap(context, center: (p.lat, p.lon), name: p.name, zoom: 17);
   return p;
 }
 
-Future<Place?> _choose(BuildContext context, List<Place> r) {
+Future<Place?> _choose(BuildContext context, List<Place> r, (double, double)? near) {
   final l = context.l10n;
   return showModalBottomSheet<Place>(
     context: context,
@@ -131,7 +139,9 @@ Future<Place?> _choose(BuildContext context, List<Place> r) {
           ListTile(
             leading: const Icon(Icons.place_outlined),
             title: Text(p.name, maxLines: 2, overflow: TextOverflow.ellipsis),
-            subtitle: Text('${p.lat.toStringAsFixed(5)}, ${p.lon.toStringAsFixed(5)}'),
+            subtitle: Text(near == null
+                ? '${p.lat.toStringAsFixed(5)}, ${p.lon.toStringAsFixed(5)}'
+                : distanceText(distanceMeters(near.$1, near.$2, p.lat, p.lon))),
             onTap: () => Navigator.of(ctx).pop(p),
           ),
         Padding(

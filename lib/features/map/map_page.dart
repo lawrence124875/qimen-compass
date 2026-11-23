@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../app/settings/app_settings.dart';
 import '../../app/theme/app_theme.dart';
@@ -19,6 +22,7 @@ import '../travel/travel_text.dart';
 import 'address_search.dart';
 import 'destination_page.dart';
 import 'map_location.dart';
+import 'maps_link.dart';
 
 /// 地圖八門（HANDOFF §12 P2）：以目前位置為中心畫 8 個 45° 扇區，依此刻時盤各宮的門吉凶上色。
 /// 地圖是真北，扇區直接用真北方位角（不經磁偏角）；點地圖或長按放圖釘看落在哪個門；
@@ -27,7 +31,10 @@ import 'map_location.dart';
 const mapsEnabled = bool.fromEnvironment('MAPS_ENABLED');
 
 class MapPage extends StatefulWidget {
-  const MapPage({super.key, this.modeSwitch});
+  const MapPage({super.key, this.modeSwitch, this.sharedText});
+
+  /// 從 Google 地圖分享進來的文字（含連結），開頁後直接標出該地點。
+  final String? sharedText;
 
   /// 羅盤分頁的「羅盤⇄地圖」切換鈕（放在標題列）。
   final Widget? modeSwitch;
@@ -104,6 +111,8 @@ class _MapPageState extends State<MapPage> {
     _heading.acquire();
     _heading.addListener(_onHeading);
     _locate();
+    final shared = widget.sharedText;
+    if (shared != null) WidgetsBinding.instance.addPostFrameCallback((_) => _useLink(shared));
     // 換時辰就重算扇區顏色
     _timer = Timer.periodic(const Duration(minutes: 1), (_) {
       final c = _compute();
@@ -148,12 +157,75 @@ class _MapPageState extends State<MapPage> {
   Future<void> _doSearch() async {
     final q = _search.text.trim();
     if (q.isEmpty) return;
+    if (MapsLink.looksLikeLink(q)) return _useLink(q);
     FocusScope.of(context).unfocus();
     setState(() => _searching = true);
     final f = await findPlace(context, q, near: _me);
     if (!mounted) return;
     setState(() => _searching = false);
     if (f == null) return;
+    _showPlace(f, q);
+  }
+
+  /// Google 地圖分享的連結或文字 → 標出地點。
+  Future<void> _useLink(String text) async {
+    FocusScope.of(context).unfocus();
+    setState(() => _searching = true);
+    final f = await MapsLink.resolve(text);
+    if (!mounted) return;
+    setState(() => _searching = false);
+    if (f == null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.l10n.mapLinkFailed)));
+      return;
+    }
+    _search.text = f.name;
+    _showPlace(f, f.name);
+  }
+
+  Future<void> _pasteLink() async {
+    final t = (await Clipboard.getData(Clipboard.kTextPlain))?.text?.trim() ?? '';
+    if (!mounted) return;
+    if (t.isEmpty || !MapsLink.looksLikeLink(t)) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.l10n.mapLinkFailed)));
+      return;
+    }
+    await _useLink(t);
+  }
+
+  /// 「從 Google 地圖找」：說明＋開 Google 地圖＋貼上連結。
+  Future<void> _googleSheet() async {
+    final l = context.l10n;
+    final q = _search.text.trim();
+    final act = await showModalBottomSheet<int>(
+      context: context,
+      showDragHandle: true,
+      isScrollControlled: true,
+      builder: (ctx) => SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            Text(l.mapGoogleTitle, style: Theme.of(ctx).textTheme.titleMedium),
+            const SizedBox(height: 8),
+            Text(Platform.isAndroid ? l.mapGoogleHelpAndroid : l.mapGoogleHelpIos),
+            const SizedBox(height: 8),
+            Text(l.mapSearchHelp, style: Theme.of(ctx).textTheme.bodySmall?.copyWith(color: ctx.qm.textMuted)),
+            const SizedBox(height: 12),
+            FilledButton.icon(icon: const Icon(Icons.map_outlined), label: Text(l.mapOpenGoogle), onPressed: () => Navigator.of(ctx).pop(1)),
+            const SizedBox(height: 8),
+            OutlinedButton.icon(icon: const Icon(Icons.content_paste), label: Text(l.mapPasteLink), onPressed: () => Navigator.of(ctx).pop(2)),
+          ]),
+        ),
+      ),
+    );
+    if (act == 1) {
+      final uri = Uri.https('www.google.com', '/maps/search/', {'api': '1', 'query': q.isEmpty ? ' ' : q});
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else if (act == 2) {
+      await _pasteLink();
+    }
+  }
+
+  void _showPlace(Place f, String q) {
     final p = LatLng(f.lat, f.lon);
     _setPin(p, q);
     if (_overlay) setState(() => _overlay = false); // 要看搜尋結果，先離開疊圖（鏡頭不再鎖定目前位置）
@@ -311,6 +383,11 @@ class _MapPageState extends State<MapPage> {
         border: const OutlineInputBorder(),
       ),
     );
+    final searchRow = Row(children: [
+      Expanded(child: searchRow),
+      const SizedBox(width: 4),
+      IconButton.filledTonal(icon: const Icon(Icons.travel_explore), tooltip: l.mapGoogleTitle, onPressed: _searching ? null : _googleSheet),
+    ]);
     final radius = SegmentedButton<double>(
       showSelectedIcon: false,
       segments: [for (final r in _radii) ButtonSegment(value: r, label: Text(l.mapKm((r / 1000).round())))],

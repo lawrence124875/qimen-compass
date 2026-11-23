@@ -1036,5 +1036,12 @@
   "doorHoursNone": "接下来两天大门方位没有吉门时辰，重要外出可改看出行诀。",
   "doorHoursRemind": "吉时前 15 分钟提醒",
   "doorHoursNotifyTitle": "大门吉时快到了",
-  "doorHoursNotifyBody": "{time} 大门（{dir}）逢{door}，重要外出可挑这时出门"
+  "doorHoursNotifyBody": "{time} 大门（{dir}）逢{door}，重要外出可挑这时出门",
+  "mapLinkFailed": "这段文字里找不到 Google 地图地点，请重新复制分享链接",
+  "mapGoogleTitle": "从 Google 地图找",
+  "mapGoogleHelpAndroid": "1. 按「打开 Google 地图」，搜索并点选地点。\n2. 按「分享」，选「奇门罗盘」，就会直接回到罗盘地图标出这个地点。\n3. 也可以选「复制链接」，回来按「粘贴链接」，或直接粘贴到搜索框。",
+  "mapGoogleHelpIos": "1. 按「打开 Google 地图」，搜索并点选地点。\n2. 按「分享」→「复制链接」。\n3. 回到这里按「粘贴链接」，或直接粘贴到搜索框。",
+  "mapSearchHelp": "搜索框用手机内置查询（免费）：输入完整地址最准，店名、地标可能查不到；结果按离你的距离排序。找不到时改用 Google 地图，或长按地图直接选点。",
+  "mapOpenGoogle": "打开 Google 地图",
+  "mapPasteLink": "粘贴链接"
 }

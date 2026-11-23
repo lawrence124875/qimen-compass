@@ -24,6 +24,7 @@ import 'features/house/house_model.dart' show HouseStore;
 import 'features/wear/wear_sync.dart';
 import 'l10n/l10n.dart';
 import 'features/travel/travel_reminders.dart';
+import 'features/map/maps_link.dart';
 import 'services/notifications.dart';
 
 /// 功能 id（Remote Config `qm_feature_<id>`，預設開）。
@@ -112,6 +113,7 @@ Future<void> main() async {
   );
   Notifications.routes[TravelReminders.payload] = () => MaterialPageRoute(builder: (_) => const TravelPage());
   runApp(AppServices(services: services, child: const QimenApp()));
+  SharedPlaceInbox.start(); // Android：從 Google 地圖分享地點進來
   final runAppMs = startup.elapsedMilliseconds;
   WidgetsBinding.instance.addPostFrameCallback((_) => Notifications.handleLaunch().catchError((_) {}));
   // 啟動加速：首頁畫出來之前什麼都不做；廣告 SDK（會載入 WebView）、推播重排、手錶同步

@@ -1036,5 +1036,12 @@
   "doorHoursNone": "앞으로 이틀간 현관 방위에 길문 시간이 없습니다. 중요한 외출은 출행결을 보세요.",
   "doorHoursRemind": "길시 15분 전 알림",
   "doorHoursNotifyTitle": "현관 길시가 곧 옵니다",
-  "doorHoursNotifyBody": "{time} 현관({dir})에 {door}. 중요한 외출은 이때 나가세요"
+  "doorHoursNotifyBody": "{time} 현관({dir})에 {door}. 중요한 외출은 이때 나가세요",
+  "mapLinkFailed": "이 텍스트에서 Google 지도 장소를 찾지 못했습니다. 공유 링크를 다시 복사하세요",
+  "mapGoogleTitle": "Google 지도로 찾기",
+  "mapGoogleHelpAndroid": "1. \"Google 지도 열기\"를 눌러 장소를 검색하고 선택합니다.\n2. \"공유\"에서 \"기문 나침반\"을 선택하면 나침반 지도로 돌아와 장소가 표시됩니다.\n3. \"링크 복사\" 후 돌아와 \"링크 붙여넣기\"를 누르거나 검색창에 붙여넣어도 됩니다.",
+  "mapGoogleHelpIos": "1. \"Google 지도 열기\"를 눌러 장소를 검색하고 선택합니다.\n2. \"공유\" → \"링크 복사\".\n3. 돌아와 \"링크 붙여넣기\"를 누르거나 검색창에 붙여넣습니다.",
+  "mapSearchHelp": "검색창은 휴대폰 내장 검색(무료)을 사용합니다. 전체 주소가 가장 정확하고 상호·랜드마크는 찾지 못할 수 있습니다. 결과는 가까운 순. 못 찾으면 Google 지도를 쓰거나 지도를 길게 눌러 위치를 고르세요.",
+  "mapOpenGoogle": "Google 지도 열기",
+  "mapPasteLink": "링크 붙여넣기"
 }

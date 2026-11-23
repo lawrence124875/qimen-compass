@@ -1036,5 +1036,12 @@
   "doorHoursNone": "No lucky-gate hours for the front door in the next two days. For important trips, check Lucky Directions instead.",
   "doorHoursRemind": "Remind me 15 minutes before",
   "doorHoursNotifyTitle": "Front door lucky hour soon",
-  "doorHoursNotifyBody": "{time}: front door ({dir}) meets {door}. A good time to head out for something important."
+  "doorHoursNotifyBody": "{time}: front door ({dir}) meets {door}. A good time to head out for something important.",
+  "mapLinkFailed": "No Google Maps place found in this text. Copy the share link again.",
+  "mapGoogleTitle": "Find with Google Maps",
+  "mapGoogleHelpAndroid": "1. Tap \"Open Google Maps\", search and select the place.\n2. Tap Share and choose Qimen Compass: you come straight back with the place pinned.\n3. Or choose Copy link, come back and tap \"Paste link\", or paste it into the search box.",
+  "mapGoogleHelpIos": "1. Tap \"Open Google Maps\", search and select the place.\n2. Tap Share → Copy link.\n3. Come back and tap \"Paste link\", or paste it into the search box.",
+  "mapSearchHelp": "The search box uses your phone's built-in lookup (free): full addresses work best; shop names and landmarks may not be found. Results are sorted by distance. If nothing fits, use Google Maps or long-press the map to drop a pin.",
+  "mapOpenGoogle": "Open Google Maps",
+  "mapPasteLink": "Paste link"
 }
