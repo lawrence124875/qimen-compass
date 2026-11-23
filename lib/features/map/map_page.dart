@@ -138,6 +138,12 @@ class _MapPageState extends State<MapPage> {
         _pinName = name;
       });
 
+  void _clearPin() => setState(() {
+        _pin = null;
+        _pinName = null;
+        _search.clear();
+      });
+
   Future<void> _doSearch() async {
     final q = _search.text.trim();
     if (q.isEmpty) return;
@@ -279,6 +285,8 @@ class _MapPageState extends State<MapPage> {
             ]),
           ),
           FilledButton(onPressed: _openDestination, child: Text(l.destCheck)),
+          // 清除地點，回到沒選地點的狀態
+          IconButton(icon: const Icon(Icons.close), tooltip: l.mapClearPin, onPressed: _clearPin),
         ]),
       ),
     );

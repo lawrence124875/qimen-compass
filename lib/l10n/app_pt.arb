@@ -1001,5 +1001,13 @@
   "houseGuide5T": "O mapa horário em casa",
   "houseGuide5B": "Não precisa todo dia. Use para:\n• Momentos-chave: mudança, primeiro fogo, primeira martelada da obra, montar a cama.\n• Tarefas importantes: chamadas, assinaturas, planos; sente-se voltado para a porta favorável da hora.\n• Imprevistos: vazamento, aparelho quebrado, briga; abra o mapa da hora e leia o palácio do cômodo.",
   "homePrevDay": "Dia anterior",
-  "homeNextDay": "Próximo dia"
+  "homeNextDay": "Próximo dia",
+  "mapClearPin": "Limpar local",
+  "destRemedyTitle": "Se precisar ir neste horário",
+  "destRemedyBody": "• Saia primeiro em direção a uma porta favorável agora ({dirs}), caminhe uns 10–15 minutos e depois siga ao destino.\n• Se puder, saia antes, na próxima hora favorável, e espere perto.\n• Prepare tudo antes de sair, fique calmo e evite pressa ou discussões.\n• Ao chegar, deixe conversas e assinaturas importantes para uma hora favorável.",
+  "travelCoverGeneral": "Recados, viagens, visitas, médico: a melhor entre as portas Aberta, Descanso e Vida",
+  "travelCoverWealth": "Dinheiro, cobranças, compras, abrir loja, investimentos: porta da Vida",
+  "travelCoverCareer": "Entrevistas, negociação, assinaturas, clientes, novo cargo: porta Aberta",
+  "travelCoverLove": "Encontros, refeições, reconciliação, visitar mais velhos, pedir ajuda: porta do Descanso",
+  "travelCoverExam": "Provas, relatórios, protocolos, apresentações, documentos: porta da Paisagem"
 }

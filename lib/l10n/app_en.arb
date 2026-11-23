@@ -1001,5 +1001,13 @@
   "houseGuide5T": "Using the hour chart at home",
   "houseGuide5B": "You do not need it every day. Use it for:\n• Key moments: moving in, first cooking, first strike of renovation, setting up a bed.\n• Important tasks at home: calls, signing, planning; sit in the lucky door's direction and face it.\n• Sudden events: a leak, a broken appliance, an argument; cast the current hour chart and read the room's palace for cause and outcome.",
   "homePrevDay": "Previous day",
-  "homeNextDay": "Next day"
+  "homeNextDay": "Next day",
+  "mapClearPin": "Clear place",
+  "destRemedyTitle": "If you must go at this time",
+  "destRemedyBody": "• Leave first toward a lucky door right now ({dirs}), walk about 10–15 minutes, then turn toward your destination.\n• Leave early if you can, at the next lucky hour, and wait nearby.\n• Prepare everything before leaving, stay calm, and avoid rushing or arguing on the way.\n• Once there, move important talks or signing to a lucky hour if possible.",
+  "travelCoverGeneral": "Errands, trips, visits, doctor: the best of Open, Rest and Life doors",
+  "travelCoverWealth": "Money, payments, buying, opening a shop, investment talks: Life Door",
+  "travelCoverCareer": "Interviews, negotiation, signing, client visits, new roles: Open Door",
+  "travelCoverLove": "Dates, meals, making up, visiting elders, asking for help: Rest Door",
+  "travelCoverExam": "Exams, reports, filing, presenting, paperwork: Scenery Door"
 }

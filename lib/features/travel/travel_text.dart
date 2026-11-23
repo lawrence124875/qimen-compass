@@ -13,6 +13,14 @@ class TravelText {
         TravelEvent.exam => l.travelEventExam,
       };
 
+  static String cover(AppLocalizations l, TravelEvent e) => switch (e) {
+        TravelEvent.general => l.travelCoverGeneral,
+        TravelEvent.wealth => l.travelCoverWealth,
+        TravelEvent.career => l.travelCoverCareer,
+        TravelEvent.love => l.travelCoverLove,
+        TravelEvent.exam => l.travelCoverExam,
+      };
+
   static String level(AppLocalizations l, TravelLevel v) => switch (v) {
         TravelLevel.great => l.levelGreat,
         TravelLevel.good => l.levelGood,
