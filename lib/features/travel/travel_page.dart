@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart' show openAppSettings;
 
 import '../../app/services.dart';
+import '../../app/theme/app_theme.dart';
 import '../../engine/engine.dart';
 import '../../shared/premium/usage_gate.dart';
 import '../../l10n/l10n.dart';
@@ -155,6 +156,8 @@ class _TravelPageState extends State<TravelPage> {
                       ),
                   ],
                 ),
+                const SizedBox(height: 8),
+                Text(TravelText.cover(l, _event), style: theme.textTheme.bodySmall?.copyWith(color: context.qm.textMuted)),
                 const SizedBox(height: 16),
                 if (now != null) _NowCard(slot: now, onStart: (m) => _start(now, m)),
                 const SizedBox(height: 16),

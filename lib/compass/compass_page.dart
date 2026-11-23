@@ -837,9 +837,28 @@ class _DialPainter extends CustomPainter {
   }
 
   void _text(Canvas canvas, String s, Offset at, double size, Color color, {bool bold = false}) {
+    // 疊在地圖上時：字放大、加粗，並先畫一圈底色描邊，任何地圖底圖上都看得清楚
+    final onMap = backdrop != null;
+    final fs = onMap ? size * 1.15 : size;
+    final weight = bold || onMap ? FontWeight.w700 : FontWeight.w400;
+    if (onMap) {
+      final halo = TextPainter(
+        text: TextSpan(
+            text: s,
+            style: TextStyle(
+                fontSize: fs,
+                fontWeight: weight,
+                foreground: Paint()
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = fs * 0.22
+                  ..strokeJoin = StrokeJoin.round
+                  ..color = backdrop!.withValues(alpha: 1))),
+        textDirection: TextDirection.ltr,
+      )..layout();
+      halo.paint(canvas, at - Offset(halo.width / 2, halo.height / 2));
+    }
     final tp = TextPainter(
-      text: TextSpan(
-          text: s, style: TextStyle(fontSize: size, color: color, fontWeight: bold ? FontWeight.w700 : FontWeight.w400)),
+      text: TextSpan(text: s, style: TextStyle(fontSize: fs, color: onMap ? color.withValues(alpha: 1) : color, fontWeight: weight)),
       textDirection: TextDirection.ltr,
     )..layout();
     tp.paint(canvas, at - Offset(tp.width / 2, tp.height / 2));

@@ -1,5 +1,6 @@
 <zh-TW>
-奇門羅盤 1.7.2：
+奇門羅盤 1.7.3：
+• 羅盤地圖上的字更清楚；選過的地點可一鍵清除；目的地遇凶時附化解方式；出行訣各情境附涵蓋說明
 • 羅盤新增「建築座向」：大樓裡鋼筋、電箱干擾磁針時，在衛星地圖沿外牆畫一次線，之後手機貼牆按「對牆」就能準確找方位
 • 北方基準改為真北／磁北／建築座向三選項，附說明；建築座向也能輸出磁北
 • 沒有定位時可手選城市，磁偏角依所在地自動計算
@@ -8,7 +9,8 @@
 • 宅盤可選盤面跟著手機轉，新增宅盤使用說明；羅盤地圖改版面
 </zh-TW>
 <zh-CN>
-奇门罗盘 1.7.2：
+奇门罗盘 1.7.3：
+• 罗盘地图上的字更清楚；选过的地点可一键清除；目的地遇凶时附化解方式；出行诀各情境附涵盖说明
 • 罗盘新增「建筑座向」：大楼里钢筋、电箱干扰磁针时，在卫星地图沿外墙画一次线，之后手机贴墙按「对墙」就能准确找方位
 • 北方基准改为真北／磁北／建筑座向三选项，附说明；建筑座向也能输出磁北
 • 没有定位时可手选城市，磁偏角依所在地自动计算
@@ -17,15 +19,15 @@
 • 宅盘可选盘面跟着手机转，新增宅盘使用说明；罗盘地图改版面
 </zh-CN>
 <en-US>
-Qimen Compass 1.7.2:
-• North reference now offers true north, magnetic north or building direction, with explanations
-• No location? Pick a nearby city; declination is calculated for your area
+Qimen Compass 1.7.3:
+• Clearer text on the map compass; clear a chosen place in one tap; remedies when the destination time is unlucky; each Travel scenario explains what it covers
 • Compass, map, travel and home chart each keep their own north reference with a tip; the map shows where your phone points
 • Day charts, plus hour/day/month/year on the compass; boards show directions and elements
 • Home chart can turn with your phone; new home chart guide
 </en-US>
 <ja-JP>
-奇門羅盤 1.7.2：
+奇門羅盤 1.7.3：
+• 羅盤地図の文字を見やすく；選んだ地点をワンタップで解除；目的地が凶の時の対処法；出行訣の各場面に適用範囲を表示
 • 羅盤に「建物の向き」を追加：鉄筋や分電盤で磁針が狂うとき、衛星地図で外壁に沿って一度線を引けば、あとは壁に当てて「壁に合わせる」で正確に方位がわかります
 • 北の基準を真北／磁北／建物の向きの3択に（説明付き）
 • 位置情報がないときは都市を選択可能。偏角は現在地で自動計算
@@ -34,7 +36,8 @@ Qimen Compass 1.7.2:
 • 宅盤の盤面をスマホと一緒に回転、使い方ガイドを追加
 </ja-JP>
 <ko-KR>
-기문 나침반 1.7.2:
+기문 나침반 1.7.3:
+• 나침반 지도 글자를 더 선명하게; 선택한 장소 한 번에 지우기; 목적지가 흉할 때 대처법; 출행결 상황별 적용 범위 설명
 • 나침반에 '건물 방향' 추가: 철근이나 전기함 때문에 바늘이 틀어질 때, 위성 지도에서 외벽을 따라 선을 한 번 그으면 이후 벽에 대고 '벽에 맞추기'로 정확한 방위를 찾을 수 있습니다
 • 북쪽 기준을 진북/자북/건물 방향 중에서 선택(설명 포함)
 • 위치를 못 잡을 때 도시 선택 가능, 자편각은 현지 기준 자동 계산
@@ -43,63 +46,64 @@ Qimen Compass 1.7.2:
 • 택반을 휴대폰과 함께 회전, 사용 안내 추가
 </ko-KR>
 <vi>
-La bàn Kỳ Môn 1.7.2:
-• Mốc hướng bắc có ba lựa chọn: bắc thật, bắc từ, hướng tòa nhà (kèm giải thích)
+La bàn Kỳ Môn 1.7.3:
+• Chữ trên bản đồ la bàn rõ hơn; xóa địa điểm đã chọn chỉ một chạm; cách hóa giải khi giờ đi xấu; mỗi tình huống Xuất hành có giải thích phạm vi
 • Không có vị trí thì chọn thành phố; độ lệch từ tự tính theo nơi bạn ở
 • La bàn, bản đồ, xuất hành và trạch bàn tự chọn hướng bắc riêng, kèm gợi ý; bản đồ hiện hướng điện thoại
 • La bàn và bàn có thêm bàn giờ/ngày/tháng/năm, hiện phương vị và ngũ hành
 • Trạch bàn xoay theo điện thoại, thêm hướng dẫn
 </vi>
 <es-ES>
-Brújula Qimen 1.7.2:
-• Referencia del norte: norte verdadero, magnético u orientación del edificio, con explicaciones
+Brújula Qimen 1.7.3:
+• Texto más claro en la brújula del mapa; borra el lugar elegido con un toque; remedios si la hora del destino es desfavorable; cada caso de Viaje explica qué cubre
 • Sin ubicación, elige una ciudad
 • Brújula, mapa, viaje y casa guardan su propio norte con sugerencia; el mapa muestra hacia dónde apuntas
 • Tableros de hora, día, mes y año en la brújula, con direcciones y elementos
 • El plano de la casa gira con el teléfono; nueva guía
 </es-ES>
 <es-US>
-Brújula Qimen 1.7.2:
-• Referencia del norte: norte verdadero, magnético u orientación del edificio, con explicaciones
+Brújula Qimen 1.7.3:
+• Texto más claro en la brújula del mapa; borra el lugar elegido con un toque; remedios si la hora del destino es desfavorable; cada caso de Viaje explica qué cubre
 • Sin ubicación, elige una ciudad
 • Brújula, mapa, viaje y casa guardan su propio norte con sugerencia; el mapa muestra hacia dónde apuntas
 • Tableros de hora, día, mes y año en la brújula, con direcciones y elementos
 • El plano de la casa gira con el teléfono; nueva guía
 </es-US>
 <pt-BR>
-Bússola Qimen 1.7.2:
-• Referência de norte: verdadeiro, magnético ou orientação do prédio, com explicações
+Bússola Qimen 1.7.3:
+• Texto mais nítido na bússola do mapa; limpe o local escolhido com um toque; remédios quando a hora do destino é desfavorável; cada cenário de Viagem explica o que cobre
 • Sem localização, escolha uma cidade
 • Bússola, mapa, viagem e casa guardam o próprio norte com sugestão; o mapa mostra para onde você aponta
 • Mapas de hora, dia, mês e ano na bússola, com direções e elementos
 • O mapa da casa gira com o celular; novo guia
 </pt-BR>
 <pt-PT>
-Bússola Qimen 1.7.2:
-• Referência de norte: verdadeiro, magnético ou orientação do prédio, com explicações
+Bússola Qimen 1.7.3:
+• Texto mais nítido na bússola do mapa; limpe o local escolhido com um toque; remédios quando a hora do destino é desfavorável; cada cenário de Viagem explica o que cobre
 • Sem localização, escolha uma cidade
 • Bússola, mapa, viagem e casa guardam o próprio norte com sugestão; o mapa mostra para onde aponta
 • Mapas de hora, dia, mês e ano na bússola, com direções e elementos
 • O mapa da casa gira com o telemóvel; novo guia
 </pt-PT>
 <id>
-Kompas Qimen 1.7.2:
-• Acuan utara: utara sejati, magnetik, atau arah bangunan, dengan penjelasan
+Kompas Qimen 1.7.3:
+• Teks kompas di peta lebih jelas; hapus tempat pilihan sekali ketuk; cara penangkal saat waktu ke tujuan kurang baik; tiap skenario Perjalanan menjelaskan cakupannya
 • Tanpa lokasi, pilih kota; deklinasi dihitung untuk lokasi Anda
 • Kompas, peta, perjalanan, dan rumah menyimpan acuan utara sendiri dengan saran; peta menunjukkan arah ponsel
 • Papan jam, hari, bulan, tahun di kompas, dengan arah dan unsur
 • Peta rumah berputar bersama ponsel; panduan baru
 </id>
 <th>
-เข็มทิศฉีเหมิน 1.7.2:
-• อ้างอิงทิศเหนือเลือกได้ 3 แบบ: เหนือจริง เหนือแม่เหล็ก ทิศของอาคาร พร้อมคำอธิบาย
+เข็มทิศฉีเหมิน 1.7.3:
+• ตัวอักษรบนเข็มทิศแผนที่ชัดขึ้น; ล้างสถานที่ที่เลือกได้ในแตะเดียว; วิธีแก้เมื่อเวลาไปจุดหมายไม่ดี; ทุกสถานการณ์การเดินทางมีคำอธิบายขอบเขต
 • ไม่มีตำแหน่งก็เลือกเมืองได้ ค่าเบี่ยงเบนคำนวณตามพื้นที่อัตโนมัติ
 • เข็มทิศ แผนที่ ออกเดินทาง และผังบ้าน เลือกทิศเหนือแยกกันพร้อมคำแนะนำ แผนที่แสดงทิศที่โทรศัพท์ชี้
 • เข็มทิศเลือกผังชั่วโมง วัน เดือน ปี แสดงทิศและธาตุ
 • ผังบ้านหมุนตามโทรศัพท์ พร้อมคู่มือใหม่
 </th>
 <ar>
-بوصلة تشيمن 1.7.2:
+بوصلة تشيمن 1.7.3:
+• نص أوضح على بوصلة الخريطة؛ مسح المكان المختار بلمسة؛ طرق علاج عند سوء وقت الوجهة؛ كل حالة سفر تشرح ما تشمله
 • مرجع الشمال: حقيقي أو مغناطيسي أو اتجاه المبنى، مع شرح
 • دون موقع، اختر مدينتك؛ يُحسب الانحراف لموقعك تلقائيًا
 • البوصلة والخريطة والسفر والمنزل لكلٍّ منها مرجع شمال خاص مع اقتراح؛ والخريطة تُظهر اتجاه هاتفك

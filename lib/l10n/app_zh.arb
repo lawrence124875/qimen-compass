@@ -2124,5 +2124,20 @@
   "houseGuide5T": "時盤在家的用法",
   "houseGuide5B": "時盤不用天天看，用在三種時候：\n• 重大動作抓吉時：入宅、開火、動土第一鎚、安床。\n• 在家做重要的事：線上會議、簽約、寫企劃，把座位移到當時吉門方位並面向它。\n• 突發狀況看事：漏水、電器壞、家人爭執，起當下時盤，對照事發房間的宮位判斷起因與發展。",
   "homePrevDay": "前一日",
-  "homeNextDay": "後一日"
+  "homeNextDay": "後一日",
+  "mapClearPin": "清除地點",
+  "destRemedyTitle": "非得在這時出發怎麼辦",
+  "destRemedyBody": "• 先往此刻吉門方位出門（{dirs}），走一段約 10–15 分鐘再轉往目的地，借吉門出行。\n• 能提早就提早，挑下一個吉時出門，到附近再等。\n• 出門前把要辦的事準備好、心情穩定，路上不急躁、不爭執。\n• 到了以後，重要的談話或簽約盡量挪到吉時再進行。",
+  "travelCoverGeneral": "一般外出、旅遊、拜訪、看病：取開門、休門、生門中最好的",
+  "travelCoverWealth": "求財、收款、採購、開店、投資洽談：看生門",
+  "travelCoverCareer": "面試、談判、簽約、拜訪客戶、上任：看開門",
+  "travelCoverLove": "約會、聚餐、和好、拜訪長輩、請人幫忙：看休門",
+  "travelCoverExam": "考試、報告、遞件、發表、文書：看景門",
+  "@destRemedyBody": {
+    "placeholders": {
+      "dirs": {
+        "type": "String"
+      }
+    }
+  }
 }

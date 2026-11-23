@@ -1001,5 +1001,13 @@
   "houseGuide5T": "Papan jam di rumah",
   "houseGuide5B": "Tidak perlu tiap hari. Gunakan untuk:\n• Momen penting: pindahan, menyalakan api pertama, pukulan pertama renovasi, memasang ranjang.\n• Urusan penting di rumah: rapat daring, tanda tangan, rencana; duduk menghadap pintu baik jam itu.\n• Kejadian mendadak: bocor, alat rusak, pertengkaran; buka papan jam itu dan baca istana ruangan tersebut.",
   "homePrevDay": "Hari sebelumnya",
-  "homeNextDay": "Hari berikutnya"
+  "homeNextDay": "Hari berikutnya",
+  "mapClearPin": "Hapus tempat",
+  "destRemedyTitle": "Jika harus pergi di jam ini",
+  "destRemedyBody": "• Keluar dulu ke arah pintu baik saat ini ({dirs}), jalan sekitar 10–15 menit, lalu belok ke tujuan.\n• Jika bisa, berangkat lebih awal di jam baik berikutnya dan tunggu di dekat sana.\n• Siapkan semuanya sebelum pergi, tetap tenang, jangan terburu-buru atau bertengkar.\n• Setibanya, pindahkan pembicaraan atau tanda tangan penting ke jam baik.",
+  "travelCoverGeneral": "Urusan, wisata, kunjungan, dokter: terbaik di antara pintu Buka, Istirahat, Hidup",
+  "travelCoverWealth": "Rezeki, tagihan, belanja, buka usaha, investasi: pintu Hidup",
+  "travelCoverCareer": "Wawancara, negosiasi, tanda tangan, klien, jabatan baru: pintu Buka",
+  "travelCoverLove": "Kencan, makan bersama, berdamai, mengunjungi orang tua, minta bantuan: pintu Istirahat",
+  "travelCoverExam": "Ujian, laporan, pengajuan berkas, presentasi, dokumen: pintu Pemandangan"
 }

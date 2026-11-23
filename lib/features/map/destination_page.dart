@@ -50,6 +50,11 @@ class _DestinationPageState extends State<DestinationPage> {
     final cur = slots.first;
     final best = (slots.skip(1).where((s) => s.recommended).toList()..sort((a, b) => b.score.compareTo(a.score))).take(3).toList()
       ..sort((a, b) => a.startUtc!.compareTo(b.startUtc!));
+    final chart = const ShiJiaEngine().compute(now, settings: settings.timeSettingsAt(now), method: settings.juMethod);
+    final goodDirs = [
+      for (final d in const [Door.kai, Door.xiu, Door.sheng])
+        if (chart.palaceOfDoor(d) != 5) '${QimenTerms.door(d, lang)} ${TravelText.direction(l, chart.palaceOfDoor(d))}',
+    ].join(l.separator);
     String range(DirectionVerdict v) {
       String hm(DateTime t) => '${t.toLocal().hour.toString().padLeft(2, '0')}:${t.toLocal().minute.toString().padLeft(2, '0')}';
       return '${hm(v.startUtc!)}–${hm(v.endUtc!)}';
@@ -118,6 +123,20 @@ class _DestinationPageState extends State<DestinationPage> {
               ]),
           ),
           const SizedBox(height: 12),
+          if (!cur.recommended) ...[
+            Card(
+              margin: EdgeInsets.zero,
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(l.destRemedyTitle, style: text.titleSmall?.copyWith(color: qm.primary)),
+                  const SizedBox(height: 6),
+                  Text(l.destRemedyBody(goodDirs), style: text.bodyMedium),
+                ]),
+              ),
+            ),
+            const SizedBox(height: 12),
+          ],
           if (_locked)
             PremiumLockCard(feature: 'destination', text: l.destLocked, onUnlocked: () => setState(() => _locked = false))
           else

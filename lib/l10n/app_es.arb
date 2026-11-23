@@ -1001,5 +1001,13 @@
   "houseGuide5T": "El tablero horario en casa",
   "houseGuide5B": "No hace falta a diario. Úsalo para:\n• Momentos clave: mudanza, primer fuego, primer golpe de obra, colocar la cama.\n• Tareas importantes: videollamadas, firmas, planes; siéntate hacia la puerta favorable de esa hora.\n• Imprevistos: fuga, avería, discusión; abre el tablero de esa hora y lee el palacio de la habitación.",
   "homePrevDay": "Día anterior",
-  "homeNextDay": "Día siguiente"
+  "homeNextDay": "Día siguiente",
+  "mapClearPin": "Borrar lugar",
+  "destRemedyTitle": "Si tienes que ir a esta hora",
+  "destRemedyBody": "• Sal primero hacia una puerta favorable ahora ({dirs}), camina unos 10–15 minutos y luego gira hacia tu destino.\n• Si puedes, sal antes, en la próxima hora favorable, y espera cerca.\n• Prepara todo antes de salir, mantén la calma y evita prisas o discusiones.\n• Al llegar, deja lo importante (charlas, firmas) para una hora favorable.",
+  "travelCoverGeneral": "Recados, viajes, visitas, médico: la mejor de las puertas Abierta, Descanso y Vida",
+  "travelCoverWealth": "Dinero, cobros, compras, abrir negocio, inversiones: puerta de la Vida",
+  "travelCoverCareer": "Entrevistas, negociación, firmas, clientes, nuevo puesto: puerta Abierta",
+  "travelCoverLove": "Citas, comidas, reconciliarse, visitar mayores, pedir ayuda: puerta del Descanso",
+  "travelCoverExam": "Exámenes, informes, trámites, presentaciones, documentos: puerta del Paisaje"
 }

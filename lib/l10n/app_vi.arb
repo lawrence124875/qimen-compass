@@ -1001,5 +1001,13 @@
   "houseGuide5T": "Dùng bàn giờ trong nhà",
   "houseGuide5B": "Không cần xem mỗi ngày. Dùng khi:\n• Việc lớn: nhập trạch, nhóm lửa đầu tiên, nhát búa đầu tiên khi sửa, kê giường.\n• Việc quan trọng ở nhà: họp trực tuyến, ký kết, lập kế hoạch; ngồi quay về cát môn của giờ đó.\n• Sự cố bất ngờ: rò nước, hỏng đồ, cãi nhau; lập bàn giờ lúc đó và xem cung của phòng.",
   "homePrevDay": "Ngày trước",
-  "homeNextDay": "Ngày sau"
+  "homeNextDay": "Ngày sau",
+  "mapClearPin": "Xóa địa điểm",
+  "destRemedyTitle": "Nếu bắt buộc phải đi giờ này",
+  "destRemedyBody": "• Trước tiên ra cửa theo hướng cát môn lúc này ({dirs}), đi khoảng 10–15 phút rồi mới rẽ về nơi cần đến.\n• Nếu được, đi sớm vào giờ tốt kế tiếp rồi chờ gần đó.\n• Chuẩn bị xong mọi việc trước khi đi, giữ bình tĩnh, không vội vàng hay cãi vã.\n• Đến nơi, dời việc bàn bạc hoặc ký kết quan trọng sang giờ tốt nếu có thể.",
+  "travelCoverGeneral": "Đi lại, du lịch, thăm hỏi, khám bệnh: tốt nhất trong Khai, Hưu, Sinh môn",
+  "travelCoverWealth": "Cầu tài, thu tiền, mua hàng, mở tiệm, bàn đầu tư: Sinh môn",
+  "travelCoverCareer": "Phỏng vấn, đàm phán, ký kết, gặp khách, nhậm chức: Khai môn",
+  "travelCoverLove": "Hẹn hò, ăn uống, làm hòa, thăm người lớn, nhờ giúp: Hưu môn",
+  "travelCoverExam": "Thi cử, báo cáo, nộp hồ sơ, thuyết trình, giấy tờ: Cảnh môn"
 }
