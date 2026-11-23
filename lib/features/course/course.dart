@@ -14,7 +14,10 @@ enum CourseActionType {
   chart, // 盤面分頁
   travel, // 出行訣
   compass, // 羅盤分頁
-  zeshi; // 擇時分頁
+  zeshi, // 擇時分頁
+  divination, // 問事
+  house, // 宅盤
+  glossary; // 圖鑑
 
   static CourseActionType? parse(String? s) {
     for (final t in values) {

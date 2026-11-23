@@ -23,6 +23,11 @@ class ZeShiText {
         ZeShiEvent.meditation => l.zeshiEventMeditation,
         ZeShiEvent.business => l.zeshiEventBusiness,
         ZeShiEvent.message => l.zeshiEventMessage,
+        ZeShiEvent.reconcile => l.zeshiEventReconcile,
+        ZeShiEvent.visitElder => l.zeshiEventVisitElder,
+        ZeShiEvent.compete => l.zeshiEventCompete,
+        ZeShiEvent.debt => l.zeshiEventDebt,
+        ZeShiEvent.publicity => l.zeshiEventPublicity,
         ZeShiEvent.custom => l.zeshiEventCustom,
       };
 

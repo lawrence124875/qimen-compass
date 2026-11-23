@@ -19,6 +19,8 @@ import 'features/reminders/day_alert_reminder.dart';
 import 'features/reminders/natal_alert_reminder.dart';
 import 'features/reminders/house_month_reminder.dart';
 import 'features/reminders/daily_reminder.dart';
+import 'features/house/door_hours.dart';
+import 'features/house/house_model.dart' show HouseStore;
 import 'features/wear/wear_sync.dart';
 import 'l10n/l10n.dart';
 import 'features/travel/travel_reminders.dart';
@@ -96,6 +98,7 @@ Future<void> main() async {
   DailyReminder.premium = premium.isPremium.value;
   _wearLocked = () => limits.wearPremium && !premium.isPremium.value;
   premium.isPremium.addListener(syncPremium);
+  HouseStore.onChanged = () => Future<void>.delayed(const Duration(milliseconds: 300), DoorHours.reschedule).catchError((_) {});
   // 家人改了：重排重要日提醒（沖生年那一行）
   FamilyStore.changed.addListener(() => DayAlertReminder.reschedule().catchError((_) {}));
   final services = Services.standard(
@@ -130,6 +133,7 @@ Future<void> main() async {
       DayAlertReminder.reschedule,
       NatalAlertReminder.reschedule,
       HouseMonthReminder.reschedule,
+      DoorHours.reschedule,
       _syncWear,
     ]) {
       try {

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../shared/widgets/result_card.dart' show toneOfLuck, ToneStyle;
+import '../../shared/widgets/result_card.dart' show Tone, toneOfLevel, toneOfLuck, ToneStyle;
 import '../../features/lucky/glossary_page.dart';
+import '../../features/lucky/placement_page.dart' show CureBlock, cureLines;
 import '../../features/meaning/meaning_content.dart';
 
 import '../../engine/engine.dart' hide Element;
@@ -332,8 +333,51 @@ class _PalaceDetailState extends State<PalaceDetail> {
                       ),
                   ]),
           ),
+          if (door != null && palace != 5) ..._wuXing(context, l, qm, text, row, v, mean, chart, palace, door),
         ]),
       ),
     );
+  }
+
+  /// 五行與化解：門宮五行關係、建議擺放、方位用法（催旺或化解物）、化解說明（同開運擺件規則）。
+  List<Widget> _wuXing(BuildContext context, AppLocalizations l, QmPalette qm, TextTheme text,
+      Widget Function(String, Widget) row, Text Function(String, {Color? color}) v, MeaningContent? mean,
+      QimenChart chart, int palace, Door door) {
+    final pc = chart[palace];
+    final rel = DoorPalaceRelation.of(door, palace);
+    final tone = toneOfLevel(DirectionPlanner.judge(chart, palace).level);
+    final cure = cureElement(door, palace);
+    final useKey = tone == Tone.good ? '吉' : (tone == Tone.neutral ? '平' : '凶');
+    final boost = tone == Tone.good && cure == null ? mean?.lookup('cure', boostElement(door).zh) : null;
+    final cures = cureLines(l, mean, door, palace, tone, pc.stars);
+    Text small(String s, {Color? color}) => Text(s, style: text.bodySmall?.copyWith(color: color ?? qm.textMuted));
+    return [
+      const Divider(height: 20),
+      Text(l.palaceWuxingTitle, style: serif(text.titleMedium).copyWith(color: qm.primary)),
+      row(
+        l.labelWuxing,
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          v(l.palaceWuxingLine(palaceElement[palace]!.zh, door.element.zh)),
+          if (mean?.lookup('gm', rel.zh) case final t?)
+            small(t, color: rel == DoorPalaceRelation.menPo || rel == DoorPalaceRelation.palaceKe ? qm.bad : null),
+        ]),
+      ),
+      if (mean?.lookup('place', door.zh) case final t?) row(l.labelPlace, v(t)),
+      row(
+        l.labelUse,
+        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          if (mean?.lookup('use', useKey) case final t?) v(t, color: tone.color(context)),
+          if (boost != null) small(l.placeBoostItems(boost)),
+        ]),
+      ),
+      CureBlock(lines: cures),
+      InkWell(
+        onTap: () => Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const GlossaryPage())),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 6),
+          child: Text('${l.glossaryWxOpen} ›', style: text.bodySmall?.copyWith(color: qm.primary)),
+        ),
+      ),
+    ];
   }
 }

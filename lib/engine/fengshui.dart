@@ -123,3 +123,28 @@ Element? cureElement(Door door, int palace) {
 
 /// 需留意的星（用於化解提示）。
 const Set<Star> cureStars = {Star.peng, Star.rui};
+
+/// 門與宮的五行關係（宮位詳情「五行與化解」）。
+enum DoorPalaceRelation {
+  palaceGen('宮生門'),
+  doorGen('門生宮'),
+  same('比和'),
+  menPo('門剋宮'),
+  palaceKe('宮剋門');
+
+  const DoorPalaceRelation(this.zh);
+  final String zh;
+
+  static DoorPalaceRelation of(Door door, int palace) {
+    final d = door.element;
+    final p = palaceElement[palace]!;
+    if (d == p) return same;
+    if (_gen(p) == d) return palaceGen;
+    if (_gen(d) == p) return doorGen;
+    if (d.overcomes(p)) return menPo;
+    return palaceKe;
+  }
+}
+
+/// 吉門催旺用的五行：生扶門的五行（[cureElement] 為 null 的吉門用）。
+Element boostElement(Door door) => _genBy(door.element);
