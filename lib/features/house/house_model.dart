@@ -253,7 +253,11 @@ class HouseStore {
     return (<House>[], null);
   }
 
+  /// 存檔後的回呼（main 設定：重排大門吉時推播）。
+  static void Function()? onChanged;
+
   static Future<void> _write(List<House> houses, String? current) async {
+    onChanged?.call();
     try {
       await (await SharedPreferences.getInstance()).setString(
           _key,

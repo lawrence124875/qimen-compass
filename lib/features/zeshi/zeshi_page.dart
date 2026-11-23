@@ -224,6 +224,11 @@ class _ZeShiPageState extends State<ZeShiPage> {
       ZeShiEvent.meditation => l.zeshiHintMeditation,
       ZeShiEvent.business => l.zeshiHintBusiness,
       ZeShiEvent.message => l.msgSub,
+      ZeShiEvent.reconcile => l.zeshiCoverReconcile,
+      ZeShiEvent.visitElder => l.zeshiCoverVisitElder,
+      ZeShiEvent.compete => l.zeshiCoverCompete,
+      ZeShiEvent.debt => l.zeshiCoverDebt,
+      ZeShiEvent.publicity => l.zeshiCoverPublicity,
       ZeShiEvent.custom => l.zeshiCoverCustom,
     };
     if (e == ZeShiEvent.custom) return cover;

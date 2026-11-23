@@ -5,6 +5,9 @@ import '../../app/theme/app_theme.dart';
 import '../../l10n/l10n.dart';
 import '../../shared/premium/paywall_page.dart';
 import '../../shared/premium/usage_gate.dart';
+import '../../app/pages/me_page.dart';
+import '../divination/divination_page.dart';
+import '../house/house_page.dart';
 import '../travel/travel_page.dart';
 import '../zeshi/zeshi_page.dart';
 import '../lucky/glossary_page.dart';
@@ -136,6 +139,12 @@ class LessonPage extends StatelessWidget {
       case CourseActionType.zeshi:
         peekPremium(context, feature: 'zeshi').then((access) =>
             nav.push(MaterialPageRoute<void>(builder: (_) => ZeShiPage(locked: access == PremiumAccess.titleOnly))));
+      case CourseActionType.divination:
+        nav.push(MaterialPageRoute<void>(builder: (_) => const DivinationPage()));
+      case CourseActionType.house:
+        MePage.openPeek(context, 'house', (locked) => HousePage(locked: locked));
+      case CourseActionType.glossary:
+        nav.push(MaterialPageRoute<void>(builder: (_) => const GlossaryPage()));
     }
   }
 
